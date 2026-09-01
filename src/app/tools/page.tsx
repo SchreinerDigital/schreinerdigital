@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { tools } from "@/components/tools/tools.config";
+import { Container } from "@/components/ui/container";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
   title: "Rechner-Tools",
@@ -10,37 +13,34 @@ export const metadata: Metadata = {
 
 export default function ToolsIndexPage() {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-16">
-      <h1 className="text-3xl font-semibold tracking-tight">Rechner-Tools</h1>
-      <p className="mt-3 max-w-2xl text-foreground/70">
+    <Container className="py-16 sm:py-20">
+      <Eyebrow>Werkstatt</Eyebrow>
+      <h1 className="mt-4 text-4xl sm:text-5xl">Rechner-Tools</h1>
+      <p className="mt-4 max-w-2xl text-lg text-ink-muted">
         Kleine Helfer für wiederkehrende Berechnungen – direkt im Browser, ohne
         Anmeldung.
       </p>
 
-      <ul className="mt-10 grid gap-4 sm:grid-cols-2">
+      <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tools.map((tool) => (
           <li key={tool.slug}>
             <Link
               href={`/tools/${tool.slug}`}
-              className="block h-full rounded-xl border border-holz-200/70 bg-holz-50/40 p-5 transition-colors hover:border-holz-400"
+              className="group flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-6 transition-colors hover:border-accent"
             >
-              <div className="flex items-baseline justify-between gap-3">
-                <h2 className="text-lg font-semibold text-holz-800">
-                  {tool.title}
-                </h2>
-                {!tool.ready && (
-                  <span className="rounded-full bg-holz-200/60 px-2 py-0.5 text-xs text-holz-800">
-                    bald
-                  </span>
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="text-lg">{tool.title}</h2>
+                {tool.ready ? (
+                  <Badge tone="accent">live</Badge>
+                ) : (
+                  <Badge>bald</Badge>
                 )}
               </div>
-              <p className="mt-2 text-sm text-foreground/70">
-                {tool.description}
-              </p>
+              <p className="mt-3 text-sm text-ink-muted">{tool.description}</p>
             </Link>
           </li>
         ))}
       </ul>
-    </div>
+    </Container>
   );
 }

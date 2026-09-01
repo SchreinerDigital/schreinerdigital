@@ -11,9 +11,24 @@ WordPress/Elementor-Seite.
 | Framework    | Next.js 16 (App Router) + React 19           |
 | Sprache      | TypeScript                                   |
 | Styling      | Tailwind CSS v4 + `@tailwindcss/typography`  |
+| Theming      | `next-themes` – hell / dunkel / System, Umschalter im Header |
 | Inhalte      | MDX (`@next/mdx`)                            |
 | Konten / DB  | Supabase (`@supabase/ssr`) – noch nicht verdrahtet |
 | Zahlungen    | Stripe – noch nicht implementiert            |
+
+## Design-System
+
+- Design-Tokens als CSS-Variablen in [`src/app/globals.css`](src/app/globals.css)
+  (`--paper`, `--surface`, `--ink*`, `--border*`, `--accent*`) – hell auf `:root`,
+  dunkel auf `.dark`. Tailwind-Utilities: `bg-paper`, `text-ink-muted`,
+  `border-border`, `text-accent` …
+- Akzent: Honig-Eiche (`--accent`). Schrift: Space Grotesk (Display),
+  Inter (Text), JetBrains Mono (Zahlen/Labels).
+- Wiederkehrendes Motiv: Lineal-Ticks ([`RulerBar`](src/components/brand/wordmark.tsx),
+  `.ruler-ticks*`-Utilities).
+- UI-Bausteine: [`src/components/ui/`](src/components/ui) (Button, Container,
+  Eyebrow, Badge). Klassen-Merge über [`cn()`](src/lib/cn.ts).
+- MDX-Inhalte: Wrapper-Klasse `prose prose-schreiner` (themt sich über CSS-Variablen).
 
 ## Entwicklung
 
@@ -47,12 +62,14 @@ src/
 │   ├── env.ts                      Zugriff auf Umgebungsvariablen
 │   └── supabase/                   client.ts (Browser) / server.ts (Server)
 ├── types/content.ts
-└── mdx-components.tsx               Pflichtdatei für @next/mdx
+├── mdx-components.tsx               Pflichtdatei für @next/mdx
+└── app/icon.svg                     Favicon (Anschlagwinkel-Motiv)
 ```
 
 ## Status / nächste Schritte
 
 - [x] Grundgerüst: Struktur, Tailwind, MDX-Pipeline, `.env.example`, `.gitignore`
+- [x] Design-System, Logo, hell/dunkel/System-Umschalter, Startseite
 - [x] Rechner „Plattengewicht" als Referenz-Implementierung
 - [ ] Inhalte: Holzarten & Plattenwerkstoffe
 - [ ] Rechner: Türenmaß, Restlänge, Durchbiegung, Stundensatz

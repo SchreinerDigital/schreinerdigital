@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { Container } from "@/components/ui/container";
 
 /** Consistent frame for a single calculator page. */
 export function ToolShell({
@@ -12,30 +13,30 @@ export function ToolShell({
   children: ReactNode;
 }) {
   return (
-    <div className="mx-auto max-w-2xl px-4 py-12">
+    <Container className="max-w-2xl py-12 sm:py-16">
       <Link
         href="/tools"
-        className="text-sm text-foreground/50 hover:text-holz-700"
+        className="font-mono text-xs uppercase tracking-[0.14em] text-ink-faint transition-colors hover:text-accent"
       >
         ← Alle Rechner
       </Link>
-      <h1 className="mt-3 text-2xl font-semibold tracking-tight">{title}</h1>
+      <h1 className="mt-6 text-3xl">{title}</h1>
       {description && (
-        <p className="mt-2 text-sm text-foreground/70">{description}</p>
+        <p className="mt-3 text-ink-muted">{description}</p>
       )}
-      <div className="mt-8">{children}</div>
-      <p className="mt-10 text-xs text-foreground/40">
-        Alle Angaben ohne Gewähr. Ergebnisse sind Näherungswerte und ersetzen
+      <div className="mt-10">{children}</div>
+      <p className="mt-12 border-t border-border pt-5 text-xs text-ink-faint">
+        Alle Angaben ohne Gewähr. Die Ergebnisse sind Näherungswerte und ersetzen
         keine statische Berechnung.
       </p>
-    </div>
+    </Container>
   );
 }
 
 /** Placeholder body for tools that are not implemented yet. */
 export function ToolStub() {
   return (
-    <div className="rounded-lg border border-dashed border-holz-300 p-6 text-sm text-foreground/60">
+    <div className="rounded-[var(--radius)] border border-dashed border-border-strong bg-surface p-8 text-sm text-ink-muted">
       Dieser Rechner ist noch nicht umgesetzt – folgt Schritt für Schritt.
     </div>
   );

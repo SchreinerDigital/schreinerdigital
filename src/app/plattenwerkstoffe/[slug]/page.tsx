@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getEntry, getSlugs } from "@/lib/content";
+import { Container } from "@/components/ui/container";
 
 export async function generateStaticParams() {
   const slugs = await getSlugs("plattenwerkstoffe");
@@ -29,8 +31,16 @@ export default async function PlattenwerkstoffPage({
   const { default: Content } = entry;
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-16 prose prose-neutral dark:prose-invert">
-      <Content />
-    </article>
+    <Container className="py-12 sm:py-16">
+      <Link
+        href="/plattenwerkstoffe"
+        className="font-mono text-xs uppercase tracking-[0.14em] text-ink-faint transition-colors hover:text-accent"
+      >
+        ← Plattenwerkstoffe
+      </Link>
+      <article className="prose prose-schreiner mt-6 max-w-2xl">
+        <Content />
+      </article>
+    </Container>
   );
 }

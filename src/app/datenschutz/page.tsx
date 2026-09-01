@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Container } from "@/components/ui/container";
 
 export const metadata: Metadata = {
   title: "Datenschutz",
@@ -7,9 +8,11 @@ export const metadata: Metadata = {
 
 export default function DatenschutzPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 prose prose-neutral dark:prose-invert">
-      <h1>Datenschutzerklärung</h1>
-      <p>Platzhalter – vollständige Datenschutzerklärung folgt.</p>
-    </div>
+    <Container className="py-16">
+      <article className="prose prose-schreiner max-w-2xl">
+        <h1>Datenschutzerklärung</h1>
+        <p>Platzhalter – vollständige Datenschutzerklärung folgt.</p>
+      </article>
+    </Container>
   );
 }

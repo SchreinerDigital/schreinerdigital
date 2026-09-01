@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllMeta } from "@/lib/content";
+import { Container } from "@/components/ui/container";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 export const metadata: Metadata = {
   title: "Plattenwerkstoffe",
@@ -12,45 +14,44 @@ export default async function PlattenwerkstoffeIndexPage() {
   const platten = await getAllMeta("plattenwerkstoffe");
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-16">
-      <h1 className="text-3xl font-semibold tracking-tight">Plattenwerkstoffe</h1>
-      <p className="mt-3 max-w-2xl text-foreground/70">
-        Steckbriefe zu Holzwerkstoffplatten. Die Inhalte werden Schritt für
-        Schritt ergänzt.
+    <Container className="py-16 sm:py-20">
+      <Eyebrow>Materialkunde</Eyebrow>
+      <h1 className="mt-4 text-4xl sm:text-5xl">Plattenwerkstoffe</h1>
+      <p className="mt-4 max-w-2xl text-lg text-ink-muted">
+        Steckbriefe zu Holzwerkstoffplatten – Aufbau, Eigenschaften, Einsatz und
+        Verarbeitung. Die Inhalte kommen Schritt für Schritt dazu.
       </p>
 
       {platten.length === 0 ? (
-        <p className="mt-10 rounded-lg border border-dashed border-holz-300 p-6 text-sm text-foreground/60">
-          Noch keine Plattenwerkstoffe erfasst. Neue Einträge als
-          <code className="mx-1 font-mono">
+        <div className="mt-12 rounded-[var(--radius)] border border-dashed border-border-strong bg-surface p-8 text-sm text-ink-muted">
+          Noch keine Plattenwerkstoffe veröffentlicht. Neue Einträge werden als{" "}
+          <code className="font-mono text-ink">
             src/content/plattenwerkstoffe/&lt;slug&gt;.mdx
-          </code>
-          anlegen (Vorlage: <code className="font-mono">_template.mdx</code>).
-        </p>
+          </code>{" "}
+          angelegt (Vorlage: <code className="font-mono text-ink">_template.mdx</code>).
+        </div>
       ) : (
-        <ul className="mt-10 grid gap-4 sm:grid-cols-2">
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {platten.map((p) => (
             <li key={p.slug}>
               <Link
                 href={`/plattenwerkstoffe/${p.slug}`}
-                className="block rounded-xl border border-holz-200/70 bg-holz-50/40 p-5 transition-colors hover:border-holz-400"
+                className="group flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-5 transition-colors hover:border-accent"
               >
                 <div className="flex items-baseline justify-between gap-3">
-                  <h2 className="text-lg font-semibold text-holz-800">
-                    {p.title}
-                  </h2>
+                  <h2 className="text-lg">{p.title}</h2>
                   {p.kategorie && (
-                    <span className="text-xs text-foreground/50">
+                    <span className="font-mono text-xs uppercase tracking-wider text-ink-faint">
                       {p.kategorie}
                     </span>
                   )}
                 </div>
-                <p className="mt-2 text-sm text-foreground/70">{p.summary}</p>
+                <p className="mt-3 text-sm text-ink-muted">{p.summary}</p>
               </Link>
             </li>
           ))}
         </ul>
       )}
-    </div>
+    </Container>
   );
 }

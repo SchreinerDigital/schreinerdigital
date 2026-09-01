@@ -1,6 +1,5 @@
 import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
-import Image, { type ImageProps } from "next/image";
 
 /**
  * Global MDX component overrides.
@@ -16,13 +15,18 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       if (isInternal) {
         return <Link href={href} {...props} />;
       }
-      return <a href={href} target="_blank" rel="noopener noreferrer" {...props} />;
+      return (
+        <a href={href} target="_blank" rel="noopener noreferrer" {...props} />
+      );
     },
-    img: (props) => (
-      <Image
-        sizes="100vw"
-        style={{ width: "100%", height: "auto" }}
-        {...(props as ImageProps)}
+    img: ({ alt = "", ...props }) => (
+      // eslint-disable-next-line @next/next/no-img-element -- MDX images can have any src without known dimensions
+      <img
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        className="rounded-[var(--radius)] border border-border"
+        {...props}
       />
     ),
     ...components,
