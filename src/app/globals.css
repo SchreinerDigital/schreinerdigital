@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* -------------------------------------------------------------------------- */
+/*  Design tokens                                                             */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  --background: #fbf8f4;
+  --foreground: #211a12;
+
+  /* Warm "wood workshop" brand scale */
+  --color-holz-50: #faf6f0;
+  --color-holz-100: #f1e7d8;
+  --color-holz-200: #e2cbab;
+  --color-holz-300: #d0ab7c;
+  --color-holz-400: #bd8b53;
+  --color-holz-500: #a8703b;
+  --color-holz-600: #8c5730;
+  --color-holz-700: #6f4429;
+  --color-holz-800: #593826;
+  --color-holz-900: #4a3022;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #17120d;
+    --foreground: #ece3d6;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-holz-50: var(--color-holz-50);
+  --color-holz-100: var(--color-holz-100);
+  --color-holz-200: var(--color-holz-200);
+  --color-holz-300: var(--color-holz-300);
+  --color-holz-400: var(--color-holz-400);
+  --color-holz-500: var(--color-holz-500);
+  --color-holz-600: var(--color-holz-600);
+  --color-holz-700: var(--color-holz-700);
+  --color-holz-800: var(--color-holz-800);
+  --color-holz-900: var(--color-holz-900);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Base                                                                      */
+/* -------------------------------------------------------------------------- */
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}

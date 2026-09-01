@@ -1,0 +1,50 @@
+import { Datentabelle } from "@/components/mdx/datentabelle";
+
+export const meta = {
+  title: "Musterholz",
+  botanical: "Genus species",
+  gruppe: "Laubholz",
+  summary: "Einzeiler für Übersichtsseiten – wird noch ersetzt.",
+  draft: true,
+  kennwerte: [
+    { label: "Rohdichte (r12–15)", value: "0,00–0,00 g/cm³" },
+    { label: "Druckfestigkeit ∥", value: "0 N/mm²" },
+    { label: "Biegefestigkeit", value: "0 N/mm²" },
+    { label: "Brinellhärte ⟂", value: "0 N/mm²" },
+    { label: "Schwindmaß radial / tangential", value: "0,0 % / 0,0 %" },
+    { label: "Dauerhaftigkeitsklasse (EN 350)", value: "–" },
+  ],
+};
+
+# {meta.title}
+
+_Botanisch: {meta.botanical}_
+
+## Herkunft
+
+Verbreitungsgebiet, Standortansprüche, Verfügbarkeit am Markt.
+
+## Holzbild
+
+Farbe von Splint und Kern, Maserung, Poren, Glanz, Textur.
+
+## Eigenschaften
+
+Mechanik, Trocknungsverhalten, Stehvermögen, Dauerhaftigkeit, Besonderheiten.
+
+## Verwendung
+
+Typische Einsatzgebiete im Innenausbau, Möbelbau, Konstruktion.
+
+## Praxistipps
+
+Bearbeitung (Sägen, Fräsen, Schleifen), Verleimung, Oberfläche, Verschraubung,
+bekannte Fallstricke.
+
+## Technische Daten
+
+<Datentabelle rows={meta.kennwerte} />
+
+## Fazit
+
+Kurze Einordnung: Wann lohnt sich dieses Holz, wann nicht?

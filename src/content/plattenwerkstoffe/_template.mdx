@@ -1,0 +1,41 @@
+import { Datentabelle } from "@/components/mdx/datentabelle";
+
+export const meta = {
+  title: "Musterplatte",
+  kategorie: "Spanplatte",
+  summary: "Einzeiler für Übersichtsseiten – wird noch ersetzt.",
+  draft: true,
+  kennwerte: [
+    { label: "Rohdichte", value: "0 kg/m³" },
+    { label: "Dickenquellung 24 h", value: "0 %" },
+    { label: "Biege-E-Modul", value: "0 N/mm²" },
+    { label: "Formaldehyd-Klasse", value: "E1 / A+" },
+    { label: "Lieferdicken", value: "0–0 mm" },
+  ],
+};
+
+# {meta.title}
+
+## Aufbau
+
+Schichtaufbau, Bindemittel, Herstellung.
+
+## Eigenschaften
+
+Festigkeit, Feuchteverhalten, Brandverhalten, Emissionen.
+
+## Verwendung
+
+Möbelbau, Innenausbau, tragende vs. nicht tragende Anwendungen.
+
+## Verarbeitung
+
+Zuschnitt, Kantenbearbeitung, Beschichtung, Verschraubung, Werkzeugverschleiß.
+
+## Technische Daten
+
+<Datentabelle rows={meta.kennwerte} />
+
+## Fazit
+
+Kurze Einordnung: Stärken, Schwächen, Alternativen.
