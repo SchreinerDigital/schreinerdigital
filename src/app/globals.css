@@ -23,14 +23,14 @@
   --border: #e6ddce;
   --border-strong: #d6c9b3;
 
-  /* Brand accent – honey oak */
-  --accent: #a75c1b;
-  --accent-hover: #8a4a12;
+  /* Brand accent – vivid honey oak */
+  --accent: #c1490a;
+  --accent-hover: #a33f09;
   --accent-contrast: #ffffff;
   --accent-soft: #f4e8d8;
 
   /* Ring / focus */
-  --ring: #a75c1b;
+  --ring: #c1490a;
 
   --radius: 0.75rem;
 }
@@ -47,12 +47,12 @@
   --border: #3b3122;
   --border-strong: #524632;
 
-  --accent: #e39a51;
-  --accent-hover: #efac6a;
-  --accent-contrast: #1c1206;
+  --accent: #ff7a1a;
+  --accent-hover: #ff9142;
+  --accent-contrast: #1a0f04;
   --accent-soft: #2b2013;
 
-  --ring: #e39a51;
+  --ring: #ff7a1a;
 }
 
 @theme inline {
