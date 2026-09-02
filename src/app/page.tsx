@@ -6,20 +6,61 @@ import { ButtonLink } from "@/components/ui/button";
 import { RulerBar } from "@/components/brand/wordmark";
 import { tools } from "@/components/tools/tools.config";
 
+function TreeRingsIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5.5" />
+      <circle cx="12" cy="12" r="2" />
+    </svg>
+  );
+}
+
+function LayersIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="3" y="5" width="18" height="4" rx="1" />
+      <rect x="3" y="10.5" width="18" height="4" rx="1" />
+      <rect x="3" y="16" width="18" height="4" rx="1" />
+    </svg>
+  );
+}
+
+function SquareToolIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M4 4v16h16" />
+      <path d="M4 4h6M4 8h3M4 12h3M4 16h3" />
+    </svg>
+  );
+}
+
+function CheckIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8.5 12.5l2.5 2.5 5-5" />
+    </svg>
+  );
+}
+
 const pillars = [
   {
     href: "/holzarten",
     title: "Holzarten",
+    icon: TreeRingsIcon,
     body: "Steckbriefe zu Massivhölzern – Herkunft, Holzbild, Eigenschaften, Verwendung, Praxistipps und technische Kennwerte auf einen Blick.",
   },
   {
     href: "/plattenwerkstoffe",
     title: "Plattenwerkstoffe",
+    icon: LayersIcon,
     body: "Span-, MDF-, OSB-, Multiplex- und Tischlerplatten: Aufbau, Einsatzgrenzen und Hinweise für die saubere Verarbeitung.",
   },
   {
     href: "/tools",
     title: "Rechner-Tools",
+    icon: SquareToolIcon,
     body: "Wiederkehrende Berechnungen aus dem Werkstattalltag – direkt im Browser, ohne Anmeldung, ohne Excel-Gefummel.",
   },
 ];
@@ -88,7 +129,7 @@ export default function HomePage() {
             <ul className="mt-9 flex flex-wrap gap-x-7 gap-y-2 font-mono text-xs uppercase tracking-[0.14em] text-ink-faint">
               {trust.map((t) => (
                 <li key={t} className="flex items-center gap-2">
-                  <span aria-hidden className="size-1.5 rounded-full bg-accent/70" />
+                  <CheckIcon className="size-4 shrink-0 text-accent" />
                   {t}
                 </li>
               ))}
@@ -132,15 +173,19 @@ export default function HomePage() {
             <Link
               key={p.href}
               href={p.href}
-              className="group flex flex-col rounded-[var(--radius)] border border-border bg-surface p-6 transition-colors hover:border-accent"
+              className="group flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-6 transition-colors hover:border-accent"
             >
-              <h2 className="flex items-center justify-between text-xl">
-                {p.title}
-                <ArrowIcon className="size-5 text-ink-faint transition-colors group-hover:text-accent" />
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-ink-muted">
+              <span className="inline-flex size-11 items-center justify-center rounded-lg bg-accent-soft text-accent">
+                <p.icon className="size-5" />
+              </span>
+              <h2 className="mt-4 text-xl">{p.title}</h2>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">
                 {p.body}
               </p>
+              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+                Zu {p.title}
+                <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+              </span>
             </Link>
           ))}
         </div>
@@ -167,18 +212,29 @@ export default function HomePage() {
               <Link
                 key={tool.slug}
                 href={`/tools/${tool.slug}`}
-                className="group flex items-start justify-between gap-3 rounded-lg border border-border bg-paper p-4 transition-colors hover:border-accent"
+                className="group flex h-full flex-col rounded-lg border border-border bg-paper p-4 transition-colors hover:border-accent"
               >
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium">{tool.title}</span>
-                    {!tool.ready && <Badge>bald</Badge>}
-                  </div>
-                  <p className="mt-1 text-sm text-ink-muted">
-                    {tool.description}
-                  </p>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">{tool.title}</span>
+                  {!tool.ready && <Badge>bald</Badge>}
                 </div>
-                <ArrowIcon className="mt-0.5 size-4 shrink-0 text-ink-faint transition-colors group-hover:text-accent" />
+                <p className="mt-1 flex-1 text-sm text-ink-muted">
+                  {tool.description}
+                </p>
+                {tool.slug === "plattengewicht" && (
+                  <div className="mt-3 flex items-baseline justify-between rounded-md border border-border bg-surface px-3 py-2">
+                    <span className="font-mono text-[0.68rem] uppercase tracking-wider text-ink-faint">
+                      Beispiel
+                    </span>
+                    <span className="font-mono text-sm font-semibold text-accent">
+                      71,6 kg
+                    </span>
+                  </div>
+                )}
+                <span className="mt-3 inline-flex items-center gap-1.5 self-start text-sm font-medium text-ink-faint transition-colors group-hover:text-accent">
+                  Öffnen
+                  <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+                </span>
               </Link>
             ))}
           </div>
