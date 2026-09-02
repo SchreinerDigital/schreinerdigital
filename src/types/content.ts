@@ -13,10 +13,18 @@ export interface HolzartMeta {
   title: string;
   /** Botanical name, e.g. "Quercus robur" */
   botanical?: string;
+  /** Alternative / trade names. */
+  synonyms?: string[];
   /** Short teaser for listing pages. */
   summary: string;
   /** Broad grouping: "Laubholz" | "Nadelholz" | "Furnier" | … */
   gruppe?: string;
+  /** Workshop hardness class as used on the old site: "Hartholz" | "Weichholz". */
+  klasse?: string;
+  /** DIN 4076 short symbol, e.g. "QCXE". */
+  dinCode?: string;
+  /** Hero image in /public, e.g. "/holzarten/eiche.jpg". */
+  bild?: string;
   /** Ordered list for the technical data table. */
   kennwerte?: TechnicalDatum[];
   draft?: boolean;
