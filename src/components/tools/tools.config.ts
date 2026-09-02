@@ -19,15 +19,15 @@ export const tools: ToolDef[] = [
     slug: "tuerenmass",
     title: "Türenmaß",
     description:
-      "Blatt-, Zargen- und Bandmaße aus dem Rohbaumaß der Öffnung ableiten.",
-    ready: false,
+      "Türblatt-, Zargen- und Wandstärkemaß aus dem Rohbaumaß der Maueröffnung nach DIN 18101 ableiten.",
+    ready: true,
   },
   {
     slug: "restlaenge",
     title: "Restlänge",
     description:
-      "Verschnitt und verbleibende Reststücke bei einem Zuschnittplan ermitteln.",
-    ready: false,
+      "Restlänge einer Kantenbandrolle aus Außen- und Innendurchmesser sowie Banddicke berechnen.",
+    ready: true,
   },
   {
     slug: "durchbiegung",
@@ -41,7 +41,7 @@ export const tools: ToolDef[] = [
     title: "Stundensatz",
     description:
       "Kostendeckenden Stundenverrechnungssatz aus Fixkosten und produktiven Stunden berechnen.",
-    ready: false,
+    ready: true,
   },
 ];
 
