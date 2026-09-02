@@ -1,0 +1,65 @@
+import { Datentabelle } from "@/components/mdx/datentabelle";
+
+export const meta = {
+  title: "Fichte",
+  botanical: "Picea abies",
+  gruppe: "Nadelholz",
+  summary:
+    "Das Standard-Bauholz – leicht, günstig, vielseitig, aber wenig dauerhaft.",
+  kennwerte: [
+    { label: "Rohdichte (r12–15)", value: "0,40–0,47 g/cm³" },
+    { label: "Druckfestigkeit ∥", value: "35–45 N/mm²" },
+    { label: "Biegefestigkeit", value: "60–75 N/mm²" },
+    { label: "Brinellhärte ⟂", value: "12–17 N/mm²" },
+    { label: "Schwindmaß radial / tangential", value: "3,6 % / 7,8 %" },
+    { label: "Dauerhaftigkeitsklasse (EN 350)", value: "Klasse 4 (wenig dauerhaft)" },
+  ],
+};
+
+# {meta.title}
+
+_Botanisch: {meta.botanical}_
+
+## Herkunft
+
+Die mit Abstand wichtigste Nadelholzart der deutschen Forstwirtschaft und
+das Rückgrat der Sägeindustrie. Riesige Verfügbarkeit in allen
+Handelsformen, entsprechend niedriger Preis im Vergleich zu Laubhölzern.
+
+## Holzbild
+
+Nahezu weiß bis gelblich-weiß, Splint und Kern kaum zu unterscheiden.
+Gerader Faserverlauf, Harzkanäle als feine dunkle Punkte oder Striche
+sichtbar, Äste sind je nach Sortierung häufig.
+
+## Eigenschaften
+
+Leicht bei guter Festigkeit im Verhältnis zum Gewicht – deshalb
+Standard-Baustatikholz. Trocknet vergleichsweise schnell und lässt sich
+leicht bearbeiten, allerdings kann Harz Sägeblätter, Fräser und Leimfugen
+verkleben. Im Freien und in feuchter Umgebung wenig dauerhaft und anfällig
+für Bläuepilz bei unsachgemäßer Lagerung.
+
+## Verwendung
+
+Konstruktionsholz für Dachstuhl und Rahmenbau, Bretter und Balken,
+Leimholzplatten, Verpackungen, preiswerte Möbel und Regale. Ausgesuchte,
+astfreie Stämme mit besonders regelmäßigem Jahrringverlauf dienen als
+Resonanzholz im Instrumentenbau.
+
+## Praxistipps
+
+Sägt und hobelt sich unkompliziert, Astlöcher und Harzgallen beim Zuschnitt
+einplanen. Für den Außeneinsatz konsequent imprägnieren oder auf eine
+dauerhaftere Holzart ausweichen. Schrauben halten in Hirnholz schlecht –
+wo möglich in die Fläche oder mit Dübeln verbinden. Wegen des günstigen
+Preises gut geeignet für Prototypen, Schablonen und Unterkonstruktionen.
+
+## Technische Daten
+
+<Datentabelle rows={meta.kennwerte} />
+
+## Fazit
+
+Erste Wahl für Konstruktion und Budget-Projekte im Innenbereich. Für
+sichtbare Bauteile im Freien ohne zusätzlichen Schutz ungeeignet.
