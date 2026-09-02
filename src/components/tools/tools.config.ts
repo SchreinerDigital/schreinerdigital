@@ -33,8 +33,8 @@ export const tools: ToolDef[] = [
     slug: "durchbiegung",
     title: "Durchbiegung",
     description:
-      "Durchbiegung eines Regalbodens unter Last abschätzen (Balkenbiegung).",
-    ready: false,
+      "Durchbiegung eines Regal- oder Schrankbodens unter Last aus Werkstoff, Abmessungen und Belastungsart abschätzen.",
+    ready: true,
   },
   {
     slug: "stundensatz",
