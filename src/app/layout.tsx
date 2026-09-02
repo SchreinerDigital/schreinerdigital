@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { siteConfig } from "@/lib/site";
 
 const display = Space_Grotesk({
   variable: "--ff-display",
@@ -24,17 +25,17 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://schreinerdigital.de"),
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: "schreiner.digital – Wissen & Werkzeuge für die Schreinerei",
     template: "%s · schreiner.digital",
   },
-  description:
-    "Fundierte Steckbriefe zu Holzarten und Plattenwerkstoffen sowie praxisnahe Rechner-Tools für den Schreineralltag.",
+  description: siteConfig.description,
   openGraph: {
     type: "website",
     locale: "de_DE",
-    siteName: "schreiner.digital",
+    siteName: siteConfig.name,
+    url: siteConfig.url,
   },
 };
 
