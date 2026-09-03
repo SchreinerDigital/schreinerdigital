@@ -192,9 +192,9 @@ export default function HomePage() {
           Die Seite wächst Schritt für Schritt
         </h2>
         <p className="mt-4 max-w-2xl text-ink-muted">
-          Über 40 Holzarten-Steckbriefe sind online. Als Nächstes folgen die
-          Plattenwerkstoffe, die übrigen Rechner sowie Nutzerkonten für
-          gespeicherte Berechnungen.
+          Die Steckbriefe zu Holzarten und Plattenwerkstoffen sind online. Als
+          Nächstes folgen die übrigen Rechner sowie Nutzerkonten für gespeicherte
+          Berechnungen.
         </p>
       </Container>
     </>

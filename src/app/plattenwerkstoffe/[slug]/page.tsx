@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getEntry, getSlugs } from "@/lib/content";
 import { Container } from "@/components/ui/container";
+import { Badge } from "@/components/ui/badge";
 
 export async function generateStaticParams() {
   const slugs = await getSlugs("plattenwerkstoffe");
@@ -15,9 +17,13 @@ export async function generateMetadata({
   const { slug } = await params;
   const entry = await getEntry("plattenwerkstoffe", slug);
   if (!entry) return {};
+  const { meta } = entry;
   return {
-    title: entry.meta.title,
-    description: entry.meta.summary,
+    title: meta.title,
+    description: meta.summary,
+    openGraph: meta.bild
+      ? { images: [{ url: meta.bild }], title: meta.title, description: meta.summary }
+      : undefined,
   };
 }
 
@@ -28,17 +34,46 @@ export default async function PlattenwerkstoffPage({
   const entry = await getEntry("plattenwerkstoffe", slug);
   if (!entry) notFound();
 
-  const { default: Content } = entry;
+  const { default: Content, meta } = entry;
 
   return (
-    <Container className="py-12 sm:py-16">
+    <Container className="py-10 sm:py-14">
       <Link
         href="/plattenwerkstoffe"
         className="font-mono text-xs uppercase tracking-[0.14em] text-ink-faint transition-colors hover:text-accent"
       >
         ← Plattenwerkstoffe
       </Link>
-      <article className="prose prose-schreiner mt-6 max-w-2xl">
+
+      <header className="mt-6 grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+        {meta.bild && (
+          <div className="relative aspect-[3/2] overflow-hidden rounded-[var(--radius)] border border-border">
+            <Image
+              src={meta.bild}
+              alt={meta.title}
+              fill
+              priority
+              sizes="(min-width: 1024px) 520px, 100vw"
+              className="object-cover"
+            />
+          </div>
+        )}
+        <div>
+          <h1 className="text-4xl sm:text-5xl">{meta.title}</h1>
+          {meta.synonyms && meta.synonyms.length > 0 && (
+            <p className="mt-2 text-sm text-ink-faint">
+              {meta.synonyms.join(" · ")}
+            </p>
+          )}
+          <div className="mt-4 flex flex-wrap gap-2">
+            {meta.kategorie && <Badge tone="accent">{meta.kategorie}</Badge>}
+            {meta.kurzname && <Badge>{meta.kurzname}</Badge>}
+            {meta.norm && <Badge>{meta.norm}</Badge>}
+          </div>
+        </div>
+      </header>
+
+      <article className="prose prose-schreiner mt-12 max-w-2xl">
         <Content />
       </article>
     </Container>

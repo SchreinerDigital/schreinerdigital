@@ -2,31 +2,37 @@ import { Datentabelle } from "@/components/mdx/datentabelle";
 
 export const meta = {
   title: "Musterplatte",
-  kategorie: "Spanplatte",
-  summary: "Einzeiler für Übersichtsseiten – wird noch ersetzt.",
+  kurzname: "XYZ",
+  kategorie: "Spanwerkstoff", // Spanwerkstoff | Faserwerkstoff | Lagenwerkstoff | Verbundwerkstoff | Schichtstoffplatte
+  synonyms: ["Handelsname A", "Handelsname B"],
+  norm: "EN 000",
+  summary: "Einzeiler für die Übersichtsseite – wird noch ersetzt.",
+  bild: "/plattenwerkstoffe/spanwerkstoffe.jpg",
   draft: true,
   kennwerte: [
     { label: "Rohdichte", value: "0 kg/m³" },
     { label: "Dickenquellung 24 h", value: "0 %" },
     { label: "Biege-E-Modul", value: "0 N/mm²" },
-    { label: "Formaldehyd-Klasse", value: "E1 / A+" },
+    { label: "Biegefestigkeit", value: "0 N/mm²" },
+    { label: "Formaldehyd-/Emissionsklasse", value: "E1" },
     { label: "Lieferdicken", value: "0–0 mm" },
   ],
 };
 
-# {meta.title}
+Titel, Kurzname und Kategorie rendert die Seite aus `meta`. Der Fließtext
+beginnt direkt mit dem Intro-Absatz (kein `# Titel`).
 
 ## Aufbau
 
-Schichtaufbau, Bindemittel, Herstellung.
+Schichtaufbau, Bindemittel, Herstellung, Plattentypen.
 
 ## Eigenschaften
 
-Festigkeit, Feuchteverhalten, Brandverhalten, Emissionen.
+Festigkeit, Feuchte- und Brandverhalten, Emissionen, Maßhaltigkeit.
 
 ## Verwendung
 
-Möbelbau, Innenausbau, tragende vs. nicht tragende Anwendungen.
+Möbel- und Innenausbau, tragende vs. nicht tragende Anwendungen, Nutzungsklassen.
 
 ## Verarbeitung
 
