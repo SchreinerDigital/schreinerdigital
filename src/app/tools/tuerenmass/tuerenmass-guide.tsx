@@ -1,21 +1,4 @@
-function ChevronIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path d="M6 9l6 6 6-6" />
-    </svg>
-  );
-}
+import { FaqAccordion, GuideSection, GuideShell, SpecTable, StepList } from "@/components/tools/guide";
 
 const steps = [
   {
@@ -33,12 +16,12 @@ const steps = [
 ];
 
 const massTabelle = [
-  { breite: "635 – 660 mm", blattBreite: "610 mm", hoehe: "2000 – 2025 mm", blattHoehe: "1985 mm" },
-  { breite: "760 – 785 mm", blattBreite: "735 mm", hoehe: "2125 – 2150 mm", blattHoehe: "2110 mm" },
-  { breite: "885 – 910 mm", blattBreite: "860 mm", hoehe: "2250 – 2275 mm", blattHoehe: "2235 mm" },
-  { breite: "1010 – 1035 mm", blattBreite: "985 mm", hoehe: "—", blattHoehe: "—" },
-  { breite: "1135 – 1160 mm", blattBreite: "1110 mm", hoehe: "—", blattHoehe: "—" },
-  { breite: "1260 – 1285 mm", blattBreite: "1235 mm", hoehe: "—", blattHoehe: "—" },
+  ["635 – 660 mm", "610 mm", "2000 – 2025 mm", "1985 mm"],
+  ["760 – 785 mm", "735 mm", "2125 – 2150 mm", "2110 mm"],
+  ["885 – 910 mm", "860 mm", "2250 – 2275 mm", "2235 mm"],
+  ["1010 – 1035 mm", "985 mm", "—", "—"],
+  ["1135 – 1160 mm", "1110 mm", "—", "—"],
+  ["1260 – 1285 mm", "1235 mm", "—", "—"],
 ];
 
 const faqs = [
@@ -66,84 +49,33 @@ const faqs = [
 
 export function TuerenmassGuide() {
   return (
-    <div className="mt-16 space-y-14 border-t border-border pt-12">
-      <section>
-        <h2 className="text-2xl">Schritt-für-Schritt: Türen &amp; Zargen richtig ausmessen</h2>
-        <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-          Das korrekte Aufmaß ist der wichtigste Schritt beim Kauf neuer Innentüren. Messen Sie
-          stets das lichte Rohbaumaß (die nackte Maueröffnung) und nicht die alte Tür oder Zarge.
-          Befolgen Sie diese drei Schritte, um Fehlbestellungen zu vermeiden:
-        </p>
+    <GuideShell>
+      <GuideSection
+        title="Schritt-für-Schritt: Türen & Zargen richtig ausmessen"
+        intro="Das korrekte Aufmaß ist der wichtigste Schritt beim Kauf neuer Innentüren. Messen Sie stets das lichte Rohbaumaß (die nackte Maueröffnung) und nicht die alte Tür oder Zarge. Befolgen Sie diese drei Schritte, um Fehlbestellungen zu vermeiden:"
+      >
+        <StepList steps={steps} />
+      </GuideSection>
 
-        <ol className="mt-6 space-y-5">
-          {steps.map((step, i) => (
-            <li key={step.title} className="flex gap-4">
-              <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-accent-soft font-mono text-sm font-semibold text-accent">
-                {i + 1}
-              </span>
-              <div>
-                <h3 className="font-semibold text-ink">{step.title}</h3>
-                <p className="mt-1 text-sm leading-relaxed text-ink-muted">{step.body}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </section>
+      <GuideSection
+        title="DIN 18101 Maßtabelle für Standard-Innentüren"
+        intro="Die DIN 18101 regelt das Verhältnis zwischen dem lichten Rohbaumaß der Wandöffnung und dem Türblattmaß. Hier sind die gängigsten Normmaße auf einen Blick:"
+      >
+        <SpecTable
+          columns={[
+            "Lichte Rohbaubreite (Maueröffnung)",
+            "Türblattbreite",
+            "Lichte Rohbauhöhe (ab OFF)",
+            "Türblatthöhe",
+          ]}
+          rows={massTabelle}
+          note="* Hinweis: Für die Standard-Türblattbreite 860 mm (sehr häufig bei Wohnräumen) muss die Maueröffnung zwischen 885 mm und 910 mm breit sein."
+        />
+      </GuideSection>
 
-      <section>
-        <h2 className="text-2xl">DIN 18101 Maßtabelle für Standard-Innentüren</h2>
-        <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-          Die DIN 18101 regelt das Verhältnis zwischen dem lichten Rohbaumaß der Wandöffnung und
-          dem Türblattmaß. Hier sind die gängigsten Normmaße auf einen Blick:
-        </p>
-
-        <div className="mt-6 overflow-x-auto rounded-[var(--radius)] border border-border">
-          <table className="w-full min-w-[820px] border-collapse text-sm">
-            <thead>
-              <tr className="border-b border-border bg-surface text-left">
-                <th className="px-4 py-2.5 font-medium text-nowrap text-ink-muted">
-                  Lichte Rohbaubreite (Maueröffnung)
-                </th>
-                <th className="px-4 py-2.5 font-medium text-nowrap text-ink-muted">Türblattbreite</th>
-                <th className="px-4 py-2.5 font-medium text-nowrap text-ink-muted">
-                  Lichte Rohbauhöhe (ab OFF)
-                </th>
-                <th className="px-4 py-2.5 font-medium text-nowrap text-ink-muted">Türblatthöhe</th>
-              </tr>
-            </thead>
-            <tbody>
-              {massTabelle.map((row, i) => (
-                <tr key={row.breite} className={i > 0 ? "border-t border-border" : undefined}>
-                  <td className="px-4 py-2.5 font-mono tabular-nums text-ink">{row.breite}</td>
-                  <td className="px-4 py-2.5 font-mono tabular-nums text-ink">{row.blattBreite}</td>
-                  <td className="px-4 py-2.5 font-mono tabular-nums text-ink-muted">{row.hoehe}</td>
-                  <td className="px-4 py-2.5 font-mono tabular-nums text-ink-muted">{row.blattHoehe}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="mt-3 text-xs text-ink-faint">
-          * Hinweis: Für die Standard-Türblattbreite 860 mm (sehr häufig bei Wohnräumen) muss die
-          Maueröffnung zwischen 885 mm und 910 mm breit sein.
-        </p>
-      </section>
-
-      <section>
-        <h2 className="text-2xl">Häufig gestellte Fragen (FAQ)</h2>
-
-        <div className="mt-6 divide-y divide-border rounded-[var(--radius)] border border-border">
-          {faqs.map((faq) => (
-            <details key={faq.q} className="group p-4 [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
-                <h3 className="font-medium text-ink">{faq.q}</h3>
-                <ChevronIcon className="size-4 shrink-0 text-ink-faint transition-transform group-open:rotate-180" />
-              </summary>
-              <p className="mt-3 text-sm leading-relaxed text-ink-muted">{faq.a}</p>
-            </details>
-          ))}
-        </div>
-      </section>
-    </div>
+      <GuideSection title="Häufig gestellte Fragen (FAQ)">
+        <FaqAccordion items={faqs} />
+      </GuideSection>
+    </GuideShell>
   );
 }
