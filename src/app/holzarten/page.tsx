@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { getAllMeta } from "@/lib/content";
 import { Container } from "@/components/ui/container";
@@ -37,22 +38,35 @@ export default async function HolzartenIndexPage() {
             <li key={h.slug}>
               <Link
                 href={`/holzarten/${h.slug}`}
-                className="group flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-5 transition-colors hover:border-accent"
+                className="group flex h-full flex-col overflow-hidden rounded-[var(--radius)] border border-border bg-surface transition-colors hover:border-accent"
               >
-                <div className="flex items-baseline justify-between gap-3">
-                  <h2 className="text-lg">{h.title}</h2>
-                  {h.gruppe && (
-                    <span className="font-mono text-xs uppercase tracking-wider text-ink-faint">
-                      {h.gruppe}
-                    </span>
-                  )}
-                </div>
-                {h.botanical && (
-                  <p className="mt-0.5 text-sm italic text-ink-faint">
-                    {h.botanical}
-                  </p>
+                {h.bild && (
+                  <div className="relative aspect-4/3 w-full overflow-hidden border-b border-border bg-surface-2">
+                    <Image
+                      src={h.bild}
+                      alt={h.title}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    />
+                  </div>
                 )}
-                <p className="mt-3 text-sm text-ink-muted">{h.summary}</p>
+                <div className="flex flex-1 flex-col p-5">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h2 className="text-lg">{h.title}</h2>
+                    {h.gruppe && (
+                      <span className="font-mono text-xs uppercase tracking-wider text-ink-faint">
+                        {h.gruppe}
+                      </span>
+                    )}
+                  </div>
+                  {h.botanical && (
+                    <p className="mt-0.5 text-sm italic text-ink-faint">
+                      {h.botanical}
+                    </p>
+                  )}
+                  <p className="mt-3 text-sm text-ink-muted">{h.summary}</p>
+                </div>
               </Link>
             </li>
           ))}

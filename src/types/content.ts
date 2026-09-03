@@ -13,10 +13,18 @@ export interface HolzartMeta {
   title: string;
   /** Botanical name, e.g. "Quercus robur" */
   botanical?: string;
+  /** Trade / secondary names, e.g. ["Weißeiche", "Roteiche"] */
+  synonyms?: string[];
   /** Short teaser for listing pages. */
   summary: string;
   /** Broad grouping: "Laubholz" | "Nadelholz" | "Furnier" | … */
   gruppe?: string;
+  /** Old-site classification: "Hartholz" | "Weichholz" */
+  klasse?: string;
+  /** DIN 4076 short code */
+  dinCode?: string;
+  /** Path to the hero image under /public, e.g. "/holzarten/eiche.jpg" */
+  bild?: string;
   /** Ordered list for the technical data table. */
   kennwerte?: TechnicalDatum[];
   draft?: boolean;

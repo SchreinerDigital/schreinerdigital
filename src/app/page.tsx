@@ -68,11 +68,12 @@ const pillars = [
 const trust = ["Zeit sparen", "Fehler vermeiden", "Sauber kalkulieren"];
 
 const specPreview = [
-  ["Rohdichte r12–15", "0,65–0,75 g/cm³"],
-  ["Druckfestigkeit ∥", "52 N/mm²"],
-  ["Biegefestigkeit", "95 N/mm²"],
-  ["Brinellhärte ⟂", "34 N/mm²"],
-  ["Dauerhaftigkeit", "Klasse 2"],
+  ["Rohdichte (12–15%)", "0,65–0,76 g/cm³"],
+  ["Druckfestigkeit", "42–64 N/mm²"],
+  ["Biegefestigkeit", "60–110 N/mm²"],
+  ["Elastizitätsmodul", "10.000–14.500 N/mm²"],
+  ["Härte (Brinell)", "23–42 N/mm²"],
+  ["Dauerhaftigkeit", "Klasse 2-4"],
 ];
 
 function ArrowIcon({ className }: { className?: string }) {
