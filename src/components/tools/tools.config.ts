@@ -12,7 +12,7 @@ export const tools: ToolDef[] = [
     slug: "plattengewicht",
     title: "Plattengewicht",
     description:
-      "Gewicht einer Platte aus Maßen und Rohdichte des Werkstoffs berechnen.",
+      "Gewicht einer Platte oder eines Rundstabs aus Maßen und Rohdichte des Werkstoffs berechnen – metrisch oder imperial.",
     ready: true,
   },
   {
