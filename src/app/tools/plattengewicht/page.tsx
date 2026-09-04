@@ -9,6 +9,7 @@ const tool = getTool("plattengewicht")!;
 export const metadata: Metadata = {
   title: tool.title,
   description: tool.description,
+  alternates: { canonical: `/tools/${tool.slug}` },
 };
 
 export default function PlattengewichtPage() {

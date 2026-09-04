@@ -9,6 +9,7 @@ const tool = getTool("durchbiegung")!;
 export const metadata: Metadata = {
   title: tool.title,
   description: tool.description,
+  alternates: { canonical: `/tools/${tool.slug}` },
 };
 
 export default function DurchbiegungPage() {

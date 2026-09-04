@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Holzarten",
   description:
     "Steckbriefe zu Massivhölzern: Herkunft, Holzbild, Eigenschaften, Verwendung, Praxistipps und technische Kennwerte.",
+  alternates: { canonical: "/holzarten" },
 };
 
 export default async function HolzartenIndexPage() {

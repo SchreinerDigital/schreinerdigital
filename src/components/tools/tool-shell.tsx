@@ -12,8 +12,23 @@ export function ToolShell({
   description?: string;
   children: ReactNode;
 }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: title,
+    description,
+    applicationCategory: "UtilitiesApplication",
+    operatingSystem: "Any (Web-Browser)",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+    inLanguage: "de-DE",
+  };
+
   return (
     <Container className="max-w-2xl py-12 sm:py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Link
         href="/tools"
         className="font-mono text-xs uppercase tracking-[0.14em] text-ink-faint transition-colors hover:text-accent"

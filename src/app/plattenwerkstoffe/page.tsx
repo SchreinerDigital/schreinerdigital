@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Plattenwerkstoffe",
   description:
     "Steckbriefe zu Plattenwerkstoffen: Aufbau, Eigenschaften, Verwendung und Verarbeitungshinweise.",
+  alternates: { canonical: "/plattenwerkstoffe" },
 };
 
 /** Display order and heading for each `kategorie` value used in the content files. */

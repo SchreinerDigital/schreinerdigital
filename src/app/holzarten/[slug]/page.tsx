@@ -19,6 +19,7 @@ export async function generateMetadata({
   return {
     title: entry.meta.title,
     description: entry.meta.summary,
+    alternates: { canonical: `/holzarten/${slug}` },
   };
 }
 
@@ -31,8 +32,22 @@ export default async function HolzartPage({
 
   const { default: Content, meta } = entry;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: meta.title,
+    description: meta.summary,
+    articleSection: meta.gruppe,
+    about: meta.botanical,
+    inLanguage: "de-DE",
+  };
+
   return (
     <Container className="py-12 sm:py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Link
         href="/holzarten"
         className="font-mono text-xs uppercase tracking-[0.14em] text-ink-faint transition-colors hover:text-accent"

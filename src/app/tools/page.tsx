@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Rechner-Tools",
   description:
     "Praxisnahe Rechner für den Schreineralltag: Plattengewicht, Türenmaß, Restlänge, Durchbiegung und Stundensatz.",
+  alternates: { canonical: "/tools" },
 };
 
 export default function ToolsIndexPage() {

@@ -19,6 +19,7 @@ export async function generateMetadata({
   return {
     title: entry.meta.title,
     description: entry.meta.summary,
+    alternates: { canonical: `/plattenwerkstoffe/${slug}` },
   };
 }
 
@@ -31,8 +32,21 @@ export default async function PlattenwerkstoffPage({
 
   const { default: Content, meta } = entry;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: meta.title,
+    description: meta.summary,
+    articleSection: meta.kategorie,
+    inLanguage: "de-DE",
+  };
+
   return (
     <Container className="py-12 sm:py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Link
         href="/plattenwerkstoffe"
         className="font-mono text-xs uppercase tracking-[0.14em] text-ink-faint transition-colors hover:text-accent"
