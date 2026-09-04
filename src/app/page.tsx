@@ -67,6 +67,21 @@ const pillars = [
 
 const trust = ["Zeit sparen", "Fehler vermeiden", "Sauber kalkulieren"];
 
+const stats = [
+  { icon: TreeRingsIcon, value: "43", label: "Holzarten im Detail" },
+  { icon: LayersIcon, value: "13", label: "Plattenwerkstoffe" },
+  { icon: SquareToolIcon, value: "5", label: "Rechner-Tools" },
+  { icon: CheckIcon, value: "100 %", label: "Kostenlos, ohne Anmeldung" },
+];
+
+const toolExamples: Record<string, string> = {
+  plattengewicht: "71,6 kg",
+  tuerenmass: "860 × 1985 mm",
+  restlaenge: "47,1 m",
+  durchbiegung: "2,38 mm",
+  stundensatz: "64,15 €/h",
+};
+
 const specPreview = [
   ["Rohdichte (12–15%)", "0,65–0,76 g/cm³"],
   ["Druckfestigkeit", "42–64 N/mm²"],
@@ -167,6 +182,19 @@ export default function HomePage() {
         </Container>
       </section>
 
+      {/* Stats */}
+      <Container className="py-10">
+        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius)] border border-border bg-border sm:grid-cols-4">
+          {stats.map((s) => (
+            <div key={s.label} className="flex flex-col items-center gap-2 bg-surface px-4 py-6 text-center">
+              <s.icon className="size-5 text-accent" />
+              <span className="font-display text-2xl font-bold text-ink">{s.value}</span>
+              <span className="text-xs text-ink-muted">{s.label}</span>
+            </div>
+          ))}
+        </div>
+      </Container>
+
       {/* Pillars */}
       <Container className="py-16">
         <div className="grid gap-4 md:grid-cols-3">
@@ -222,13 +250,13 @@ export default function HomePage() {
                 <p className="mt-1 flex-1 text-sm text-ink-muted">
                   {tool.description}
                 </p>
-                {tool.slug === "plattengewicht" && (
+                {toolExamples[tool.slug] && (
                   <div className="mt-3 flex items-baseline justify-between rounded-md border border-border bg-surface px-3 py-2">
                     <span className="font-mono text-[0.68rem] uppercase tracking-wider text-ink-faint">
                       Beispiel
                     </span>
                     <span className="font-mono text-sm font-semibold text-accent">
-                      71,6 kg
+                      {toolExamples[tool.slug]}
                     </span>
                   </div>
                 )}
@@ -242,18 +270,27 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* Roadmap / honest status */}
-      <Container className="py-16">
-        <Eyebrow>Im Aufbau</Eyebrow>
-        <h2 className="mt-4 max-w-2xl text-3xl">
-          Die Seite wächst Schritt für Schritt
-        </h2>
-        <p className="mt-4 max-w-2xl text-ink-muted">
-          Das Grundgerüst steht. Als Nächstes kommen die ersten Holzarten-
-          Steckbriefe, die übrigen Rechner sowie Nutzerkonten für gespeicherte
-          Berechnungen.
-        </p>
-      </Container>
+      {/* Closing CTA */}
+      <section className="border-t border-border">
+        <Container className="py-16 text-center sm:py-20">
+          <h2 className="mx-auto max-w-xl text-3xl">
+            Bereit für präziseres Arbeiten?
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-ink-muted">
+            Alle Rechner und Steckbriefe sind kostenlos, ohne Anmeldung und
+            direkt im Browser nutzbar.
+          </p>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <ButtonLink href="/tools" size="lg">
+              Rechner ausprobieren
+              <ArrowIcon className="size-4" />
+            </ButtonLink>
+            <ButtonLink href="/holzarten" size="lg" variant="secondary">
+              Schreinerwissen entdecken
+            </ButtonLink>
+          </div>
+        </Container>
+      </section>
     </>
   );
 }

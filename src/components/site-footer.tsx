@@ -66,7 +66,7 @@ export function SiteFooter() {
       <div className="border-t border-border">
         <Container className="flex flex-col gap-1 py-6 text-xs text-ink-faint sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} schreiner.digital</p>
-          <p>Seite im Aufbau – Inhalte folgen Schritt für Schritt.</p>
+          <p>Alle Rechner kostenlos &amp; ohne Anmeldung.</p>
         </Container>
       </div>
     </footer>
