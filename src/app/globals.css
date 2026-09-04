@@ -159,14 +159,21 @@
   --tw-prose-pre-code: var(--ink);
   --tw-prose-th-borders: var(--border-strong);
   --tw-prose-td-borders: var(--border);
+
+  color: var(--ink-muted);
 }
 
-.prose-schreiner :where(h1, h2, h3, h4) {
+.prose-schreiner :is(h1, h2, h3, h4) {
   font-family: var(--ff-display), ui-sans-serif, system-ui, sans-serif;
   letter-spacing: -0.02em;
+  color: var(--ink);
 }
 
-.prose-schreiner :where(a):hover {
+.prose-schreiner :is(strong, b) {
+  color: var(--ink);
+}
+
+.prose-schreiner a:hover {
   color: var(--accent-hover);
 }
 

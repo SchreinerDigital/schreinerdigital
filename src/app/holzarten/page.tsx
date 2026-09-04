@@ -13,47 +13,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/holzarten" },
 };
 
-function HolzartCard({ h }: { h: HolzartMeta }) {
-  return (
-    <li>
-      <Link
-        href={`/holzarten/${h.slug}`}
-        className="group flex h-full flex-col overflow-hidden rounded-[var(--radius)] border border-border bg-surface transition-colors hover:border-accent"
-      >
-        <div className="relative aspect-[3/2] overflow-hidden bg-surface-2">
-          {h.bild && (
-            <Image
-              src={h.bild}
-              alt={`Holzbild ${h.title}`}
-              fill
-              sizes="(min-width: 1024px) 300px, (min-width: 640px) 45vw, 90vw"
-              className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-            />
-          )}
-        </div>
-        <div className="flex flex-1 flex-col p-4">
-          <div className="flex items-baseline justify-between gap-2">
-            <h3 className="text-base font-semibold">{h.title}</h3>
-            {h.klasse && (
-              <span className="font-mono text-[0.65rem] uppercase tracking-wider text-ink-faint">
-                {h.klasse}
-              </span>
-            )}
-          </div>
-          {h.botanical && (
-            <p className="mt-0.5 text-xs italic text-ink-faint">{h.botanical}</p>
-          )}
-          <p className="mt-2 line-clamp-2 text-sm text-ink-muted">{h.summary}</p>
-        </div>
-      </Link>
-    </li>
-  );
-}
-
 export default async function HolzartenIndexPage() {
   const holzarten = await getAllMeta("holzarten");
-  const laub = holzarten.filter((h) => h.gruppe !== "Nadelholz");
-  const nadel = holzarten.filter((h) => h.gruppe === "Nadelholz");
 
   return (
     <Container className="py-16 sm:py-20">

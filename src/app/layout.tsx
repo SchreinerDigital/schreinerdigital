@@ -44,15 +44,14 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "Organization",
-      name: "schreiner.digital",
-      url: "https://schreinerdigital.de",
-      description:
-        "Fundierte Steckbriefe zu Holzarten und Plattenwerkstoffen sowie praxisnahe Rechner-Tools für den Schreineralltag.",
+      name: siteConfig.name,
+      url: siteConfig.url,
+      description: siteConfig.description,
     },
     {
       "@type": "WebSite",
-      name: "schreiner.digital",
-      url: "https://schreinerdigital.de",
+      name: siteConfig.name,
+      url: siteConfig.url,
       inLanguage: "de-DE",
     },
   ],
