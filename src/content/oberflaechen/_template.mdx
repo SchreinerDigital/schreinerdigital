@@ -1,0 +1,44 @@
+import { Datentabelle } from "@/components/mdx/datentabelle";
+
+export const meta = {
+  title: "Musteroberfläche",
+  kurzname: "XYZ",
+  kategorie: "Öle und Wachse", // Öle und Wachse | Lacke | Beizen und Lasuren
+  synonyms: ["Andere Bezeichnung A", "Andere Bezeichnung B"],
+  norm: "DIN EN 000",
+  summary: "Einzeiler für die Übersichtsseite – wird noch ersetzt.",
+  bild: "/oberflaechen/lacke.jpg",
+  draft: true,
+  kennwerte: [
+    { label: "Trockenzeit", value: "0 Stunden" },
+    { label: "Ergiebigkeit", value: "0 m²/l" },
+    { label: "Glanzgrad", value: "matt / seidenmatt / glänzend" },
+  ],
+};
+
+Titel, Kurzname und Kategorie rendert die Seite aus `meta`. Der Fließtext
+beginnt direkt mit dem Intro-Absatz (kein `# Titel`).
+
+## Zusammensetzung
+
+Bindemittel, Lösemittel, typische Rezeptur.
+
+## Eigenschaften
+
+Schutzwirkung, Optik, Beständigkeit, gesundheitliche Hinweise.
+
+## Verwendung
+
+Typische Anwendungsfälle und Werkstücke.
+
+## Verarbeitung
+
+Auftragsmethode, Trocknungszeiten, Zwischenschliff, Werkzeuge.
+
+## Technische Daten
+
+<Datentabelle rows={meta.kennwerte} />
+
+## Fazit
+
+Kurze Einordnung: Stärken, Schwächen, Alternativen.

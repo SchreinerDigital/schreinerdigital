@@ -72,4 +72,47 @@ export interface VerbindungMeta {
   draft?: boolean;
 }
 
-export type ContentCollection = "holzarten" | "plattenwerkstoffe" | "verbindungstechnik";
+/** Frontmatter-style metadata exported from each Beschlag MDX file. */
+export interface BeschlagMeta {
+  slug: string;
+  title: string;
+  /** Short/trade name, e.g. "Topfscharnier", "Tandembox", "Tip-On" */
+  kurzname?: string;
+  summary: string;
+  /** e.g. "Scharniere" | "Auszüge" | "Griffe und Bedienelemente" | "Funktionsbeschläge" */
+  kategorie?: string;
+  /** Trade / secondary names */
+  synonyms?: string[];
+  /** Relevant standard, e.g. "EN 15570" */
+  norm?: string;
+  /** Path to the hero image under /public, e.g. "/beschlaege/scharniere.jpg" */
+  bild?: string;
+  kennwerte?: TechnicalDatum[];
+  draft?: boolean;
+}
+
+/** Frontmatter-style metadata exported from each Oberfläche MDX file. */
+export interface OberflaecheMeta {
+  slug: string;
+  title: string;
+  /** Short/trade name, e.g. "DD-Lack", "Hartwachsöl" */
+  kurzname?: string;
+  summary: string;
+  /** e.g. "Öle und Wachse" | "Lacke" | "Beizen und Lasuren" */
+  kategorie?: string;
+  /** Trade / secondary names */
+  synonyms?: string[];
+  /** Relevant standard, e.g. "DIN EN 204" */
+  norm?: string;
+  /** Path to the hero image under /public, e.g. "/oberflaechen/lacke.jpg" */
+  bild?: string;
+  kennwerte?: TechnicalDatum[];
+  draft?: boolean;
+}
+
+export type ContentCollection =
+  | "holzarten"
+  | "plattenwerkstoffe"
+  | "verbindungstechnik"
+  | "beschlaege"
+  | "oberflaechen";

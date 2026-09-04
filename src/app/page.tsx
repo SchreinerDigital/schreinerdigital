@@ -108,14 +108,14 @@ const pillars = [
     title: "Beschläge",
     icon: HingeIcon,
     body: "Scharniere, Griffe und Auszüge im Überblick – Einbaumaße, Belastbarkeit und Auswahlhilfen für die Praxis.",
-    comingSoon: true,
+    comingSoon: false,
   },
   {
     href: "/oberflaechen",
     title: "Oberflächen",
     icon: DropletIcon,
     body: "Öle, Lacke, Wachse und Beizen im Vergleich – Wirkung, Verarbeitung und Pflege für ein sauberes Finish.",
-    comingSoon: true,
+    comingSoon: false,
   },
 ];
 

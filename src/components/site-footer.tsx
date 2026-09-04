@@ -12,6 +12,8 @@ const columns = [
       { href: "/holzarten", label: "Holzarten" },
       { href: "/plattenwerkstoffe", label: "Plattenwerkstoffe" },
       { href: "/verbindungstechnik", label: "Verbindungstechnik" },
+      { href: "/beschlaege", label: "Beschläge" },
+      { href: "/oberflaechen", label: "Oberflächen" },
     ],
   },
   {

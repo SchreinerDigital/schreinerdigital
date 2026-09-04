@@ -1,0 +1,44 @@
+import { Datentabelle } from "@/components/mdx/datentabelle";
+
+export const meta = {
+  title: "Musterbeschlag",
+  kurzname: "XYZ",
+  kategorie: "Scharniere", // Scharniere | Auszüge | Griffe und Bedienelemente | Funktionsbeschläge
+  synonyms: ["Andere Bezeichnung A", "Andere Bezeichnung B"],
+  norm: "EN 00000",
+  summary: "Einzeiler für die Übersichtsseite – wird noch ersetzt.",
+  bild: "/beschlaege/scharniere.jpg",
+  draft: true,
+  kennwerte: [
+    { label: "Maße", value: "0 mm" },
+    { label: "Tragkraft", value: "0 kg" },
+    { label: "Lösbar", value: "ja / nein" },
+  ],
+};
+
+Titel, Kurzname und Kategorie rendert die Seite aus `meta`. Der Fließtext
+beginnt direkt mit dem Intro-Absatz (kein `# Titel`).
+
+## Aufbau
+
+Konstruktion, Varianten, verfügbare Größen/Ausführungen.
+
+## Eigenschaften
+
+Belastbarkeit, Verstellmöglichkeiten, Lebensdauer, Optik.
+
+## Verwendung
+
+Typische Möbeltypen und Einbausituationen.
+
+## Verarbeitung
+
+Bohrbilder, Montageschritte, Werkzeuge, typische Fehler.
+
+## Technische Daten
+
+<Datentabelle rows={meta.kennwerte} />
+
+## Fazit
+
+Kurze Einordnung: Stärken, Schwächen, Alternativen.
