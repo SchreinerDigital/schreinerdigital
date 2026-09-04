@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { getAllMeta } from "@/lib/content";
 import { Container } from "@/components/ui/container";
@@ -36,17 +37,30 @@ export default async function PlattenwerkstoffeIndexPage() {
             <li key={p.slug}>
               <Link
                 href={`/plattenwerkstoffe/${p.slug}`}
-                className="group flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-5 transition-colors hover:border-accent"
+                className="group flex h-full flex-col overflow-hidden rounded-[var(--radius)] border border-border bg-surface transition-colors hover:border-accent"
               >
-                <div className="flex items-baseline justify-between gap-3">
-                  <h2 className="text-lg">{p.title}</h2>
-                  {p.kategorie && (
-                    <span className="font-mono text-xs uppercase tracking-wider text-ink-faint">
-                      {p.kategorie}
-                    </span>
-                  )}
+                {p.bild && (
+                  <div className="relative aspect-4/3 w-full overflow-hidden border-b border-border bg-surface-2">
+                    <Image
+                      src={p.bild}
+                      alt={p.title}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    />
+                  </div>
+                )}
+                <div className="flex flex-1 flex-col p-5">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h2 className="text-lg">{p.title}</h2>
+                    {p.kategorie && (
+                      <span className="font-mono text-xs uppercase tracking-wider text-ink-faint">
+                        {p.kategorie}
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-3 text-sm text-ink-muted">{p.summary}</p>
                 </div>
-                <p className="mt-3 text-sm text-ink-muted">{p.summary}</p>
               </Link>
             </li>
           ))}

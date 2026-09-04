@@ -34,9 +34,17 @@ export interface HolzartMeta {
 export interface PlattenwerkstoffMeta {
   slug: string;
   title: string;
+  /** Short code, e.g. "MDF", "OSB/3" */
+  kurzname?: string;
   summary: string;
-  /** e.g. "Spanplatte" | "MDF" | "Sperrholz" | … */
+  /** e.g. "Spanwerkstoff" | "Faserwerkstoff" | "Lagenwerkstoff" | … */
   kategorie?: string;
+  /** Trade / secondary names */
+  synonyms?: string[];
+  /** Relevant product standard, e.g. "EN 312" */
+  norm?: string;
+  /** Path to the hero image under /public, e.g. "/plattenwerkstoffe/spanwerkstoffe.jpg" */
+  bild?: string;
   kennwerte?: TechnicalDatum[];
   draft?: boolean;
 }
