@@ -164,7 +164,7 @@ export default function HomePage() {
         <div className="absolute inset-0 -z-10">
           <Image
             src="/hero-workshop.jpg"
-            alt="Digitale Möbelplanung am Laptop, im Hintergrund eine Schreinerwerkstatt mit CNC-Maschine"
+            alt="Laptop mit 3D-Möbelentwurf auf einem Werkstatttisch, umgeben von Holzmustern und Skizzenbüchern, im Hintergrund eine Schreinerwerkstatt mit Werkzeugwand"
             fill
             priority
             className="object-cover"
