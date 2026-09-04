@@ -44,24 +44,78 @@ function CheckIcon({ className }: { className?: string }) {
   );
 }
 
+function HingeIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="3" y="3" width="7" height="18" rx="1.5" />
+      <rect x="14" y="3" width="7" height="18" rx="1.5" />
+      <circle cx="12" cy="7" r="1.3" />
+      <circle cx="12" cy="12" r="1.3" />
+      <circle cx="12" cy="17" r="1.3" />
+    </svg>
+  );
+}
+
+function DropletIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M12 3.5s6.5 7.1 6.5 11.3a6.5 6.5 0 1 1-13 0c0-4.2 6.5-11.3 6.5-11.3z" />
+    </svg>
+  );
+}
+
+function JointIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="2" y="6" width="8.5" height="12" rx="1" />
+      <rect x="13.5" y="6" width="8.5" height="12" rx="1" />
+      <rect x="9.5" y="10.5" width="5" height="3" rx="0.8" />
+    </svg>
+  );
+}
+
 const pillars = [
   {
     href: "/holzarten",
     title: "Holzarten",
     icon: TreeRingsIcon,
     body: "Steckbriefe zu Massivhölzern – Herkunft, Holzbild, Eigenschaften, Verwendung, Praxistipps und technische Kennwerte auf einen Blick.",
+    comingSoon: false,
   },
   {
     href: "/plattenwerkstoffe",
     title: "Plattenwerkstoffe",
     icon: LayersIcon,
     body: "Span-, MDF-, OSB-, Multiplex- und Tischlerplatten: Aufbau, Einsatzgrenzen und Hinweise für die saubere Verarbeitung.",
+    comingSoon: false,
   },
   {
     href: "/tools",
     title: "Rechner-Tools",
     icon: SquareToolIcon,
     body: "Wiederkehrende Berechnungen aus dem Werkstattalltag – direkt im Browser, ohne Anmeldung, ohne Excel-Gefummel.",
+    comingSoon: false,
+  },
+  {
+    href: "/beschlaege",
+    title: "Beschläge",
+    icon: HingeIcon,
+    body: "Scharniere, Griffe, Auszüge und Verbinder im Überblick – Einbaumaße, Belastbarkeit und Auswahlhilfen für die Praxis.",
+    comingSoon: true,
+  },
+  {
+    href: "/oberflaechen",
+    title: "Oberflächen",
+    icon: DropletIcon,
+    body: "Öle, Lacke, Wachse und Beizen im Vergleich – Wirkung, Verarbeitung und Pflege für ein sauberes Finish.",
+    comingSoon: true,
+  },
+  {
+    href: "/verbindungstechnik",
+    title: "Verbindungstechnik",
+    icon: JointIcon,
+    body: "Dübel, Lamello, Schrauben und Klebstoffe – welche Verbindung für welchen Einsatzzweck die richtige Wahl ist.",
+    comingSoon: true,
   },
 ];
 
@@ -173,26 +227,47 @@ export default function HomePage() {
 
       {/* Pillars */}
       <Container className="py-16">
-        <div className="grid gap-4 md:grid-cols-3">
-          {pillars.map((p) => (
-            <Link
-              key={p.href}
-              href={p.href}
-              className="group flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-6 transition-colors hover:border-accent"
-            >
-              <span className="inline-flex size-11 items-center justify-center rounded-lg bg-accent-soft text-accent">
-                <p.icon className="size-5" />
-              </span>
-              <h2 className="mt-4 text-xl">{p.title}</h2>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">
-                {p.body}
-              </p>
-              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
-                Zu {p.title}
-                <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-              </span>
-            </Link>
-          ))}
+        <Eyebrow>Schreinerwissen</Eyebrow>
+        <h2 className="mt-4 text-3xl">Alles für deinen Arbeitsalltag</h2>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {pillars.map((p) =>
+            p.comingSoon ? (
+              <div
+                key={p.title}
+                className="flex h-full flex-col rounded-[var(--radius)] border border-dashed border-border bg-surface/60 p-6"
+              >
+                <span className="inline-flex size-11 items-center justify-center rounded-lg bg-surface-2 text-ink-faint">
+                  <p.icon className="size-5" />
+                </span>
+                <div className="mt-4 flex items-center gap-2">
+                  <h3 className="text-xl text-ink-muted">{p.title}</h3>
+                  <Badge>bald</Badge>
+                </div>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-faint">
+                  {p.body}
+                </p>
+              </div>
+            ) : (
+              <Link
+                key={p.title}
+                href={p.href}
+                className="group flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-6 transition-colors hover:border-accent"
+              >
+                <span className="inline-flex size-11 items-center justify-center rounded-lg bg-accent-soft text-accent">
+                  <p.icon className="size-5" />
+                </span>
+                <h3 className="mt-4 text-xl">{p.title}</h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">
+                  {p.body}
+                </p>
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+                  Zu {p.title}
+                  <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+                </span>
+              </Link>
+            ),
+          )}
         </div>
       </Container>
 
