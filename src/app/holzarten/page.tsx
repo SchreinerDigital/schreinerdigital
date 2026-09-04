@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getAllMeta } from "@/lib/content";
 import { Container } from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import { HolzartenGuide } from "./holzarten-guide";
 
 export const metadata: Metadata = {
   title: "Holzarten",
@@ -72,6 +73,8 @@ export default async function HolzartenIndexPage() {
           ))}
         </ul>
       )}
+
+      <HolzartenGuide />
     </Container>
   );
 }

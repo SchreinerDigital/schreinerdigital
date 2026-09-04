@@ -111,18 +111,29 @@ function ChevronIcon({ className }: { className?: string }) {
   );
 }
 
-export function FaqAccordion({ items }: { items: { q: string; a: string }[] }) {
+export function Accordion({ items }: { items: { title: string; content: ReactNode }[] }) {
   return (
     <div className="mt-6 divide-y divide-border rounded-[var(--radius)] border border-border">
       {items.map((item) => (
-        <details key={item.q} className="group p-4 [&_summary::-webkit-details-marker]:hidden">
+        <details key={item.title} className="group p-4 [&_summary::-webkit-details-marker]:hidden">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
-            <h3 className="font-medium text-ink">{item.q}</h3>
+            <h3 className="font-medium text-ink">{item.title}</h3>
             <ChevronIcon className="size-4 shrink-0 text-ink-faint transition-transform group-open:rotate-180" />
           </summary>
-          <p className="mt-3 text-sm leading-relaxed text-ink-muted">{item.a}</p>
+          <div className="mt-3">{item.content}</div>
         </details>
       ))}
     </div>
+  );
+}
+
+export function FaqAccordion({ items }: { items: { q: string; a: string }[] }) {
+  return (
+    <Accordion
+      items={items.map((item) => ({
+        title: item.q,
+        content: <p className="text-sm leading-relaxed text-ink-muted">{item.a}</p>,
+      }))}
+    />
   );
 }
