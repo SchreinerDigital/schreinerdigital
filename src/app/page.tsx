@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
+import { NewsletterForm } from "@/components/newsletter/newsletter-form";
 import { tools } from "@/components/tools/tools.config";
 
 function TreeRingsIcon({ className }: { className?: string }) {
@@ -318,6 +319,21 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
+        </Container>
+      </section>
+
+      {/* Newsletter */}
+      <section className="border-t border-border bg-surface">
+        <Container className="py-16 sm:py-20">
+          <div className="mx-auto max-w-xl text-center">
+            <Eyebrow>Newsletter</Eyebrow>
+            <h2 className="mt-4 text-3xl">Neue Vorlagen &amp; Tools zuerst erfahren</h2>
+            <p className="mt-4 text-ink-muted">
+              Kein Spam – nur neue Rechner, Steckbriefe und kostenlose
+              Vorlagen direkt ins Postfach, sobald es etwas Neues gibt.
+            </p>
+          </div>
+          <NewsletterForm source="homepage" className="mx-auto mt-7 max-w-md" />
         </Container>
       </section>
 

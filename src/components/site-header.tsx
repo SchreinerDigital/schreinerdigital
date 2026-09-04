@@ -160,6 +160,15 @@ export function SiteHeader() {
               )}
             </div>
           ))}
+          <Link
+            href="/vorlagen"
+            className={cn(
+              "rounded-full px-3 py-2 text-sm font-medium transition-colors",
+              isActive("/vorlagen") ? "text-accent" : "text-ink-muted hover:text-ink",
+            )}
+          >
+            Vorlagen
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -221,6 +230,15 @@ export function SiteHeader() {
                 </div>
               </details>
             ))}
+            <Link
+              href="/vorlagen"
+              className={cn(
+                "rounded-lg px-3 py-3 text-sm font-medium",
+                isActive("/vorlagen") ? "text-accent" : "text-ink-muted",
+              )}
+            >
+              Vorlagen
+            </Link>
           </Container>
         </div>
       )}

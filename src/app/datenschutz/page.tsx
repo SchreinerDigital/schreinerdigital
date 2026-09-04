@@ -104,7 +104,39 @@ export default function DatenschutzPage() {
           übertragen oder von uns gespeichert.
         </p>
 
-        <h2>6. Kontaktaufnahme per E-Mail</h2>
+        <h2>6. Newsletter</h2>
+        <p>
+          Wenn du dich für unseren Newsletter anmeldest (freistehend oder im
+          Rahmen der Anmeldung für Vorlagen &amp; Downloads unter{" "}
+          <code>/vorlagen</code>), verwenden wir das sogenannte
+          Double-Opt-in-Verfahren: Nach Eingabe deiner E-Mail-Adresse erhältst
+          du zunächst eine Bestätigungs-Mail mit einem Link. Erst wenn du
+          diesen Link anklickst, wird deine Anmeldung aktiv und du erhältst
+          künftig Newsletter-Ausgaben von uns. Gespeichert werden dabei deine
+          E-Mail-Adresse, Zeitpunkt von Anmeldung und Bestätigung, deine
+          IP-Adresse sowie der Ausgangspunkt der Anmeldung (z. B. Startseite
+          oder Vorlagen-Seite) – zum Nachweis, dass die Anmeldung wirksam
+          erfolgt ist (Art. 7 Abs. 1 DSGVO).
+        </p>
+        <p>
+          Bitte beachte: Der Zugriff auf die kostenlosen Vorlagen unter{" "}
+          <code>/vorlagen</code> setzt eine Newsletter-Anmeldung voraus. Die
+          Nutzung der übrigen Inhalte dieser Website (Steckbriefe, Rechner)
+          ist davon unabhängig und erfordert keine Anmeldung.
+        </p>
+        <p>
+          Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO).
+          Für den Versand setzen wir den E-Mail-Marketing-Dienstleister Brevo
+          (Brevo GmbH, Köpenicker Str. 126, 10179 Berlin) ein, mit dem ein
+          Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO besteht. Deine
+          Daten werden dort auf Servern innerhalb der EU verarbeitet und
+          gespeichert, bis du dich abmeldest. Du kannst deine Einwilligung
+          jederzeit mit Wirkung für die Zukunft über den Abmeldelink in jeder
+          Newsletter-E-Mail widerrufen; die Rechtmäßigkeit der bis dahin
+          erfolgten Verarbeitung bleibt davon unberührt.
+        </p>
+
+        <h2>7. Kontaktaufnahme per E-Mail</h2>
         <p>
           Wenn du uns per E-Mail kontaktierst, verarbeiten wir deine dabei
           mitgeteilten Daten (E-Mail-Adresse und Inhalt der Nachricht)
@@ -113,14 +145,14 @@ export default function DatenschutzPage() {
           an Dritte erfolgt nicht.
         </p>
 
-        <h2>7. SSL-/TLS-Verschlüsselung</h2>
+        <h2>8. SSL-/TLS-Verschlüsselung</h2>
         <p>
           Diese Website nutzt aus Sicherheitsgründen eine SSL-/TLS-
           Verschlüsselung. Eine verschlüsselte Verbindung erkennst du am
           Kürzel „https://&rdquo; in der Adresszeile deines Browsers.
         </p>
 
-        <h2>8. Deine Rechte</h2>
+        <h2>9. Deine Rechte</h2>
         <p>
           Du hast im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit
           das Recht auf unentgeltliche Auskunft über deine gespeicherten
@@ -135,7 +167,7 @@ export default function DatenschutzPage() {
           personenbezogenen Daten durch uns zu beschweren (Art. 77 DSGVO).
         </p>
 
-        <h2>9. Änderung dieser Datenschutzerklärung</h2>
+        <h2>10. Änderung dieser Datenschutzerklärung</h2>
         <p>
           Wir passen diese Datenschutzerklärung an, sobald sich die hier
           beschriebene Datenverarbeitung ändert – etwa wenn neue Funktionen
