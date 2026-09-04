@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getEntry, getSlugs } from "@/lib/content";
 import { Container } from "@/components/ui/container";
+import { Badge } from "@/components/ui/badge";
 
 export async function generateStaticParams() {
   const slugs = await getSlugs("holzarten");
@@ -16,6 +17,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const entry = await getEntry("holzarten", slug);
   if (!entry) return {};
+  const { meta } = entry;
   return {
     title: entry.meta.title,
     description: entry.meta.summary,

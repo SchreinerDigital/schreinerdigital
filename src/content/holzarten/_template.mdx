@@ -3,26 +3,29 @@ import { Datentabelle } from "@/components/mdx/datentabelle";
 export const meta = {
   title: "Musterholz",
   botanical: "Genus species",
-  gruppe: "Laubholz",
-  summary: "Einzeiler für Übersichtsseiten – wird noch ersetzt.",
+  synonyms: ["Handelsname A", "Handelsname B"],
+  gruppe: "Laubholz", // "Laubholz" | "Nadelholz"
+  klasse: "Hartholz", // "Hartholz" | "Weichholz"
+  dinCode: "XXXX", // DIN 4076 Kurzzeichen
+  summary: "Einzeiler für die Übersichtsseite – wird noch ersetzt.",
+  bild: "/holzarten/musterholz.jpg", // 3:2, ~1280×853, in /public
   draft: true,
   kennwerte: [
-    { label: "Rohdichte (r12–15)", value: "0,00–0,00 g/cm³" },
-    { label: "Druckfestigkeit ∥", value: "0 N/mm²" },
+    { label: "Rohdichte (12–15 %)", value: "0,00–0,00 g/cm³" },
+    { label: "Druckfestigkeit", value: "0 N/mm²" },
     { label: "Biegefestigkeit", value: "0 N/mm²" },
-    { label: "Brinellhärte ⟂", value: "0 N/mm²" },
-    { label: "Schwindmaß radial / tangential", value: "0,0 % / 0,0 %" },
-    { label: "Dauerhaftigkeitsklasse (EN 350)", value: "–" },
+    { label: "Elastizitätsmodul", value: "0 N/mm²" },
+    { label: "Härte (Brinell)", value: "0 N/mm²" },
+    { label: "Dauerhaftigkeit", value: "Klasse 0 (EN 350)" },
   ],
 };
 
-# {meta.title}
-
-_Botanisch: {meta.botanical}_
+Titel, botanischer Name, Synonyme und Kennwerte-Badges rendert die Seite aus
+`meta`. Der Fließtext beginnt direkt mit dem Intro-Absatz (kein `# Titel`).
 
 ## Herkunft
 
-Verbreitungsgebiet, Standortansprüche, Verfügbarkeit am Markt.
+Verbreitungsgebiet, Arten, Standortansprüche, Verfügbarkeit.
 
 ## Holzbild
 
@@ -30,16 +33,19 @@ Farbe von Splint und Kern, Maserung, Poren, Glanz, Textur.
 
 ## Eigenschaften
 
-Mechanik, Trocknungsverhalten, Stehvermögen, Dauerhaftigkeit, Besonderheiten.
+Mechanik, Trocknung, Stehvermögen, Dauerhaftigkeit, Bearbeitung, Verleimung.
 
 ## Verwendung
 
-Typische Einsatzgebiete im Innenausbau, Möbelbau, Konstruktion.
+Typische Einsatzgebiete – Möbelbau, Innenausbau, Außenbereich, Konstruktion.
+
+## Besonderheiten
+
+Sorten, Behandlungen, Geruch, Arbeitsschutz, Verwechslungen.
 
 ## Praxistipps
 
-Bearbeitung (Sägen, Fräsen, Schleifen), Verleimung, Oberfläche, Verschraubung,
-bekannte Fallstricke.
+Konkrete Hinweise für die Werkstatt.
 
 ## Technische Daten
 

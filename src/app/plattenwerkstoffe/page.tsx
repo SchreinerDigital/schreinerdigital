@@ -46,8 +46,8 @@ export default async function PlattenwerkstoffeIndexPage() {
       <Eyebrow>Materialkunde</Eyebrow>
       <h1 className="mt-4 text-4xl sm:text-5xl">Plattenwerkstoffe</h1>
       <p className="mt-4 max-w-2xl text-lg text-ink-muted">
-        Steckbriefe zu Holzwerkstoffplatten – Aufbau, Eigenschaften, Einsatz und
-        Verarbeitung. Die Inhalte kommen Schritt für Schritt dazu.
+        Steckbriefe zu {platten.length} Holzwerkstoffplatten – Aufbau,
+        Eigenschaften, Verwendung, Verarbeitung und technische Datentabelle.
       </p>
 
       {platten.length === 0 ? (

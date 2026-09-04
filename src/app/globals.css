@@ -131,7 +131,9 @@
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Prose (MDX content) – themed via CSS variables, works in light & dark      */
+/*  Prose (MDX content) – themed via CSS variables, works in light & dark.     */
+/*  Deliberately UNLAYERED so it always wins over the typography plugin's      */
+/*  `.prose` variable defaults regardless of layer order.                     */
 /* -------------------------------------------------------------------------- */
 
 /*
