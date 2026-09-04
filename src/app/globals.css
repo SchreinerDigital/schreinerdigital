@@ -23,14 +23,15 @@
   --border: #e6ddce;
   --border-strong: #d6c9b3;
 
-  /* Brand accent – vivid honey oak */
-  --accent: #c1490a;
-  --accent-hover: #a33f09;
+  /* Brand accent – same hue as the dark-mode orange, darkened just enough
+     to stay readable (WCAG AA, ≈4.5:1) as text on the light paper background. */
+  --accent: #c24e00;
+  --accent-hover: #993d00;
   --accent-contrast: #ffffff;
   --accent-soft: #f4e8d8;
 
   /* Ring / focus */
-  --ring: #c1490a;
+  --ring: #c24e00;
 
   --radius: 0.75rem;
 }
