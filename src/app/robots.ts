@@ -5,7 +5,6 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/impressum", "/datenschutz"],
     },
     sitemap: "https://schreinerdigital.de/sitemap.xml",
   };

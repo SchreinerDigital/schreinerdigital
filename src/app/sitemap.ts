@@ -15,6 +15,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/holzarten`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/plattenwerkstoffe`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/tools`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE_URL}/impressum`, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${BASE_URL}/datenschutz`, changeFrequency: "yearly", priority: 0.2 },
   ];
 
   const holzartenRoutes: MetadataRoute.Sitemap = holzarten.map((h) => ({
