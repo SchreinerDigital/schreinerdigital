@@ -4,7 +4,6 @@ import { Container } from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
-import { RulerBar } from "@/components/brand/wordmark";
 import { tools } from "@/components/tools/tools.config";
 
 function TreeRingsIcon({ className }: { className?: string }) {
@@ -83,15 +82,6 @@ const toolExamples: Record<string, string> = {
   stundensatz: "64,15 €/h",
 };
 
-const specPreview = [
-  ["Rohdichte (12–15%)", "0,65–0,76 g/cm³"],
-  ["Druckfestigkeit", "42–64 N/mm²"],
-  ["Biegefestigkeit", "60–110 N/mm²"],
-  ["Elastizitätsmodul", "10.000–14.500 N/mm²"],
-  ["Härte (Brinell)", "23–42 N/mm²"],
-  ["Dauerhaftigkeit", "Klasse 2-4"],
-];
-
 function ArrowIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -114,16 +104,29 @@ function ArrowIcon({ className }: { className?: string }) {
 export default function HomePage() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border">
+      {/* Hero – forced dark (via the `dark` class) regardless of the site theme,
+          since the photo needs a dark scrim for the overlaid text to stay legible. */}
+      <section className="dark relative isolate overflow-hidden border-b border-border">
+        <div className="absolute inset-0 -z-10">
+          <Image
+            src="/hero-workshop.jpg"
+            alt="Digitale Möbelplanung am Laptop, im Hintergrund eine Schreinerwerkstatt mit CNC-Maschine"
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-paper from-15% via-paper/80 via-45% to-transparent to-85%" />
+        </div>
+
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-1.5 ruler-ticks-lg opacity-60"
         />
-        <Container className="grid items-center gap-12 pt-16 pb-14 sm:pt-20 lg:grid-cols-[1.15fr_0.85fr] lg:pt-24 lg:pb-16">
-          <div>
+        <Container className="py-20 sm:py-24 lg:py-28">
+          <div className="max-w-xl">
             <Eyebrow>Handwerk trifft Präzision</Eyebrow>
-            <h1 className="mt-5 text-4xl leading-[1.05] text-balance sm:text-5xl lg:text-6xl">
+            <h1 className="mt-5 text-4xl leading-[1.05] text-balance text-ink sm:text-5xl lg:text-6xl">
               Wissen und Werkzeuge für die{" "}
               <span className="text-accent">Schreinerei</span>
             </h1>
@@ -151,47 +154,6 @@ export default function HomePage() {
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div className="relative">
-            <div className="relative aspect-4/3 overflow-hidden rounded-[var(--radius)] border border-border">
-              <Image
-                src="/hero-workshop.jpg"
-                alt="Digitale Möbelplanung am Laptop, im Hintergrund eine Schreinerwerkstatt mit CNC-Maschine"
-                fill
-                priority
-                className="object-cover"
-                sizes="(min-width: 1024px) 40vw, (min-width: 640px) 60vw, 100vw"
-              />
-            </div>
-
-            {/* Decorative spec sheet – floats over the photo on larger screens */}
-            <div className="absolute -bottom-6 -right-6 hidden w-72 lg:block">
-              <div className="rounded-[var(--radius)] border border-border bg-surface shadow-[0_1px_0_rgba(0,0,0,0.02),0_12px_40px_-12px_rgba(60,40,20,0.15)]">
-                <div className="flex items-center justify-between border-b border-border px-5 py-3">
-                  <span className="font-mono text-xs uppercase tracking-[0.16em] text-ink-faint">
-                    Datenblatt
-                  </span>
-                  <span className="font-display text-sm font-bold">Eiche</span>
-                </div>
-                <dl className="divide-y divide-border">
-                  {specPreview.map(([k, v]) => (
-                    <div
-                      key={k}
-                      className="flex items-baseline justify-between gap-4 px-5 py-2.5"
-                    >
-                      <dt className="text-sm text-ink-muted">{k}</dt>
-                      <dd className="font-mono text-sm tabular-nums text-ink">
-                        {v}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-                <div className="px-5 pb-4 pt-2">
-                  <RulerBar className="h-2.5 text-border-strong" />
-                </div>
-              </div>
-            </div>
           </div>
         </Container>
       </section>
