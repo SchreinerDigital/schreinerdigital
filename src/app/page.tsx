@@ -97,10 +97,17 @@ const pillars = [
     comingSoon: false,
   },
   {
+    href: "/verbindungstechnik",
+    title: "Verbindungstechnik",
+    icon: JointIcon,
+    body: "Dübel, Lamello, Schrauben und Klebstoffe – welche Verbindung für welchen Einsatzzweck die richtige Wahl ist.",
+    comingSoon: false,
+  },
+  {
     href: "/beschlaege",
     title: "Beschläge",
     icon: HingeIcon,
-    body: "Scharniere, Griffe, Auszüge und Verbinder im Überblick – Einbaumaße, Belastbarkeit und Auswahlhilfen für die Praxis.",
+    body: "Scharniere, Griffe und Auszüge im Überblick – Einbaumaße, Belastbarkeit und Auswahlhilfen für die Praxis.",
     comingSoon: true,
   },
   {
@@ -108,13 +115,6 @@ const pillars = [
     title: "Oberflächen",
     icon: DropletIcon,
     body: "Öle, Lacke, Wachse und Beizen im Vergleich – Wirkung, Verarbeitung und Pflege für ein sauberes Finish.",
-    comingSoon: true,
-  },
-  {
-    href: "/verbindungstechnik",
-    title: "Verbindungstechnik",
-    icon: JointIcon,
-    body: "Dübel, Lamello, Schrauben und Klebstoffe – welche Verbindung für welchen Einsatzzweck die richtige Wahl ist.",
     comingSoon: true,
   },
 ];

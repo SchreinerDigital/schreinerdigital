@@ -11,6 +11,7 @@ const columns = [
     links: [
       { href: "/holzarten", label: "Holzarten" },
       { href: "/plattenwerkstoffe", label: "Plattenwerkstoffe" },
+      { href: "/verbindungstechnik", label: "Verbindungstechnik" },
     ],
   },
   {

@@ -5,15 +5,17 @@ import { tools } from "@/components/tools/tools.config";
 const BASE_URL = "https://schreinerdigital.de";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [holzarten, plattenwerkstoffe] = await Promise.all([
+  const [holzarten, plattenwerkstoffe, verbindungstechnik] = await Promise.all([
     getAllMeta("holzarten"),
     getAllMeta("plattenwerkstoffe"),
+    getAllMeta("verbindungstechnik"),
   ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE_URL, changeFrequency: "weekly", priority: 1 },
     { url: `${BASE_URL}/holzarten`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/plattenwerkstoffe`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE_URL}/verbindungstechnik`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/tools`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE_URL}/impressum`, changeFrequency: "yearly", priority: 0.2 },
     { url: `${BASE_URL}/datenschutz`, changeFrequency: "yearly", priority: 0.2 },
@@ -31,6 +33,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
+  const verbindungstechnikRoutes: MetadataRoute.Sitemap = verbindungstechnik.map((v) => ({
+    url: `${BASE_URL}/verbindungstechnik/${v.slug}`,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
   const toolRoutes: MetadataRoute.Sitemap = tools
     .filter((t) => t.ready)
     .map((t) => ({
@@ -39,5 +47,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     }));
 
-  return [...staticRoutes, ...holzartenRoutes, ...plattenwerkstoffeRoutes, ...toolRoutes];
+  return [
+    ...staticRoutes,
+    ...holzartenRoutes,
+    ...plattenwerkstoffeRoutes,
+    ...verbindungstechnikRoutes,
+    ...toolRoutes,
+  ];
 }

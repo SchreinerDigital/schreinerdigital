@@ -1,0 +1,45 @@
+import { Datentabelle } from "@/components/mdx/datentabelle";
+
+export const meta = {
+  title: "Musterverbindung",
+  kurzname: "XYZ",
+  kategorie: "Traditionelle Holzverbindung", // Traditionelle Holzverbindung | Dübeltechnik | Beschlagverbindung | Schraub- und Klebeverbindung
+  synonyms: ["Andere Bezeichnung A", "Andere Bezeichnung B"],
+  norm: "DIN 00000",
+  summary: "Einzeiler für die Übersichtsseite – wird noch ersetzt.",
+  bild: "/verbindungstechnik/duebeltechnik.jpg",
+  draft: true,
+  kennwerte: [
+    { label: "Maße", value: "0 × 0 mm" },
+    { label: "Belastung", value: "gering / mittel / hoch" },
+    { label: "Lösbar", value: "ja / nein" },
+    { label: "Sichtbarkeit", value: "sichtbar / verdeckt" },
+  ],
+};
+
+Titel, Kurzname und Kategorie rendert die Seite aus `meta`. Der Fließtext
+beginnt direkt mit dem Intro-Absatz (kein `# Titel`).
+
+## Aufbau
+
+Wie die Verbindung konstruktiv funktioniert, welches Werkzeug sie erfordert.
+
+## Eigenschaften
+
+Belastbarkeit, Lösbarkeit, Sichtbarkeit, Toleranzanforderungen.
+
+## Verwendung
+
+Typische Bauteile und Möbeltypen, für die sich die Verbindung eignet.
+
+## Verarbeitung
+
+Werkzeuge, Vorbohren/Fräsen, typische Fehler, Praxistipps.
+
+## Technische Daten
+
+<Datentabelle rows={meta.kennwerte} />
+
+## Fazit
+
+Kurze Einordnung: Stärken, Schwächen, Alternativen.

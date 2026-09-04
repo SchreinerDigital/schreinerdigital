@@ -30,6 +30,7 @@ const navGroups: NavGroup[] = [
     items: [
       { href: "/holzarten", label: "Holzarten" },
       { href: "/plattenwerkstoffe", label: "Plattenwerkstoffe" },
+      { href: "/verbindungstechnik", label: "Verbindungstechnik" },
     ],
   },
 ];

@@ -53,4 +53,23 @@ export interface PlattenwerkstoffMeta {
   draft?: boolean;
 }
 
-export type ContentCollection = "holzarten" | "plattenwerkstoffe";
+/** Frontmatter-style metadata exported from each Verbindungstechnik MDX file. */
+export interface VerbindungMeta {
+  slug: string;
+  title: string;
+  /** Short/trade name, e.g. "Riffeldübel", "Lamello", "Konfirmat" */
+  kurzname?: string;
+  summary: string;
+  /** e.g. "Traditionelle Holzverbindung" | "Dübeltechnik" | "Beschlagverbindung" | "Schraub- und Klebeverbindung" */
+  kategorie?: string;
+  /** Trade / secondary names */
+  synonyms?: string[];
+  /** Relevant standard, e.g. "DIN 68150" */
+  norm?: string;
+  /** Path to the hero image under /public, e.g. "/verbindungstechnik/duebeltechnik.jpg" */
+  bild?: string;
+  kennwerte?: TechnicalDatum[];
+  draft?: boolean;
+}
+
+export type ContentCollection = "holzarten" | "plattenwerkstoffe" | "verbindungstechnik";
