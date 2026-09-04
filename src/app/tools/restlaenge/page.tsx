@@ -7,7 +7,7 @@ import { RestlaengeGuide } from "./restlaenge-guide";
 const tool = getTool("restlaenge")!;
 
 export const metadata: Metadata = {
-  title: tool.title,
+  title: tool.seoTitle,
   description: tool.description,
   alternates: { canonical: `/tools/${tool.slug}` },
 };

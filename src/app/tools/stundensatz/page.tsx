@@ -7,7 +7,7 @@ import { StundensatzGuide } from "./stundensatz-guide";
 const tool = getTool("stundensatz")!;
 
 export const metadata: Metadata = {
-  title: tool.title,
+  title: tool.seoTitle,
   description: tool.description,
   alternates: { canonical: `/tools/${tool.slug}` },
 };

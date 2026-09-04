@@ -7,7 +7,7 @@ import { DurchbiegungGuide } from "./durchbiegung-guide";
 const tool = getTool("durchbiegung")!;
 
 export const metadata: Metadata = {
-  title: tool.title,
+  title: tool.seoTitle,
   description: tool.description,
   alternates: { canonical: `/tools/${tool.slug}` },
 };

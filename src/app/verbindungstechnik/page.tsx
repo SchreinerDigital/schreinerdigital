@@ -7,9 +7,9 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { VerbindungstechnikGuide } from "./verbindungstechnik-guide";
 
 export const metadata: Metadata = {
-  title: "Verbindungstechnik",
+  title: "Holzverbindungen im Überblick",
   description:
-    "Steckbriefe zu Holzverbindungen: Aufbau, Eigenschaften, Verwendung und Verarbeitungshinweise.",
+    "Zapfen, Zinken, Dübel, Lamello, Domino und Möbelverbinder: wie die Verbindungen aufgebaut sind, was sie aushalten und wann sich welche eignet.",
   alternates: { canonical: "/verbindungstechnik" },
 };
 

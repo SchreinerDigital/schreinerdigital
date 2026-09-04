@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getEntry, getSlugs } from "@/lib/content";
 import { Container } from "@/components/ui/container";
+import { siteConfig } from "@/lib/site";
 
 export async function generateStaticParams() {
   const slugs = await getSlugs("beschlaege");
@@ -17,9 +18,10 @@ export async function generateMetadata({
   const entry = await getEntry("beschlaege", slug);
   if (!entry) return {};
   return {
-    title: entry.meta.title,
+    title: `${entry.meta.title} – Maße & Montage`,
     description: entry.meta.summary,
     alternates: { canonical: `/beschlaege/${slug}` },
+    openGraph: { type: "article", title: entry.meta.title, description: entry.meta.summary, images: [siteConfig.ogImage] },
   };
 }
 

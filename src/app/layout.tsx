@@ -39,6 +39,14 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     url: siteConfig.url,
   },
+  twitter: {
+    card: "summary_large_image",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
 };
 
 const jsonLd = {

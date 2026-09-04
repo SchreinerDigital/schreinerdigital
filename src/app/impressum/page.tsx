@@ -3,6 +3,8 @@ import { Container } from "@/components/ui/container";
 
 export const metadata: Metadata = {
   title: "Impressum",
+  description:
+    "Anbieterkennzeichnung und Kontaktdaten von schreiner.digital gemäß § 5 DDG.",
   alternates: { canonical: "/impressum" },
 };
 
@@ -11,7 +13,7 @@ export default function ImpressumPage() {
     <Container className="py-16">
       <article className="prose prose-schreiner max-w-2xl">
         <h1>Impressum</h1>
-        <p>Angaben gemäß § 5 TMG</p>
+        <p>Angaben gemäß § 5 DDG</p>
 
         <p>
           schreiner.digital
@@ -33,8 +35,8 @@ export default function ImpressumPage() {
           Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für
           die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können
           wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir
-          gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den
-          allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir
+          gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den
+          allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir
           als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder
           gespeicherte fremde Informationen zu überwachen oder nach Umständen
           zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
@@ -72,8 +74,9 @@ export default function ImpressumPage() {
           kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser
           Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte
           Dritter beachtet. Insbesondere werden Inhalte Dritter als solche
-          gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung
-          aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei
+          gekennzeichnet. Solltest du trotzdem auf eine
+          Urheberrechtsverletzung aufmerksam werden, bitten wir um einen
+          entsprechenden Hinweis. Bei
           Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte
           umgehend entfernen.
         </p>

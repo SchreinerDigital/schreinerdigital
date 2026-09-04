@@ -2,6 +2,8 @@
 export interface ToolDef {
   slug: string;
   title: string;
+  /** Suchintent-orientierter Titel für <title>; im UI wird `title` verwendet. */
+  seoTitle: string;
   description: string;
   /** false while only a stub page exists. */
   ready: boolean;
@@ -10,6 +12,7 @@ export interface ToolDef {
 export const tools: ToolDef[] = [
   {
     slug: "plattengewicht",
+    seoTitle: "Plattengewicht berechnen",
     title: "Plattengewicht",
     description:
       "Gewicht einer Platte oder eines Rundstabs aus Maßen und Rohdichte des Werkstoffs berechnen – metrisch oder imperial.",
@@ -17,6 +20,7 @@ export const tools: ToolDef[] = [
   },
   {
     slug: "tuerenmass",
+    seoTitle: "Türenmaß berechnen nach DIN 18101",
     title: "Türenmaß",
     description:
       "Türblatt-, Zargen- und Wandstärkemaß aus dem Rohbaumaß der Maueröffnung nach DIN 18101 ableiten.",
@@ -24,6 +28,7 @@ export const tools: ToolDef[] = [
   },
   {
     slug: "restlaenge",
+    seoTitle: "Restlänge Kantenband berechnen",
     title: "Restlänge",
     description:
       "Restlänge einer Kantenbandrolle aus Außen- und Innendurchmesser sowie Banddicke berechnen.",
@@ -31,6 +36,7 @@ export const tools: ToolDef[] = [
   },
   {
     slug: "durchbiegung",
+    seoTitle: "Durchbiegung Regalboden berechnen",
     title: "Durchbiegung",
     description:
       "Durchbiegung eines Regal- oder Schrankbodens unter Last aus Werkstoff, Abmessungen und Belastungsart abschätzen.",
@@ -38,6 +44,7 @@ export const tools: ToolDef[] = [
   },
   {
     slug: "stundensatz",
+    seoTitle: "Stundensatz berechnen für Schreiner",
     title: "Stundensatz",
     description:
       "Kostendeckenden Stundenverrechnungssatz aus Fixkosten und produktiven Stunden berechnen.",

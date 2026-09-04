@@ -6,6 +6,14 @@ import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
 import { NewsletterForm } from "@/components/newsletter/newsletter-form";
 import { tools } from "@/components/tools/tools.config";
+import { getAllMeta } from "@/lib/content";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  description:
+    "Materialkunde und kostenlose Rechner für die Schreinerei: Steckbriefe zu Holzarten, Plattenwerkstoffen, Verbindungstechnik, Beschlägen und Oberflächen – praxisnah und ohne Anmeldung.",
+  alternates: { canonical: "/" },
+};
 
 function TreeRingsIcon({ className }: { className?: string }) {
   return (
@@ -122,12 +130,30 @@ const pillars = [
 
 const trust = ["Zeit sparen", "Fehler vermeiden", "Sauber kalkulieren"];
 
-const stats = [
-  { icon: TreeRingsIcon, value: "43", label: "Holzarten im Detail" },
-  { icon: LayersIcon, value: "13", label: "Plattenwerkstoffe" },
-  { icon: SquareToolIcon, value: "5", label: "Rechner-Tools" },
-  { icon: CheckIcon, value: "100 %", label: "Kostenlos, ohne Anmeldung" },
-];
+/** Zahlen kommen aus dem tatsächlichen Inhalt, damit sie nicht veralten. */
+async function getStats() {
+  const [holzarten, platten, verbindungen, beschlaege, oberflaechen] =
+    await Promise.all([
+      getAllMeta("holzarten"),
+      getAllMeta("plattenwerkstoffe"),
+      getAllMeta("verbindungstechnik"),
+      getAllMeta("beschlaege"),
+      getAllMeta("oberflaechen"),
+    ]);
+  const steckbriefe =
+    holzarten.length +
+    platten.length +
+    verbindungen.length +
+    beschlaege.length +
+    oberflaechen.length;
+
+  return [
+    { icon: LayersIcon, value: String(steckbriefe), label: "Steckbriefe gesamt" },
+    { icon: TreeRingsIcon, value: String(holzarten.length), label: "Holzarten im Detail" },
+    { icon: SquareToolIcon, value: String(tools.length), label: "Rechner-Tools" },
+    { icon: CheckIcon, value: "100 %", label: "Kostenlos nutzbar" },
+  ];
+}
 
 const toolExamples: Record<string, string> = {
   plattengewicht: "71,6 kg",
@@ -156,7 +182,9 @@ function ArrowIcon({ className }: { className?: string }) {
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const stats = await getStats();
+
   return (
     <>
       {/* Hero – forced dark (via the `dark` class) regardless of the site theme,

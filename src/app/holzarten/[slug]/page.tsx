@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getEntry, getSlugs } from "@/lib/content";
 import { Container } from "@/components/ui/container";
+import { siteConfig } from "@/lib/site";
 
 export async function generateStaticParams() {
   const slugs = await getSlugs("holzarten");
@@ -17,9 +18,10 @@ export async function generateMetadata({
   const entry = await getEntry("holzarten", slug);
   if (!entry) return {};
   return {
-    title: entry.meta.title,
+    title: `${entry.meta.title} – Eigenschaften & Verwendung`,
     description: entry.meta.summary,
     alternates: { canonical: `/holzarten/${slug}` },
+    openGraph: { type: "article", title: entry.meta.title, description: entry.meta.summary, images: [siteConfig.ogImage] },
   };
 }
 

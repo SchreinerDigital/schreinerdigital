@@ -7,9 +7,9 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { HolzartenGuide } from "./holzarten-guide";
 
 export const metadata: Metadata = {
-  title: "Holzarten",
+  title: "Holzarten-Lexikon",
   description:
-    "Steckbriefe zu Massivhölzern: Herkunft, Holzbild, Eigenschaften, Verwendung, Praxistipps und technische Kennwerte.",
+    "Massivholz-Lexikon für die Werkstatt: Herkunft, Holzbild, Rohdichte, Festigkeit und Verarbeitungstipps – von Ahorn bis Zwetschge.",
   alternates: { canonical: "/holzarten" },
 };
 

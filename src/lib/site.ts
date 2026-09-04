@@ -20,5 +20,10 @@ export const siteConfig = {
   name: "schreiner.digital",
   url: resolveSiteUrl(),
   description:
-    "Fundierte Steckbriefe zu Holzarten und Plattenwerkstoffen sowie praxisnahe Rechner-Tools für den Schreineralltag.",
+    "Steckbriefe zu Holzarten, Plattenwerkstoffen, Verbindungstechnik, Beschlägen und Oberflächen – dazu kostenlose Rechner für den Schreineralltag.",
+  /**
+   * Social-Preview-Bild. Muss überall dort mitgegeben werden, wo eine Seite ein
+   * eigenes `openGraph`-Objekt setzt – das ersetzt sonst das geerbte Bild.
+   */
+  ogImage: "/opengraph-image.jpg",
 } as const;

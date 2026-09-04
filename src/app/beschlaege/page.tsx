@@ -7,9 +7,9 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { BeschlaegeGuide } from "./beschlaege-guide";
 
 export const metadata: Metadata = {
-  title: "Beschläge",
+  title: "Möbelbeschläge im Überblick",
   description:
-    "Steckbriefe zu Möbelbeschlägen: Aufbau, Eigenschaften, Verwendung und Montagehinweise.",
+    "Topfscharniere, Auszüge, Griffe und Funktionsbeschläge: Einbaumaße, Tragkraft, Bohrbilder und Auswahlhilfen für den Möbelbau.",
   alternates: { canonical: "/beschlaege" },
 };
 

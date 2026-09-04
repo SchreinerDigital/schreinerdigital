@@ -7,9 +7,9 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { PlattenwerkstoffeGuide } from "./plattenwerkstoffe-guide";
 
 export const metadata: Metadata = {
-  title: "Plattenwerkstoffe",
+  title: "Plattenwerkstoffe im Überblick",
   description:
-    "Steckbriefe zu Plattenwerkstoffen: Aufbau, Eigenschaften, Verwendung und Verarbeitungshinweise.",
+    "Span-, MDF-, OSB-, Multiplex- und Tischlerplatten im Vergleich: Aufbau, Rohdichte, Einsatzgrenzen und Hinweise zur Verarbeitung.",
   alternates: { canonical: "/plattenwerkstoffe" },
 };
 

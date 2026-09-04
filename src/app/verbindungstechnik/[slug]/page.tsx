@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getEntry, getSlugs } from "@/lib/content";
 import { Container } from "@/components/ui/container";
+import { siteConfig } from "@/lib/site";
 
 export async function generateStaticParams() {
   const slugs = await getSlugs("verbindungstechnik");
@@ -17,9 +18,10 @@ export async function generateMetadata({
   const entry = await getEntry("verbindungstechnik", slug);
   if (!entry) return {};
   return {
-    title: entry.meta.title,
+    title: `${entry.meta.title} – Aufbau & Anwendung`,
     description: entry.meta.summary,
     alternates: { canonical: `/verbindungstechnik/${slug}` },
+    openGraph: { type: "article", title: entry.meta.title, description: entry.meta.summary, images: [siteConfig.ogImage] },
   };
 }
 

@@ -7,7 +7,7 @@ import { TuerenmassGuide } from "./tuerenmass-guide";
 const tool = getTool("tuerenmass")!;
 
 export const metadata: Metadata = {
-  title: tool.title,
+  title: tool.seoTitle,
   description: tool.description,
   alternates: { canonical: `/tools/${tool.slug}` },
 };

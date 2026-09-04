@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
 
 export const metadata: Metadata = {
-  title: "Datenschutz",
+  title: "Datenschutzerklärung",
+  description:
+    "Wie schreiner.digital mit deinen Daten umgeht: Hosting, Cookies, Google Analytics, Newsletter und deine Rechte nach DSGVO.",
   alternates: { canonical: "/datenschutz" },
 };
 

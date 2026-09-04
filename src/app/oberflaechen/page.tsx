@@ -7,9 +7,9 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { OberflaechenGuide } from "./oberflaechen-guide";
 
 export const metadata: Metadata = {
-  title: "Oberflächen",
+  title: "Oberflächenbehandlung von Holz",
   description:
-    "Steckbriefe zu Oberflächenbehandlungen: Zusammensetzung, Eigenschaften, Verwendung und Verarbeitungshinweise.",
+    "Öl, Wachs, Lack, Beize und Lasur im Vergleich: Zusammensetzung, Schutzwirkung, Trockenzeiten und Verarbeitung – innen wie außen.",
   alternates: { canonical: "/oberflaechen" },
 };
 
