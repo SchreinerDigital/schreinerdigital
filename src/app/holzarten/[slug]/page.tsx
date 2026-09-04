@@ -67,15 +67,33 @@ export default async function HolzartPage({
       </div>
 
       {meta.bild && (
-        <div className="relative mt-8 aspect-16/9 max-w-2xl overflow-hidden rounded-[var(--radius)] border border-border">
-          <Image
-            src={meta.bild}
-            alt={meta.title}
-            fill
-            priority
-            className="object-cover"
-            sizes="(min-width: 672px) 672px, 100vw"
-          />
+        <div className="mt-8 max-w-2xl">
+          <div className="relative aspect-16/9 overflow-hidden rounded-[var(--radius)] border border-border">
+            <Image
+              src={meta.bild}
+              alt={meta.title}
+              fill
+              priority
+              className="object-cover"
+              sizes="(min-width: 672px) 672px, 100vw"
+            />
+          </div>
+          {meta.bildCredit && (
+            <p className="mt-1.5 text-xs text-ink-faint">
+              {meta.bildCreditHref ? (
+                <a
+                  href={meta.bildCreditHref}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  className="hover:text-accent hover:underline"
+                >
+                  {meta.bildCredit}
+                </a>
+              ) : (
+                meta.bildCredit
+              )}
+            </p>
+          )}
         </div>
       )}
 

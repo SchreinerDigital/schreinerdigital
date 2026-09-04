@@ -25,6 +25,10 @@ export interface HolzartMeta {
   dinCode?: string;
   /** Path to the hero image under /public, e.g. "/holzarten/eiche.jpg" */
   bild?: string;
+  /** Attribution text for licensed hero images, e.g. "Das Ohr, Wikimedia Commons, CC BY-SA 3.0" */
+  bildCredit?: string;
+  /** Link target for bildCredit, e.g. the license URL */
+  bildCreditHref?: string;
   /** Ordered list for the technical data table. */
   kennwerte?: TechnicalDatum[];
   draft?: boolean;
