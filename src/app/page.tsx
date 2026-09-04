@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -152,30 +153,43 @@ export default function HomePage() {
             </ul>
           </div>
 
-          {/* Decorative spec sheet */}
-          <div className="relative hidden lg:block">
-            <div className="rounded-[var(--radius)] border border-border bg-surface shadow-[0_1px_0_rgba(0,0,0,0.02),0_12px_40px_-12px_rgba(60,40,20,0.15)]">
-              <div className="flex items-center justify-between border-b border-border px-5 py-3">
-                <span className="font-mono text-xs uppercase tracking-[0.16em] text-ink-faint">
-                  Datenblatt
-                </span>
-                <span className="font-display text-sm font-bold">Eiche</span>
-              </div>
-              <dl className="divide-y divide-border">
-                {specPreview.map(([k, v]) => (
-                  <div
-                    key={k}
-                    className="flex items-baseline justify-between gap-4 px-5 py-2.5"
-                  >
-                    <dt className="text-sm text-ink-muted">{k}</dt>
-                    <dd className="font-mono text-sm tabular-nums text-ink">
-                      {v}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-              <div className="px-5 pb-4 pt-2">
-                <RulerBar className="h-2.5 text-border-strong" />
+          <div className="relative">
+            <div className="relative aspect-4/3 overflow-hidden rounded-[var(--radius)] border border-border">
+              <Image
+                src="/hero-workshop.jpg"
+                alt="Digitale Möbelplanung am Laptop, im Hintergrund eine Schreinerwerkstatt mit CNC-Maschine"
+                fill
+                priority
+                className="object-cover"
+                sizes="(min-width: 1024px) 40vw, (min-width: 640px) 60vw, 100vw"
+              />
+            </div>
+
+            {/* Decorative spec sheet – floats over the photo on larger screens */}
+            <div className="absolute -bottom-6 -right-6 hidden w-72 lg:block">
+              <div className="rounded-[var(--radius)] border border-border bg-surface shadow-[0_1px_0_rgba(0,0,0,0.02),0_12px_40px_-12px_rgba(60,40,20,0.15)]">
+                <div className="flex items-center justify-between border-b border-border px-5 py-3">
+                  <span className="font-mono text-xs uppercase tracking-[0.16em] text-ink-faint">
+                    Datenblatt
+                  </span>
+                  <span className="font-display text-sm font-bold">Eiche</span>
+                </div>
+                <dl className="divide-y divide-border">
+                  {specPreview.map(([k, v]) => (
+                    <div
+                      key={k}
+                      className="flex items-baseline justify-between gap-4 px-5 py-2.5"
+                    >
+                      <dt className="text-sm text-ink-muted">{k}</dt>
+                      <dd className="font-mono text-sm tabular-nums text-ink">
+                        {v}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+                <div className="px-5 pb-4 pt-2">
+                  <RulerBar className="h-2.5 text-border-strong" />
+                </div>
               </div>
             </div>
           </div>
