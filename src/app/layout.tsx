@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { CookieBanner } from "@/components/consent/cookie-banner";
+import { AnalyticsLoader } from "@/components/consent/analytics-loader";
 import { siteConfig } from "@/lib/site";
 
 const display = Space_Grotesk({
@@ -78,6 +80,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SiteHeader />
           <main className="flex-1">{children}</main>
           <SiteFooter />
+          <CookieBanner />
+          <AnalyticsLoader />
         </ThemeProvider>
       </body>
     </html>

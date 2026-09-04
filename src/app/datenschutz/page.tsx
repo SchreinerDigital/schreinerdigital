@@ -46,25 +46,53 @@ export default function DatenschutzPage() {
           EU-Standardvertragsklauseln.
         </p>
 
-        <h2>3. Cookies und lokale Speicherung</h2>
+        <h2>3. Cookies und Einwilligung</h2>
         <p>
-          Für die Anzeige-Einstellung (Hell-/Dunkelmodus) speichert diese
-          Website eine Information im lokalen Speicher (Local Storage) deines
-          Browsers. Diese Information verbleibt ausschließlich auf deinem
-          Gerät, wird nicht an uns oder Dritte übertragen und enthält keine
-          personenbezogenen Daten. Da es sich um eine technisch notwendige,
-          rein funktionale Speicherung handelt, ist hierfür keine Einwilligung
-          erforderlich (§ 25 Abs. 2 TDDDG, vormals TTDSG). Darüber hinaus
-          setzt diese Website derzeit keine Cookies ein.
+          Für die Anzeige-Einstellung (Hell-/Dunkelmodus) sowie für deine
+          Cookie-Auswahl selbst speichert diese Website eine Information im
+          lokalen Speicher (Local Storage) deines Browsers. Diese Information
+          verbleibt ausschließlich auf deinem Gerät, wird nicht an Dritte
+          übertragen und enthält keine personenbezogenen Daten. Da es sich um
+          eine technisch notwendige, rein funktionale Speicherung handelt, ist
+          hierfür keine Einwilligung erforderlich (§ 25 Abs. 2 TDDDG, vormals
+          TTDSG).
+        </p>
+        <p>
+          Beim ersten Besuch fragen wir dich über einen Cookie-Banner, ob du
+          zusätzlich der Statistik-Kategorie (Google Analytics, siehe Punkt 4)
+          zustimmst. Erst mit deiner Zustimmung wird das entsprechende Skript
+          geladen und werden die zugehörigen Cookies gesetzt. Du kannst deine
+          Auswahl jederzeit über den Link „Cookie-Einstellungen“ im Footer
+          dieser Seite ändern oder widerrufen.
         </p>
 
-        <h2>4. Analyse- und Werbedienste</h2>
+        <h2>4. Google Analytics</h2>
         <p>
-          Diese Website verwendet aktuell keine Webanalyse-Dienste (z. B.
-          Google Analytics), keine Werbedienste (z. B. Google AdSense) und
-          keine vergleichbaren Tracking- oder Marketing-Technologien. Es
-          findet keine Auswertung deines Nutzungsverhaltens statt und es
-          werden keine Nutzungsprofile gebildet.
+          Sofern du eingewilligt hast, verwenden wir Google Analytics, einen
+          Webanalysedienst der Google Ireland Limited, Gordon House, Barrow
+          Street, Dublin 4, Irland (Datenverarbeitung ggf. auch durch die
+          Google LLC, USA; „Google“). Google Analytics verwendet Cookies, die
+          eine Analyse der Benutzung dieser Website ermöglichen (u. a.
+          aufgerufene Seiten, Verweildauer, ungefähre Herkunft). Die dabei
+          erzeugten Informationen werden an Server von Google übertragen und
+          dort verarbeitet; deine IP-Adresse wird dabei von Google gekürzt
+          (IP-Anonymisierung), sodass kein direkter Personenbezug mehr
+          hergestellt werden kann.
+        </p>
+        <p>
+          Rechtsgrundlage ist ausschließlich deine Einwilligung (Art. 6 Abs. 1
+          lit. a DSGVO, § 25 Abs. 1 TDDDG). Du kannst diese Einwilligung
+          jederzeit mit Wirkung für die Zukunft über „Cookie-Einstellungen“ im
+          Footer widerrufen; die Rechtmäßigkeit der bis dahin erfolgten
+          Verarbeitung bleibt davon unberührt. Die von Google Analytics
+          gesetzten Cookies werden nach spätestens 14 Monaten automatisch
+          gelöscht.
+        </p>
+        <p>
+          Werbedienste (z. B. Google AdSense) setzen wir derzeit nicht ein.
+          Sollten wir das zu einem späteren Zeitpunkt ändern, aktualisieren
+          wir diese Datenschutzerklärung entsprechend und holen, soweit
+          erforderlich, vorab deine Einwilligung ein.
         </p>
 
         <h2>5. Rechner-Tools</h2>

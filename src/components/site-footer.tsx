@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { Wordmark } from "@/components/brand/wordmark";
 import { Container } from "@/components/ui/container";
+import { openConsentSettings } from "@/lib/consent";
 
 const columns = [
   {
@@ -58,6 +61,17 @@ export function SiteFooter() {
                   </Link>
                 </li>
               ))}
+              {col.title === "Rechtliches" && (
+                <li>
+                  <button
+                    type="button"
+                    onClick={openConsentSettings}
+                    className="text-sm text-ink-muted transition-colors hover:text-accent"
+                  >
+                    Cookie-Einstellungen
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         ))}
