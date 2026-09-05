@@ -102,12 +102,19 @@
     color: var(--ink);
     font-family: var(--ff-sans), ui-sans-serif, system-ui, sans-serif;
     text-rendering: optimizeLegibility;
+    /* Backstop: nothing on this site should ever require sideways scrolling
+       (e.g. a hover tooltip positioned near a narrow viewport's edge). */
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4 {
     font-family: var(--ff-display), ui-sans-serif, system-ui, sans-serif;
     font-weight: 600;
     letter-spacing: -0.02em;
+    /* Long German compound words (e.g. "Datenschutzerklärung") must break
+       instead of overflowing on narrow screens. */
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   ::selection {
