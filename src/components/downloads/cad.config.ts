@@ -3,9 +3,12 @@
  * https://schreinerdigital.de/downloads-2/cad/) und mit dem Nutzer abgestimmt.
  *
  * Es gibt noch keine Kaufabwicklung (kein Stripe) und keine echten DWG-Dateien –
- * die Seite zeigt den Katalog mit echten Preisen, aber ohne funktionierende
+ * die Seite zeigt nur den Katalog (Titel/Beschreibung), ohne funktionierende
  * Kauf-Buttons. Stattdessen: Anmeldung zur Benachrichtigung, sobald der Kauf
  * live geht (siehe /cad und NewsletterForm source="cad").
+ *
+ * `preis` ist echt und bleibt hier hinterlegt, wird auf /cad aktuell aber
+ * bewusst nicht angezeigt, solange kein Kauf möglich ist.
  */
 
 export interface CadProdukt {

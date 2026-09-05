@@ -47,14 +47,42 @@ export function SpecTable({
   columns,
   rows,
   note,
+  titleColumn = 0,
 }: {
   columns: string[];
   rows: string[][];
   note?: ReactNode;
+  /** Index of the column that identifies a row (shown as the card heading on phones). */
+  titleColumn?: number;
 }) {
   return (
     <>
-      <div className="mt-6 overflow-x-auto rounded-[var(--radius)] border border-border">
+      {/* Phones: a data table with 3+ columns never fits without sideways scrolling,
+          so each row becomes a small card of label/value pairs instead. */}
+      <div className="mt-6 space-y-3 sm:hidden">
+        {rows.map((row, i) => (
+          <div key={i} className="rounded-[var(--radius)] border border-border p-4">
+            <p className="font-mono text-[0.65rem] uppercase tracking-wider text-ink-faint">
+              {columns[titleColumn]}
+            </p>
+            <p className="mt-1 font-mono text-base font-semibold text-ink">
+              {row[titleColumn]}
+            </p>
+            <dl className="mt-3 space-y-2.5 border-t border-border pt-3">
+              {columns.map((col, j) =>
+                j === titleColumn ? null : (
+                  <div key={col}>
+                    <dt className="text-xs text-ink-faint">{col}</dt>
+                    <dd className="mt-0.5 font-mono text-sm text-ink-muted">{row[j]}</dd>
+                  </div>
+                ),
+              )}
+            </dl>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-6 hidden overflow-x-auto rounded-[var(--radius)] border border-border sm:block">
         <table
           className="w-full border-collapse text-sm"
           style={{ minWidth: `${columns.length * 190}px` }}

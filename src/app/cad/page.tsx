@@ -20,11 +20,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "/cad" },
 };
 
-function formatPreis(preis: number | null): string {
-  if (preis === null) return "Preis in Kürze";
-  return `${preis.toFixed(2).replace(".", ",")} €`;
-}
-
 const kategorien: CadProdukt["kategorie"][] = ["Einbauschrank", "Moebelbau", "Innenausbau"];
 
 const kategorieIntro: Record<CadProdukt["kategorie"], string> = {
@@ -63,8 +58,8 @@ export default function CadPage() {
           Der Kauf ist noch nicht freigeschaltet
         </h2>
         <p className="mt-1.5 text-sm text-ink-muted">
-          Die Preise unten zeigen, was dich erwartet. Lass dich per E-Mail
-          benachrichtigen, sobald du die Vorlagen tatsächlich kaufen kannst.
+          Unten siehst du schon, welche Vorlagen es geben wird. Lass dich per
+          E-Mail benachrichtigen, sobald du sie tatsächlich kaufen kannst.
         </p>
         <NewsletterForm source="cad" submitLabel="Benachrichtige mich" className="mt-5" />
       </div>
@@ -101,14 +96,9 @@ export default function CadPage() {
                 ))}
               </ul>
               <div className="mt-5 border-t border-border pt-4">
-                <div className="flex items-baseline justify-between">
-                  <span className="font-display text-xl font-bold text-ink">
-                    {formatPreis(p.preis)}
-                  </span>
-                  <span className="font-mono text-xs uppercase tracking-wider text-ink-faint">
-                    {p.updateMonate} Monate Updates
-                  </span>
-                </div>
+                <span className="font-mono text-xs uppercase tracking-wider text-ink-faint">
+                  {p.updateMonate} Monate Updates
+                </span>
               </div>
             </div>
           ))}
@@ -135,9 +125,6 @@ export default function CadPage() {
                       {p.istPaketAngebot && <Badge>Paket</Badge>}
                     </div>
                     <p className="mt-2 flex-1 text-sm text-ink-muted">{p.beschreibung}</p>
-                    <span className="mt-4 font-display text-lg font-bold text-ink">
-                      {formatPreis(p.preis)}
-                    </span>
                   </li>
                 ))}
               </ul>
