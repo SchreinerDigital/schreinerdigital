@@ -5,13 +5,20 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 type Status = "idle" | "loading" | "success" | "error";
+type Source = "homepage" | "vorlagen" | "cad";
+
+const CONSENT_TEXT: Record<Source, string> = {
+  homepage: "Ich melde mich zum Newsletter an",
+  vorlagen: "Ich melde mich zum Newsletter an",
+  cad: "Ich möchte per E-Mail benachrichtigt werden, sobald der Kauf der CAD-Vorlagen möglich ist",
+};
 
 export function NewsletterForm({
   source,
   submitLabel = "Anmelden",
   className,
 }: {
-  source: "homepage" | "vorlagen";
+  source: Source;
   submitLabel?: string;
   className?: string;
 }) {
@@ -89,7 +96,7 @@ export function NewsletterForm({
           className="mt-0.5 size-3.5 shrink-0 rounded-sm border-border-strong accent-accent"
         />
         <span>
-          Ich melde mich zum Newsletter an und akzeptiere die{" "}
+          {CONSENT_TEXT[source]} und akzeptiere die{" "}
           <Link href="/datenschutz" className="text-accent hover:underline">
             Datenschutzerklärung
           </Link>

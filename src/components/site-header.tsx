@@ -169,6 +169,15 @@ export function SiteHeader() {
           >
             Vorlagen
           </Link>
+          <Link
+            href="/cad"
+            className={cn(
+              "rounded-full px-3 py-2 text-sm font-medium transition-colors",
+              isActive("/cad") ? "text-accent" : "text-ink-muted hover:text-ink",
+            )}
+          >
+            CAD-Vorlagen
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -238,6 +247,15 @@ export function SiteHeader() {
               )}
             >
               Vorlagen
+            </Link>
+            <Link
+              href="/cad"
+              className={cn(
+                "rounded-lg px-3 py-3 text-sm font-medium",
+                isActive("/cad") ? "text-accent" : "text-ink-muted",
+              )}
+            >
+              CAD-Vorlagen
             </Link>
           </Container>
         </div>

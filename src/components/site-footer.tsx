@@ -15,6 +15,7 @@ const columns = [
       { href: "/beschlaege", label: "Beschläge" },
       { href: "/oberflaechen", label: "Oberflächen" },
       { href: "/vorlagen", label: "Vorlagen & Downloads" },
+      { href: "/cad", label: "CAD-Vorlagen" },
     ],
   },
   {

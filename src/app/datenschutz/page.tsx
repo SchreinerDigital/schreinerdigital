@@ -108,23 +108,28 @@ export default function DatenschutzPage() {
 
         <h2>6. Newsletter</h2>
         <p>
-          Wenn du dich für unseren Newsletter anmeldest (freistehend oder im
+          Wenn du dich für unseren Newsletter anmeldest – freistehend, im
           Rahmen der Anmeldung für Vorlagen &amp; Downloads unter{" "}
-          <code>/vorlagen</code>), verwenden wir das sogenannte
-          Double-Opt-in-Verfahren: Nach Eingabe deiner E-Mail-Adresse erhältst
-          du zunächst eine Bestätigungs-Mail mit einem Link. Erst wenn du
-          diesen Link anklickst, wird deine Anmeldung aktiv und du erhältst
-          künftig Newsletter-Ausgaben von uns. Gespeichert werden dabei deine
-          E-Mail-Adresse, Zeitpunkt von Anmeldung und Bestätigung, deine
-          IP-Adresse sowie der Ausgangspunkt der Anmeldung (z. B. Startseite
-          oder Vorlagen-Seite) – zum Nachweis, dass die Anmeldung wirksam
-          erfolgt ist (Art. 7 Abs. 1 DSGVO).
+          <code>/vorlagen</code> oder um dich über die Verfügbarkeit der
+          CAD-Vorlagen unter <code>/cad</code> benachrichtigen zu lassen –,
+          verwenden wir das sogenannte Double-Opt-in-Verfahren: Nach Eingabe
+          deiner E-Mail-Adresse erhältst du zunächst eine Bestätigungs-Mail
+          mit einem Link. Erst wenn du diesen Link anklickst, wird deine
+          Anmeldung aktiv. Gespeichert werden dabei deine E-Mail-Adresse,
+          Zeitpunkt von Anmeldung und Bestätigung, deine IP-Adresse sowie der
+          Ausgangspunkt der Anmeldung (z. B. Startseite, Vorlagen- oder
+          CAD-Seite) – zum Nachweis, dass die Anmeldung wirksam erfolgt ist
+          (Art. 7 Abs. 1 DSGVO), sowie um dir passende Inhalte zuzusenden.
         </p>
         <p>
           Bitte beachte: Der Zugriff auf die kostenlosen Vorlagen unter{" "}
           <code>/vorlagen</code> setzt eine Newsletter-Anmeldung voraus. Die
           Nutzung der übrigen Inhalte dieser Website (Steckbriefe, Rechner)
-          ist davon unabhängig und erfordert keine Anmeldung.
+          ist davon unabhängig und erfordert keine Anmeldung. Die
+          CAD-Vorlagen unter <code>/cad</code> sind kostenpflichtig; ein Kauf
+          ist derzeit noch nicht möglich – die Anmeldung dort dient
+          ausschließlich der Benachrichtigung, sobald der Kauf freigeschaltet
+          wird.
         </p>
         <p>
           Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO).

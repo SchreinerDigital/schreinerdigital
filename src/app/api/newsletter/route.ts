@@ -7,6 +7,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const REDIRECTS: Record<string, string> = {
   homepage: "/",
   vorlagen: "/vorlagen/bestaetigt",
+  cad: "/cad/bestaetigt",
 };
 
 export async function POST(request: Request) {
