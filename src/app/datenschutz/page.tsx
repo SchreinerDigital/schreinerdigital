@@ -99,8 +99,8 @@ export default function DatenschutzPage() {
 
         <h2>5. Rechner-Tools</h2>
         <p>
-          Die auf dieser Website angebotenen Rechner (u. a. Plattengewicht,
-          Türenmaß, Restlänge, Durchbiegung, Stundensatz) führen sämtliche
+          Die auf dieser Website angebotenen Rechner (u. a. Plattengewichtsrechner,
+          Türenmaß-Rechner, Restlängenrechner, Durchbiegung, Stundensatz) führen sämtliche
           Berechnungen ausschließlich lokal in deinem Browser aus. Die von dir
           eingegebenen Werte werden nicht an unsere Server oder an Dritte
           übertragen oder von uns gespeichert.

@@ -423,7 +423,7 @@ const generatePDF = (
   doc.setFont("helvetica", "bold");
   doc.setFontSize(8);
   doc.setTextColor(30, 41, 59);
-  doc.text("Berechnet mit dem Online-Türenmaßrechner auf www.schreinerdigital.de", 105, footerY + 19, {
+  doc.text("Berechnet mit dem Online-Türenmaß-Rechner auf www.schreinerdigital.de", 105, footerY + 19, {
     align: "center",
   });
 
@@ -727,7 +727,7 @@ ${
 }
 
 -------------------------------------------
-Berechnet mit dem Online-Türenmaßrechner auf www.schreinerdigital.de`;
+Berechnet mit dem Online-Türenmaß-Rechner auf www.schreinerdigital.de`;
 
     navigator.clipboard.writeText(summaryText).then(() => {
       setCopied(true);

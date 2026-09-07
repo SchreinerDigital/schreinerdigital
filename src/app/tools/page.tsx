@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
   title: "Rechner-Tools",
   description:
-    "Praxisnahe Rechner für den Schreineralltag: Plattengewicht, Türenmaß, Restlänge, Durchbiegung und Stundensatz.",
+    "Praxisnahe Rechner für den Schreineralltag: Plattengewichtsrechner, Türenmaß-Rechner, Restlängenrechner, Durchbiegung und Stundensatz.",
   alternates: { canonical: "/tools" },
 };
 

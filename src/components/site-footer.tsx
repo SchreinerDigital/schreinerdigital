@@ -23,9 +23,9 @@ const columns = [
   {
     title: "Rechner",
     links: [
-      { href: "/tools/plattengewicht", label: "Plattengewicht" },
-      { href: "/tools/tuerenmass", label: "Türenmaß" },
-      { href: "/tools/restlaenge", label: "Restlänge" },
+      { href: "/tools/plattengewicht", label: "Plattengewichtsrechner" },
+      { href: "/tools/tuerenmass", label: "Türenmaß-Rechner" },
+      { href: "/tools/restlaenge", label: "Restlängenrechner" },
       { href: "/tools/durchbiegung", label: "Durchbiegung" },
       { href: "/tools/stundensatz", label: "Stundensatz" },
     ],

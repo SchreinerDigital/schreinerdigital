@@ -13,7 +13,7 @@ export const tools: ToolDef[] = [
   {
     slug: "plattengewicht",
     seoTitle: "Plattengewicht berechnen",
-    title: "Plattengewicht",
+    title: "Plattengewichtsrechner",
     description:
       "Gewicht einer Platte oder eines Rundstabs aus Maßen und Rohdichte des Werkstoffs berechnen – metrisch oder imperial.",
     ready: true,
@@ -21,7 +21,7 @@ export const tools: ToolDef[] = [
   {
     slug: "tuerenmass",
     seoTitle: "Türenmaß berechnen nach DIN 18101",
-    title: "Türenmaß",
+    title: "Türenmaß-Rechner",
     description:
       "Türblatt-, Zargen- und Wandstärkemaß aus dem Rohbaumaß der Maueröffnung nach DIN 18101 ableiten.",
     ready: true,
@@ -29,7 +29,7 @@ export const tools: ToolDef[] = [
   {
     slug: "restlaenge",
     seoTitle: "Restlänge Kantenband berechnen",
-    title: "Restlänge",
+    title: "Restlängenrechner",
     description:
       "Restlänge einer Kantenbandrolle aus Außen- und Innendurchmesser sowie Banddicke berechnen.",
     ready: true,
