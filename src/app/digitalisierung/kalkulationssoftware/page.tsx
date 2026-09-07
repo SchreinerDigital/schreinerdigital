@@ -5,7 +5,10 @@ import {
   FaqAccordion,
   GuideSection,
   GuideShell,
+  IndependenceNote,
+  SoftwareProfiles,
   SpecTable,
+  type SoftwareProfile,
 } from "@/components/tools/guide";
 
 export const metadata: Metadata = {
@@ -63,6 +66,72 @@ const software = [
   ],
 ];
 
+const profiles: SoftwareProfile[] = [
+  {
+    name: "Schreiners Büro",
+    kuerzel: "SB",
+    website: "https://www.schreiners-buero.de/",
+    beschreibung:
+      "Schreiners Büro wird von einem gelernten Schreiner mit IT-Hintergrund entwickelt und ist seit rund 25 Jahren am Markt. Die Software läuft plattformübergreifend auf Windows, macOS und Linux und lässt sich auch von unterwegs auf Tablet oder Smartphone nutzen.",
+  },
+  {
+    name: "Sander & Doll (Forma)",
+    kuerzel: "SD",
+    website: "https://sander-doll.com/produkte/forma",
+    beschreibung:
+      "Forma von der Sander & Doll AG deckt Mengen- und Zuschnittberechnung sowie Abschlagsrechnungen in allen gängigen Varianten ab und importiert Stücklisten direkt aus CAD-Programmen. Neue Kundinnen und Kunden erhalten in den ersten sechs Wochen kostenlose Unterstützung durch ein eigenes Einführungsteam.",
+  },
+  {
+    name: "HERO",
+    kuerzel: "HE",
+    website: "https://hero-software.de/anwendungen/tischler-software",
+    beschreibung:
+      "HERO ist eine cloudbasierte Handwerkersoftware mit eigener App für Android und iOS, die Kalkulation, Auftragsplanung und Rechnungsstellung in einem System bündelt. Die App erlaubt zusätzlich das digitale Aufmaß direkt auf der Baustelle, die Software lässt sich 14 Tage kostenlos und unverbindlich testen.",
+  },
+  {
+    name: "Corpora",
+    kuerzel: "CO",
+    website: "https://p-s-s.de/",
+    beschreibung:
+      "Corpora vom Anbieter PinnCalc aus Eckernförde ist seit 1987 in der Branche im Einsatz und bildet den kompletten Auftragsprozess vom Angebot bis zur Rechnung ab. Über direkte Schnittstellen zu den CAD-Programmen interiorcad und TrunCAD lassen sich Konstruktionsdaten ohne doppelte Erfassung übernehmen.",
+  },
+  {
+    name: "Plancraft",
+    kuerzel: "PL",
+    website: "https://plancraft.com/de-de/gewerke/software-schreiner",
+    beschreibung:
+      "Plancraft ist eine cloudbasierte Handwerkersoftware aus Hamburg, gegründet 2020 und laut Anbieter mittlerweile von über 30.000 Handwerksbetrieben in mehreren Ländern genutzt. Aufmaß, Kalkulation, Plantafel und Rechnung laufen in einer App zusammen, eine GAEB-Schnittstelle deckt auch öffentliche Ausschreibungen ab.",
+  },
+  {
+    name: "Sage 50 Handwerk",
+    kuerzel: "SA",
+    website: "https://www.sage.com/de-de/produkte/sage-50-handwerk/",
+    beschreibung:
+      "Sage 50 Handwerk ist die kaufmännische Lösung des etablierten, branchenübergreifenden ERP-Anbieters Sage mit einer eigenen Ausrichtung für Tischler und Schreiner. Von der Angebotserstellung über GAEB-Ausschreibungen bis zu Abschlags- und Schlussrechnungen deckt die Software die komplette kaufmännische Prozesskette ab.",
+  },
+  {
+    name: "Zentro",
+    kuerzel: "ZE",
+    website: "https://www.zentro.at/branchen/tischler-schreiner-software",
+    beschreibung:
+      "Zentro ist ein ERP-Anbieter aus dem österreichischen Almtal, der seit fast 20 Jahren maßgeschneiderte Lösungen für Tischler und Schreiner entwickelt. Der Fokus liegt auf durchgängigen Prozessen für projektorientierte Betriebe – vom ersten Kundenkontakt bis zur Abrechnung.",
+  },
+  {
+    name: "OSD",
+    kuerzel: "OS",
+    website: "https://www.osd.de/branchen/die-software-fuer-schreiner-tischler/",
+    beschreibung:
+      "OS Datensysteme (OSD) bietet seit 1984 durchgängige Software für Schreiner, Tischler, Laden- und Messebau sowie Möbelfertigung und deckt damit CAD, Kalkulation, ERP/PPS und CNC-Steuerung in einem System ab. Der Anbieter zählt nach eigenen Angaben über 4.000 Nutzerbetriebe in Deutschland.",
+  },
+  {
+    name: "Kuhnle NG",
+    kuerzel: "KU",
+    website: "https://www.kuhnle.com/KuhnleNG.html",
+    beschreibung:
+      "Kuhnle entwickelt seit über 40 Jahren Branchensoftware für Tischler und Schreiner und ist nach eigenen Angaben in über 2.000 Betrieben im Einsatz. Kuhnle NG Flex richtet sich an kleine und mittlere Betriebe, NG Professional bringt mit zusätzlichen Modulen und Schnittstellen mehr Flexibilität für größere Betriebe.",
+  },
+];
+
 const faqs = [
   {
     q: "Was kostet Kalkulationssoftware für einen kleinen Betrieb?",
@@ -99,6 +168,8 @@ export default function KalkulationssoftwarePage() {
       </div>
 
       <GuideShell>
+        <IndependenceNote />
+
         <GuideSection
           title="Software im Vergleich"
           intro="Eine Auswahl gängiger Branchenlösungen – Zielgruppe und Besonderheit auf einen Blick:"
@@ -108,6 +179,13 @@ export default function KalkulationssoftwarePage() {
             rows={software}
             note="Angaben ohne Gewähr, Stand der Recherche. Preise variieren stark je nach Anbieter und Modulumfang – am besten direkt beim Anbieter anfragen oder eine Testversion nutzen."
           />
+        </GuideSection>
+
+        <GuideSection
+          title="Die Programme im Einzelnen"
+          intro="Kurzporträt je Software mit Link zur Anbieter-Website – zum Aufklappen:"
+        >
+          <SoftwareProfiles items={profiles} />
         </GuideSection>
 
         <GuideSection title="Worauf du bei der Auswahl achten solltest">

@@ -160,11 +160,11 @@ function ChevronIcon({ className }: { className?: string }) {
   );
 }
 
-export function Accordion({ items }: { items: { title: string; content: ReactNode }[] }) {
+export function Accordion({ items }: { items: { title: ReactNode; content: ReactNode }[] }) {
   return (
     <div className="mt-6 divide-y divide-border rounded-[var(--radius)] border border-border">
-      {items.map((item) => (
-        <details key={item.title} className="group p-4 [&_summary::-webkit-details-marker]:hidden">
+      {items.map((item, i) => (
+        <details key={i} className="group p-4 [&_summary::-webkit-details-marker]:hidden">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
             <h3 className="font-medium text-ink">{item.title}</h3>
             <ChevronIcon className="size-4 shrink-0 text-ink-faint transition-transform group-open:rotate-180" />
@@ -184,5 +184,101 @@ export function FaqAccordion({ items }: { items: { q: string; a: string }[] }) {
         content: <p className="text-sm leading-relaxed text-ink-muted">{item.a}</p>,
       }))}
     />
+  );
+}
+
+function ExternalLinkIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      <path d="M15 3h6v6" />
+      <path d="M10 14 21 3" />
+    </svg>
+  );
+}
+
+export interface SoftwareProfile {
+  /** Product or app name, shown as the accordion heading. */
+  name: string;
+  /** One or two letters for the monogram badge (no real product logos are used, see IndependenceNote). */
+  kuerzel: string;
+  /** Short, 2–4 sentence portrait – adds detail beyond the comparison table. */
+  beschreibung: ReactNode;
+  /** Link to the provider's own site or product page. */
+  website: string;
+}
+
+/** Expandable per-product portraits: monogram, short article, link to the provider's own site. */
+export function SoftwareProfiles({ items }: { items: SoftwareProfile[] }) {
+  return (
+    <Accordion
+      items={items.map((item) => ({
+        title: (
+          <span className="flex items-center gap-3">
+            <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-accent-soft font-mono text-xs font-semibold text-accent">
+              {item.kuerzel}
+            </span>
+            {item.name}
+          </span>
+        ),
+        content: (
+          <div className="space-y-3 pl-11">
+            <p className="text-sm leading-relaxed text-ink-muted">{item.beschreibung}</p>
+            <a
+              href={item.website}
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline"
+            >
+              Website besuchen
+              <ExternalLinkIcon className="size-3.5" />
+            </a>
+          </div>
+        ),
+      }))}
+    />
+  );
+}
+
+function ShieldCheckIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M12 3l7 3.5v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9v-5L12 3Z" />
+      <path d="m9.5 12 2 2 3.5-4" />
+    </svg>
+  );
+}
+
+/** Discloses that the comparison is independent editorial research, not paid placement. */
+export function IndependenceNote() {
+  return (
+    <div className="flex items-start gap-3 rounded-[var(--radius)] border border-border bg-surface-2/40 p-4">
+      <ShieldCheckIcon className="mt-0.5 size-5 shrink-0 text-accent" />
+      <p className="text-sm leading-relaxed text-ink-muted">
+        <strong className="text-ink">Unabhängige Einschätzung:</strong> Diese
+        Übersicht ist eine unabhängige redaktionelle Recherche. Es gibt kein
+        Sponsoring, keine Bezahlung und keine Provisionen durch die genannten
+        Hersteller – Auswahl und Beschreibung beruhen auf frei zugänglichen
+        Informationen der Anbieter.
+      </p>
+    </div>
   );
 }

@@ -5,7 +5,10 @@ import {
   FaqAccordion,
   GuideSection,
   GuideShell,
+  IndependenceNote,
+  SoftwareProfiles,
   SpecTable,
+  type SoftwareProfile,
 } from "@/components/tools/guide";
 
 export const metadata: Metadata = {
@@ -22,9 +25,9 @@ const apps = [
     "Kostenlose App für Bosch-Laser-Entfernungsmesser, überträgt Maße direkt aufs Smartphone",
   ],
   [
-    "Bosch Toolbox",
+    "Bosch Toolbox (→ PRO360)",
     "Bosch",
-    "Bündelt mehrere digitale Werkzeuge, unter anderem eine Messkamera zur Vermessung vor Ort",
+    "Bündelt mehrere digitale Werkzeuge inkl. Messkamera zur Vermessung vor Ort; wird schrittweise durch den Nachfolger PRO360 abgelöst",
   ],
   [
     "Leica DISTO Plan",
@@ -41,6 +44,44 @@ const apps = [
     "STABILA",
     "Verbindet STABILA-Messgeräte per Bluetooth mit dem Smartphone",
   ],
+];
+
+const profiles: SoftwareProfile[] = [
+  {
+    name: "Bosch MeasureOn",
+    kuerzel: "BM",
+    website: "https://www.bosch-professional.com/de/de/measureon/",
+    beschreibung:
+      "MeasureOn ist der cloudbasierte Nachfolgedienst für Bosch-Laser-Entfernungsmesser mit einem „C“ in der Modellbezeichnung, etwa den GLM 50 C. Die App-Basisnutzung inklusive Basic-Cloud-Abo ist kostenlos, Messungen lassen sich darüber auch am Rechner im Webportal weiterverarbeiten.",
+  },
+  {
+    name: "Bosch Toolbox (→ PRO360)",
+    kuerzel: "BT",
+    website: "https://www.bosch-professional.com/de/de/pro360/",
+    beschreibung:
+      "Die Bosch Toolbox bündelt neben einer Messkamera für die Vermessung vor Ort auch Zeiterfassung, Aufgaben- und Materialverwaltung sowie einen Einheitenumrechner. Bosch stellt die App aktuell schrittweise auf den Nachfolger PRO360 um, der zusätzlich Werkzeug-Inventar und Garantieverwaltung übernimmt.",
+  },
+  {
+    name: "Leica DISTO Plan",
+    kuerzel: "LD",
+    website: "https://shop.leica-geosystems.com/measurement-tools/disto/leica-disto-plan-app",
+    beschreibung:
+      "Die App von Leica Geosystems erstellt aus Laser-Messungen direkt einfache Grundrisse und unterstützt die neueste DISTO-Gerätegeneration (X1, D2-2, D2G) inklusive NFC-Kopplung. Fertige Pläne lassen sich unter anderem als DXF- oder DWG-Datei exportieren und direkt in ein CAD-Programm weiterverarbeiten.",
+  },
+  {
+    name: "Würth WDM",
+    kuerzel: "WD",
+    website: "https://apps.apple.com/de/app/w%C3%BCrth-wdm/id1501559326",
+    beschreibung:
+      "Die Würth-WDM-App verbindet sich per Bluetooth mit den Laser-Entfernungsmessern WDM 3-19, WDM 6-22, WDM 8-14 und WDM 9-24 und überträgt Distanzen sowie Flächenwerte direkt aufs Smartphone. Fertige Pläne oder bemaßte Fotos lassen sich als JPG oder PDF exportieren.",
+  },
+  {
+    name: "STABILA Measures II",
+    kuerzel: "ST",
+    website: "https://www.stabila.com/en/products/details/stabila-measures-ii-measurement-app.html",
+    beschreibung:
+      "Measures II von STABILA verbindet sich per Bluetooth mit den Messgeräten LD 530 BT, LD 520 und LD 250 BT. Die Smart-Sketch-Funktion erzeugt automatisch einen Raumgrundriss, sobald die Wandmaße erfasst sind, dazu gibt es Zeichenwerkzeuge und Ausrichtungshilfen.",
+  },
 ];
 
 const faqs = [
@@ -79,6 +120,8 @@ export default function AufmassAppsPage() {
       </div>
 
       <GuideShell>
+        <IndependenceNote />
+
         <GuideSection
           title="Laser-Messgeräte mit App-Anbindung"
           intro="Die bekanntesten kostenlosen Begleit-Apps der Werkzeughersteller:"
@@ -88,6 +131,13 @@ export default function AufmassAppsPage() {
             rows={apps}
             note="Angaben ohne Gewähr, Stand der Recherche. Jede App funktioniert nur mit Messgeräten des jeweils eigenen Herstellers."
           />
+        </GuideSection>
+
+        <GuideSection
+          title="Die Apps im Einzelnen"
+          intro="Kurzporträt je App mit Link zur Anbieter-Website – zum Aufklappen:"
+        >
+          <SoftwareProfiles items={profiles} />
         </GuideSection>
 
         <GuideSection title="Aufmaß direkt in der Auftragssoftware">

@@ -5,7 +5,10 @@ import {
   FaqAccordion,
   GuideSection,
   GuideShell,
+  IndependenceNote,
+  SoftwareProfiles,
   SpecTable,
+  type SoftwareProfile,
 } from "@/components/tools/guide";
 
 export const metadata: Metadata = {
@@ -58,6 +61,65 @@ const software = [
   ],
 ];
 
+const profiles: SoftwareProfile[] = [
+  {
+    name: "imos iX",
+    kuerzel: "IM",
+    website: "https://www.imos3d.com/",
+    beschreibung:
+      "imos iX ist eine modulare Planungssoftware der imos AG, die vom kleinen Betrieb bis zum Großunternehmen skaliert. Über die Cloud-Anbindung an die Homag Digital Factory lassen sich Aufträge direkt an Fertigungsmaschinen weitergeben, dazu kommen VR- und AR-Funktionen für die Kundenpräsentation.",
+  },
+  {
+    name: "paletteCAD",
+    kuerzel: "PC",
+    website: "https://www.palettecad.com/",
+    beschreibung:
+      "paletteCAD von der Palette CAD AG ist eine cloudbasierte 3D-Software speziell für Tischler und Schreiner mit einer großen Bibliothek fertiger 3D-Objekte und starker Fotorealistik für die Kundenpräsentation. Laut Anbieter setzen über 12.000 Handwerksbetriebe, Fachhändler und Planer auf die Software.",
+  },
+  {
+    name: "PYTHA",
+    kuerzel: "PY",
+    website: "https://www.pytha.de/",
+    beschreibung:
+      "PYTHA ist ein universelles 3D-CAD-System, das komplett in Deutschland entwickelt wird und neben Möbeldesign auch Laden- und Messebau abdeckt. Die patentierte Footprint-Technologie erkennt beim Konstruieren automatisch passende Verbinder wie Dübel oder Minifix.",
+  },
+  {
+    name: "TopSolid'Wood",
+    kuerzel: "TS",
+    website: "https://www.topsolid.com/en/products/topsolidwood",
+    beschreibung:
+      "TopSolid'Wood vom französischen Anbieter Missler Software baut auf dem Siemens-Parasolid-Kern auf und richtet sich an Tischler, Innenausbauer, Ladenbauer und CNC-Zulieferer. Bearbeitungsschritte werden schon während der 3D-Modellierung mitgedacht, das CAM-Modul steuert Maschinen maschinenneutral bis zur 5-Achs-Simultanbearbeitung an.",
+  },
+  {
+    name: "TrunCAD",
+    kuerzel: "TC",
+    website: "https://truncad.de/",
+    beschreibung:
+      "TrunCAD wird seit 2004 von der TrunCAD GmbH aus Lindau entwickelt und zielt auf schnelle, einfache Möbel- und Küchenplanung mit automatischer Stücklistenerstellung. Laut Anbieter nutzen weltweit mehr als 2.000 Betriebe die Software, zusätzlich lässt sich ein Online-Konfigurator in die eigene Website einbinden.",
+  },
+  {
+    name: "interiorcad",
+    kuerzel: "IC",
+    website: "https://www.vectorworks.de/vectorworks/interiorcad-powered-vectorworks",
+    beschreibung:
+      "interiorcad powered by Vectorworks wird seit 1997 von der extragroup GmbH in Münster entwickelt und nutzt als CAD-Kern die Grafiksoftware Vectorworks, die 2D- und 3D-Konstruktion auf einem Niveau verbindet. Für die Kalkulation gibt es eine direkte Schnittstelle zur Software Corpora, sodass Konstruktionsdaten nicht doppelt erfasst werden müssen.",
+  },
+  {
+    name: "SolidWorks (mit SWOOD)",
+    kuerzel: "SW",
+    website: "https://swood.eficad.com/",
+    beschreibung:
+      "SolidWorks ist die verbreitete mechanische 3D-CAD-Plattform von Dassault Systèmes; für den Möbel- und Holzbereich wird sie erst durch die Erweiterung SWOOD interessant. SWOOD stammt vom französischen Anbieter EFICAD, ist seit 2009 am Markt und steuert gängige Holzbearbeitungs-CNC inklusive Kantenanleimung direkt aus dem 3D-Modell an.",
+  },
+  {
+    name: "AutoCAD",
+    kuerzel: "AC",
+    website: "https://www.autodesk.com/de/products/autocad/",
+    beschreibung:
+      "AutoCAD von Autodesk ist ein allgemeines technisches Zeichenprogramm ohne Branchenfokus auf Möbel- oder Innenausbau. Für Zuschnittlisten, Materiallisten oder eine direkte CNC-Ausgabe braucht es zusätzliche Erweiterungen – dafür ist der Einstieg oft günstiger als bei den spezialisierten Branchenlösungen.",
+  },
+];
+
 const faqs = [
   {
     q: "Brauche ich CAD oder gleich CAD/CAM?",
@@ -96,6 +158,8 @@ export default function CadCamSoftwarePage() {
       </div>
 
       <GuideShell>
+        <IndependenceNote />
+
         <GuideSection
           title="Software im Vergleich"
           intro="Eine Auswahl gängiger Programme in der Branche – Zielgruppe und Besonderheit auf einen Blick:"
@@ -105,6 +169,13 @@ export default function CadCamSoftwarePage() {
             rows={software}
             note="Angaben ohne Gewähr, Stand der Recherche. Preise variieren stark je nach Modulumfang und Betriebsgröße – am besten direkt beim Anbieter anfragen oder eine Testversion nutzen."
           />
+        </GuideSection>
+
+        <GuideSection
+          title="Die Programme im Einzelnen"
+          intro="Kurzporträt je Software mit Link zur Anbieter-Website – zum Aufklappen:"
+        >
+          <SoftwareProfiles items={profiles} />
         </GuideSection>
 
         <GuideSection title="Worauf du bei der Auswahl achten solltest">
