@@ -13,6 +13,43 @@ import {
   type CadProdukt,
 } from "@/components/downloads/cad.config";
 
+function DownloadIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M12 3v12" />
+      <path d="M7 11l5 5 5-5" />
+      <path d="M5 21h14" />
+    </svg>
+  );
+}
+
+function InfinityIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M12 12C9 8 5 8 5 12s4 4 7 0c3-4 7-4 7 0s-4 4-7 0" />
+    </svg>
+  );
+}
+
+function SlidersIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="4" y1="12" x2="20" y2="12" />
+      <line x1="4" y1="18" x2="20" y2="18" />
+      <circle cx="15" cy="6" r="2" fill="currentColor" stroke="none" />
+      <circle cx="9" cy="12" r="2" fill="currentColor" stroke="none" />
+      <circle cx="18" cy="18" r="2" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+const vorteileIcons: Record<string, typeof DownloadIcon> = {
+  "Sofortiger Download": DownloadIcon,
+  "Unbegrenzte Nutzung": InfinityIcon,
+  "Individuell anpassbar": SlidersIcon,
+};
+
 export const metadata: Metadata = {
   title: "CAD-Vorlagen für Schreiner",
   description:
@@ -143,16 +180,25 @@ export default function CadPage() {
         })}
       </div>
 
-      {/* Vorteile */}
+      {/* Vorteile – bewusst als eigene, umrandete Box statt weiterer Produktkarten,
+          damit klar ist: das sind Kaufargumente, keine weiteren Downloads. */}
       <div className="mt-16">
         <h2 className="text-2xl">Vorteile im Überblick</h2>
-        <div className="mt-6 grid gap-4 sm:grid-cols-3">
-          {cadVorteile.map((v) => (
-            <div key={v.titel} className="rounded-[var(--radius)] border border-border bg-surface p-5">
-              <h3 className="font-medium text-ink">{v.titel}</h3>
-              <p className="mt-1.5 text-sm text-ink-muted">{v.text}</p>
-            </div>
-          ))}
+        <div className="mt-6 grid divide-y divide-border overflow-hidden rounded-[var(--radius)] border border-border bg-surface-2/40 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          {cadVorteile.map((v) => {
+            const Icon = vorteileIcons[v.titel];
+            return (
+              <div key={v.titel} className="flex flex-col items-center gap-3 p-6 text-center">
+                {Icon && (
+                  <span className="inline-flex size-11 items-center justify-center rounded-lg bg-accent-soft text-accent">
+                    <Icon className="size-5" />
+                  </span>
+                )}
+                <h3 className="font-medium text-ink">{v.titel}</h3>
+                <p className="text-sm text-ink-muted">{v.text}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
 
