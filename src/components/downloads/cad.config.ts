@@ -21,6 +21,8 @@ export interface CadProdukt {
   istPaketAngebot?: boolean;
   /** true = auf der Alt-Seite ohne Inhalt, noch nicht veröffentlichen. */
   draft?: boolean;
+  /** Screenshot des CAD-Blocks, z. B. "/cad/einbauschrank-rueckwaende.jpg". Ohne Angabe zeigt die Karte den Platzhalter. */
+  bild?: string;
 }
 
 export interface CadPaket {

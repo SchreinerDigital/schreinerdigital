@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Container } from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Badge } from "@/components/ui/badge";
@@ -56,6 +57,9 @@ export const metadata: Metadata = {
     "Fertige 2D-Zeichenvorlagen im DWG-Format für die DIN-gerechte Zeichnung: Einbauschrank, Möbelbau und Innenausbau. Kauf startet in Kürze.",
   alternates: { canonical: "/cad" },
 };
+
+/** Zeigt an, solange ein Produkt noch keinen echten Screenshot hat (siehe CadProdukt.bild). */
+const PLATZHALTER_BILD = "/cad/platzhalter.jpg";
 
 const kategorien: CadProdukt["kategorie"][] = ["Einbauschrank", "Moebelbau", "Innenausbau"];
 
@@ -167,10 +171,21 @@ export default function CadPage() {
                   {einzelteile.map((p) => (
                     <li
                       key={p.slug}
-                      className="flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-5"
+                      className="flex h-full flex-col overflow-hidden rounded-[var(--radius)] border border-border bg-surface"
                     >
-                      <h3 className="text-lg">{p.titel}</h3>
-                      <p className="mt-2 flex-1 text-sm text-ink-muted">{p.beschreibung}</p>
+                      <div className="relative aspect-4/3 w-full overflow-hidden border-b border-border bg-surface-2">
+                        <Image
+                          src={p.bild ?? PLATZHALTER_BILD}
+                          alt={p.titel}
+                          fill
+                          className="object-cover"
+                          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        />
+                      </div>
+                      <div className="flex flex-1 flex-col p-5">
+                        <h3 className="text-lg">{p.titel}</h3>
+                        <p className="mt-2 flex-1 text-sm text-ink-muted">{p.beschreibung}</p>
+                      </div>
                     </li>
                   ))}
                 </ul>
