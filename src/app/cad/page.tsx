@@ -5,6 +5,7 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { Badge } from "@/components/ui/badge";
 import { NewsletterForm } from "@/components/newsletter/newsletter-form";
 import { FaqAccordion } from "@/components/tools/guide";
+import { cn } from "@/lib/cn";
 import {
   CATEGORY_LABELS,
   cadFaq,
@@ -111,22 +112,23 @@ export default function CadPage() {
         <p className="mt-2 text-sm text-ink-muted">
           Nutze das Einsparpotenzial der Kombi-Pakete!
         </p>
-        <div className="mt-6 grid gap-4 sm:grid-cols-3">
+        <div className="mt-6 grid gap-4 sm:grid-cols-3 sm:items-center">
           {cadPakete.map((p) => (
             <div
               key={p.slug}
-              className={`flex h-full flex-col rounded-[var(--radius)] border p-6 ${
+              className={cn(
+                "flex h-full flex-col rounded-[var(--radius)] border p-6",
                 p.hervorgehoben
-                  ? "border-accent bg-accent-soft/20"
-                  : "border-border bg-surface"
-              }`}
+                  ? "relative z-10 border-2 border-accent bg-accent-soft/40 shadow-xl shadow-accent/15 sm:-my-4 sm:p-7"
+                  : "border-border bg-surface",
+              )}
             >
               {p.hervorgehoben && (
                 <Badge tone="accent" className="mb-3 self-start">
-                  Bestes Angebot
+                  Beliebteste Wahl
                 </Badge>
               )}
-              <h3 className="text-lg">{p.titel}</h3>
+              <h3 className={p.hervorgehoben ? "text-xl" : "text-lg"}>{p.titel}</h3>
               <p className="mt-1.5 text-sm text-ink-muted">{p.beschreibung}</p>
               <ul className="mt-4 flex-1 space-y-1.5 text-sm text-ink-muted">
                 {p.enthaelt.map((item) => (

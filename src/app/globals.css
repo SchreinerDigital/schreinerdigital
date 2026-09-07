@@ -40,20 +40,22 @@
 
 .dark {
   --paper: #14110d;
-  --surface: #201b14;
-  --surface-2: #2b2318;
+  /* Surface/border spaced further from --paper than before so cards and
+     dividers actually stand out, not just blend into the dark background. */
+  --surface: #26201a;
+  --surface-2: #342a1e;
 
   --ink: #ece4d7;
   --ink-muted: #ab9e88;
   --ink-faint: #8a7d68;
 
-  --border: #3b3122;
-  --border-strong: #524632;
+  --border: #4a3d2b;
+  --border-strong: #5f5138;
 
   --accent: #ff7a1a;
   --accent-hover: #ff9142;
   --accent-contrast: #1a0f04;
-  --accent-soft: #2b2013;
+  --accent-soft: #382718;
 
   --ring: #ff7a1a;
 }

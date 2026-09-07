@@ -44,18 +44,6 @@ export const CATEGORY_LABELS: Record<CadProdukt["kategorie"], string> = {
 
 export const cadPakete: CadPaket[] = [
   {
-    slug: "premium-paket",
-    titel: "Premium-Paket",
-    beschreibung: "Alle Vorlagen im Komplettpack.",
-    enthaelt: [
-      "Alle Inhalte des Möbelbau-Pakets",
-      "Alle Inhalte des Innenausbau-Pakets",
-    ],
-    updateMonate: 24,
-    preis: null,
-    hervorgehoben: true,
-  },
-  {
     slug: "moebelbau-paket",
     titel: "Möbelbau-Paket",
     beschreibung: "Nützliche Vorlagen für deine DIN-Zeichnung im Möbelbau!",
@@ -72,6 +60,18 @@ export const cadPakete: CadPaket[] = [
     ],
     updateMonate: 12,
     preis: null,
+  },
+  {
+    slug: "premium-paket",
+    titel: "Premium-Paket",
+    beschreibung: "Alle Vorlagen im Komplettpack.",
+    enthaelt: [
+      "Alle Inhalte des Möbelbau-Pakets",
+      "Alle Inhalte des Innenausbau-Pakets",
+    ],
+    updateMonate: 24,
+    preis: null,
+    hervorgehoben: true,
   },
   {
     slug: "innenausbau-paket",
