@@ -73,6 +73,18 @@ const profiles: SoftwareProfile[] = [
     website: "https://www.schreiners-buero.de/",
     beschreibung:
       "Schreiners Büro wird von einem gelernten Schreiner mit IT-Hintergrund entwickelt und ist seit rund 25 Jahren am Markt. Die Software läuft plattformübergreifend auf Windows, macOS und Linux und lässt sich auch von unterwegs auf Tablet oder Smartphone nutzen.",
+    geeignetFuer:
+      "Kleine und mittlere Betriebe, die plattformunabhängig (auch macOS/Linux) arbeiten wollen.",
+    vorteile: [
+      "Von einem gelernten Schreiner mit IT-Hintergrund entwickelt – praxisnah",
+      "Läuft auf Windows, macOS und Linux",
+      "Seit rund 25 Jahren am Markt, entsprechend ausgereift",
+    ],
+    nachteile: [
+      "Kleinerer Anbieter, dadurch potenziell kleineres Partner-/Schnittstellen-Ökosystem",
+      "Weniger auf sehr große Betriebe ausgelegt",
+      "Cloud-/Mobilfunktionen weniger im Vordergrund als bei neueren Cloud-Tools",
+    ],
   },
   {
     name: "Sander & Doll (Forma)",
@@ -80,6 +92,18 @@ const profiles: SoftwareProfile[] = [
     website: "https://sander-doll.com/produkte/forma",
     beschreibung:
       "Forma von der Sander & Doll AG deckt Mengen- und Zuschnittberechnung sowie Abschlagsrechnungen in allen gängigen Varianten ab und importiert Stücklisten direkt aus CAD-Programmen. Neue Kundinnen und Kunden erhalten in den ersten sechs Wochen kostenlose Unterstützung durch ein eigenes Einführungsteam.",
+    geeignetFuer:
+      "Schreiner, Tischler und Fensterbauer mit Bedarf an detaillierter Zuschnittberechnung.",
+    vorteile: [
+      "Deckt Mengen- und Zuschnittberechnung in vielen Varianten ab",
+      "Kostenlose Einführungsunterstützung in den ersten sechs Wochen",
+      "Importiert Stücklisten direkt aus CAD-Programmen",
+    ],
+    nachteile: [
+      "Fensterbau-/Zuschnittfokus, dadurch für reine Möbelbaubetriebe teils ungenutzte Funktionen",
+      "Einarbeitung in die Abschlagsrechnungs-Logik nötig",
+      "Preise nur auf Anfrage",
+    ],
   },
   {
     name: "HERO",
@@ -87,6 +111,18 @@ const profiles: SoftwareProfile[] = [
     website: "https://hero-software.de/anwendungen/tischler-software",
     beschreibung:
       "HERO ist eine cloudbasierte Handwerkersoftware mit eigener App für Android und iOS, die Kalkulation, Auftragsplanung und Rechnungsstellung in einem System bündelt. Die App erlaubt zusätzlich das digitale Aufmaß direkt auf der Baustelle, die Software lässt sich 14 Tage kostenlos und unverbindlich testen.",
+    geeignetFuer:
+      "Kleine bis mittlere Betriebe, die Kalkulation und Aufmaß mobil aus einer App heraus erledigen wollen.",
+    vorteile: [
+      "Cloudbasiert und ortsunabhängig nutzbar",
+      "Eigene App fürs Aufmaß direkt auf der Baustelle",
+      "14 Tage kostenlos und unverbindlich testbar",
+    ],
+    nachteile: [
+      "Laufende Abo-Kosten statt Einmallizenz",
+      "Benötigt Internetverbindung für die volle Funktionalität",
+      "Cloud-Ansatz erfordert Vertrauen in externe Datenhaltung",
+    ],
   },
   {
     name: "Corpora",
@@ -94,6 +130,18 @@ const profiles: SoftwareProfile[] = [
     website: "https://p-s-s.de/",
     beschreibung:
       "Corpora vom Anbieter PinnCalc aus Eckernförde ist seit 1987 in der Branche im Einsatz und bildet den kompletten Auftragsprozess vom Angebot bis zur Rechnung ab. Über direkte Schnittstellen zu den CAD-Programmen interiorcad und TrunCAD lassen sich Konstruktionsdaten ohne doppelte Erfassung übernehmen.",
+    geeignetFuer:
+      "Betriebe jeder Größe, die eine seit Jahrzehnten etablierte Lösung mit CAD-Schnittstellen suchen.",
+    vorteile: [
+      "Seit 1987 in der Branche, entsprechend ausgereift",
+      "Direkte Schnittstellen zu interiorcad und TrunCAD",
+      "Bildet den kompletten Prozess vom Angebot bis zur Rechnung ab",
+    ],
+    nachteile: [
+      "Älterer Systemkern kann modernerer Cloud-Software im Bedienkomfort hinterherhinken",
+      "Volle Stärke erst im Verbund mit passendem CAD-Programm",
+      "Preise nur auf Anfrage",
+    ],
   },
   {
     name: "Plancraft",
@@ -101,6 +149,18 @@ const profiles: SoftwareProfile[] = [
     website: "https://plancraft.com/de-de/gewerke/software-schreiner",
     beschreibung:
       "Plancraft ist eine cloudbasierte Handwerkersoftware aus Hamburg, gegründet 2020 und laut Anbieter mittlerweile von über 30.000 Handwerksbetrieben in mehreren Ländern genutzt. Aufmaß, Kalkulation, Plantafel und Rechnung laufen in einer App zusammen, eine GAEB-Schnittstelle deckt auch öffentliche Ausschreibungen ab.",
+    geeignetFuer:
+      "Kleine bis mittlere Betriebe, die eine moderne, mobile All-in-one-App bevorzugen.",
+    vorteile: [
+      "Aufmaß, Kalkulation, Plantafel und Rechnung in einer App",
+      "GAEB-Schnittstelle auch für öffentliche Ausschreibungen",
+      "Laut Anbieter breite, wachsende Nutzerbasis",
+    ],
+    nachteile: [
+      "Jüngerer Anbieter (seit 2020) mit kürzerer Erfolgshistorie als etablierte ERP-Anbieter",
+      "Cloudbasiert, dauerhafte Internetverbindung nötig",
+      "Tiefe Branchenschnittstellen (z. B. zu CAD) noch nicht so ausgereift wie bei langjährigen Kombinationen",
+    ],
   },
   {
     name: "Sage 50 Handwerk",
@@ -108,6 +168,17 @@ const profiles: SoftwareProfile[] = [
     website: "https://www.sage.com/de-de/produkte/sage-50-handwerk/",
     beschreibung:
       "Sage 50 Handwerk ist die kaufmännische Lösung des etablierten, branchenübergreifenden ERP-Anbieters Sage mit einer eigenen Ausrichtung für Tischler und Schreiner. Von der Angebotserstellung über GAEB-Ausschreibungen bis zu Abschlags- und Schlussrechnungen deckt die Software die komplette kaufmännische Prozesskette ab.",
+    geeignetFuer: "Betriebe, die vor allem eine solide Buchhaltung mit Handwerksbezug suchen.",
+    vorteile: [
+      "Etablierter, großer ERP-Anbieter mit langer Erfahrung",
+      "Deckt GAEB, Abschlags- und Schlussrechnungen ab",
+      "Cloud-Zusatzpaket für Monteure im Außendienst verfügbar",
+    ],
+    nachteile: [
+      "Branchenübergreifend entwickelt, kein reiner Schreiner-/Tischler-Fokus",
+      "Volle Cloud-Funktionalität erfordert Zusatzpaket",
+      "Weniger tief in der Zuschnitt-/Konstruktionslogik als reine Holz-Branchensoftware",
+    ],
   },
   {
     name: "Zentro",
@@ -115,6 +186,18 @@ const profiles: SoftwareProfile[] = [
     website: "https://www.zentro.at/branchen/tischler-schreiner-software",
     beschreibung:
       "Zentro ist ein ERP-Anbieter aus dem österreichischen Almtal, der seit fast 20 Jahren maßgeschneiderte Lösungen für Tischler und Schreiner entwickelt. Der Fokus liegt auf durchgängigen Prozessen für projektorientierte Betriebe – vom ersten Kundenkontakt bis zur Abrechnung.",
+    geeignetFuer:
+      "Projektorientierte Tischler- und Schreinerbetriebe mit Fokus auf durchgängige Prozesse.",
+    vorteile: [
+      "Maßgeschneiderte Lösungen speziell für Tischler und Schreiner",
+      "Fast 20 Jahre Branchenerfahrung",
+      "Fokus auf durchgängige Prozesse vom Kontakt bis zur Abrechnung",
+    ],
+    nachteile: [
+      "Kleinerer, regional verankerter Anbieter (Österreich) mit entsprechend kleinerem Ökosystem",
+      "Weniger internationale Bekanntheit als große ERP-Marken",
+      "Preise nur auf Anfrage",
+    ],
   },
   {
     name: "OSD",
@@ -122,6 +205,17 @@ const profiles: SoftwareProfile[] = [
     website: "https://www.osd.de/branchen/die-software-fuer-schreiner-tischler/",
     beschreibung:
       "OS Datensysteme (OSD) bietet seit 1984 durchgängige Software für Schreiner, Tischler, Laden- und Messebau sowie Möbelfertigung und deckt damit CAD, Kalkulation, ERP/PPS und CNC-Steuerung in einem System ab. Der Anbieter zählt nach eigenen Angaben über 4.000 Nutzerbetriebe in Deutschland.",
+    geeignetFuer: "Betriebe, die CAD, Kalkulation, ERP/PPS und CNC-Steuerung aus einer Hand wollen.",
+    vorteile: [
+      "Deckt CAD, Kalkulation, ERP/PPS und CNC-Steuerung in einem System ab",
+      "Seit 1984 am Markt, laut Anbieter über 4.000 Nutzerbetriebe",
+      "Eine Datenbasis für Konstruktion und Kalkulation statt getrennter Systeme",
+    ],
+    nachteile: [
+      "Großer Funktionsumfang kann für sehr kleine Betriebe überdimensioniert sein",
+      "Geschlossenes Gesamtsystem, Umstieg auf einzelne Fremdmodule schwieriger",
+      "Einarbeitung in ein derart umfangreiches System braucht Zeit",
+    ],
   },
   {
     name: "Kuhnle NG",
@@ -129,6 +223,17 @@ const profiles: SoftwareProfile[] = [
     website: "https://www.kuhnle.com/KuhnleNG.html",
     beschreibung:
       "Kuhnle entwickelt seit über 40 Jahren Branchensoftware für Tischler und Schreiner und ist nach eigenen Angaben in über 2.000 Betrieben im Einsatz. Kuhnle NG Flex richtet sich an kleine und mittlere Betriebe, NG Professional bringt mit zusätzlichen Modulen und Schnittstellen mehr Flexibilität für größere Betriebe.",
+    geeignetFuer: "Betriebe, die mit einer Lösung mitwachsen wollen – von Flex bis Professional.",
+    vorteile: [
+      "Über 40 Jahre Branchenerfahrung",
+      "Zwei Ausbaustufen (Flex/Professional) je nach Betriebsgröße",
+      "Laut Anbieter in über 2.000 Betrieben im Einsatz",
+    ],
+    nachteile: [
+      "Umstieg von Flex auf Professional bedeutet Migrationsaufwand",
+      "Traditioneller Systemaufbau statt cloud-first wie bei jüngeren Anbietern",
+      "Preise nur auf Anfrage",
+    ],
   },
 ];
 

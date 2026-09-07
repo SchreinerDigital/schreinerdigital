@@ -213,11 +213,35 @@ export interface SoftwareProfile {
   kuerzel: string;
   /** Short, 2–4 sentence portrait – adds detail beyond the comparison table. */
   beschreibung: ReactNode;
+  /** One sentence: who this is the best fit for. */
+  geeignetFuer: string;
+  /** 2–4 concrete advantages. */
+  vorteile: string[];
+  /** 2–4 concrete trade-offs or limitations. */
+  nachteile: string[];
   /** Link to the provider's own site or product page. */
   website: string;
 }
 
-/** Expandable per-product portraits: monogram, short article, link to the provider's own site. */
+function PlusCircleIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 8v8M8 12h8" />
+    </svg>
+  );
+}
+
+function MinusCircleIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8 12h8" />
+    </svg>
+  );
+}
+
+/** Expandable per-product portraits: monogram, short article, Vorteile/Nachteile, link to the provider's own site. */
 export function SoftwareProfiles({ items }: { items: SoftwareProfile[] }) {
   return (
     <Accordion
@@ -231,8 +255,35 @@ export function SoftwareProfiles({ items }: { items: SoftwareProfile[] }) {
           </span>
         ),
         content: (
-          <div className="space-y-3 pl-11">
+          <div className="space-y-4 pl-11">
             <p className="text-sm leading-relaxed text-ink-muted">{item.beschreibung}</p>
+            <p className="text-sm leading-relaxed text-ink-muted">
+              <strong className="text-ink">Besonders geeignet für:</strong> {item.geeignetFuer}
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <h4 className="flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-ink">
+                  <PlusCircleIcon className="size-3.5 text-accent" />
+                  Vorteile
+                </h4>
+                <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-ink-muted">
+                  {item.vorteile.map((v, i) => (
+                    <li key={i}>{v}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 className="flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-ink">
+                  <MinusCircleIcon className="size-3.5 text-ink-faint" />
+                  Nachteile
+                </h4>
+                <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-ink-muted">
+                  {item.nachteile.map((n, i) => (
+                    <li key={i}>{n}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
             <a
               href={item.website}
               target="_blank"
