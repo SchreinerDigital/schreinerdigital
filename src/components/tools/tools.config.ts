@@ -37,7 +37,7 @@ export const tools: ToolDef[] = [
   {
     slug: "durchbiegung",
     seoTitle: "Durchbiegung Regalboden berechnen",
-    title: "Durchbiegung",
+    title: "Durchbiegungsrechner",
     description:
       "Durchbiegung eines Regal- oder Schrankbodens unter Last aus Werkstoff, Abmessungen und Belastungsart abschätzen.",
     ready: true,
@@ -45,7 +45,7 @@ export const tools: ToolDef[] = [
   {
     slug: "stundensatz",
     seoTitle: "Stundensatz berechnen für Schreiner",
-    title: "Stundensatz",
+    title: "Stundensatzrechner",
     description:
       "Kostendeckenden Stundenverrechnungssatz aus Fixkosten und produktiven Stunden berechnen.",
     ready: true,

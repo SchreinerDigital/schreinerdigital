@@ -26,8 +26,8 @@ const columns = [
       { href: "/tools/plattengewicht", label: "Plattengewichtsrechner" },
       { href: "/tools/tuerenmass", label: "Türenmaß-Rechner" },
       { href: "/tools/restlaenge", label: "Restlängenrechner" },
-      { href: "/tools/durchbiegung", label: "Durchbiegung" },
-      { href: "/tools/stundensatz", label: "Stundensatz" },
+      { href: "/tools/durchbiegung", label: "Durchbiegungsrechner" },
+      { href: "/tools/stundensatz", label: "Stundensatzrechner" },
     ],
   },
   {
