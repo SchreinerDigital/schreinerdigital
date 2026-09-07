@@ -45,7 +45,19 @@ const navGroups: NavGroup[] = [
       { href: "/digitalisierung/cad-cam-software", label: "CAD/CAM-Software" },
       { href: "/digitalisierung/kalkulationssoftware", label: "Kalkulationssoftware" },
       { href: "/digitalisierung/aufmass-apps", label: "Aufmaß-Apps" },
-      { href: "/digitalisierung/e-rechnung", label: "E-Rechnung" },
+    ],
+  },
+  {
+    id: "betrieb-recht",
+    label: "Betrieb & Recht",
+    overviewHref: "/betrieb-und-recht",
+    overviewLabel: "Betrieb & Recht im Überblick",
+    items: [
+      { href: "/betrieb-und-recht/gewaehrleistung-maengelhaftung", label: "Gewährleistung & Mängel" },
+      { href: "/betrieb-und-recht/meisterpflicht-handwerksordnung", label: "Meisterpflicht & HwO" },
+      { href: "/betrieb-und-recht/aufbewahrungspflichten-gobd", label: "Aufbewahrung & GoBD" },
+      { href: "/betrieb-und-recht/datenschutz-dsgvo", label: "Datenschutz (DSGVO)" },
+      { href: "/betrieb-und-recht/e-rechnung", label: "E-Rechnung" },
     ],
   },
   {
@@ -117,13 +129,13 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-paper/85 backdrop-blur supports-[backdrop-filter]:bg-paper/70">
-      <Container className="flex h-16 items-center justify-between gap-4">
+      <Container className="flex h-16 items-center justify-between gap-3">
         <Link href="/" className="shrink-0 rounded-sm">
           <Wordmark className="text-[1.3rem]" />
           <span className="sr-only">schreiner.digital – Startseite</span>
         </Link>
 
-        <nav ref={navRef} className="hidden items-center gap-1 lg:flex">
+        <nav ref={navRef} className="hidden items-center gap-1 xl:flex">
           {navGroups.map((g) => (
             <div key={g.id} className="relative">
               <button
@@ -132,7 +144,7 @@ export function SiteHeader() {
                 aria-haspopup="menu"
                 onClick={() => setOpenGroup((v) => (v === g.id ? null : g.id))}
                 className={cn(
-                  "flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium transition-colors",
+                  "flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 text-sm font-medium transition-colors",
                   isGroupActive(g) ? "text-accent" : "text-ink-muted hover:text-ink",
                 )}
               >
@@ -185,7 +197,7 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <ButtonLink href="/tools" size="sm" className="hidden sm:inline-flex">
+          <ButtonLink href="/tools" size="sm" className="hidden whitespace-nowrap sm:inline-flex">
             Rechner öffnen
           </ButtonLink>
           <button
@@ -193,7 +205,7 @@ export function SiteHeader() {
             aria-label="Menü"
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((v) => !v)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-ink-muted lg:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-ink-muted xl:hidden"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
               {mobileOpen ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
@@ -203,7 +215,7 @@ export function SiteHeader() {
       </Container>
 
       {mobileOpen && (
-        <div className="border-t border-border bg-paper lg:hidden">
+        <div className="border-t border-border bg-paper xl:hidden">
           <Container className="flex flex-col py-2">
             {navGroups.map((g) => (
               <details key={g.id} className="group [&_summary::-webkit-details-marker]:hidden">

@@ -4,6 +4,17 @@ import createMDX from "@next/mdx";
 const nextConfig: NextConfig = {
   // Allow pages/routes to be authored as .md / .mdx in addition to the usual extensions.
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+  async redirects() {
+    return [
+      {
+        // E-Rechnung moved from Digitalisierung to Betrieb & Recht (it's a legal
+        // obligation, not a software choice) – keep the old URL working.
+        source: "/digitalisierung/e-rechnung",
+        destination: "/betrieb-und-recht/e-rechnung",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 const withMDX = createMDX({

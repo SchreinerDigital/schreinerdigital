@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "E-Rechnungspflicht 2025 – was für Schreinereien gilt",
   description:
     "Die E-Rechnungspflicht im B2B-Geschäftsverkehr seit 2025: Empfangspflicht, Übergangsfristen fürs Ausstellen und die zulässigen Formate XRechnung und ZUGFeRD.",
-  alternates: { canonical: "/digitalisierung/e-rechnung" },
+  alternates: { canonical: "/betrieb-und-recht/e-rechnung" },
 };
 
 const fristen = [
@@ -38,16 +38,20 @@ const faqs = [
     q: "Was ist der Unterschied zwischen XRechnung und ZUGFeRD?",
     a: "XRechnung ist ein reines XML-Format, ursprünglich für Rechnungen an öffentliche Auftraggeber entwickelt. ZUGFeRD kombiniert eine für Menschen lesbare PDF-Ansicht mit eingebetteten, strukturierten XML-Daten – dadurch bleibt die Rechnung auch optisch prüfbar.",
   },
+  {
+    q: "Wie lange muss ich eine E-Rechnung aufbewahren?",
+    a: "Wie jeder andere Buchungsbeleg unterliegt auch die E-Rechnung den allgemeinen Aufbewahrungspflichten – aktuell 8 Jahre. Aufzubewahren ist dabei der ursprüngliche strukturierte Datensatz, nicht nur ein Ausdruck. Mehr dazu unter Aufbewahrungspflichten & GoBD.",
+  },
 ];
 
 export default function ERechnungPage() {
   return (
     <Container className="py-12 sm:py-16">
       <Link
-        href="/digitalisierung"
+        href="/betrieb-und-recht"
         className="font-mono text-xs uppercase tracking-[0.14em] text-ink-faint transition-colors hover:text-accent"
       >
-        ← Digitalisierung
+        ← Betrieb & Recht
       </Link>
 
       <div className="mt-6 max-w-2xl">
@@ -102,6 +106,21 @@ export default function ERechnungPage() {
             dazu unter{" "}
             <Link href="/digitalisierung/kalkulationssoftware" className="text-accent hover:underline">
               Kalkulations- und Auftragssoftware
+            </Link>
+            .
+          </p>
+        </GuideSection>
+
+        <GuideSection title="Aufbewahrung">
+          <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+            E-Rechnungen unterliegen denselben Aufbewahrungspflichten wie
+            andere Buchungsbelege. Aufzubewahren ist dabei der ursprüngliche
+            strukturierte Datensatz (XML bzw. die eingebetteten Daten bei
+            ZUGFeRD), nicht nur ein Ausdruck oder Screenshot. Details zu
+            Fristen und den GoBD-Anforderungen an die digitale Archivierung
+            findest du unter{" "}
+            <Link href="/betrieb-und-recht/aufbewahrungspflichten-gobd" className="text-accent hover:underline">
+              Aufbewahrungspflichten & GoBD
             </Link>
             .
           </p>
