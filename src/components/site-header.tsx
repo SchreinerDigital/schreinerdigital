@@ -35,6 +35,14 @@ const navGroups: NavGroup[] = [
       { href: "/oberflaechen", label: "Oberflächen" },
     ],
   },
+  {
+    id: "downloads",
+    label: "Downloads",
+    items: [
+      { href: "/vorlagen", label: "Vorlagen" },
+      { href: "/cad", label: "CAD-Vorlagen" },
+    ],
+  },
 ];
 
 function ChevronIcon({ className }: { className?: string }) {
@@ -98,7 +106,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border bg-paper/85 backdrop-blur supports-[backdrop-filter]:bg-paper/70">
       <Container className="flex h-16 items-center justify-between gap-4">
         <Link href="/" className="shrink-0 rounded-sm">
-          <Wordmark className="text-[1.15rem]" />
+          <Wordmark className="text-[1.3rem]" />
           <span className="sr-only">schreiner.digital – Startseite</span>
         </Link>
 
@@ -160,24 +168,6 @@ export function SiteHeader() {
               )}
             </div>
           ))}
-          <Link
-            href="/vorlagen"
-            className={cn(
-              "rounded-full px-3 py-2 text-sm font-medium transition-colors",
-              isActive("/vorlagen") ? "text-accent" : "text-ink-muted hover:text-ink",
-            )}
-          >
-            Vorlagen
-          </Link>
-          <Link
-            href="/cad"
-            className={cn(
-              "rounded-full px-3 py-2 text-sm font-medium transition-colors",
-              isActive("/cad") ? "text-accent" : "text-ink-muted hover:text-ink",
-            )}
-          >
-            CAD-Vorlagen
-          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -239,24 +229,6 @@ export function SiteHeader() {
                 </div>
               </details>
             ))}
-            <Link
-              href="/vorlagen"
-              className={cn(
-                "rounded-lg px-3 py-3 text-sm font-medium",
-                isActive("/vorlagen") ? "text-accent" : "text-ink-muted",
-              )}
-            >
-              Vorlagen
-            </Link>
-            <Link
-              href="/cad"
-              className={cn(
-                "rounded-lg px-3 py-3 text-sm font-medium",
-                isActive("/cad") ? "text-accent" : "text-ink-muted",
-              )}
-            >
-              CAD-Vorlagen
-            </Link>
           </Container>
         </div>
       )}
