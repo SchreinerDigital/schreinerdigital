@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { subscribeToNewsletter } from "@/lib/newsletter";
+import { siteConfig } from "@/lib/site";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -37,11 +38,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Ungültige Anfrage." }, { status: 400 });
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   const result = await subscribeToNewsletter({
     email,
     source,
-    redirectionUrl: `${siteUrl}${REDIRECTS[source]}`,
+    redirectionUrl: `${siteConfig.url}${REDIRECTS[source]}`,
   });
 
   return NextResponse.json(result, { status: result.ok ? 200 : 502 });
