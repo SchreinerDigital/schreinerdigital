@@ -47,6 +47,11 @@ const software = [
     "Baut auf Vectorworks auf, in Kombination mit der Kalkulationssoftware Corpora als durchgängige Lösung",
   ],
   [
+    "SolidWorks (mit SWOOD)",
+    "Schreiner, Tischler, Möbeldesigner, Innenarchitekten – vom kleinen Handwerksbetrieb bis zur Industrie",
+    "SWOOD ist eine Erweiterung für SolidWorks von der französischen Firma EFICAD, seit 2009 am Markt, steuert gängige Holzbearbeitungs-CNC inklusive Kantenanleimung an",
+  ],
+  [
     "AutoCAD",
     "Allgemeine technische Zeichnungen, kein Branchenfokus",
     "Weit verbreitet und günstiger im Einstieg, aber ohne fertige Zuschnittlisten oder direkte CNC-Ausgabe für den Möbelbau",
