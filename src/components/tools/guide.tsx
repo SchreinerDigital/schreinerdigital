@@ -55,6 +55,57 @@ export function SpecTable({
   /** Index of the column that identifies a row (shown as the card heading on phones). */
   titleColumn?: number;
 }) {
+  const table = (
+    <table
+      className="w-full border-collapse text-sm"
+      style={columns.length > 2 ? { minWidth: `${columns.length * 190}px` } : undefined}
+    >
+      <thead>
+        <tr className="border-b border-border bg-surface text-left">
+          {columns.map((col) => (
+            <th
+              key={col}
+              className={cn(
+                "px-4 py-2.5 font-medium text-ink-muted",
+                columns.length > 2 && "text-nowrap",
+              )}
+            >
+              {col}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row, i) => (
+          <tr key={i} className={i > 0 ? "border-t border-border" : undefined}>
+            {row.map((cell, j) => (
+              <td
+                key={j}
+                className={cn(
+                  "px-4 py-2.5 font-mono tabular-nums",
+                  j === 0 ? "text-ink" : "text-ink-muted",
+                )}
+              >
+                {cell}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+
+  // A table with only 2 columns is already narrow enough to fit any screen
+  // on its own – no need for the mobile card fallback below.
+  if (columns.length <= 2) {
+    return (
+      <>
+        <div className="mt-6 overflow-x-auto rounded-[var(--radius)] border border-border">{table}</div>
+        {note && <p className="mt-3 text-xs text-ink-faint">{note}</p>}
+      </>
+    );
+  }
+
   return (
     <>
       {/* Phones: a data table with 3+ columns never fits without sideways scrolling,
@@ -83,37 +134,7 @@ export function SpecTable({
       </div>
 
       <div className="mt-6 hidden overflow-x-auto rounded-[var(--radius)] border border-border sm:block">
-        <table
-          className="w-full border-collapse text-sm"
-          style={{ minWidth: `${columns.length * 190}px` }}
-        >
-          <thead>
-            <tr className="border-b border-border bg-surface text-left">
-              {columns.map((col) => (
-                <th key={col} className="px-4 py-2.5 font-medium text-nowrap text-ink-muted">
-                  {col}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row, i) => (
-              <tr key={i} className={i > 0 ? "border-t border-border" : undefined}>
-                {row.map((cell, j) => (
-                  <td
-                    key={j}
-                    className={cn(
-                      "px-4 py-2.5 font-mono tabular-nums",
-                      j === 0 ? "text-ink" : "text-ink-muted",
-                    )}
-                  >
-                    {cell}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {table}
       </div>
       {note && <p className="mt-3 text-xs text-ink-faint">{note}</p>}
     </>

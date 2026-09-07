@@ -15,13 +15,19 @@ const steps = [
   },
 ];
 
-const massTabelle = [
-  ["635 – 660 mm", "610 mm", "2000 – 2025 mm", "1985 mm"],
-  ["760 – 785 mm", "735 mm", "2125 – 2150 mm", "2110 mm"],
-  ["885 – 910 mm", "860 mm", "2250 – 2275 mm", "2235 mm"],
-  ["1010 – 1035 mm", "985 mm", "—", "—"],
-  ["1135 – 1160 mm", "1110 mm", "—", "—"],
-  ["1260 – 1285 mm", "1235 mm", "—", "—"],
+const breiteTabelle = [
+  ["635 – 660 mm", "610 mm"],
+  ["760 – 785 mm", "735 mm"],
+  ["885 – 910 mm", "860 mm"],
+  ["1010 – 1035 mm", "985 mm"],
+  ["1135 – 1160 mm", "1110 mm"],
+  ["1260 – 1285 mm", "1235 mm"],
+];
+
+const hoeheTabelle = [
+  ["2000 – 2025 mm", "1985 mm"],
+  ["2125 – 2150 mm", "2110 mm"],
+  ["2250 – 2275 mm", "2235 mm"],
 ];
 
 const faqs = [
@@ -59,17 +65,19 @@ export function TuerenmassGuide() {
 
       <GuideSection
         title="DIN 18101 Maßtabelle für Standard-Innentüren"
-        intro="Die DIN 18101 regelt das Verhältnis zwischen dem lichten Rohbaumaß der Wandöffnung und dem Türblattmaß. Hier sind die gängigsten Normmaße auf einen Blick:"
+        intro="Die DIN 18101 regelt das Verhältnis zwischen dem lichten Rohbaumaß der Wandöffnung und dem Türblattmaß. Breite und Höhe sind dabei unabhängig voneinander genormt – hier die gängigsten Normmaße auf einen Blick:"
       >
+        <h3 className="mt-8 text-lg font-medium text-ink">Breite</h3>
         <SpecTable
-          columns={[
-            "Lichte Rohbaubreite (Maueröffnung)",
-            "Türblattbreite",
-            "Lichte Rohbauhöhe (ab OFF)",
-            "Türblatthöhe",
-          ]}
-          rows={massTabelle}
+          columns={["Lichte Rohbaubreite (Maueröffnung)", "Türblattbreite"]}
+          rows={breiteTabelle}
           note="* Hinweis: Für die Standard-Türblattbreite 860 mm (sehr häufig bei Wohnräumen) muss die Maueröffnung zwischen 885 mm und 910 mm breit sein."
+        />
+
+        <h3 className="mt-10 text-lg font-medium text-ink">Höhe</h3>
+        <SpecTable
+          columns={["Lichte Rohbauhöhe (ab OFF)", "Türblatthöhe"]}
+          rows={hoeheTabelle}
         />
       </GuideSection>
 
