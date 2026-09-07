@@ -14,6 +14,7 @@ interface NavGroup {
   id: string;
   label: string;
   overviewHref?: string;
+  overviewLabel?: string;
   items: { href: string; label: string }[];
 }
 
@@ -33,7 +34,18 @@ const navGroups: NavGroup[] = [
       { href: "/verbindungstechnik", label: "Verbindungstechnik" },
       { href: "/beschlaege", label: "Beschläge" },
       { href: "/oberflaechen", label: "Oberflächen" },
-      { href: "/digitalisierung", label: "Digitalisierung" },
+    ],
+  },
+  {
+    id: "digitalisierung",
+    label: "Digitalisierung",
+    overviewHref: "/digitalisierung",
+    overviewLabel: "Digitalisierung im Überblick",
+    items: [
+      { href: "/digitalisierung/cad-cam-software", label: "CAD/CAM-Software" },
+      { href: "/digitalisierung/kalkulationssoftware", label: "Kalkulationssoftware" },
+      { href: "/digitalisierung/aufmass-apps", label: "Aufmaß-Apps" },
+      { href: "/digitalisierung/e-rechnung", label: "E-Rechnung" },
     ],
   },
   {
@@ -145,7 +157,7 @@ export function SiteHeader() {
                         role="menuitem"
                         className="block rounded-md px-3 py-2 text-sm font-medium text-ink hover:bg-surface-2"
                       >
-                        Alle {g.label} ansehen
+                        {g.overviewLabel ?? `Alle ${g.label} ansehen`}
                       </Link>
                       <div className="my-1 border-t border-border" />
                     </>
@@ -210,7 +222,7 @@ export function SiteHeader() {
                       href={g.overviewHref}
                       className="rounded-lg px-3 py-2.5 text-sm font-medium text-ink-muted hover:bg-surface-2"
                     >
-                      Alle {g.label} ansehen
+                      {g.overviewLabel ?? `Alle ${g.label} ansehen`}
                     </Link>
                   )}
                   {g.items.map((item) => (
