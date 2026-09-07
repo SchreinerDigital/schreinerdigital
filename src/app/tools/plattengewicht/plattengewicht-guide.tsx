@@ -1,5 +1,4 @@
-import { FaqAccordion, GuideSection, GuideShell, SpecTable, StepList } from "@/components/tools/guide";
-import { MATERIALS_METRIC } from "./materials";
+import { FaqAccordion, GuideSection, GuideShell, StepList } from "@/components/tools/guide";
 
 const steps = [
   {
@@ -15,10 +14,6 @@ const steps = [
     body: "Bei Rechteck: Länge, Breite und Stärke. Bei Rundstab: Durchmesser und Länge. Anschließend auf „Berechnen“ klicken.",
   },
 ];
-
-const dichteTabelle = Object.entries(MATERIALS_METRIC).flatMap(([kategorie, materialien]) =>
-  Object.entries(materialien).map(([name, dichte]) => [kategorie, name, `${dichte} kg/m³`]),
-);
 
 const faqs = [
   {
@@ -51,17 +46,6 @@ export function PlattengewichtGuide() {
         intro="Drei Angaben reichen für ein zuverlässiges Ergebnis:"
       >
         <StepList steps={steps} />
-      </GuideSection>
-
-      <GuideSection
-        title="Hinterlegte Rohdichten im Überblick"
-        intro="Diese Werte sind direkt im Rechner als Schnellauswahl hinterlegt (Angaben in kg/m³, Massivholz bei ca. 12–15 % Holzfeuchte):"
-      >
-        <SpecTable
-          columns={["Kategorie", "Werkstoff", "Rohdichte"]}
-          rows={dichteTabelle}
-          titleColumn={1}
-        />
       </GuideSection>
 
       <GuideSection title="Häufig gestellte Fragen (FAQ)">
