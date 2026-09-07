@@ -108,39 +108,52 @@ export default function CadPage() {
       {/* Kategorien */}
       <div className="mt-16 space-y-14">
         {kategorien.map((kat) => {
-          const items = cadProdukte.filter((p) => p.kategorie === kat && !p.draft);
-          if (items.length === 0) return null;
+          const alle = cadProdukte.filter((p) => p.kategorie === kat && !p.draft);
+          if (alle.length === 0) return null;
+          const paket = alle.find((p) => p.istPaketAngebot);
+          const einzelteile = alle.filter((p) => !p.istPaketAngebot);
           return (
             <section key={kat}>
               <h2 className="text-2xl">{CATEGORY_LABELS[kat]}</h2>
               <p className="mt-2 max-w-2xl text-sm text-ink-muted">{kategorieIntro[kat]}</p>
-              <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {items.map((p) => (
-                  <li
-                    key={p.slug}
-                    className="flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-5"
-                  >
-                    <div className="flex items-baseline justify-between gap-3">
+
+              {paket && (
+                <div className="mt-6 rounded-[var(--radius)] border border-accent bg-accent-soft/20 p-5">
+                  <Badge tone="accent">Paket</Badge>
+                  <h3 className="mt-2 text-lg">{paket.titel}</h3>
+                  <p className="mt-1.5 text-sm text-ink-muted">{paket.beschreibung}</p>
+                </div>
+              )}
+
+              {einzelteile.length > 0 && (
+                <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {einzelteile.map((p) => (
+                    <li
+                      key={p.slug}
+                      className="flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-5"
+                    >
                       <h3 className="text-lg">{p.titel}</h3>
-                      {p.istPaketAngebot && <Badge>Paket</Badge>}
-                    </div>
-                    <p className="mt-2 flex-1 text-sm text-ink-muted">{p.beschreibung}</p>
-                  </li>
-                ))}
-              </ul>
+                      <p className="mt-2 flex-1 text-sm text-ink-muted">{p.beschreibung}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </section>
           );
         })}
       </div>
 
       {/* Vorteile */}
-      <div className="mt-16 grid gap-4 sm:grid-cols-3">
-        {cadVorteile.map((v) => (
-          <div key={v.titel} className="rounded-[var(--radius)] border border-border bg-surface p-5">
-            <h3 className="font-medium text-ink">{v.titel}</h3>
-            <p className="mt-1.5 text-sm text-ink-muted">{v.text}</p>
-          </div>
-        ))}
+      <div className="mt-16">
+        <h2 className="text-2xl">Vorteile im Überblick</h2>
+        <div className="mt-6 grid gap-4 sm:grid-cols-3">
+          {cadVorteile.map((v) => (
+            <div key={v.titel} className="rounded-[var(--radius)] border border-border bg-surface p-5">
+              <h3 className="font-medium text-ink">{v.titel}</h3>
+              <p className="mt-1.5 text-sm text-ink-muted">{v.text}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* FAQ */}
