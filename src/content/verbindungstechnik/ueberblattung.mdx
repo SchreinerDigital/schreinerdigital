@@ -1,0 +1,111 @@
+import { Datentabelle } from "@/components/mdx/datentabelle";
+import { Accordion, StepList } from "@/components/tools/guide";
+
+export const meta = {
+  title: "Überblattung",
+  kurzname: "Verblattung",
+  kategorie: "Traditionelle Holzverbindung",
+  synonyms: ["Verblattung", "Blattverbindung", "Half-Lap Joint"],
+  summary: "Beide Hölzer werden je zur Hälfte ausgeklinkt und überlappen flächenbündig – die einfachste Verbindung im Rahmen- und Fachwerkbau, meist zusätzlich verleimt oder verstiftet.",
+  kennwerte: [
+    { label: "Überlappung", value: "je Teil ca. halbe Werkstückdicke" },
+    { label: "Belastung", value: "gering bis mittel (Querschnitt geschwächt)" },
+    { label: "Lösbar", value: "nein (verleimt) / bedingt (nur verstiftet)" },
+    { label: "Sichtbarkeit", value: "meist sichtbar" },
+  ],
+};
+
+Bei der Überblattung (auch Verblattung) werden beide Werkstücke an der Fügestelle je zur Hälfte ihrer Dicke ausgeklinkt, sodass sie sich überlappend zusammenfügen und in der Summe wieder die ursprüngliche Materialstärke ergeben. Es ist eine der ältesten und einfachsten Verbindungen im Rahmen- und Fachwerkbau – schnell hergestellt, aber mechanisch schwächer als eine Zapfenverbindung, da an der Fügestelle Querschnitt entfernt wird.
+
+## Aufbau
+
+Je nachdem, in welchem Winkel die beiden Hölzer aufeinandertreffen, unterscheidet man zwei Grundformen:
+
+- **Ecküberblattung** – zwei Hölzer treffen an einer Ecke aufeinander (z. B. ein Rahmeneck). Beide Enden werden zur Hälfte ausgeklinkt und liegen flächenbündig übereinander.
+- **Kreuzüberblattung** – zwei Hölzer kreuzen sich, meist im rechten Winkel (z. B. bei Gitterwerk oder sich kreuzenden Riegeln). Beide Teile werden an der Kreuzungsstelle zur Hälfte ausgeklinkt, sodass sie ineinandergreifen und auf gleicher Höhe bleiben.
+
+Innerhalb dieser Grundformen kommen weitere Varianten vor:
+
+- **Gerade Überblattung** – beide Klinken im rechten Winkel zur Holzachse, die einfachste Form.
+- **Schräge Überblattung** – die Klinkenflächen laufen schräg zur Holzachse; unter Last verkeilt sich die Verbindung dadurch ein Stück weit selbst.
+- **Schwalbenschwanzförmige Überblattung** – die Klinke ist wie bei einer Zinkung schwalbenschwanzförmig statt gerade ausgeführt. Anders als bei der geraden oder schrägen Form entsteht dadurch ein Formschluss, der auch Zugkräften entgegenwirkt.
+
+## Eigenschaften
+
+- Die reine Klinkenform (gerade oder schräg) hält Druckkräfte senkrecht zur Fügefläche, bietet aber keinen Widerstand gegen Auseinanderziehen oder seitliches Verschieben – dafür braucht es zusätzlich Leim, Holznägel oder Schrauben.
+- Die Kreuzüberblattung ist durch die kreuzende Geometrie etwas selbstständiger positioniert als eine einfache Ecküberblattung, wird in der Praxis aber ebenfalls verleimt oder verstiftet, um die volle Festigkeit zu erreichen.
+- Die schwalbenschwanzförmige Variante ist die einzige der drei Klinkenformen, die auch ohne Verleimung nennenswerten Zugkräften standhält.
+- Da an der Fügestelle bei jeder Variante die Hälfte des Querschnitts entfernt wird, gilt die Überblattung grundsätzlich als geschwächte Verbindung – für hochbelastete tragende Anschlüsse ist die Zapfenverbindung die stabilere Wahl.
+
+## Verwendung
+
+- Dachausbau und Aufstockung, wo Hölzer nachträglich überlappend ergänzt werden
+- Instandsetzung und Ergänzung von Fachwerk
+- Rahmen- und Gitterkonstruktionen mit sich kreuzenden Leisten
+- Leicht belastete, dekorative Rahmenverbindungen
+
+## Verarbeitung
+
+- Beide Werkstücke möglichst gemeinsam anreißen (aneinandergelegt oder mit gemeinsamem Anschlag), damit die beiden Klinken exakt zueinander passen.
+- Mit dem Streichmaß die halbe Werkstückdicke auf beiden Kanten anreißen – Ungenauigkeiten hier führen sofort zu einem unebenen Übergang.
+- Schulterschnitt zuerst mit der Säge knapp neben der Anrisslinie ansetzen, den Klinkengrund anschließend mit dem Stechbeitel plan ausarbeiten.
+- Vor dem Verleimen eine Trockenprobe machen; erst danach entscheiden, ob zusätzlich Holznägel oder Schrauben nötig sind.
+
+## Anleitung: von Hand herstellen
+
+<Accordion items={[
+  {
+    title: "Ecküberblattung",
+    content: <StepList steps={[
+      {
+        title: "Beide Hölzer gemeinsam anreißen",
+        body: "Die beiden Werkstücke in ihrer späteren Lage aneinanderlegen und die Breite der Überlappung gemeinsam anreißen, damit später nichts verwechselt wird.",
+      },
+      {
+        title: "Tiefe anreißen",
+        body: "Mit dem Streichmaß die halbe Werkstückdicke auf den Kanten beider Teile anreißen – bei gleich starken Hölzern ergibt das an beiden Teilen dieselbe Linie.",
+      },
+      {
+        title: "Schulterschnitt sägen",
+        body: "Mit der Säge senkrecht bis zur Tiefenlinie einschneiden, knapp im abfallenden Holz, damit beim Nacharbeiten noch Spielraum bleibt.",
+      },
+      {
+        title: "Klinke ausstemmen",
+        body: "Das restliche Material mit dem Stechbeitel bis zur Anrisslinie entfernen, den Klinkengrund dabei plan und eben halten.",
+      },
+      {
+        title: "Passprobe und Verleimen",
+        body: "Beide Teile trocken zusammenfügen, bis sie flächenbündig aufliegen. Erst danach verleimen und – falls auf Zug beansprucht – zusätzlich mit Holznagel oder Schraube sichern.",
+      },
+    ]} />,
+  },
+  {
+    title: "Kreuzüberblattung",
+    content: <StepList steps={[
+      {
+        title: "Kreuzungspunkt anreißen",
+        body: "Die Breite des kreuzenden Holzes an der richtigen Stelle auf beide Werkstücke übertragen – am einfachsten, indem man das Gegenstück probeweise auflegt und die Kanten anzeichnet.",
+      },
+      {
+        title: "Tiefe anreißen",
+        body: "Auf beiden Hölzern die halbe Werkstückdicke anreißen, damit sich beide Klinken später auf gleicher Höhe treffen.",
+      },
+      {
+        title: "Sägen und ausstemmen",
+        body: "Beidseitige Schulterschnitte sägen und die Klinke wie bei der Ecküberblattung mit dem Stechbeitel plan ausarbeiten – bei beiden Hölzern in dieselbe Richtung, damit sie ineinandergreifen.",
+      },
+      {
+        title: "Zusammenfügen und sichern",
+        body: "Die Kreuzung greift durch die Klinkenform bereits spürbar ineinander; für volle Festigkeit trotzdem verleimen oder verstiften.",
+      },
+    ]} />,
+  },
+]} />
+
+## Technische Daten
+
+<Datentabelle rows={meta.kennwerte} />
+
+## Fazit
+
+Die Überblattung ist die pragmatische Antwort, wenn zwei Hölzer schnell und mit einfachem Werkzeug überlappend verbunden werden müssen – für hochbelastete Rahmenecken bleibt die Zapfenverbindung die stabilere Wahl, aber im Fachwerk, bei Reparaturen und für sich kreuzende Leisten ist sie kaum zu schlagen.

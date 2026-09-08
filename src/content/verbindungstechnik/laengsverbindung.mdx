@@ -1,0 +1,107 @@
+import { Datentabelle } from "@/components/mdx/datentabelle";
+import { Accordion, StepList } from "@/components/tools/guide";
+
+export const meta = {
+  title: "Längsverbindung",
+  kurzname: "Längsstoß",
+  kategorie: "Traditionelle Holzverbindung",
+  synonyms: ["Fries-Stoß", "Längsschäftung"],
+  summary: "Zwei Holzteile werden in der Längsrichtung verbunden, um lange oder gebogene Friese ohne schwache Querholzabschnitte herzustellen – lösbar per Keilverschluss oder fest verzinkt.",
+  kennwerte: [
+    { label: "Verschlussart", value: "Französischer Keilverschluss (lösbar) / Zinkenstoß (fest verleimt)" },
+    { label: "Belastung", value: "mittel bis hoch (formschlüssig gegen Zug)" },
+    { label: "Lösbar", value: "ja (Keilverschluss) / nein (Zinkenstoß)" },
+    { label: "Sichtbarkeit", value: "meist sichtbar (Schauseite)" },
+  ],
+};
+
+Lange oder gebogene Friese – etwa der Bogen über einem Rundbogenfenster oder ein umlaufendes Zierprofil in einer großen Halle – lassen sich selten aus einem einzigen Stück Massivholz herstellen: Entweder ist kein Brett lang genug, oder ein gebogener Fries aus einem Stück hätte an den Enden zu kurze, quer zur Faser stehende Abschnitte, die leicht abbrechen. Die Längsverbindung fügt zwei Teile in der Längsrichtung zusammen, ohne diese Schwachstelle zu erzeugen. Zwei Techniken haben sich dafür etabliert: der lösbare Französische Keilverschluss und der fest verzinkte Doppelte Schwalbenschwanzstoß.
+
+## Aufbau
+
+- **Französischer Keilverschluss** – in die Fügefläche beider Werkstücke wird eine leicht schräg verlaufende Nut eingearbeitet. Ein langer, schmaler Keil wird in diese Nut eingetrieben und erzeugt dabei einen seitlichen Anpressdruck, der die beiden Teile gegeneinanderzieht. Da der Keil jederzeit wieder herausgetrieben werden kann, bleibt die Verbindung – im Gegensatz zu den meisten anderen Längsverbindungen – lösbar.
+- **Doppelter Schwalbenschwanzstoß** – an den Stoßenden beider Werkstücke werden ineinandergreifende, schwalbenschwanzförmige Zinken herausgearbeitet, ganz ähnlich wie bei einer Zinkung, nur nicht an einer Ecke, sondern auf der Fluchtlinie zweier in einer Linie liegender Teile. Die Schwalbenschwanzform sorgt für einen Formschluss, der die Verbindung – anders als ein einfacher, gerader Stoß – auch gegen Zugkräfte sichert. Nach dem Zusammenfügen wird fest verleimt.
+
+Nicht zu verwechseln ist der Doppelte Schwalbenschwanzstoß mit dem Schmetterlingsverschluss (auch Schwalbenschwanz-Intarsie genannt): Dort wird ein separates, tailliertes Plättchen von außen in eine Nut über einen bestehenden Riss eingesetzt, um einen Sprung im Holz zu stabilisieren. Beim Doppelten Schwalbenschwanzstoß dagegen sind die Zinken direkt aus den beiden Werkstücken selbst herausgearbeitet – es kommt kein zusätzliches Teil hinzu.
+
+Für die einfache Verlängerung gerader, nicht sichtbarer Bauteile (etwa Schwellen im Fachwerk) sind beide Techniken ohnehin die Ausnahme: Dort genügen meist einfachere Blattstöße wie das gerade oder stehende Blatt, die weniger Aufwand erfordern, aber überwiegend nur Druckkräfte übertragen.
+
+## Eigenschaften
+
+- Der Französische Keilverschluss lässt sich ohne Leim ausführen und bei Bedarf wieder lösen – ideal, wenn ein Bauteil später zerlegt oder ausgetauscht werden muss.
+- Da die Keilnut der Kontur des Werkstücks folgen kann, eignet sich der Keilverschluss besonders für gebogene Friese und Bogenstücke.
+- Der Doppelte Schwalbenschwanzstoß hält durch die Zinkenform auch Zugkräften stand, ist aber nach dem Verleimen dauerhaft fest und nicht mehr zerlegbar.
+- Beide Techniken sind im Vergleich zu einfachen Blattstößen deutlich aufwendiger in der Herstellung und bleiben daher der feinen Möbeltischlerei und der Denkmalpflege vorbehalten.
+
+## Verwendung
+
+- Gebogene Rahmenteile an Rundbogen- und Stichbogenfenstern
+- Lange, umlaufende Friese an großen Fenstern in Treppenhäusern und Sälen
+- Fachwerkbau
+- Denkmalpflege: Austausch verfaulter oder von Schädlingen befallener Teilstücke, ohne das ganze Bauteil erneuern zu müssen
+
+## Verarbeitung
+
+- Beide Fügeflächen exakt plan und passgenau zueinander zurichten – bei gebogenen Friesen entlang der tatsächlichen Kontur, nicht nur gerade.
+- Beim Keilverschluss die Nutwangen sauber parallel zur Anrisslinie halten, damit der Keil auf ganzer Länge gleichmäßig Druck aufbaut.
+- Beim Schwalbenschwanzstoß die Zinken zunächst etwas zu stark anreißen und erst durch vorsichtiges Nacharbeiten auf die endgültige Passung bringen – umgekehrt lässt sich ein zu lockerer Zinken nicht mehr nachbessern.
+- Vor dem endgültigen Zusammenfügen immer eine Trockenprobe machen, insbesondere bei gebogenen Teilen, wo sich Passungenauigkeiten optisch stark bemerkbar machen.
+
+## Anleitung: von Hand herstellen
+
+<Accordion items={[
+  {
+    title: "Französischer Keilverschluss",
+    content: <StepList steps={[
+      {
+        title: "Fügeflächen anreißen und anpassen",
+        body: "Beide Werkstückenden plan und exakt zueinander passend zurichten – bei gebogenen Friesen entlang der tatsächlichen Kontur.",
+      },
+      {
+        title: "Keilnut anreißen",
+        body: "Eine leicht schräg verlaufende Nut über die Fügefläche anreißen, die später den Keil aufnimmt.",
+      },
+      {
+        title: "Nut aussägen und ausstemmen",
+        body: "Mit Schlitzsäge und Stechbeitel entlang der Anrisslinien ausarbeiten, die Nutwangen dabei sauber parallel halten.",
+      },
+      {
+        title: "Keil anfertigen",
+        body: "Einen langen, schmalen Keil passgenau zur Nut zuschneiden.",
+      },
+      {
+        title: "Zusammenstecken und prüfen",
+        body: "Keil eintreiben – die Fügefläche zieht sich dabei von selbst zusammen. Bei Bedarf lässt sich die Verbindung durch Herausschlagen des Keils jederzeit wieder lösen.",
+      },
+    ]} />,
+  },
+  {
+    title: "Doppelter Schwalbenschwanzstoß",
+    content: <StepList steps={[
+      {
+        title: "Stoßstelle anreißen",
+        body: "Auf beiden Werkstücken Lage und Breite der ineinandergreifenden Zinken übertragen, wie bei einer Zinkung an der Schmalseite.",
+      },
+      {
+        title: "Schwalbenschwanzform anreißen",
+        body: "Die sich verjüngende Zinkenform mit Schmiege oder Zinkenschablone auf beide Stoßenden anreißen.",
+      },
+      {
+        title: "Zinken sägen und ausstemmen",
+        body: "Im abfallenden Holz sägen und mit dem Stechbeitel nacharbeiten, bis die Flanken sauber auf der Anrisslinie stehen.",
+      },
+      {
+        title: "Passung prüfen und verleimen",
+        body: "Die Zinken sollen sich von Hand fügen lassen, ohne zu schlagen. Erst nach zufriedenstellender Passprobe verleimen – anders als der Keilverschluss ist diese Verbindung danach dauerhaft fest.",
+      },
+    ]} />,
+  },
+]} />
+
+## Technische Daten
+
+<Datentabelle rows={meta.kennwerte} />
+
+## Fazit
+
+Beide Techniken lösen dasselbe Problem – zu kurzes oder zu schwach gemasertes Holz für einen langen Fries – auf entgegengesetzte Weise: Der Französische Keilverschluss bleibt zerlegbar und ist damit erste Wahl für Restaurierung und Austausch, der Doppelte Schwalbenschwanzstoß ist einmal verleimt dauerhaft und zugfest. Für die einfache Verlängerung gerader Bauteile ohne besondere Anforderungen reicht in aller Regel ein gewöhnlicher Blattstoß.
