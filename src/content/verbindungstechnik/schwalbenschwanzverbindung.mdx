@@ -1,4 +1,5 @@
 import { Datentabelle } from "@/components/mdx/datentabelle";
+import { Accordion, StepList } from "@/components/tools/guide";
 
 export const meta = {
   title: "Schwalbenschwanzverbindung",
@@ -25,7 +26,14 @@ Zwei Grundformen werden unterschieden:
 - **Halbverdeckte Zinkung (Schubkastenzinkung)** – von vorne unsichtbar, da die vordere Zarge nicht ganz durchstoßen wird; der Standard für Schubladenfronten im Möbelbau.
 - **Voll verdeckte Zinkung** – beidseitig unsichtbar, aufwendigste und seltenste Ausführung.
 
-Zu unterscheiden von der Zinkung ist die **gerade Zinkenverbindung (Fingerzinken)**, bei der die Zinken parallel statt trapezförmig verlaufen – einfacher maschinell zu fertigen, aber ohne den selbstverkeilenden Effekt der Schwalbenschwanzform.
+Weitere Varianten passen die Grundform an besondere Anforderungen an:
+
+- **Schräge Zinkung** – die Werkstücke selbst treffen nicht im rechten Winkel aufeinander, sondern schräg – etwa bei trapezförmigen Kästen oder Schubladen für Eckschränke.
+- **Gehrungszinken (verdeckte Zinkung)** – Zinken und Schwalben sind von außen komplett unsichtbar, da beide Kanten zusätzlich auf Gehrung laufen; geeignet für ringsum furnierte oder foliierte Werkstücke.
+- **Zinkung mit doppeltem Schwalbenschwanz** – eine aufwendige Zierform, bei der die Zinken selbst nochmals schwalbenschwanzförmig unterteilt sind; rein dekorativ, ohne zusätzlichen Festigkeitsgewinn.
+- **Trichterzinkung** – die Zinken laufen nicht parallel, sondern trichterförmig auf einen Punkt zu; eine seltene Zierzinkung für repräsentative Einzelstücke.
+
+Zu unterscheiden von der Zinkung ist die **gerade Zinkenverbindung (Fingerzinken)**, bei der die Zinken parallel statt trapezförmig verlaufen – einfacher maschinell zu fertigen, aber ohne den selbstverkeilenden Effekt der Schwalbenschwanzform. Da bei parallelen Flanken keine Kraftübertragung über Keilwirkung stattfindet, muss die Fingerzinkung immer verleimt werden. Der **Fingerzapfen** ist eine Sonderform davon für T-förmige Anschlüsse, etwa wenn ein Mittelsteg auf einen durchlaufenden Rahmen trifft statt zweier Werkstücke im rechten Winkel.
 
 ## Eigenschaften
 
@@ -46,6 +54,185 @@ Zu unterscheiden von der Zinkung ist die **gerade Zinkenverbindung (Fingerzinken
 - Beim Sägen knapp neben der Anrisslinie bleiben und mit dem Stechbeitel auf Maß nacharbeiten; lieber zu eng ansetzen als zu weit.
 - Maschinelle Fertigung (Zinkenfräse mit Schablone, Oberfräse mit Zinkenlade oder CNC) liefert absolut gleichmäßige Zinken und ist bei Serienfertigung Standard.
 - Vor dem Verleimen trocken zusammenstecken (Anprobe) – Nacharbeit ist deutlich einfacher als bei bereits verleimten Zinken.
+
+## Anleitung: von Hand herstellen
+
+Acht Varianten, acht Handwerkstechniken – zum Aufklappen. Alle bauen auf derselben Grundlogik auf: erst die Zinken anreißen und ausarbeiten, dann mit dem fertigen Zinkenstück die Gegenseite anzeichnen.
+
+<Accordion items={[
+  {
+    title: "Offene Zinkung",
+    content: (
+      <StepList steps={[
+        {
+          title: "Hölzer zuschneiden und Schreinerdreieck anzeichnen",
+          body: "Beide Werkstücke auf Maß hobeln und ablängen, Kopfholz rechtwinklig bestoßen. Festlegen, welches Teil die Zinken und welches die Schwalben bekommt – bei einer Kiste typischerweise Vorder-/Rückwand mit Zinken, Seitenteile mit Schwalben.",
+        },
+        {
+          title: "Holzstärke anreißen",
+          body: "Beim Zinkenstück nur auf den Flächen, beim Schwalbenstück rundherum. Bei unterschiedlichen Holzstärken die tatsächliche Stärke des Gegenstücks übernehmen.",
+        },
+        {
+          title: "Zinkenteilung mit der Zinkenformel anzeichnen",
+          body: "Zwei Hilfslinien anlegen (halbe Holzstärke auf dem Kopfholz des Zinkenstücks, zweieinhalbfache Holzstärke auf der Fläche des Schwalbenstücks). Die Anzahl der Zinken ergibt sich aus Holzbreite ÷ (1,5 × Holzstärke); eine Schmiege von etwa 1:6 gilt als bewährtes Verhältnis zwischen Haltbarkeit und Optik.",
+        },
+        {
+          title: "Zinken einschneiden und freistemmen",
+          body: "Abfallendes Holz mit Kreuzchen markieren, damit der Sägeschnitt nicht auf der falschen Seite der Anrisslinie liegt. Auf der Innenseite mit dem Stechbeitel beginnen und bis zur Hälfte der Holzstärke arbeiten, dann von der Gegenseite weiterstemmen.",
+        },
+        {
+          title: "Schwalben mit dem Zinkenstück anreißen",
+          body: "Das fertige Zinkenstück wie im späteren Zusammenbau an das Schwalbenstück halten und die Zinkenform mit Reißnadel oder spitzem Bleistift direkt übertragen – das ergibt eine exakte Passung ohne erneutes Rechnen.",
+        },
+        {
+          title: "Schwalben sägen und freistemmen",
+          body: "Erst alle rechts geneigten, dann alle links geneigten Schrägen sägen, danach wie beim Zinkenstück freistemmen.",
+        },
+        {
+          title: "Einpassen, verleimen, putzen",
+          body: "Trocken zusammenstecken und bei Bedarf mit dem Stechbeitel nacharbeiten. Innenflächen vor dem Verleimen säubern, beim Verleimen auf Winkligkeit (Diagonalen messen) achten, abschließend schleifen und Kanten brechen.",
+        },
+      ]} />
+    ),
+  },
+  {
+    title: "Halbverdeckte Zinkung (Schubkastenzinkung)",
+    content: (
+      <StepList steps={[
+        {
+          title: "Zinkentiefe festlegen",
+          body: "Die Zinken dürfen die sichtbare Front nicht durchstoßen – üblich sind rund zwei Drittel der Frontstärke. Diese Tiefe als Deckriss auf der Innenseite der Front anreißen.",
+        },
+        {
+          title: "Zinken am Seitenteil ausarbeiten",
+          body: "Einschneiden und freistemmen wie bei der offenen Zinkung, allerdings bleibt die Zinkenlänge durch den Deckriss begrenzt.",
+        },
+        {
+          title: "Schwalben an der Front anzeichnen und nur bis zum Deckriss ausstemmen",
+          body: "Mit dem fertigen Zinkenstück anreißen, dann vorsichtig von der Rückseite her bis zur markierten Tiefe stemmen – der Grund darf nicht durchbrochen werden, sonst ist die Front von vorne sichtbar durchlöchert.",
+        },
+        {
+          title: "Einpassen und verleimen",
+          body: "Wegen der geringen Resttiefe an der Front vorsichtig zusammenstecken, um die dünne Restwand nicht abzuscheren.",
+        },
+      ]} />
+    ),
+  },
+  {
+    title: "Schräge Zinkung",
+    content: (
+      <StepList steps={[
+        {
+          title: "Anschlagwinkel der Werkstücke festlegen",
+          body: "Der Winkel, in dem die beiden Teile später zueinanderstehen (z. B. bei einem trapezförmigen Eckschrank), bestimmt die Ausgangslage für alle weiteren Anrisse.",
+        },
+        {
+          title: "Schreinerdreieck und Hilfslinien am abweichenden Winkel ausrichten",
+          body: "Statt eines rechten Winkels wird der tatsächliche Anschlagwinkel für Zinkenteilung und Kopfholz-Anriss verwendet – am besten mit einer Schmiege statt dem Anschlagwinkel abnehmen.",
+        },
+        {
+          title: "Zinken wie bei der offenen Zinkung ausarbeiten",
+          body: "Der Ablauf bleibt gleich, nur alle Linien laufen entsprechend dem angepassten Winkel statt im rechten Winkel zueinander.",
+        },
+      ]} />
+    ),
+  },
+  {
+    title: "Gehrungszinken (verdeckte Zinkung)",
+    content: (
+      <StepList steps={[
+        {
+          title: "Gehrung wie bei einer normalen Gehrungsverbindung anreißen und sägen",
+          body: "Beide Werkstücke zunächst auf 45° zuschneiden, als würde keine Zinkung folgen.",
+        },
+        {
+          title: "Zinken von der Innenseite her einschneiden",
+          body: "Die Zinkenteilung wie gewohnt anreißen, dabei aber die Gehrungsfläche selbst nicht durchstoßen – die Zinken bleiben komplett innerhalb der Gehrungsecke verborgen.",
+        },
+        {
+          title: "Mit sehr scharfem Stechbeitel feinarbeiten",
+          body: "Die dünnwandige Spitze an der Gehrungskante bricht leicht aus – kleine, kontrollierte Stemmschläge statt grober Schläge verwenden.",
+        },
+      ]} />
+    ),
+  },
+  {
+    title: "Zinkung mit doppeltem Schwalbenschwanz",
+    content: (
+      <StepList steps={[
+        {
+          title: "Grundzinkung wie bei der offenen Zinkung anreißen",
+          body: "Die normale Zinkenteilung bildet die Basis für die aufwendigere Zierform.",
+        },
+        {
+          title: "Zweite, kleinere Schwalbenschwanzform auf jeden Zinken zeichnen",
+          body: "Jeder einzelne Zinken erhält eine eigene, nochmals schwalbenschwanzförmige Unterteilung – reine Zierarbeit ohne zusätzlichen Festigkeitsgewinn, entsprechend zeitaufwendig in Anriss und Stemmarbeit.",
+        },
+        {
+          title: "Feinsägen und in mehreren Schritten freistemmen",
+          body: "Wegen der kleinteiligen Form empfiehlt sich eine sehr feine Zinkensäge und mehrfaches, vorsichtiges Nachstemmen statt großer Späne.",
+        },
+      ]} />
+    ),
+  },
+  {
+    title: "Trichterzinkung",
+    content: (
+      <StepList steps={[
+        {
+          title: "Fluchtpunkt bzw. Fluchtlinie festlegen",
+          body: "Anders als bei der parallelen Zinkenteilung laufen hier alle Zinkenflanken auf einen gemeinsamen Punkt oder eine Linie zu – diese zuerst mittig auf dem Werkstück anreißen.",
+        },
+        {
+          title: "Zinken strahlenförmig statt parallel anzeichnen",
+          body: "Von der Fluchtlinie ausgehend die einzelnen Zinken mit zunehmendem Winkel nach außen anreißen.",
+        },
+        {
+          title: "Sägen und stemmen wie gewohnt, mit Zusatzsorgfalt an den Außenzinken",
+          body: "Die am stärksten geneigten, äußeren Zinken sind am empfindlichsten gegen Ausbrechen – hier besonders vorsichtig freistemmen.",
+        },
+      ]} />
+    ),
+  },
+  {
+    title: "Fingerzinken",
+    content: (
+      <StepList steps={[
+        {
+          title: "Zinkenbreite gleich Holzstärke anreißen",
+          body: "Anders als bei der Schwalbenschwanzform verlaufen alle Linien parallel und rechtwinklig zur Fläche, ohne Schmiege.",
+        },
+        {
+          title: "Sägen und stemmen oder mit der Zinkenfräse fertigen",
+          body: "Wegen der geraden, parallelen Schnitte lässt sich diese Form besonders gut mit Fräsanschlag-Schablone oder Zinkenfräse in Serie fertigen.",
+        },
+        {
+          title: "Sorgfältig verleimen",
+          body: "Da parallele Flanken keine Keilwirkung entfalten, hält die Verbindung ohne Leim praktisch nicht – ausreichend Leim und Anpressdruck sind hier wichtiger als bei der Schwalbenschwanzform.",
+        },
+      ]} />
+    ),
+  },
+  {
+    title: "Fingerzapfen",
+    content: (
+      <StepList steps={[
+        {
+          title: "T-Anschluss anzeichnen",
+          body: "Im Unterschied zu den übrigen Varianten trifft hier ein Mittelsteg auf einen durchlaufenden Rahmen statt zwei Werkstücke im rechten Winkel – die Anschlussstelle entsprechend auf dem durchlaufenden Teil markieren.",
+        },
+        {
+          title: "Zapfenlöcher im durchlaufenden Rahmen anreißen und ausstemmen",
+          body: "Mehrere kurze Zapfenlöcher statt eines durchgehenden Schlitzes anlegen, passend zur Zinkenteilung des Mittelstegs.",
+        },
+        {
+          title: "Mittelsteg mit den Fingerzapfen ausarbeiten und einzeln einpassen",
+          body: "Jeden Zapfen einzeln auf Passung prüfen, da mehrere kurze Zapfen gleichzeitig einschieben müssen – ungleichmäßige Passung an nur einem Zapfen verhindert sonst das vollständige Einsetzen.",
+        },
+      ]} />
+    ),
+  },
+]} />
 
 ## Technische Daten
 

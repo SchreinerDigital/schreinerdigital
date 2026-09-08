@@ -1,4 +1,5 @@
 import { Datentabelle } from "@/components/mdx/datentabelle";
+import { StepList } from "@/components/tools/guide";
 
 export const meta = {
   title: "Zapfenverbindung",
@@ -27,6 +28,17 @@ Der Zapfen wird an der Stirnseite eines Rahmenholms ausgearbeitet, das Zapfenloc
 - **Gratzapfen** – mit zusätzlicher Nut-Feder-Gratleiste für Füllungsrahmen (Türen, Kassettenwände).
 - **Schrägzapfen** – für winklige Rahmenverbindungen (z. B. Treppengeländer, Dachstühle).
 
+Je nach Anschluss an Füllung, Profil oder Nachbarbauteil kommen weitere Varianten der Grundform hinzu:
+
+- **Zapfen mit Falz** – zusätzlich zum Zapfen wird am Rahmenholz ein Falz ausgeklinkt, etwa zur Aufnahme einer aufgesetzten Füllung oder Glasscheibe.
+- **Zapfen mit Nut** – eine durchlaufende Nut nimmt eine Füllung (Platte, Glas) auf; sie wird meist am Zapfen selbst ausgeklinkt, damit die Nutwangen nicht durchlaufen.
+- **Zapfen auf Gehrung (einseitig)** – die sichtbare Vorderkante ist auf Gehrung geschnitten, die Rückseite bleibt ein normaler rechtwinkliger Zapfen; typisch bei Rahmen mit profilierter Sichtkante, die um die Ecke laufen soll.
+- **Zapfen mit verschiedenen Rahmenstärken** – treffen unterschiedlich dicke Rahmenhölzer aufeinander, wird der Zapfen an die dünnere Seite angepasst und meist bündig zur Schauseite versetzt statt mittig angeordnet.
+
+Die **Brüstung** – die schmale, rechtwinklig zum Zapfen stehende Restfläche zwischen Zapfenwurzel und Werkstückende – braucht bei alldem besondere Sorgfalt: Sie nimmt beim Verleimen überschüssigen Leim auf und muss auch nach dem Schwinden des Holzes noch dicht am Gegenstück anliegen.
+
+**Grat bei profilierten Rahmen:** Hat das Rahmenholz eine profilierte oder gefaste Sichtkante (z. B. an Kassettentüren), muss dieses Profil an der Ecke auf Gehrung laufen, während der tragende Zapfen weiterhin rechtwinklig gefertigt wird. Diesen auf Gehrung geschnittenen Profilanschluss nennt man Grat. Läuft das Profil nur an einer Kante des Rahmenholzes um, spricht man vom **einseitigen Grat**; ist die Kante beidseitig (innen und außen) profiliert, braucht es den **zweiseitigen Grat** – entsprechend mehr Sorgfalt beim Anreißen und Sägen der beiden Gehrungsschnitte.
+
 ## Eigenschaften
 
 - Sehr hohe Festigkeit, da überwiegend Langholz auf Langholz verleimt wird – die stabilste Leimverbindung im Holzbau überhaupt.
@@ -47,6 +59,41 @@ Der Zapfen wird an der Stirnseite eines Rahmenholms ausgearbeitet, das Zapfenloc
 - Passung prüfen: Der Zapfen soll sich von Hand, mit leichtem Widerstand, vollständig einschieben lassen – zu lose Verbindungen verlieren die Leimfestigkeit, zu stramme sprengen beim Zusammenbau.
 - Vor dem Verleimen alle Kanten leicht brechen, damit überschüssiger Leim beim Zusammenpressen entweichen kann.
 - Bei sichtbaren, durchgesteckten Zapfen zusätzlich verkeilen oder mit einem Holznagel sichern (traditionell auch leimfrei ausführbar).
+
+## Anleitung: von Hand herstellen
+
+Die traditionelle Fertigung mit Stechbeitel, Schlitzsäge und Streichmaß folgt bei allen Grundformen demselben Ablauf – die Falz-, Nut- oder Gehrungsvarianten kommen als zusätzlicher Sägeschnitt oder Fräsgang am Ende hinzu.
+
+<StepList steps={[
+  {
+    title: "Rahmenhölzer zuschneiden und anreißen",
+    body: "Beide Werkstücke auf Maß hobeln und ablängen, Kopfholz rechtwinklig bestoßen. Mit dem Schreinerdreieck die Lage von Zapfen und Zapfenloch auf beiden Teilen festlegen, damit später nichts verwechselt wird.",
+  },
+  {
+    title: "Zapfendicke und -länge anreißen",
+    body: "Mit dem Streichmaß die Zapfendicke (Faustregel: rund ein Drittel der Holzstärke) auf beiden Kanten und dem Kopfholz anreißen. Die Zapfenlänge (rund zwei Drittel der Breite des Gegenstücks) auf der Fläche markieren – das ergibt gleichzeitig die Lage des Zapfenlochs.",
+  },
+  {
+    title: "Zapfenloch aussägen und ausstemmen",
+    body: "Zunächst mit Bohrer oder Langlochbohrmaschine grob vorbohren, dann mit dem Stechbeitel entlang der Anrisslinien sauber auf Maß nacharbeiten. Von beiden Seiten arbeiten, damit die Kante nicht ausreißt.",
+  },
+  {
+    title: "Zapfen sägen",
+    body: "Mit der Schlitzsäge knapp neben der Anrisslinie ansetzen und im abfallenden Holz sägen – lieber zu dick als zu dünn, Nacharbeit mit dem Stechbeitel ist einfacher als ein zu lockerer Zapfen.",
+  },
+  {
+    title: "Passung prüfen",
+    body: "Der Zapfen soll sich von Hand, mit leichtem Widerstand, vollständig einschieben lassen. Zu strammer Sitz kann das Zapfenloch beim Zusammenbau sprengen, zu lockerer Sitz schwächt die spätere Leimverbindung.",
+  },
+  {
+    title: "Zusatzschnitte für Falz, Nut oder Gehrung",
+    body: "Erst jetzt, an der fertig gepassten Grundverbindung, den Falz oder die Nut für die Füllung anlegen bzw. die sichtbare Kante auf Gehrung sägen – so bleibt die tragende Zapfenverbindung von den Zusatzarbeiten unberührt.",
+  },
+  {
+    title: "Kanten brechen, verleimen",
+    body: "Vor dem Verleimen alle Kanten leicht brechen, damit überschüssiger Leim beim Zusammenpressen entweichen kann. Winkligkeit über Eck kontrollieren, bei größeren Rahmen zusätzlich die Diagonalen messen.",
+  },
+]} />
 
 ## Technische Daten
 
