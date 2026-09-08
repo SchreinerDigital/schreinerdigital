@@ -62,7 +62,7 @@ export default async function BeschlaegeIndexPage() {
           {groups.map((group) => (
             <section key={group.heading}>
               <h2 className="text-2xl">{group.heading}</h2>
-              <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {group.items.map((b) => (
                   <li key={b.slug}>
                     <Link
@@ -82,7 +82,7 @@ export default async function BeschlaegeIndexPage() {
                       )}
                       <div className="flex flex-1 flex-col p-5">
                         <div className="flex items-baseline justify-between gap-3">
-                          <h3 className="text-lg">{b.title}</h3>
+                          <h3 className="min-w-0 break-words text-lg">{b.title}</h3>
                           {b.kurzname && (
                             <span className="font-mono text-xs uppercase tracking-wider text-ink-faint">
                               {b.kurzname}

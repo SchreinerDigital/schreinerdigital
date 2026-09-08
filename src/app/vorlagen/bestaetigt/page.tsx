@@ -37,14 +37,14 @@ export default function VorlagenBestaetigtPage() {
             bekommst automatisch eine E-Mail, sobald sie verfügbar sind.
           </div>
         ) : (
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {vorlagen.map((v) => (
               <li
                 key={v.slug}
                 className="flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-5"
               >
                 <div className="flex items-baseline justify-between gap-3">
-                  <h2 className="text-lg">{v.title}</h2>
+                  <h2 className="min-w-0 break-words text-lg">{v.title}</h2>
                   <Badge>{v.format}</Badge>
                 </div>
                 <p className="mt-2 flex-1 text-sm text-ink-muted">{v.description}</p>

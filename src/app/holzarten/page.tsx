@@ -31,7 +31,7 @@ export default async function HolzartenIndexPage() {
           Noch keine Holzarten veröffentlicht.
         </p>
       ) : (
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {holzarten.map((h) => (
             <li key={h.slug}>
               <Link
@@ -51,7 +51,7 @@ export default async function HolzartenIndexPage() {
                 )}
                 <div className="flex flex-1 flex-col p-5">
                   <div className="flex items-baseline justify-between gap-3">
-                    <h2 className="text-lg">{h.title}</h2>
+                    <h2 className="min-w-0 break-words text-lg">{h.title}</h2>
                     {h.gruppe && (
                       <span className="font-mono text-xs uppercase tracking-wider text-ink-faint">
                         {h.gruppe}

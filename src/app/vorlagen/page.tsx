@@ -41,14 +41,14 @@ export default function VorlagenPage() {
             verfügbar sind.
           </div>
         ) : (
-          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {vorlagen.map((v) => (
               <li
                 key={v.slug}
                 className="flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-5"
               >
                 <div className="flex items-baseline justify-between gap-3">
-                  <h3 className="text-lg">{v.title}</h3>
+                  <h3 className="min-w-0 break-words text-lg">{v.title}</h3>
                   <Badge>{v.format}</Badge>
                 </div>
                 <p className="mt-2 flex-1 text-sm text-ink-muted">{v.description}</p>
