@@ -105,42 +105,42 @@ const pillars = [
     title: "Rechner-Tools",
     cta: "Zu den Tools",
     icon: SquareToolIcon,
-    body: "Praktische Rechner für deine täglichen Aufgaben in der Werkstatt – direkt im Browser, ohne Anmeldung.",
+    body: "Praktische Rechner für die Werkstatt.",
   },
   {
     href: "/holzarten",
     title: "Schreinerwissen",
     cta: "Zum Wissen",
     icon: BookIcon,
-    body: "Fachwissen zu Holzarten, Plattenwerkstoffen, Verbindungstechnik, Beschlägen und Oberflächen – verständlich erklärt.",
+    body: "Fachwissen zu Holz, Platten, Verbindungen & mehr.",
   },
   {
     href: "/vorlagen",
     title: "Vorlagen & Downloads",
     cta: "Zu den Vorlagen",
     icon: DocumentIcon,
-    body: "Kostenlose Vorlagen für den Werkstattalltag – Aufmaßblätter, Checklisten und mehr. Einmal anmelden, alle nutzen.",
+    body: "Aufmaßblätter, Checklisten und mehr.",
   },
   {
     href: "/digitalisierung",
     title: "Digitalisierung",
     cta: "Mehr erfahren",
     icon: ChipIcon,
-    body: "Wie du Aufmaß, Kalkulation und Planung in deiner Schreinerei Schritt für Schritt digitalisierst.",
+    body: "Aufmaß, Kalkulation und Planung digitalisieren.",
   },
   {
     href: "/betrieb-und-recht",
     title: "Betrieb & Recht",
     cta: "Zum Überblick",
     icon: ScaleIcon,
-    body: "Gewährleistung, Meisterpflicht, Datenschutz und E-Rechnung – die wichtigsten Pflichten für deinen Betrieb.",
+    body: "Gewährleistung, Meisterpflicht, Datenschutz & mehr.",
   },
   {
     href: "/cad",
     title: "CAD-Vorlagen",
     cta: "Zu den CAD-Vorlagen",
     icon: CubeIcon,
-    body: "Fertige 2D-Zeichenvorlagen im DWG-Format für die DIN-gerechte Zeichnung – Einbauschrank, Möbelbau, Innenausbau.",
+    body: "2D-Zeichenvorlagen im DWG-Format.",
   },
 ];
 
@@ -276,7 +276,7 @@ export default async function HomePage() {
       </Container>
 
       {/* Pillars */}
-      <Container className="py-16">
+      <Container className="py-14">
         <Eyebrow>Überblick</Eyebrow>
         <h2 className="mt-4 text-3xl">Alles für deinen Arbeitsalltag</h2>
         <p className="mt-3 max-w-2xl text-ink-muted">
@@ -284,23 +284,23 @@ export default async function HomePage() {
           schreiner.digital auf einen Blick.
         </p>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {pillars.map((p) => (
             <Link
               key={p.title}
               href={p.href}
-              className="group flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-6 transition-colors hover:border-accent"
+              className="group flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-4 transition-colors hover:border-accent"
             >
-              <span className="inline-flex size-14 items-center justify-center rounded-xl bg-accent-soft text-accent">
-                <p.icon className="size-7" />
+              <span className="inline-flex size-11 items-center justify-center rounded-lg bg-accent-soft text-accent">
+                <p.icon className="size-5" />
               </span>
-              <h3 className="mt-5 text-xl">{p.title}</h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">
+              <h3 className="mt-3 text-base font-semibold">{p.title}</h3>
+              <p className="mt-1.5 flex-1 text-sm leading-snug text-ink-muted">
                 {p.body}
               </p>
-              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+              <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-accent">
                 {p.cta}
-                <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+                <ArrowIcon className="size-3.5 transition-transform group-hover:translate-x-0.5" />
               </span>
             </Link>
           ))}
