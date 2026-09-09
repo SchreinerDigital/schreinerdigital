@@ -7,6 +7,7 @@ import { Wordmark } from "@/components/brand/wordmark";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { SiteSearch } from "@/components/site-search";
 import { tools } from "@/components/tools/tools.config";
 import { cn } from "@/lib/cn";
 
@@ -196,6 +197,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <SiteSearch />
           <ThemeToggle />
           <ButtonLink href="/tools" size="sm" className="hidden whitespace-nowrap sm:inline-flex">
             Rechner öffnen
