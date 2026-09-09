@@ -83,42 +83,6 @@ function JointIcon({ className }: { className?: string }) {
   );
 }
 
-function DoorIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <rect x="5" y="2.5" width="14" height="19" rx="1" />
-      <circle cx="14.5" cy="12" r="1" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
-function SpoolIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <circle cx="12" cy="12" r="9" />
-      <circle cx="12" cy="12" r="3.5" />
-      <path d="M12 2.5v3M12 18.5v3M21.5 12h-3M5.5 12h-3" />
-    </svg>
-  );
-}
-
-function BeamIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M3 6h18" />
-      <path d="M3 6c0 6 3 11 9 11s9-5 9-11" />
-    </svg>
-  );
-}
-
-function ClockIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3.5 2" />
-    </svg>
-  );
-}
 
 const pillars = [
   {
@@ -199,14 +163,6 @@ const toolExamples: Record<string, string> = {
   durchbiegung: "2,38 mm",
   stundensatz: "64,15 €/h",
 };
-
-const toolIcons = {
-  plattengewicht: LayersIcon,
-  tuerenmass: DoorIcon,
-  restlaenge: SpoolIcon,
-  durchbiegung: BeamIcon,
-  stundensatz: ClockIcon,
-} as const;
 
 function ArrowIcon({ className }: { className?: string }) {
   return (
@@ -293,10 +249,8 @@ export default async function HomePage() {
       <Container className="py-10">
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius)] border border-border bg-border sm:grid-cols-4">
           {stats.map((s) => (
-            <div key={s.label} className="flex flex-col items-center gap-3 bg-surface px-4 py-7 text-center">
-              <span className="inline-flex size-10 items-center justify-center rounded-full bg-accent-soft text-accent">
-                <s.icon className="size-5" />
-              </span>
+            <div key={s.label} className="flex flex-col items-center gap-2 bg-surface px-4 py-6 text-center">
+              <s.icon className="size-5 text-accent" />
               <span className="font-display text-2xl font-bold text-ink">{s.value}</span>
               <span className="text-xs text-ink-muted">{s.label}</span>
             </div>
@@ -367,22 +321,13 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {tools.map((tool) => {
-              const ToolIcon = toolIcons[tool.slug as keyof typeof toolIcons] as
-                | typeof LayersIcon
-                | undefined;
-              return (
+            {tools.map((tool) => (
               <Link
                 key={tool.slug}
                 href={`/tools/${tool.slug}`}
                 className="group flex h-full flex-col rounded-lg border border-border bg-paper p-4 transition-colors hover:border-accent"
               >
-                {ToolIcon && (
-                  <span className="inline-flex size-9 items-center justify-center rounded-lg bg-accent-soft text-accent">
-                    <ToolIcon className="size-4.5" />
-                  </span>
-                )}
-                <div className="mt-3 flex items-center gap-2">
+                <div className="flex items-center gap-2">
                   <span className="font-medium">{tool.title}</span>
                   {!tool.ready && <Badge>bald</Badge>}
                 </div>
@@ -404,8 +349,7 @@ export default async function HomePage() {
                   <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
                 </span>
               </Link>
-              );
-            })}
+            ))}
           </div>
         </Container>
       </section>
