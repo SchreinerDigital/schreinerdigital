@@ -129,7 +129,12 @@ const pillars = [
   },
 ];
 
-const trust = ["100 % kostenlos", "Keine Anmeldung nötig", "Zeit sparen", "Fehler vermeiden"];
+const trust = [
+  "100 % kostenlos starten",
+  "Praxisnah & sofort einsetzbar",
+  "Für Schreiner von Schreiner",
+  "Keine Anmeldung nötig",
+];
 
 /** Zahlen kommen aus dem tatsächlichen Inhalt, damit sie nicht veralten. */
 async function getStats() {
@@ -207,7 +212,7 @@ export default async function HomePage() {
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-1.5 ruler-ticks-lg opacity-60"
         />
-        <Container className="py-20 sm:py-24 lg:py-28">
+        <Container className="py-14 sm:py-16 lg:py-20">
           <div className="max-w-xl">
             <Eyebrow>Handwerk trifft Präzision</Eyebrow>
             <h1 className="mt-5 text-4xl leading-[1.05] font-bold text-balance text-ink sm:text-5xl lg:text-6xl">
@@ -229,16 +234,16 @@ export default async function HomePage() {
                 Holzarten ansehen
               </ButtonLink>
             </div>
-
-            <ul className="mt-9 flex flex-wrap gap-x-6 gap-y-2.5">
-              {trust.map((t) => (
-                <li key={t} className="flex items-center gap-2 text-sm text-ink-muted">
-                  <CheckIcon className="size-4 shrink-0 text-accent" />
-                  {t}
-                </li>
-              ))}
-            </ul>
           </div>
+
+          <ul className="mt-9 flex flex-wrap gap-x-5 gap-y-2.5">
+            {trust.map((t) => (
+              <li key={t} className="flex items-center gap-2 text-sm text-ink-muted">
+                <CheckIcon className="size-4 shrink-0 text-accent" />
+                {t}
+              </li>
+            ))}
+          </ul>
         </Container>
       </section>
 
