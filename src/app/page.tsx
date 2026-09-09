@@ -230,12 +230,9 @@ export default async function HomePage() {
               </ButtonLink>
             </div>
 
-            <ul className="mt-9 flex flex-wrap gap-2">
+            <ul className="mt-9 flex flex-wrap gap-x-6 gap-y-2.5">
               {trust.map((t) => (
-                <li
-                  key={t}
-                  className="flex items-center gap-2 rounded-full border border-border bg-surface/80 px-3.5 py-2 text-sm text-ink-muted"
-                >
+                <li key={t} className="flex items-center gap-2 text-sm text-ink-muted">
                   <CheckIcon className="size-4 shrink-0 text-accent" />
                   {t}
                 </li>
