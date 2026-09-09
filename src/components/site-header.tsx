@@ -197,9 +197,9 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <SiteSearch />
+          <SiteSearch className="hidden w-44 xl:block" />
           <ThemeToggle />
-          <ButtonLink href="/tools" size="sm" className="hidden whitespace-nowrap sm:inline-flex">
+          <ButtonLink href="/tools" size="sm" className="hidden whitespace-nowrap sm:inline-flex xl:hidden">
             Rechner öffnen
           </ButtonLink>
           <button
@@ -214,6 +214,10 @@ export function SiteHeader() {
             </svg>
           </button>
         </div>
+      </Container>
+
+      <Container className="pb-3 xl:hidden">
+        <SiteSearch className="w-full max-w-md" />
       </Container>
 
       {mobileOpen && (
