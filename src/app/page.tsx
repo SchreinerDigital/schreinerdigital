@@ -53,79 +53,94 @@ function CheckIcon({ className }: { className?: string }) {
   );
 }
 
-function HingeIcon({ className }: { className?: string }) {
+function BookIcon({ className }: { className?: string }) {
   return (
     <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <rect x="3" y="3" width="7" height="18" rx="1.5" />
-      <rect x="14" y="3" width="7" height="18" rx="1.5" />
-      <circle cx="12" cy="7" r="1.3" />
-      <circle cx="12" cy="12" r="1.3" />
-      <circle cx="12" cy="17" r="1.3" />
+      <path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 1 4 17.5v-12Z" />
+      <path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5-.7 1.5-1.5v-12Z" />
     </svg>
   );
 }
 
-function DropletIcon({ className }: { className?: string }) {
+function DocumentIcon({ className }: { className?: string }) {
   return (
     <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M12 3.5s6.5 7.1 6.5 11.3a6.5 6.5 0 1 1-13 0c0-4.2 6.5-11.3 6.5-11.3z" />
+      <path d="M6 3h9l3 3v15H6z" />
+      <path d="M15 3v3h3" />
+      <path d="M9 12h6M9 16h6" />
     </svg>
   );
 }
 
-function JointIcon({ className }: { className?: string }) {
+function ChipIcon({ className }: { className?: string }) {
   return (
     <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <rect x="2" y="6" width="8.5" height="12" rx="1" />
-      <rect x="13.5" y="6" width="8.5" height="12" rx="1" />
-      <rect x="9.5" y="10.5" width="5" height="3" rx="0.8" />
+      <rect x="6" y="6" width="12" height="12" rx="1.5" />
+      <path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" />
     </svg>
   );
 }
 
+function ScaleIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M12 3v18M7 21h10M5 7h5M14 7h5" />
+      <path d="M5 7 2.5 12a2.5 2.5 0 0 0 5 0L5 7ZM19 7l-2.5 5a2.5 2.5 0 0 0 5 0L19 7Z" />
+    </svg>
+  );
+}
+
+function CubeIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M12 3 3 8v8l9 5 9-5V8l-9-5Z" />
+      <path d="M3 8l9 5 9-5M12 13v8" />
+    </svg>
+  );
+}
 
 const pillars = [
   {
-    href: "/holzarten",
-    title: "Holzarten",
-    icon: TreeRingsIcon,
-    body: "Steckbriefe zu Massivhölzern – Herkunft, Holzbild, Eigenschaften, Verwendung, Praxistipps und technische Kennwerte auf einen Blick.",
-    comingSoon: false,
-  },
-  {
-    href: "/plattenwerkstoffe",
-    title: "Plattenwerkstoffe",
-    icon: LayersIcon,
-    body: "Span-, MDF-, OSB-, Multiplex- und Tischlerplatten: Aufbau, Einsatzgrenzen und Hinweise für die saubere Verarbeitung.",
-    comingSoon: false,
-  },
-  {
     href: "/tools",
     title: "Rechner-Tools",
+    cta: "Zu den Tools",
     icon: SquareToolIcon,
-    body: "Wiederkehrende Berechnungen aus dem Werkstattalltag – direkt im Browser, ohne Anmeldung, ohne Excel-Gefummel.",
-    comingSoon: false,
+    body: "Praktische Rechner für deine täglichen Aufgaben in der Werkstatt – direkt im Browser, ohne Anmeldung.",
   },
   {
-    href: "/verbindungstechnik",
-    title: "Verbindungstechnik",
-    icon: JointIcon,
-    body: "Dübel, Lamello, Schrauben und Klebstoffe – welche Verbindung für welchen Einsatzzweck die richtige Wahl ist.",
-    comingSoon: false,
+    href: "/holzarten",
+    title: "Schreinerwissen",
+    cta: "Zum Wissen",
+    icon: BookIcon,
+    body: "Fachwissen zu Holzarten, Plattenwerkstoffen, Verbindungstechnik, Beschlägen und Oberflächen – verständlich erklärt.",
   },
   {
-    href: "/beschlaege",
-    title: "Beschläge",
-    icon: HingeIcon,
-    body: "Scharniere, Griffe und Auszüge im Überblick – Einbaumaße, Belastbarkeit und Auswahlhilfen für die Praxis.",
-    comingSoon: false,
+    href: "/vorlagen",
+    title: "Vorlagen & Downloads",
+    cta: "Zu den Vorlagen",
+    icon: DocumentIcon,
+    body: "Kostenlose Vorlagen für den Werkstattalltag – Aufmaßblätter, Checklisten und mehr. Einmal anmelden, alle nutzen.",
   },
   {
-    href: "/oberflaechen",
-    title: "Oberflächen",
-    icon: DropletIcon,
-    body: "Öle, Lacke, Wachse und Beizen im Vergleich – Wirkung, Verarbeitung und Pflege für ein sauberes Finish.",
-    comingSoon: false,
+    href: "/digitalisierung",
+    title: "Digitalisierung",
+    cta: "Mehr erfahren",
+    icon: ChipIcon,
+    body: "Wie du Aufmaß, Kalkulation und Planung in deiner Schreinerei Schritt für Schritt digitalisierst.",
+  },
+  {
+    href: "/betrieb-und-recht",
+    title: "Betrieb & Recht",
+    cta: "Zum Überblick",
+    icon: ScaleIcon,
+    body: "Gewährleistung, Meisterpflicht, Datenschutz und E-Rechnung – die wichtigsten Pflichten für deinen Betrieb.",
+  },
+  {
+    href: "/cad",
+    title: "CAD-Vorlagen",
+    cta: "Zu den CAD-Vorlagen",
+    icon: CubeIcon,
+    body: "Fertige 2D-Zeichenvorlagen im DWG-Format für die DIN-gerechte Zeichnung – Einbauschrank, Möbelbau, Innenausbau.",
   },
 ];
 
@@ -262,47 +277,33 @@ export default async function HomePage() {
 
       {/* Pillars */}
       <Container className="py-16">
-        <Eyebrow>Schreinerwissen</Eyebrow>
+        <Eyebrow>Überblick</Eyebrow>
         <h2 className="mt-4 text-3xl">Alles für deinen Arbeitsalltag</h2>
+        <p className="mt-3 max-w-2xl text-ink-muted">
+          Rechner, Fachwissen, Vorlagen und mehr – die wichtigsten Bereiche von
+          schreiner.digital auf einen Blick.
+        </p>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {pillars.map((p) =>
-            p.comingSoon ? (
-              <div
-                key={p.title}
-                className="flex h-full flex-col rounded-[var(--radius)] border border-dashed border-border bg-surface/60 p-6"
-              >
-                <span className="inline-flex size-11 items-center justify-center rounded-lg bg-surface-2 text-ink-faint">
-                  <p.icon className="size-5" />
-                </span>
-                <div className="mt-4 flex items-center gap-2">
-                  <h3 className="text-xl text-ink-muted">{p.title}</h3>
-                  <Badge>bald</Badge>
-                </div>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-faint">
-                  {p.body}
-                </p>
-              </div>
-            ) : (
-              <Link
-                key={p.title}
-                href={p.href}
-                className="group flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-6 transition-colors hover:border-accent"
-              >
-                <span className="inline-flex size-11 items-center justify-center rounded-lg bg-accent-soft text-accent">
-                  <p.icon className="size-5" />
-                </span>
-                <h3 className="mt-4 text-xl">{p.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">
-                  {p.body}
-                </p>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
-                  Zu {p.title}
-                  <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-                </span>
-              </Link>
-            ),
-          )}
+          {pillars.map((p) => (
+            <Link
+              key={p.title}
+              href={p.href}
+              className="group flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-6 transition-colors hover:border-accent"
+            >
+              <span className="inline-flex size-14 items-center justify-center rounded-xl bg-accent-soft text-accent">
+                <p.icon className="size-7" />
+              </span>
+              <h3 className="mt-5 text-xl">{p.title}</h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">
+                {p.body}
+              </p>
+              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+                {p.cta}
+                <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </Link>
+          ))}
         </div>
       </Container>
 
