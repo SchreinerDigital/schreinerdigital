@@ -182,6 +182,7 @@ const toolExamples: Record<string, string> = {
   restlaenge: "47,1 m",
   durchbiegung: "2,38 mm",
   stundensatz: "64,15 €/h",
+  "quell-schwund": "+1,53 mm",
 };
 
 function ArrowIcon({ className }: { className?: string }) {
@@ -323,7 +324,7 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {tools.map((tool) => (
               <Link
                 key={tool.slug}

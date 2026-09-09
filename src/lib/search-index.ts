@@ -82,7 +82,7 @@ export async function buildSearchIndex(): Promise<SearchDoc[]> {
     {
       title: "Rechner-Tools",
       description:
-        "Praxisnahe Rechner für den Schreineralltag: Plattengewichtsrechner, Türenmaß-Rechner, Restlängenrechner, Durchbiegungsrechner und Stundensatzrechner.",
+        "Praxisnahe Rechner für den Schreineralltag: Plattengewichtsrechner, Türenmaß-Rechner, Restlängenrechner, Durchbiegungsrechner, Stundensatzrechner und Quell- und Schwundrechner.",
       url: "/tools",
       category: "Übersicht",
     },

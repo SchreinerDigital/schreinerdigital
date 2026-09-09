@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
   title: "Rechner-Tools",
   description:
-    "Praxisnahe Rechner für den Schreineralltag: Plattengewichtsrechner, Türenmaß-Rechner, Restlängenrechner, Durchbiegungsrechner und Stundensatzrechner.",
+    "Praxisnahe Rechner für den Schreineralltag: Plattengewichtsrechner, Türenmaß-Rechner, Restlängenrechner, Durchbiegungsrechner, Stundensatzrechner und Quell- und Schwundrechner.",
   alternates: { canonical: "/tools" },
 };
 
@@ -22,7 +22,7 @@ export default function ToolsIndexPage() {
         Anmeldung.
       </p>
 
-      <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tools.map((tool) => (
           <li key={tool.slug}>
             <Link

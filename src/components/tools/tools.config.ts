@@ -50,6 +50,14 @@ export const tools: ToolDef[] = [
       "Kostendeckenden Stundenverrechnungssatz aus Fixkosten und produktiven Stunden berechnen.",
     ready: true,
   },
+  {
+    slug: "quell-schwund",
+    seoTitle: "Quellen und Schwinden von Holz berechnen (DIN 52184)",
+    title: "Quell- und Schwundrechner",
+    description:
+      "Maßänderung von Massivholz aus Holzart, Jahrringlage, Abmessungen und Holzfeuchte nach DIN 52184 berechnen.",
+    ready: true,
+  },
 ];
 
 export function getTool(slug: string): ToolDef | undefined {

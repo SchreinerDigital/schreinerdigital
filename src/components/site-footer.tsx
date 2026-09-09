@@ -28,6 +28,7 @@ const columns = [
       { href: "/tools/restlaenge", label: "Restlängenrechner" },
       { href: "/tools/durchbiegung", label: "Durchbiegungsrechner" },
       { href: "/tools/stundensatz", label: "Stundensatzrechner" },
+      { href: "/tools/quell-schwund", label: "Quell- und Schwundrechner" },
     ],
   },
   {
