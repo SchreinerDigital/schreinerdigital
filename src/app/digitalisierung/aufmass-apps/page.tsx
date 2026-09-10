@@ -205,8 +205,8 @@ export default function AufmassAppsPage() {
             Statt einer separaten App bringen einige Kalkulations- und
             Auftragsprogramme das digitale Aufmaß bereits mit und verbinden
             sich direkt mit dem Lasermessgerät. So landen die Werte ohne
-            Umweg in der Kalkulation. Beispiele sind Plancraft, HERO und
-            STREIT – mehr dazu unter{" "}
+            Umweg in der Kalkulation. Beispiele sind Plancraft und HERO –
+            mehr dazu unter{" "}
             <Link href="/digitalisierung/kalkulationssoftware" className="text-accent hover:underline">
               Kalkulations- und Auftragssoftware
             </Link>
