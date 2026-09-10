@@ -8,7 +8,7 @@ import { vorlagen } from "@/components/downloads/vorlagen.config";
 export const metadata: Metadata = {
   title: "Vorlagen & Downloads",
   description:
-    "Kostenlose Vorlagen für den Werkstattalltag – Aufmaßblätter, Checklisten und mehr. Einmal anmelden, alle Vorlagen nutzen.",
+    "Kostenlose Vorlagen für den Werkstattalltag – Auftragszettel, Angebotsvorlage, Zeiterfassung und mehr, als PDF und editierbare Word-/Excel-Datei. Einmal anmelden, alle Vorlagen nutzen.",
   alternates: { canonical: "/vorlagen" },
 };
 
@@ -18,9 +18,11 @@ export default function VorlagenPage() {
       <Eyebrow>Für deinen Arbeitsalltag</Eyebrow>
       <h1 className="mt-4 text-4xl sm:text-5xl">Vorlagen &amp; Downloads</h1>
       <p className="mt-4 max-w-2xl text-lg text-ink-muted">
-        Aufmaßblätter, Checklisten und weitere Vorlagen für die Werkstatt –
-        kostenlos, aber nur mit einmaliger Newsletter-Anmeldung. Nach der
-        Bestätigung per E-Mail hast du dauerhaft Zugriff auf alle Vorlagen.
+        Auftragszettel, Angebotsvorlage, Zeiterfassung und weitere Vorlagen
+        für die Werkstatt – als fertige PDF zum Ausdrucken und als
+        editierbare Word- oder Excel-Datei zum Anpassen. Kostenlos, aber nur
+        mit einmaliger Newsletter-Anmeldung. Nach der Bestätigung per E-Mail
+        hast du dauerhaft Zugriff auf alle Vorlagen.
       </p>
 
       <div className="mt-10 max-w-lg rounded-[var(--radius)] border border-border bg-surface p-6">

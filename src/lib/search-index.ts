@@ -275,7 +275,7 @@ export async function buildSearchIndex(): Promise<SearchDoc[]> {
     {
       title: "Vorlagen & Downloads",
       description:
-        "Kostenlose Vorlagen für den Werkstattalltag – Aufmaßblätter, Checklisten und mehr. Einmal anmelden, alle Vorlagen nutzen.",
+        "Kostenlose Vorlagen für den Werkstattalltag – Auftragszettel, Angebotsvorlage, Zeiterfassung und mehr, als PDF und editierbare Datei. Einmal anmelden, alle Vorlagen nutzen.",
       url: "/vorlagen",
       category: "Downloads",
     },

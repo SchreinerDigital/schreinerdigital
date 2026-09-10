@@ -48,15 +48,26 @@ export default function VorlagenBestaetigtPage() {
                   <Badge>{v.format}</Badge>
                 </div>
                 <p className="mt-2 flex-1 text-sm text-ink-muted">{v.description}</p>
-                {v.file && (
-                  <a
-                    href={`/downloads/${v.file}`}
-                    download
-                    className="mt-4 inline-flex items-center gap-1.5 self-start text-sm font-medium text-accent hover:text-accent-hover"
-                  >
-                    Herunterladen
-                  </a>
-                )}
+                <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5">
+                  {v.pdfFile && (
+                    <a
+                      href={`/downloads/${v.pdfFile}`}
+                      download
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover"
+                    >
+                      PDF herunterladen
+                    </a>
+                  )}
+                  {v.editableFile && (
+                    <a
+                      href={`/downloads/${v.editableFile}`}
+                      download
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover"
+                    >
+                      {v.editableFormat} herunterladen
+                    </a>
+                  )}
+                </div>
               </li>
             ))}
           </ul>

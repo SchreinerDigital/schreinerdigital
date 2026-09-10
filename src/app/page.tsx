@@ -120,7 +120,7 @@ const pillars = [
     title: "Vorlagen & Downloads",
     cta: "Zu den Vorlagen",
     icon: DocumentIcon,
-    body: "Aufmaßblätter, Checklisten und mehr.",
+    body: "Auftragszettel, Angebote, Zeiterfassung – als PDF und Word/Excel.",
   },
   {
     href: "/digitalisierung",
