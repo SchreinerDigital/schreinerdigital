@@ -39,17 +39,17 @@ function buildPdf() {
     { label: "Straße:", x: 78, endX: 132 },
     { label: "PLZ/Ort:", x: 136, endX: 190 },
   ]);
-  y += 10;
+  y += 9;
 
   drawFieldsRow(doc, y, [
     { label: "Telefon:", x: 20, endX: 74 },
     { label: "E-Mail:", x: 78, endX: 132 },
     { label: "Datum:", x: 136, endX: 190 },
   ]);
-  y += 10;
+  y += 9;
 
   drawFieldsRow(doc, y, [{ label: "Gesprochen mit (Ansprechpartner beim Kunden):", x: 20, endX: 190 }]);
-  y += 12;
+  y += 9;
 
   // Art der Anfrage
   sectionLabel(doc, PAGE.marginLeft, y, "ART DER ANFRAGE");
@@ -57,7 +57,7 @@ function buildPdf() {
   drawCheckboxLabel(doc, 20, y, "Angebotsanfrage");
   drawCheckboxLabel(doc, 90, y, "Auftrag");
   drawCheckboxLabel(doc, 130, y, "Auftrag mit Rapportzettel");
-  y += 12;
+  y += 9;
 
   // Termin
   sectionLabel(doc, PAGE.marginLeft, y, "TERMIN");
@@ -67,7 +67,7 @@ function buildPdf() {
     { label: "Uhrzeit:", x: 68, endX: 112 },
     { label: "Ansprechpartner vor Ort:", x: 116, endX: 190 },
   ]);
-  y += 12;
+  y += 9;
 
   // Beschreibung / Notizen
   const notesHeight = 6 + ruledAreaHeight(8, 6);
