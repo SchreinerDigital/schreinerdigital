@@ -67,7 +67,7 @@ function buildPdf() {
   y += 8;
 
   y = ensureRoom(doc, y, 10, header);
-  y = drawParagraph(doc, CLOSING_NOTE, PAGE.marginLeft, y, PAGE.contentWidth, {
+  drawParagraph(doc, CLOSING_NOTE, PAGE.marginLeft, y, PAGE.contentWidth, {
     fontSize: 7.5,
     lineHeight: 3.6,
     color: COLORS.muted,

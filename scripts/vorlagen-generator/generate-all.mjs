@@ -17,6 +17,26 @@ import { generateBautagebericht } from "./bautagebericht.mjs";
 import { generateLadecheckliste } from "./ladecheckliste.mjs";
 import { generateTeambesprechungProtokoll } from "./teambesprechung-protokoll.mjs";
 import { generateEmailVorlagenKundenkommunikation } from "./email-vorlagen-kundenkommunikation.mjs";
+import { generateAufmassblatt } from "./aufmassblatt.mjs";
+import { generateKundendatenblatt } from "./kundendatenblatt.mjs";
+import { generateProjektuebersichtKapazitaetsplaner } from "./projektuebersicht-kapazitaetsplaner.mjs";
+import { generateUrlaubsplaner } from "./urlaubsplaner.mjs";
+import { generateMaterialbestellliste } from "./materialbestellliste.mjs";
+import { generateBeschlagsliste } from "./beschlagsliste.mjs";
+import { generateOberflaechenauftrag } from "./oberflaechenauftrag.mjs";
+import { generateLieferschein } from "./lieferschein.mjs";
+import { generateAbnahmeprotokoll } from "./abnahmeprotokoll.mjs";
+import { generateMaengelliste } from "./maengelliste.mjs";
+import { generateEndkontrolleCheckliste } from "./endkontrolle-checkliste.mjs";
+import { generateReklamationsprotokoll } from "./reklamationsprotokoll.mjs";
+import { generateRechnungsvorlage } from "./rechnungsvorlage.mjs";
+import { generateAbwesenheitsnotizVorlagen } from "./abwesenheitsnotiz-vorlagen.mjs";
+import { generateRetourenschein } from "./retourenschein.mjs";
+import { generateEmailVorlagenKundenkommunikationTeil2 } from "./email-vorlagen-kundenkommunikation-teil2.mjs";
+import { generateProjektordnerRegister } from "./projektordner-register.mjs";
+import { generateAblagesystemBuchhaltung } from "./ablagesystem-buchhaltung.mjs";
+import { generateBestaetigungElternzeit } from "./bestaetigung-elternzeit.mjs";
+import { generateEinarbeitungsplan } from "./einarbeitungsplan.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.resolve(__dirname, "../../public/downloads");
@@ -54,6 +74,76 @@ const JOBS = [
     base: "email-vorlagen-kundenkommunikation",
     editable: "docx",
   },
+  { name: "Aufmaßblatt", build: generateAufmassblatt, base: "aufmassblatt", editable: "docx" },
+  { name: "Kundendatenblatt", build: generateKundendatenblatt, base: "kundendatenblatt", editable: "docx" },
+  {
+    name: "Projektübersicht / Kapazitätsplaner",
+    build: generateProjektuebersichtKapazitaetsplaner,
+    base: "projektuebersicht-kapazitaetsplaner",
+    editable: "xlsx",
+  },
+  { name: "Urlaubsplaner", build: generateUrlaubsplaner, base: "urlaubsplaner", editable: "xlsx" },
+  {
+    name: "Materialbestellliste",
+    build: generateMaterialbestellliste,
+    base: "materialbestellliste",
+    editable: "xlsx",
+  },
+  { name: "Beschlagsliste", build: generateBeschlagsliste, base: "beschlagsliste", editable: "xlsx" },
+  {
+    name: "Oberflächenauftrag",
+    build: generateOberflaechenauftrag,
+    base: "oberflaechenauftrag",
+    editable: "docx",
+  },
+  { name: "Lieferschein", build: generateLieferschein, base: "lieferschein", editable: "docx" },
+  { name: "Abnahmeprotokoll", build: generateAbnahmeprotokoll, base: "abnahmeprotokoll", editable: "docx" },
+  { name: "Mängelliste", build: generateMaengelliste, base: "maengelliste", editable: "xlsx" },
+  {
+    name: "Endkontrolle vor Auslieferung",
+    build: generateEndkontrolleCheckliste,
+    base: "endkontrolle-checkliste",
+    editable: "docx",
+  },
+  {
+    name: "Reklamationsprotokoll",
+    build: generateReklamationsprotokoll,
+    base: "reklamationsprotokoll",
+    editable: "docx",
+  },
+  { name: "Rechnungsvorlage", build: generateRechnungsvorlage, base: "rechnungsvorlage", editable: "docx" },
+  {
+    name: "Abwesenheitsnotiz-Vorlagen",
+    build: generateAbwesenheitsnotizVorlagen,
+    base: "abwesenheitsnotiz-vorlagen",
+    editable: "docx",
+  },
+  { name: "Retourenschein", build: generateRetourenschein, base: "retourenschein", editable: "docx" },
+  {
+    name: "E-Mail-Vorlagen Kundenkommunikation Teil 2",
+    build: generateEmailVorlagenKundenkommunikationTeil2,
+    base: "email-vorlagen-kundenkommunikation-teil2",
+    editable: "docx",
+  },
+  {
+    name: "Projektordner-Register",
+    build: generateProjektordnerRegister,
+    base: "projektordner-register",
+    editable: "docx",
+  },
+  {
+    name: "Ablagesystem für Buchhaltungsunterlagen",
+    build: generateAblagesystemBuchhaltung,
+    base: "ablagesystem-buchhaltung",
+    editable: "docx",
+  },
+  {
+    name: "Bestätigung der Elternzeit",
+    build: generateBestaetigungElternzeit,
+    base: "bestaetigung-elternzeit",
+    editable: "docx",
+  },
+  { name: "Einarbeitungsplan", build: generateEinarbeitungsplan, base: "einarbeitungsplan", editable: "docx" },
 ];
 
 async function main() {
