@@ -127,9 +127,69 @@ export async function buildSearchIndex(): Promise<SearchDoc[]> {
       category: "Digitalisierung",
     },
     {
+      title: "CAD/CAM-Einführung",
+      description: "Der Workflow von der Konstruktion bis zum CNC-Programm.",
+      url: "/digitalisierung/cad-cam-einfuehrung",
+      category: "Digitalisierung",
+    },
+    {
+      title: "Stücklisten & CNC-Ausgabe",
+      description: "Wie Material-, Zuschnitt- und Beschlaglisten automatisch entstehen.",
+      url: "/digitalisierung/stuecklisten-cnc-ausgabe",
+      category: "Digitalisierung",
+    },
+    {
+      title: "Fertigungsprozesse optimieren",
+      description: "Engpässe erkennen und den Werkstattdurchlauf verbessern.",
+      url: "/digitalisierung/fertigungsprozesse-optimieren",
+      category: "Digitalisierung",
+    },
+    {
+      title: "Auftragskalkulation",
+      description: "Zuschlagskalkulation Schritt für Schritt mit Rechenbeispiel.",
+      url: "/digitalisierung/auftragskalkulation",
+      category: "Digitalisierung",
+    },
+    {
+      title: "Aufmaß & Angebotserstellung",
+      description: "Vom Aufmaß vor Ort zum rechtssicheren Angebot.",
+      url: "/digitalisierung/aufmass-angebotserstellung",
+      category: "Digitalisierung",
+    },
+    {
+      title: "Projektplanung: Excel, Tools und Vorlagen",
+      description: "Excel, Gantt-Tools oder integrierte Software – was wann passt.",
+      url: "/digitalisierung/projektplanung",
+      category: "Digitalisierung",
+    },
+    {
+      title: "Cloud-Tools & Dateiverwaltung",
+      description: "Cloud-Speicher versus lokaler Server für Konstruktionsdaten.",
+      url: "/digitalisierung/cloud-tools-dateiverwaltung",
+      category: "Digitalisierung",
+    },
+    {
+      title: "Schnittstellen zwischen CAD, ERP und CNC",
+      description: "Warum drei Softwarewelten nicht von selbst zusammenarbeiten.",
+      url: "/digitalisierung/schnittstellen-cad-erp-cnc",
+      category: "Digitalisierung",
+    },
+    {
+      title: "Papierloses Büro in der Schreinerei",
+      description: "Belege digital statt in Papierform verwalten – GoBD-konform.",
+      url: "/digitalisierung/papierloses-buero",
+      category: "Digitalisierung",
+    },
+    {
+      title: "Datenmanagement & Backups",
+      description: "Die 3-2-1-Regel für verlässliche Datensicherung.",
+      url: "/digitalisierung/datenmanagement-backups",
+      category: "Digitalisierung",
+    },
+    {
       title: "Betrieb & Recht",
       description:
-        "Gewährleistung, Meisterpflicht, Aufbewahrungsfristen, Datenschutz und E-Rechnung: die wichtigsten rechtlichen Pflichten für Schreinerei- und Tischlereibetriebe im Überblick.",
+        "Gewährleistung, Meisterpflicht, Datenschutz und Arbeitszeiterfassung bis Arbeitsvorbereitung, Kalkulation und Marketing: Recht und Betriebsführung für Schreinerei- und Tischlereibetriebe im Überblick.",
       url: "/betrieb-und-recht",
       category: "Übersicht",
     },
@@ -166,6 +226,50 @@ export async function buildSearchIndex(): Promise<SearchDoc[]> {
       description:
         "Was seit 2025 im Geschäftsverkehr zwischen Unternehmen gilt, welche Formate erlaubt sind und welche Übergangsfristen es gibt.",
       url: "/betrieb-und-recht/e-rechnung",
+      category: "Betrieb & Recht",
+    },
+    {
+      title: "Zeitmanagement & Arbeitszeiterfassung",
+      description:
+        "Warum Arbeitszeiterfassung bereits verpflichtend ist und welche Erfassungsmethoden sich für Werkstätten eignen.",
+      url: "/betrieb-und-recht/zeitmanagement",
+      category: "Betrieb & Recht",
+    },
+    {
+      title: "Arbeitsvorbereitung in der Werkstatt",
+      description:
+        "Von der Auftragsklärung bis zur Reihenfolgeplanung: wie Aufträge reibungslos durch die Werkstatt laufen.",
+      url: "/betrieb-und-recht/arbeitsvorbereitung",
+      category: "Betrieb & Recht",
+    },
+    {
+      title: "Lagerverwaltung & Materialfluss",
+      description: "ABC-Analyse, Mindest- und Meldebestand sowie kurze Wege in der Werkstatt.",
+      url: "/betrieb-und-recht/lagerverwaltung-materialfluss",
+      category: "Betrieb & Recht",
+    },
+    {
+      title: "Qualitätsmanagement in der Schreinerei",
+      description: "Wareneingangs-, Zwischen- und Endkontrolle sowie strukturiertes Reklamationsmanagement.",
+      url: "/betrieb-und-recht/qualitaetsmanagement",
+      category: "Betrieb & Recht",
+    },
+    {
+      title: "Preisgestaltung & Wirtschaftlichkeit",
+      description: "Kostenorientierte, wettbewerbsorientierte und wertorientierte Preisstrategien im Vergleich.",
+      url: "/betrieb-und-recht/preisgestaltung-wirtschaftlichkeit",
+      category: "Betrieb & Recht",
+    },
+    {
+      title: "Kundenkommunikation in der Schreinerei",
+      description: "Vom Erstkontakt über die Angebotsphase bis zur Übergabe – Kommunikation ohne Missverständnisse.",
+      url: "/betrieb-und-recht/kundenkommunikation",
+      category: "Betrieb & Recht",
+    },
+    {
+      title: "Marketing für Schreinereien",
+      description: "Google Unternehmensprofil, eigene Website, Social Media und Empfehlungsmarketing im Vergleich.",
+      url: "/betrieb-und-recht/marketing",
       category: "Betrieb & Recht",
     },
     {

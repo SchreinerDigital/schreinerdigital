@@ -49,6 +49,99 @@ const faqs = [
   },
 ];
 
+const themenGruppen = [
+  {
+    titel: "Aufmaß & Angebotserstellung",
+    items: [
+      {
+        href: "/digitalisierung/aufmass-apps",
+        titel: "Digitale Aufmaß-Apps",
+        text: "Laser-Messgeräte mit App-Anbindung im Vergleich.",
+      },
+      {
+        href: "/digitalisierung/aufmass-angebotserstellung",
+        titel: "Aufmaß & Angebotserstellung",
+        text: "Vom Aufmaß vor Ort zum rechtssicheren Angebot.",
+      },
+    ],
+  },
+  {
+    titel: "Kalkulation & Planung",
+    items: [
+      {
+        href: "/digitalisierung/kalkulationssoftware",
+        titel: "Kalkulations- & Auftragssoftware",
+        text: "Von der Angebotserstellung bis zur Rechnung.",
+      },
+      {
+        href: "/digitalisierung/auftragskalkulation",
+        titel: "Auftragskalkulation",
+        text: "Zuschlagskalkulation Schritt für Schritt mit Rechenbeispiel.",
+      },
+      {
+        href: "/digitalisierung/projektplanung",
+        titel: "Projektplanung",
+        text: "Excel, Gantt-Tools oder integrierte Software – was wann passt.",
+      },
+      {
+        href: "/digitalisierung/fertigungsprozesse-optimieren",
+        titel: "Fertigungsprozesse optimieren",
+        text: "Engpässe erkennen und den Werkstattdurchlauf verbessern.",
+      },
+    ],
+  },
+  {
+    titel: "CAD/CAM & Fertigung",
+    items: [
+      {
+        href: "/digitalisierung/cad-cam-software",
+        titel: "CAD/CAM-Software",
+        text: "3D-Planung und CNC-Anbindung im Vergleich.",
+      },
+      {
+        href: "/digitalisierung/cad-cam-einfuehrung",
+        titel: "CAD/CAM-Einführung",
+        text: "Der Workflow von der Konstruktion bis zum CNC-Programm.",
+      },
+      {
+        href: "/digitalisierung/stuecklisten-cnc-ausgabe",
+        titel: "Stücklisten & CNC-Ausgabe",
+        text: "Wie Material-, Zuschnitt- und Beschlaglisten automatisch entstehen.",
+      },
+      {
+        href: "/digitalisierung/schnittstellen-cad-erp-cnc",
+        titel: "Schnittstellen: CAD, ERP, CNC",
+        text: "Warum drei Softwarewelten nicht von selbst zusammenarbeiten.",
+      },
+    ],
+  },
+  {
+    titel: "Digitale Infrastruktur",
+    items: [
+      {
+        href: "/digitalisierung/e-rechnung",
+        titel: "E-Rechnungspflicht",
+        text: "Was seit 2025 im Geschäftsverkehr zwischen Unternehmen gilt.",
+      },
+      {
+        href: "/digitalisierung/cloud-tools-dateiverwaltung",
+        titel: "Cloud-Tools & Dateiverwaltung",
+        text: "Cloud-Speicher versus lokaler Server für Konstruktionsdaten.",
+      },
+      {
+        href: "/digitalisierung/datenmanagement-backups",
+        titel: "Datenmanagement & Backups",
+        text: "Die 3-2-1-Regel für verlässliche Datensicherung.",
+      },
+      {
+        href: "/digitalisierung/papierloses-buero",
+        titel: "Papierloses Büro",
+        text: "Belege digital statt in Papierform verwalten – GoBD-konform.",
+      },
+    ],
+  },
+];
+
 export default function DigitalisierungPage() {
   return (
     <Container className="py-16 sm:py-20">
@@ -91,42 +184,35 @@ export default function DigitalisierungPage() {
 
         <GuideSection
           title="Die Themen im Detail"
-          intro="Drei Bereiche, in denen sich der Einstieg in digitale Werkzeuge für die meisten Betriebe zuerst lohnt:"
+          intro="Vier Bereiche, von der ersten Kundenmessung bis zur digitalen Ablage im Büro:"
         >
-          <ul className="mt-4 grid gap-4 sm:grid-cols-3">
-            {[
-              {
-                href: "/digitalisierung/aufmass-apps",
-                titel: "Digitale Aufmaß-Apps",
-                text: "Laser-Messgeräte mit App-Anbindung im Vergleich.",
-              },
-              {
-                href: "/digitalisierung/kalkulationssoftware",
-                titel: "Kalkulations- & Auftragssoftware",
-                text: "Von der Angebotserstellung bis zur Rechnung.",
-              },
-              {
-                href: "/digitalisierung/cad-cam-software",
-                titel: "CAD/CAM-Software",
-                text: "3D-Planung und CNC-Anbindung im Vergleich.",
-              },
-            ].map((a) => (
-              <li key={a.href}>
-                <Link
-                  href={a.href}
-                  className="group flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-5 transition-colors hover:border-accent"
-                >
-                  <h3 className="text-base font-semibold text-ink">{a.titel}</h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">
-                    {a.text}
-                  </p>
-                  <span className="mt-4 text-sm font-medium text-accent">
-                    Weiterlesen →
-                  </span>
-                </Link>
-              </li>
+          <div className="mt-4 space-y-8">
+            {themenGruppen.map((gruppe) => (
+              <div key={gruppe.titel}>
+                <h3 className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-ink-faint">
+                  {gruppe.titel}
+                </h3>
+                <ul className="mt-3 grid gap-4 sm:grid-cols-2">
+                  {gruppe.items.map((a) => (
+                    <li key={a.href}>
+                      <Link
+                        href={a.href}
+                        className="group flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-5 transition-colors hover:border-accent"
+                      >
+                        <h4 className="text-base font-semibold text-ink">{a.titel}</h4>
+                        <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">
+                          {a.text}
+                        </p>
+                        <span className="mt-4 text-sm font-medium text-accent">
+                          Weiterlesen →
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </GuideSection>
 
         <GuideSection title="Häufig gestellte Fragen (FAQ)">
