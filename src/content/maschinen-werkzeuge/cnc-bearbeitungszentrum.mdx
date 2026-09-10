@@ -1,0 +1,51 @@
+import { Datentabelle } from "@/components/mdx/datentabelle";
+
+export const meta = {
+  title: "CNC-Bearbeitungszentrum",
+  kategorie: "CNC & Digitalfertigung",
+  synonyms: ["CNC-BAZ", "CNC-Fräse", "Nesting-Maschine"],
+  norm: "DIN EN ISO 19085-3",
+  summary: "Bohren, Fräsen und Sägen in einem Arbeitsgang, gesteuert von CAD/CAM-Daten statt von Hand – die CNC-Maschine verbindet die Werkstatt direkt mit der digitalen Planung.",
+  kennwerte: [
+    { label: "Arbeitsbereich (X/Y)", value: "ca. 2.100–3.700 × 1.300–2.200 mm" },
+    { label: "Achsen", value: "3 (Standard) bis 5 (mit Schwenkkopf)" },
+    { label: "Spindelleistung", value: "ca. 5–13 kW" },
+    { label: "Sicherheitsnorm", value: "DIN EN ISO 19085-3 (NC-/CNC-Bohr- und Fräsmaschinen)" },
+    { label: "Datenformat", value: "meist DXF/DWG-Import über CAD/CAM-Software" },
+  ],
+};
+
+Das CNC-Bearbeitungszentrum (BAZ) übernimmt Bohren, Fräsen, Nuten und bei manchen Modellen auch Sägen automatisiert nach hinterlegten Werkzeugbahnen. Statt jeden Arbeitsschritt von Hand einzurichten, überträgt eine CAD/CAM-Software die Konstruktionsdaten direkt in Steuerbefehle – die Maschine arbeitet das Werkstück dann eigenständig ab.
+
+## Aufbau
+
+Auf einem Maschinenbett bewegt sich ein Fräsaggregat entlang der X- und Y-Achse, während die Z-Achse die Frästiefe steuert; 5-Achs-Zentren ergänzen einen schwenk- und drehbaren Fräskopf für Bearbeitungen im Winkel. Das Werkstück wird meist über ein Vakuum-Spannsystem oder mechanische Spanner auf dem Maschinentisch fixiert. Viele Zentren verfügen zusätzlich über einen Werkzeugwechsler, der je nach Arbeitsschritt automatisch zwischen Bohrern, Fräsern und Sägeaggregat wechselt – nesting-fähige Maschinen sägen dabei sogar die Plattenteile direkt aus dem Rohformat heraus.
+
+## Eigenschaften
+
+- Die Wiederholgenauigkeit liegt deutlich über der von Handarbeit – identische Bauteile (z. B. Serienmöbel oder Küchenkorpusse) fallen absolut maßgleich aus.
+- Komplexe Bearbeitungen wie Schattenfugen, Lichtkanäle oder Freiformkonturen lassen sich in einem Arbeitsgang fertigen, für die von Hand mehrere Maschinen nötig wären.
+- Die Anbindung an CAD/CAM-Software (siehe Digitalisierung im Schreinerhandwerk) entscheidet maßgeblich über den tatsächlichen Zeitgewinn – ohne durchgängigen Datenfluss von der Planung bis zur Maschine bleibt viel Potenzial ungenutzt.
+- Je nach Ausstattung übernimmt das BAZ auch die Ausgabe von Stücklisten und Beschriftungen für die anschließende Montage.
+
+## Verwendung
+
+- Serienfertigung von Korpusbohrungen (32-mm-System) für Küchen- und Möbelbau
+- Fräsen von Nuten, Ausklinkungen und Formteilen nach digitaler Vorlage
+- Nesting-Zuschnitt: Verschachteln mehrerer Bauteile auf einer Rohplatte zur Materialoptimierung
+- Gravuren, Beschriftungen und dekorative Fräsungen
+
+## Verarbeitung
+
+- Werkzeugdaten (Durchmesser, Länge, Schneidenzahl) vor jedem Auftrag in der Steuerungssoftware pflegen – veraltete Werkzeugdaten sind eine häufige Fehlerquelle bei Maßabweichungen.
+- Nullpunkt und Werkstückausrichtung bei jedem neuen Rohteil sorgfältig referenzieren, besonders bei asymmetrischen oder bereits vorbearbeiteten Werkstücken.
+- Vakuumspannung vor Bearbeitungsbeginn auf ausreichenden Unterdruck prüfen – besonders bei kleinteiligem Nesting mit vielen einzelnen Zuschnitten.
+- Simulation der Werkzeugbahnen vorab nutzen, um Kollisionen zwischen Fräskopf, Spannmitteln und Werkstück zu vermeiden.
+
+## Technische Daten
+
+<Datentabelle rows={meta.kennwerte} />
+
+## Fazit
+
+Ein CNC-Bearbeitungszentrum ist nur so gut wie die Daten, die es füttern – der eigentliche Effizienzgewinn entsteht durch eine durchgängige CAD/CAM-Kette von der Planung bis zur Maschine, nicht durch die Maschine allein.

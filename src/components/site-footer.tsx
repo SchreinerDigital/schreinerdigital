@@ -14,6 +14,7 @@ const columns = [
       { href: "/verbindungstechnik", label: "Verbindungstechnik" },
       { href: "/beschlaege", label: "Beschläge" },
       { href: "/oberflaechen", label: "Oberflächen" },
+      { href: "/maschinen-werkzeuge", label: "Maschinen & Werkzeuge" },
       { href: "/digitalisierung", label: "Digitalisierung" },
       { href: "/betrieb-und-recht", label: "Betrieb & Recht" },
       { href: "/vorlagen", label: "Vorlagen & Downloads" },

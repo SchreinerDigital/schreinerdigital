@@ -110,9 +110,29 @@ export interface OberflaecheMeta {
   draft?: boolean;
 }
 
+/** Frontmatter-style metadata exported from each Maschine/Werkzeug MDX file. */
+export interface MaschineMeta {
+  slug: string;
+  title: string;
+  /** Short/trade name, e.g. "CNC-BAZ", "Kappsäge" */
+  kurzname?: string;
+  summary: string;
+  /** e.g. "Sägetechnik" | "Hobel- und Frästechnik" | "CNC & Digitalfertigung" | "Bohr- und Schleiftechnik" | "Arbeitssicherheit" | "Handwerkzeuge" */
+  kategorie?: string;
+  /** Trade / secondary names */
+  synonyms?: string[];
+  /** Relevant standard, e.g. "DIN EN 1870-1" */
+  norm?: string;
+  /** Path to the hero image under /public, e.g. "/maschinen-werkzeuge/formatkreissaege.jpg" */
+  bild?: string;
+  kennwerte?: TechnicalDatum[];
+  draft?: boolean;
+}
+
 export type ContentCollection =
   | "holzarten"
   | "plattenwerkstoffe"
   | "verbindungstechnik"
   | "beschlaege"
-  | "oberflaechen";
+  | "oberflaechen"
+  | "maschinen-werkzeuge";

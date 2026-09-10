@@ -1,0 +1,43 @@
+import { Datentabelle } from "@/components/mdx/datentabelle";
+
+export const meta = {
+  title: "Musterwerkzeug",
+  kurzname: "XYZ",
+  kategorie: "Sägetechnik", // Sägetechnik | Hobel- und Frästechnik | CNC & Digitalfertigung | Bohr-, Schleif- und Kantentechnik | Arbeitssicherheit | Handwerkzeuge
+  synonyms: ["Andere Bezeichnung A", "Andere Bezeichnung B"],
+  norm: "DIN EN 00000",
+  summary: "Einzeiler für die Übersichtsseite – wird noch ersetzt.",
+  bild: "/maschinen-werkzeuge/muster.jpg",
+  draft: true,
+  kennwerte: [
+    { label: "Kennwert 1", value: "0 mm" },
+    { label: "Kennwert 2", value: "0 kg" },
+  ],
+};
+
+Titel, Kurzname und Kategorie rendert die Seite aus `meta`. Der Fließtext
+beginnt direkt mit dem Intro-Absatz (kein `# Titel`).
+
+## Aufbau
+
+Konstruktion, Funktionsweise, Bauformen.
+
+## Eigenschaften
+
+Belastbarkeit, Genauigkeit, typische Grenzen.
+
+## Verwendung
+
+Typische Einsatzfälle in der Werkstatt.
+
+## Verarbeitung
+
+Praxistipps, typische Fehler, Sicherheitshinweise.
+
+## Technische Daten
+
+<Datentabelle rows={meta.kennwerte} />
+
+## Fazit
+
+Kurze Einordnung: Stärken, Schwächen, Alternativen.

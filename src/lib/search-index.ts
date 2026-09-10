@@ -28,13 +28,14 @@ function truthy<T>(value: T | undefined | null | false): value is T {
  * becomes searchable before it's live.
  */
 export async function buildSearchIndex(): Promise<SearchDoc[]> {
-  const [holzarten, plattenwerkstoffe, verbindungstechnik, beschlaege, oberflaechen] =
+  const [holzarten, plattenwerkstoffe, verbindungstechnik, beschlaege, oberflaechen, maschinenWerkzeuge] =
     await Promise.all([
       getAllMeta("holzarten"),
       getAllMeta("plattenwerkstoffe"),
       getAllMeta("verbindungstechnik"),
       getAllMeta("beschlaege"),
       getAllMeta("oberflaechen"),
+      getAllMeta("maschinen-werkzeuge"),
     ]);
 
   const docs: SearchDoc[] = [
@@ -49,6 +50,13 @@ export async function buildSearchIndex(): Promise<SearchDoc[]> {
       description:
         "Massivholz-Lexikon für die Werkstatt: Herkunft, Holzbild, Rohdichte, Festigkeit und Verarbeitungstipps – von Ahorn bis Zwetschge.",
       url: "/holzarten",
+      category: "Übersicht",
+    },
+    {
+      title: "Holzarten bestimmen – Merkmale und Grundlagen",
+      description:
+        "Wie man Holzarten anhand von Farbe, Kern-/Splintholz, Jahresringen, Porenstruktur, Härte und Dichte sicher unterscheidet – plus geeignete Hölzer für den Möbelbau.",
+      url: "/holzarten/grundlagen",
       category: "Übersicht",
     },
     {
@@ -77,6 +85,13 @@ export async function buildSearchIndex(): Promise<SearchDoc[]> {
       description:
         "Öl, Wachs, Lack, Beize und Lasur im Vergleich: Zusammensetzung, Schutzwirkung, Trockenzeiten und Verarbeitung – innen wie außen.",
       url: "/oberflaechen",
+      category: "Übersicht",
+    },
+    {
+      title: "Maschinen & Werkzeuge im Überblick",
+      description:
+        "Formatkreissäge, Bandsäge, Fräse, CNC-Bearbeitungszentrum und Handwerkzeuge: Aufbau, Sicherheitsnormen und Praxistipps für die Schreinerwerkstatt.",
+      url: "/maschinen-werkzeuge",
       category: "Übersicht",
     },
     {
@@ -225,6 +240,15 @@ export async function buildSearchIndex(): Promise<SearchDoc[]> {
       url: `/oberflaechen/${o.slug}`,
       category: "Oberfläche",
       keywords: [o.kurzname, o.kategorie, o.norm, ...(o.synonyms ?? [])].filter(truthy),
+    });
+  }
+  for (const m of maschinenWerkzeuge) {
+    docs.push({
+      title: m.title,
+      description: m.summary,
+      url: `/maschinen-werkzeuge/${m.slug}`,
+      category: "Maschine & Werkzeug",
+      keywords: [m.kurzname, m.kategorie, m.norm, ...(m.synonyms ?? [])].filter(truthy),
     });
   }
 

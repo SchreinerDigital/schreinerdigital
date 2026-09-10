@@ -26,6 +26,27 @@ export default async function HolzartenIndexPage() {
         Datentabelle.
       </p>
 
+      <Link
+        href="/holzarten/grundlagen"
+        className="group mt-8 flex flex-col gap-1 rounded-[var(--radius)] border border-accent/40 bg-accent-soft p-5 transition-colors hover:border-accent sm:flex-row sm:items-center sm:justify-between"
+      >
+        <span>
+          <span className="block font-semibold text-ink">
+            Neu hier? Holzarten bestimmen – Merkmale und Grundlagen
+          </span>
+          <span className="mt-1 block text-sm text-ink-muted">
+            Farbe, Kern-/Splintholz, Poren, Härte und Dichte richtig
+            einordnen, bevor du ins Lexikon eintauchst.
+          </span>
+        </span>
+        <span className="mt-3 inline-flex shrink-0 items-center gap-1 text-sm font-medium text-accent sm:mt-0">
+          Zu den Grundlagen
+          <svg className="size-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </span>
+      </Link>
+
       {holzarten.length === 0 ? (
         <p className="mt-12 rounded-[var(--radius)] border border-dashed border-border-strong bg-surface p-8 text-sm text-ink-muted">
           Noch keine Holzarten veröffentlicht.

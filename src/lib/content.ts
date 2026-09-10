@@ -6,6 +6,7 @@ import type {
   BeschlagMeta,
   ContentCollection,
   HolzartMeta,
+  MaschineMeta,
   OberflaecheMeta,
   PlattenwerkstoffMeta,
   VerbindungMeta,
@@ -21,7 +22,9 @@ type MetaFor<C extends ContentCollection> = C extends "holzarten"
       ? VerbindungMeta
       : C extends "beschlaege"
         ? BeschlagMeta
-        : OberflaecheMeta;
+        : C extends "oberflaechen"
+          ? OberflaecheMeta
+          : MaschineMeta;
 
 /** List the MDX slugs in a collection (files prefixed with "_" are ignored). */
 export async function getSlugs(collection: ContentCollection): Promise<string[]> {
@@ -59,7 +62,9 @@ export async function getEntry<C extends ContentCollection>(
             ? await import(`@/content/verbindungstechnik/${slug}.mdx`)
             : collection === "beschlaege"
               ? await import(`@/content/beschlaege/${slug}.mdx`)
-              : await import(`@/content/oberflaechen/${slug}.mdx`);
+              : collection === "oberflaechen"
+                ? await import(`@/content/oberflaechen/${slug}.mdx`)
+                : await import(`@/content/maschinen-werkzeuge/${slug}.mdx`);
     return {
       default: mod.default,
       meta: { slug, ...(mod.meta ?? {}) } as MetaFor<C>,
