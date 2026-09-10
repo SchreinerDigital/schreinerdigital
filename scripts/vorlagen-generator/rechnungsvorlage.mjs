@@ -1,9 +1,14 @@
 // rechnungsvorlage.mjs — RECHNUNG (PDF + Word)
 //
-// Customer-facing invoice, plus a credit-note (Gutschrift/Stornorechnung)
-// variant. Original wording throughout; every company/person/address/amount
-// reference is a literal bracketed placeholder — nothing here is real
-// business data.
+// Customer-facing invoice with the elements required under § 14 UStG
+// (fortlaufende Rechnungsnummer, Leistungsdatum, Steuersatz/-betrag) plus an
+// explicit Verzugsfolgen-Hinweis, which German law requires stating on the
+// invoice itself for automatic default against consumers after 30 days
+// (§ 286 Abs. 3 BGB) without a further reminder being necessary. The credit
+// note / cancellation-invoice variants live in their own standalone files
+// (gutschrift.mjs, storno-rechnung.mjs). Original wording throughout; every
+// company/person/address/amount reference is a literal bracketed
+// placeholder — nothing here is real business data.
 
 import { jsPDF } from "jspdf";
 import { Document, Packer } from "docx";
@@ -19,9 +24,7 @@ import {
   drawFieldsRow,
   drawTable,
   tableHeight,
-  smallNote,
   docxHeader,
-  docxSectionLabel,
   docxParagraph,
   docxFieldsBlock,
   docxDataTable,
@@ -29,9 +32,7 @@ import {
 } from "./branding.mjs";
 
 const TITLE = "RECHNUNG";
-const SUBTITLE = "Rechnung für erbrachte Leistungen – inklusive Vorlage für Gutschrift/Stornorechnung";
-const GUTSCHRIFT_TITLE = "GUTSCHRIFT / STORNORECHNUNG";
-const GUTSCHRIFT_SUBTITLE = "Verwendung bei Rechnungskorrekturen";
+const SUBTITLE = "Rechnung für erbrachte Leistungen – mit den Pflichtangaben nach § 14 UStG";
 
 const ITEM_TABLE_HEADERS = ["Pos.", "Menge", "Einheit", "Bezeichnung", "Einzelpreis", "Gesamtpreis"];
 const ITEM_TABLE_PDF_COLS = [10, 16, 16, 68, 30, 30];
@@ -77,10 +78,8 @@ function signatureParagraphs(spacingAfter) {
 function buildPdf() {
   const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
   const header1 = { title: TITLE, subtitle: SUBTITLE };
-  const header2 = { title: GUTSCHRIFT_TITLE, subtitle: GUTSCHRIFT_SUBTITLE };
   let y = drawPdfHeader(doc, header1);
 
-  // PART 1 — RECHNUNG
   drawFieldsRow(doc, y, [
     { label: "Rechnungsnummer:", x: 20, endX: 74 },
     { label: "Rechnungsdatum:", x: 78, endX: 132 },
@@ -116,10 +115,10 @@ function buildPdf() {
   y = drawSummaryLines(doc, y);
   y += 12;
 
-  y = ensureRoom(doc, y, 20, header1);
+  y = ensureRoom(doc, y, 26, header1);
   y = drawParagraph(
     doc,
-    "Bitte überweisen Sie den Rechnungsbetrag innerhalb von [Zahlungsziel, z. B. 14 Tage] auf das unten genannte Konto. Für Rückfragen stehen wir gerne zur Verfügung.",
+    "Bitte überweisen Sie den Rechnungsbetrag innerhalb von [Zahlungsziel, z. B. 14 Tage] auf das unten genannte Konto. Bei Zahlungsverzug sind wir berechtigt, Verzugszinsen gemäß § 288 BGB zu berechnen. Für Rückfragen stehen wir gerne zur Verfügung.",
     PAGE.marginLeft,
     y,
     PAGE.contentWidth,
@@ -134,63 +133,6 @@ function buildPdf() {
   y = ensureRoom(doc, y, 14, header1);
   drawParagraph(doc, FOOTER_NOTE, PAGE.marginLeft, y, PAGE.contentWidth, { fontSize: 7.5, color: COLORS.muted });
 
-  // PART 2 — GUTSCHRIFT / STORNORECHNUNG (always starts on its own page)
-  doc.addPage();
-  y = drawPdfHeader(doc, header2);
-
-  drawFieldsRow(doc, y, [
-    { label: "Gutschrift-Nr.:", x: 20, endX: 60 },
-    { label: "Datum:", x: 64, endX: 96 },
-    { label: "Bezug: Rechnung Nr. [Nummer] vom [Datum]", x: 100, endX: 190 },
-  ]);
-  y += 9;
-
-  drawFieldsRow(doc, y, [{ label: "Kunde (Name, Anschrift):", x: 20, endX: 190 }]);
-  y += 9;
-
-  y = ensureRoom(doc, y, 14, header2);
-  y = drawParagraph(
-    doc,
-    "Sehr geehrte Damen und Herren, vereinbarungsgemäß erhalten Sie hiermit eine Gutschrift zu unserer Rechnung Nr. [Nummer] vom [Datum]:",
-    PAGE.marginLeft,
-    y,
-    PAGE.contentWidth,
-    { fontSize: 9 },
-  );
-  y += 8;
-
-  y = ensureRoom(doc, y, tableHeight({ rowCount: 4 }), header2);
-  y = drawTable(doc, {
-    y,
-    colWidths: ITEM_TABLE_PDF_COLS,
-    headers: ITEM_TABLE_HEADERS,
-    rowCount: 4,
-    fontSize: 7.5,
-  });
-  y += 8;
-
-  y = ensureRoom(doc, y, 24, header2);
-  y = drawSummaryLines(doc, y);
-  y += 8;
-
-  y = ensureRoom(doc, y, 10, header2);
-  smallNote(doc, PAGE.marginLeft, y, "(Beträge als Abzug ausweisen, z. B. „./. 250,00 €“.)");
-  y += 10;
-
-  y = ensureRoom(doc, y, 20, header2);
-  y = drawParagraph(
-    doc,
-    "Wir überweisen Ihnen den Betrag innerhalb der nächsten Tage auf Ihr Konto. Für Rückfragen stehen wir Ihnen gerne zur Verfügung.",
-    PAGE.marginLeft,
-    y,
-    PAGE.contentWidth,
-    { fontSize: 9 },
-  );
-  y += 10;
-
-  y = ensureRoom(doc, y, 16, header2);
-  drawSignature(doc, y);
-
   finalizePdf(doc);
   return Buffer.from(doc.output("arraybuffer"));
 }
@@ -198,8 +140,6 @@ function buildPdf() {
 async function buildDocx() {
   const children = [
     ...docxHeader(TITLE, SUBTITLE),
-
-    // PART 1 — RECHNUNG
     ...docxFieldsBlock([
       [
         { label: "Rechnungsnummer:", labelPct: 12, valuePct: 21 },
@@ -217,44 +157,11 @@ async function buildDocx() {
     docxSpacer(200),
     ...summaryFieldsBlock(),
     docxParagraph(
-      "Bitte überweisen Sie den Rechnungsbetrag innerhalb von [Zahlungsziel, z. B. 14 Tage] auf das unten genannte Konto. Für Rückfragen stehen wir gerne zur Verfügung.",
+      "Bitte überweisen Sie den Rechnungsbetrag innerhalb von [Zahlungsziel, z. B. 14 Tage] auf das unten genannte Konto. Bei Zahlungsverzug sind wir berechtigt, Verzugszinsen gemäß § 288 BGB zu berechnen. Für Rückfragen stehen wir gerne zur Verfügung.",
       { spacingAfter: 300 },
     ),
     ...signatureParagraphs(300),
-    docxParagraph(FOOTER_NOTE, { size: 15, color: HEX.muted, spacingAfter: 200 }),
-
-    // PART 2 — GUTSCHRIFT / STORNORECHNUNG
-    docxSectionLabel("GUTSCHRIFT / STORNORECHNUNG"),
-    docxParagraph("Verwendung bei Rechnungskorrekturen", { italics: true, size: 19, color: HEX.muted, spacingAfter: 300 }),
-    ...docxFieldsBlock([
-      [
-        { label: "Gutschrift-Nr.:", labelPct: 14, valuePct: 16 },
-        { label: "Datum:", labelPct: 10, valuePct: 15 },
-        { label: "Bezug: Rechnung Nr. [Nummer] vom [Datum]", labelPct: 27, valuePct: 18 },
-      ],
-      [{ label: "Kunde (Name, Anschrift):", labelPct: 25, valuePct: 75 }],
-    ]),
-    docxParagraph(
-      "Sehr geehrte Damen und Herren, vereinbarungsgemäß erhalten Sie hiermit eine Gutschrift zu unserer Rechnung Nr. [Nummer] vom [Datum]:",
-    ),
-    docxDataTable({
-      headers: ITEM_TABLE_HEADERS,
-      colPcts: ITEM_TABLE_DOCX_COLS,
-      rowCount: 4,
-    }),
-    docxSpacer(200),
-    ...summaryFieldsBlock(),
-    docxParagraph("(Beträge als Abzug ausweisen, z. B. „./. 250,00 €“.)", {
-      italics: true,
-      size: 15,
-      color: HEX.muted,
-      spacingAfter: 200,
-    }),
-    docxParagraph(
-      "Wir überweisen Ihnen den Betrag innerhalb der nächsten Tage auf Ihr Konto. Für Rückfragen stehen wir Ihnen gerne zur Verfügung.",
-      { spacingAfter: 300 },
-    ),
-    ...signatureParagraphs(0),
+    docxParagraph(FOOTER_NOTE, { size: 15, color: HEX.muted, spacingAfter: 0 }),
   ];
 
   const document = new Document({
