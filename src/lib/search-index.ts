@@ -275,7 +275,7 @@ export async function buildSearchIndex(): Promise<SearchDoc[]> {
     {
       title: "Vorlagen & Downloads",
       description:
-        "Kostenlose Vorlagen für den Werkstattalltag – Auftragszettel, Angebotsvorlage, Zeiterfassung und mehr, als PDF und editierbare Datei. Einmal anmelden, alle Vorlagen nutzen.",
+        "Vorlagen für den Werkstattalltag als Komplett-Paket oder einzeln nach Kategorie – Auftragszettel, Angebotsvorlage, Zeiterfassung und mehr, als PDF und editierbare Datei.",
       url: "/vorlagen",
       category: "Downloads",
     },

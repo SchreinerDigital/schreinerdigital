@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
-import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
-import { vorlagen } from "@/components/downloads/vorlagen.config";
 
 export const metadata: Metadata = {
   title: "Anmeldung bestätigt",
@@ -26,56 +24,13 @@ export default function VorlagenBestaetigtPage() {
       </span>
       <h1 className="mt-5 text-4xl sm:text-5xl">Danke, du bist bestätigt!</h1>
       <p className="mt-4 max-w-2xl text-lg text-ink-muted">
-        Deine Newsletter-Anmeldung ist bestätigt. Du kannst dich jederzeit
-        über den Abmeldelink in jeder E-Mail wieder abmelden.
+        Wir benachrichtigen dich per E-Mail, sobald du die Vorlagen
+        tatsächlich kaufen kannst. Du kannst dich jederzeit über den
+        Abmeldelink in jeder E-Mail wieder abmelden.
       </p>
 
-      <div className="mt-10">
-        {vorlagen.length === 0 ? (
-          <div className="max-w-2xl rounded-[var(--radius)] border border-dashed border-border-strong bg-surface p-8 text-sm text-ink-muted">
-            Die ersten Vorlagen sind in Arbeit und folgen in Kürze – du
-            bekommst automatisch eine E-Mail, sobald sie verfügbar sind.
-          </div>
-        ) : (
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {vorlagen.map((v) => (
-              <li
-                key={v.slug}
-                className="flex h-full flex-col rounded-[var(--radius)] border border-border bg-surface p-5"
-              >
-                <div className="flex items-baseline justify-between gap-3">
-                  <h2 className="min-w-0 break-words text-lg">{v.title}</h2>
-                  <Badge>{v.format}</Badge>
-                </div>
-                <p className="mt-2 flex-1 text-sm text-ink-muted">{v.description}</p>
-                <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5">
-                  {v.pdfFile && (
-                    <a
-                      href={`/downloads/${v.pdfFile}`}
-                      download
-                      className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover"
-                    >
-                      PDF herunterladen
-                    </a>
-                  )}
-                  {v.editableFile && (
-                    <a
-                      href={`/downloads/${v.editableFile}`}
-                      download
-                      className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover"
-                    >
-                      {v.editableFormat} herunterladen
-                    </a>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-
-      <ButtonLink href="/" size="lg" variant="secondary" className="mt-10">
-        Zur Startseite
+      <ButtonLink href="/vorlagen" size="lg" variant="secondary" className="mt-8">
+        Zurück zu den Vorlagen
       </ButtonLink>
     </Container>
   );
