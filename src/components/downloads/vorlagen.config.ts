@@ -74,4 +74,64 @@ export const vorlagen: VorlageDef[] = [
     editableFile: "abtretungserklaerung-versicherung.docx",
     editableFormat: "Word",
   },
+  {
+    slug: "zuschnittliste",
+    title: "Zuschnittliste",
+    description:
+      "Bauteile für den Zuschnitt vorbereiten und den Fortschritt dokumentieren – mit Materialart, Maßen und Kantenbearbeitung je Position.",
+    format: "PDF + Excel",
+    pdfFile: "zuschnittliste.pdf",
+    editableFile: "zuschnittliste.xlsx",
+    editableFormat: "Excel",
+  },
+  {
+    slug: "terminplan",
+    title: "Terminplan",
+    description:
+      "Meilensteine und Termine eines Projekts im Überblick behalten – geplant versus tatsächlich, mit Verantwortlichkeit und Status.",
+    format: "PDF + Excel",
+    pdfFile: "terminplan.pdf",
+    editableFile: "terminplan.xlsx",
+    editableFormat: "Excel",
+  },
+  {
+    slug: "bautagebericht",
+    title: "Bautagebericht",
+    description:
+      "Tägliche Dokumentation der Arbeiten auf der Baustelle – eingesetzte Arbeiter, erbrachte Leistungen und besondere Vorkommnisse.",
+    format: "PDF + Word",
+    pdfFile: "bautagebericht.pdf",
+    editableFile: "bautagebericht.docx",
+    editableFormat: "Word",
+  },
+  {
+    slug: "ladecheckliste",
+    title: "Ladecheckliste",
+    description:
+      "Werkzeug und Material für Montage- und Baustelleneinsätze vollständig einladen, statt erst vor Ort etwas zu vermissen.",
+    format: "PDF + Word",
+    pdfFile: "ladecheckliste.pdf",
+    editableFile: "ladecheckliste.docx",
+    editableFormat: "Word",
+  },
+  {
+    slug: "teambesprechung-protokoll",
+    title: "Teambesprechung-Protokoll",
+    description:
+      "Ergebnisse und Aufgaben aus der Teambesprechung festhalten – inklusive Anwesenheitsliste und Zuständigkeiten.",
+    format: "PDF + Word",
+    pdfFile: "teambesprechung-protokoll.pdf",
+    editableFile: "teambesprechung-protokoll.docx",
+    editableFormat: "Word",
+  },
+  {
+    slug: "email-vorlagen-kundenkommunikation",
+    title: "E-Mail-Vorlagen für die Kundenkommunikation",
+    description:
+      "Sieben fertig formulierte E-Mail-Texte für Angebot, Nachfrage, Rechnung, Zahlungserinnerung, Mahnung und Anfragen – zum direkten Kopieren.",
+    format: "PDF + Word",
+    pdfFile: "email-vorlagen-kundenkommunikation.pdf",
+    editableFile: "email-vorlagen-kundenkommunikation.docx",
+    editableFormat: "Word",
+  },
 ];
