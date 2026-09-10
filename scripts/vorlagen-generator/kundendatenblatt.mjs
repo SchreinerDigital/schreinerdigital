@@ -33,6 +33,14 @@ const CONSENT_TEXT =
   "Der Kunde ist damit einverstanden, dass die genannten Daten zur Bearbeitung der Anfrage gespeichert werden.";
 const DSGVO_NOTE =
   "Hinweis: Diese Vorlage ersetzt keine Rechtsberatung. Prüfen Sie die Formulierung zur Einwilligung ggf. mit Blick auf die DSGVO für Ihren Betrieb.";
+// smallNote() draws a single line of unwrapped text; at its fixed 7.5pt size this
+// sentence measures ~173mm (wider than the 170mm content area), so for the PDF it
+// is split across two lines at the natural sentence boundary (same wording as
+// DSGVO_NOTE above, used as-is for the docx paragraph, which wraps on its own).
+const DSGVO_NOTE_PDF_LINES = [
+  "Hinweis: Diese Vorlage ersetzt keine Rechtsberatung.",
+  "Prüfen Sie die Formulierung zur Einwilligung ggf. mit Blick auf die DSGVO für Ihren Betrieb.",
+];
 
 function buildPdf() {
   const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
@@ -89,7 +97,9 @@ function buildPdf() {
   drawCheckbox(doc, 20, y - 3.2, 4);
   y = drawParagraph(doc, CONSENT_TEXT, 26, y, PAGE.contentWidth - 6);
   y += 6;
-  smallNote(doc, PAGE.marginLeft, y, DSGVO_NOTE);
+  DSGVO_NOTE_PDF_LINES.forEach((line, i) => {
+    smallNote(doc, PAGE.marginLeft, y + i * 4, line);
+  });
 
   finalizePdf(doc);
   return Buffer.from(doc.output("arraybuffer"));
