@@ -5,6 +5,7 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
 import { NewsletterForm } from "@/components/newsletter/newsletter-form";
+import { Reveal } from "@/components/ui/reveal";
 import { tools } from "@/components/tools/tools.config";
 import { getAllMeta } from "@/lib/content";
 import type { Metadata } from "next";
@@ -185,6 +186,83 @@ const toolExamples: Record<string, string> = {
   "quell-schwund": "+1,53 mm",
 };
 
+const toolHighlights: Record<string, string> = {
+  plattengewicht: "Gewicht von Holzwerkstoffen sofort berechnen.",
+  tuerenmass: "Türblatt- und Zargenmaß nach DIN 18101 ableiten.",
+  restlaenge: "Restlänge der Kantenbandrolle optimal nutzen.",
+  durchbiegung: "Tragfähigkeit von Regal- und Schrankböden prüfen.",
+  stundensatz: "Deinen kostendeckenden Stundensatz ermitteln.",
+  "quell-schwund": "Holzbewegung durch Feuchte sicher einplanen.",
+};
+
+function ScaleWeightIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="4" y="4" width="16" height="4" rx="1" />
+      <path d="M12 8v4M9 12h6l1.5 6h-9L9 12Z" />
+    </svg>
+  );
+}
+
+function DoorIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="5" y="3" width="14" height="18" rx="1" />
+      <path d="M9 3v18" />
+      <path d="M15 12h.01" />
+    </svg>
+  );
+}
+
+function EdgeRollIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="12" cy="12" r="8" />
+      <circle cx="12" cy="12" r="3" />
+      <path d="M12 4v3M20 12h-3" />
+    </svg>
+  );
+}
+
+function BeamBendIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M3 6h18" strokeDasharray="1.5 3.5" />
+      <path d="M3 6q9 9 18 0" />
+      <path d="M12 6v3" />
+    </svg>
+  );
+}
+
+function ClockIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3.5 2" />
+    </svg>
+  );
+}
+
+function WoodMovementIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="12" cy="12" r="7.5" />
+      <path d="M2 12h2.5M19.5 12H22" />
+      <path d="M4.5 12l1.5-1.5M4.5 12l1.5 1.5M19.5 12l-1.5-1.5M19.5 12l-1.5 1.5" />
+    </svg>
+  );
+}
+
+const toolIcons: Record<string, typeof ScaleWeightIcon> = {
+  plattengewicht: ScaleWeightIcon,
+  tuerenmass: DoorIcon,
+  restlaenge: EdgeRollIcon,
+  durchbiegung: BeamBendIcon,
+  stundensatz: ClockIcon,
+  "quell-schwund": WoodMovementIcon,
+};
+
 function ArrowIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -310,50 +388,64 @@ export default async function HomePage() {
 
       {/* Tools strip */}
       <section className="border-y border-border bg-surface">
-        <Container className="py-16">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <Eyebrow>Rechner</Eyebrow>
-              <h2 className="mt-4 text-3xl">Fünf Helfer für den Alltag</h2>
-            </div>
-            <Link
-              href="/tools"
-              className="hidden shrink-0 items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover sm:flex"
-            >
-              Alle Rechner <ArrowIcon className="size-4" />
-            </Link>
-          </div>
+        <Container className="py-16 sm:py-20">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-3 lg:items-start">
+            <Reveal>
+              <Eyebrow>Kostenlose Tools</Eyebrow>
+              <h2 className="mt-4 text-3xl">
+                Smarte Rechner für <span className="text-accent">bessere</span> Ergebnisse
+              </h2>
+              <p className="mt-4 text-ink-muted">
+                Sechs Rechner für den Werkstattalltag – von Plattengewicht
+                über Türmaße bis zur Holzbewegung nach DIN 52184. Ergebnis in
+                Sekunden, ohne Anmeldung.
+              </p>
+              <ButtonLink href="/tools" variant="secondary" className="mt-6">
+                Alle Rechner ansehen
+                <ArrowIcon className="size-4" />
+              </ButtonLink>
+            </Reveal>
 
-          <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {tools.map((tool) => (
-              <Link
-                key={tool.slug}
-                href={`/tools/${tool.slug}`}
-                className="group flex h-full flex-col rounded-lg border border-border bg-paper p-4 transition-colors hover:border-accent"
-              >
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">{tool.title}</span>
-                  {!tool.ready && <Badge>bald</Badge>}
-                </div>
-                <p className="mt-1 flex-1 text-sm text-ink-muted">
-                  {tool.description}
-                </p>
-                {toolExamples[tool.slug] && (
-                  <div className="mt-3 flex items-baseline justify-between rounded-md border border-border bg-surface px-3 py-2">
-                    <span className="font-mono text-[0.68rem] uppercase tracking-wider text-ink-faint">
-                      Beispiel
-                    </span>
-                    <span className="font-mono text-sm font-semibold text-accent">
-                      {toolExamples[tool.slug]}
-                    </span>
-                  </div>
-                )}
-                <span className="mt-3 inline-flex items-center gap-1.5 self-start text-sm font-medium text-ink-faint transition-colors group-hover:text-accent">
-                  Öffnen
-                  <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-                </span>
-              </Link>
-            ))}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-2">
+              {tools.map((tool, i) => {
+                const Icon = toolIcons[tool.slug];
+                return (
+                  <Reveal key={tool.slug} delay={i * 60}>
+                    <Link
+                      href={`/tools/${tool.slug}`}
+                      className="group flex h-full flex-col rounded-[var(--radius)] border border-border bg-paper p-4 transition-colors hover:border-accent"
+                    >
+                      <div className="flex items-center gap-3">
+                        {Icon && (
+                          <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent transition-transform duration-300 group-hover:scale-110">
+                            <Icon className="size-5" />
+                          </span>
+                        )}
+                        <span className="font-medium">{tool.title}</span>
+                        {!tool.ready && <Badge>bald</Badge>}
+                      </div>
+                      <p className="mt-2.5 flex-1 text-sm text-ink-muted">
+                        {toolHighlights[tool.slug] ?? tool.description}
+                      </p>
+                      {toolExamples[tool.slug] && (
+                        <div className="mt-3 flex items-baseline justify-between rounded-md border border-border bg-surface px-3 py-2">
+                          <span className="font-mono text-[0.68rem] uppercase tracking-wider text-ink-faint">
+                            Beispiel
+                          </span>
+                          <span className="font-mono text-sm font-semibold text-accent">
+                            {toolExamples[tool.slug]}
+                          </span>
+                        </div>
+                      )}
+                      <span className="mt-3 inline-flex items-center gap-1.5 self-start text-sm font-medium text-ink-faint transition-colors group-hover:text-accent">
+                        Öffnen
+                        <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+                      </span>
+                    </Link>
+                  </Reveal>
+                );
+              })}
+            </div>
           </div>
         </Container>
       </section>
