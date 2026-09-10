@@ -117,7 +117,7 @@ export interface MaschineMeta {
   /** Short/trade name, e.g. "CNC-BAZ", "Kappsäge" */
   kurzname?: string;
   summary: string;
-  /** e.g. "Sägetechnik" | "Hobel- und Frästechnik" | "CNC & Digitalfertigung" | "Bohr- und Schleiftechnik" | "Arbeitssicherheit" | "Handwerkzeuge" */
+  /** e.g. "Sägetechnik" | "Hobel- und Frästechnik" | "CNC & Digitalfertigung" | "Bohr-, Schleif- und Kantentechnik" | "Arbeitssicherheit" | "Handwerkzeuge" */
   kategorie?: string;
   /** Trade / secondary names */
   synonyms?: string[];

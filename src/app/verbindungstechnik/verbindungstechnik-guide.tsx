@@ -37,6 +37,9 @@ const gruppen = [
             { name: "Schwalbenschwanzverbindung (Zinkung)", slug: "schwalbenschwanzverbindung" },
             { name: "Nut-Feder-Verbindung", slug: "nut-feder-verbindung" },
             { name: "Gehrungsverbindung", slug: "gehrungsverbindung" },
+            { name: "Längsverbindung", slug: "laengsverbindung" },
+            { name: "Stegverbindung", slug: "stegverbindung" },
+            { name: "Überblattung", slug: "ueberblattung" },
           ]}
         />
         <p>

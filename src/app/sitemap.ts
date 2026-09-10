@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
 import { getAllMeta } from "@/lib/content";
 import { tools } from "@/components/tools/tools.config";
+import { siteConfig } from "@/lib/site";
 
-const BASE_URL = "https://schreinerdigital.de";
+const BASE_URL = siteConfig.url;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [holzarten, plattenwerkstoffe, verbindungstechnik, beschlaege, oberflaechen, maschinenWerkzeuge] =
