@@ -108,7 +108,8 @@ function fitTitleFontSize(doc, text, maxWidth, startSize, minSize = 10.5) {
 export function drawWordmark(doc, x = PAGE.marginLeft, y = 18) {
   const prefix = "schreiner";
   const suffix = ".digital";
-  doc.setFont("helvetica", "bold");
+  registerBrandFont(doc);
+  doc.setFont(BRAND_FONT_NAME, "bold");
   doc.setFontSize(16);
   doc.setTextColor(...COLORS.ink);
   doc.text(prefix, x, y);
@@ -246,7 +247,11 @@ const RULER_COLOR = [130, 127, 125];
 // licensed, see fonts/OFL.txt.
 const BRAND_FONT_DIR = dirname(fileURLToPath(import.meta.url));
 const BRAND_FONT_BASE64 = readFileSync(join(BRAND_FONT_DIR, "fonts", "SpaceGrotesk-Bold.ttf")).toString("base64");
+// Internal jsPDF registration key (arbitrary, VFS-local) — distinct from
+// BRAND_FONT_FAMILY, the real installed-font name used for the DOCX/XLSX
+// hints below, which only take effect if the reader's machine has the font.
 const BRAND_FONT_NAME = "SpaceGrotesk";
+const BRAND_FONT_FAMILY = "Space Grotesk";
 
 // jsPDF's font VFS/registration is per-document, so every new jsPDF
 // instance needs its own addFileToVFS/addFont call before the font name
@@ -650,8 +655,8 @@ export function tableHeight({ rowCount, rowHeight = 7, headerHeight = 7, extraRo
 export function docxWordmarkParagraph() {
   return new Paragraph({
     children: [
-      new TextRun({ text: "schreiner", bold: true, size: 28, color: HEX.ink }),
-      new TextRun({ text: ".digital", bold: true, size: 28, color: HEX.accent }),
+      new TextRun({ text: "schreiner", bold: true, size: 28, color: HEX.ink, font: BRAND_FONT_FAMILY }),
+      new TextRun({ text: ".digital", bold: true, size: 28, color: HEX.accent, font: BRAND_FONT_FAMILY }),
     ],
     spacing: { after: 120 },
   });
@@ -1013,8 +1018,8 @@ export function xlsxHeader(ws, title, subtitle) {
   const r1 = ws.getRow(1);
   r1.getCell(1).value = {
     richText: [
-      { font: { bold: true, size: 14, color: { argb: ARGB.ink } }, text: "schreiner" },
-      { font: { bold: true, size: 14, color: { argb: ARGB.accent } }, text: ".digital" },
+      { font: { name: BRAND_FONT_FAMILY, bold: true, size: 14, color: { argb: ARGB.ink } }, text: "schreiner" },
+      { font: { name: BRAND_FONT_FAMILY, bold: true, size: 14, color: { argb: ARGB.accent } }, text: ".digital" },
     ],
   };
   r1.height = 22;
