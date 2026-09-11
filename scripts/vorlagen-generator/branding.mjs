@@ -17,6 +17,9 @@ import {
   TextRun,
   WidthType,
 } from "docx";
+import { readFileSync } from "fs";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 
 // --- COLORS -----------------------------------------------------------
 
@@ -235,6 +238,26 @@ const LETTER = {
 // take an alpha channel here.
 const RULER_COLOR = [130, 127, 125];
 
+// Embedded brand font for the branded-PDF wordmark: jsPDF's built-in fonts
+// are Helvetica/Times/Courier only, but the site's actual wordmark
+// (src/app/layout.tsx: font-display, next/font/google) is Space Grotesk.
+// Google distributes it only as a variable font, so this is a static Bold
+// (wght=700) instance produced via `fontTools.varLib.instancer`; OFL-1.1
+// licensed, see fonts/OFL.txt.
+const BRAND_FONT_DIR = dirname(fileURLToPath(import.meta.url));
+const BRAND_FONT_BASE64 = readFileSync(join(BRAND_FONT_DIR, "fonts", "SpaceGrotesk-Bold.ttf")).toString("base64");
+const BRAND_FONT_NAME = "SpaceGrotesk";
+
+// jsPDF's font VFS/registration is per-document, so every new jsPDF
+// instance needs its own addFileToVFS/addFont call before the font name
+// can be selected via setFont.
+function registerBrandFont(doc) {
+  if (doc.__brandFontRegistered) return;
+  doc.addFileToVFS(`${BRAND_FONT_NAME}-Bold.ttf`, BRAND_FONT_BASE64);
+  doc.addFont(`${BRAND_FONT_NAME}-Bold.ttf`, BRAND_FONT_NAME, "bold");
+  doc.__brandFontRegistered = true;
+}
+
 // Right-aligned "schreiner.digital" wordmark, two-tone (ink + accent) with
 // the ruler-tick motif under ".digital" — matching
 // src/components/brand/wordmark.tsx's Wordmark + RulerBar (the site
@@ -242,7 +265,8 @@ const RULER_COLOR = [130, 127, 125];
 function drawWordmarkRight(doc, rightX, y, fontSize = 20) {
   const prefix = "schreiner";
   const suffix = ".digital";
-  doc.setFont("helvetica", "bold");
+  registerBrandFont(doc);
+  doc.setFont(BRAND_FONT_NAME, "bold");
   doc.setFontSize(fontSize);
   const prefixWidth = doc.getTextWidth(prefix);
   const suffixWidth = doc.getTextWidth(suffix);
