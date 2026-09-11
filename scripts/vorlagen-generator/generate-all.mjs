@@ -37,6 +37,13 @@ import { generateProjektordnerRegister } from "./projektordner-register.mjs";
 import { generateAblagesystemBuchhaltung } from "./ablagesystem-buchhaltung.mjs";
 import { generateBestaetigungElternzeit } from "./bestaetigung-elternzeit.mjs";
 import { generateEinarbeitungsplan } from "./einarbeitungsplan.mjs";
+import { generateAuftragsbestaetigung } from "./auftragsbestaetigung.mjs";
+import { generateAnzahlungsrechnung } from "./anzahlungsrechnung.mjs";
+import { generateZahlungserinnerungBrief } from "./zahlungserinnerung-brief.mjs";
+import { generateMahnung1 } from "./mahnung-1.mjs";
+import { generateMahnung2 } from "./mahnung-2.mjs";
+import { generateStornoRechnung } from "./storno-rechnung.mjs";
+import { generateGutschrift } from "./gutschrift.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.resolve(__dirname, "../../public/downloads");
@@ -144,6 +151,28 @@ const JOBS = [
     editable: "docx",
   },
   { name: "Einarbeitungsplan", build: generateEinarbeitungsplan, base: "einarbeitungsplan", editable: "docx" },
+  {
+    name: "Auftragsbestätigung",
+    build: generateAuftragsbestaetigung,
+    base: "auftragsbestaetigung",
+    editable: "docx",
+  },
+  {
+    name: "Anzahlungsrechnung",
+    build: generateAnzahlungsrechnung,
+    base: "anzahlungsrechnung",
+    editable: "docx",
+  },
+  {
+    name: "Zahlungserinnerung (Brief)",
+    build: generateZahlungserinnerungBrief,
+    base: "zahlungserinnerung-brief",
+    editable: "docx",
+  },
+  { name: "1. Mahnung", build: generateMahnung1, base: "mahnung-1", editable: "docx" },
+  { name: "2. Mahnung", build: generateMahnung2, base: "mahnung-2", editable: "docx" },
+  { name: "Stornorechnung", build: generateStornoRechnung, base: "storno-rechnung", editable: "docx" },
+  { name: "Gutschrift", build: generateGutschrift, base: "gutschrift", editable: "docx" },
 ];
 
 async function main() {
