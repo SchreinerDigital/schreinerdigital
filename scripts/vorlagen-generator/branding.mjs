@@ -230,14 +230,38 @@ const LETTER = {
   footerRuleY: 258,
 };
 
-// Right-aligned "[Ihr Firmenlogo]" wordmark placeholder + accent rule.
-// Returns LETTER.blockStartY, where the sender address / recipient address
-// / info box may begin.
-export function drawLetterHeader(doc) {
+// Right-aligned "schreiner.digital" wordmark, two-tone (ink + accent),
+// matching drawWordmark()'s styling but right-aligned as one unit instead
+// of left-aligned.
+function drawWordmarkRight(doc, rightX, y, fontSize = 20) {
+  const prefix = "schreiner";
+  const suffix = ".digital";
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(20);
+  doc.setFontSize(fontSize);
+  const totalWidth = doc.getTextWidth(prefix) + doc.getTextWidth(suffix);
+  const startX = rightX - totalWidth;
   doc.setTextColor(...COLORS.ink);
-  pdfText(doc, "[Ihr Firmenlogo]", PAGE.marginRight, LETTER.logoY, { align: "right" });
+  pdfText(doc, prefix, startX, y);
+  doc.setTextColor(...COLORS.accent);
+  pdfText(doc, suffix, startX + doc.getTextWidth(prefix), y);
+}
+
+// Right-aligned logo area + accent rule. Returns LETTER.blockStartY, where
+// the sender address / recipient address / info box may begin. Pass
+// `branded: true` for the schreiner.digital-branded PDF preview (real
+// wordmark instead of the "[Ihr Firmenlogo]" placeholder) — the DOCX side
+// (docxLetterHeader) has no such option and always keeps the placeholder,
+// since that file is the one customers actually customize with their own
+// logo.
+export function drawLetterHeader(doc, { branded = false } = {}) {
+  if (branded) {
+    drawWordmarkRight(doc, PAGE.marginRight, LETTER.logoY, 20);
+  } else {
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.setTextColor(...COLORS.ink);
+    pdfText(doc, "[Ihr Firmenlogo]", PAGE.marginRight, LETTER.logoY, { align: "right" });
+  }
 
   doc.setDrawColor(...COLORS.accent);
   doc.setLineWidth(0.7);

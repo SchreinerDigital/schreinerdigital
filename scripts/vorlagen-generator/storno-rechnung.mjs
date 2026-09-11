@@ -71,7 +71,7 @@ function signatureParagraphs(spacingAfter) {
 
 function buildPdf() {
   const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
-  drawLetterHeader(doc);
+  drawLetterHeader(doc, { branded: true });
   const addressEndY = drawAddressBlock(doc);
   const infoEndY = drawInfoBox(doc, INFO_FIELDS);
   let y = Math.max(addressEndY, infoEndY) + 10;
