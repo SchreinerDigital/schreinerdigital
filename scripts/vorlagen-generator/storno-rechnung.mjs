@@ -1,4 +1,8 @@
 // storno-rechnung.mjs — STORNORECHNUNG (PDF + Word)
+//
+// Laid out as a real DIN-5008-style business letter (address window, sender
+// line, info box, "[Ihr Firmenlogo]" placeholder) since this document is
+// meant to be sent out under the customer's OWN letterhead.
 
 import { jsPDF } from "jspdf";
 import { Document, Packer } from "docx";
@@ -6,34 +10,42 @@ import {
   PAGE,
   COLORS,
   HEX,
-  drawPdfHeader,
-  finalizePdf,
-  ensureRoom,
+  drawLetterHeader,
+  drawAddressBlock,
+  drawInfoBox,
+  drawSubjectLine,
+  ensureLetterRoom,
+  finalizeLetterPdf,
   pdfText,
   drawParagraph,
   drawFieldsRow,
   drawTable,
   tableHeight,
   smallNote,
-  docxHeader,
+  docxLetterHeader,
+  docxAddressAndInfoBlock,
+  docxSubjectLine,
+  docxLetterFooter,
   docxParagraph,
   docxFieldsBlock,
   docxDataTable,
   docxSpacer,
 } from "./branding.mjs";
 
-const TITLE = "STORNORECHNUNG";
-const SUBTITLE = "Vollständige Stornierung einer fehlerhaft ausgestellten Rechnung";
+const TITLE = "Stornorechnung";
 
 const ITEM_TABLE_HEADERS = ["Pos.", "Menge", "Einheit", "Bezeichnung", "Einzelpreis", "Gesamtpreis"];
 const ITEM_TABLE_PDF_COLS = [10, 16, 16, 68, 30, 30];
 const ITEM_TABLE_DOCX_COLS = [6, 9, 9, 40, 18, 18];
 
+const INFO_FIELDS = [
+  { label: "Stornorechnung-Nr.:", value: "[Nummer]" },
+  { label: "Datum:", value: "[Datum]" },
+  { label: "Bezug:", value: "Rechnung Nr. [Nummer] vom [Datum]" },
+];
+
 const SMALL_NOTE_TEXT =
   '(Positionen und Beträge entsprechen der stornierten Rechnung, ausgewiesen als Abzug, z. B. „./. 250,00 €".)';
-
-const FOOTER_NOTE =
-  "[Ihre Firma] · [Straße Hausnummer] · [PLZ Ort] · Telefon: [Nummer] · [E-Mail] · [Website] · Bank: [Name] · IBAN: [IBAN] · BIC: [BIC] · Registergericht: [Ort], HRB [Nummer] · USt-IdNr.: [Nummer]";
 
 // Same shape as the invoice's totals lines (only the numbers filled in by
 // hand differ) — kept as a local, unexported helper so this file stands on
@@ -71,20 +83,15 @@ function signatureParagraphs(spacingAfter) {
 
 function buildPdf() {
   const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
-  const header1 = { title: TITLE, subtitle: SUBTITLE };
-  let y = drawPdfHeader(doc, header1);
+  drawLetterHeader(doc);
+  let y = drawAddressBlock(doc);
+  drawInfoBox(doc, INFO_FIELDS);
+  y += 10;
 
-  drawFieldsRow(doc, y, [
-    { label: "Stornorechnung-Nr.:", x: 20, endX: 72 },
-    { label: "Datum:", x: 76, endX: 110 },
-    { label: "Bezug: Rechnung Nr. [Nummer] vom [Datum]", x: 114, endX: 190 },
-  ]);
-  y += 9;
+  y = drawSubjectLine(doc, y, TITLE);
+  y += 3;
 
-  drawFieldsRow(doc, y, [{ label: "Kunde (Name, Anschrift):", x: 20, endX: 190 }]);
-  y += 9;
-
-  y = ensureRoom(doc, y, 14, header1);
+  y = ensureLetterRoom(doc, y, 14);
   y = drawParagraph(
     doc,
     "Sehr geehrte Damen und Herren, hiermit stornieren wir unsere Rechnung Nr. [Nummer] vom [Datum] vollständig. Die genannte Rechnung ist damit ungültig:",
@@ -95,7 +102,7 @@ function buildPdf() {
   );
   y += 8;
 
-  y = ensureRoom(doc, y, tableHeight({ rowCount: 4 }), header1);
+  y = ensureLetterRoom(doc, y, tableHeight({ rowCount: 4 }));
   y = drawTable(doc, {
     y,
     colWidths: ITEM_TABLE_PDF_COLS,
@@ -105,15 +112,15 @@ function buildPdf() {
   });
   y += 4;
 
-  y = ensureRoom(doc, y, 10, header1);
+  y = ensureLetterRoom(doc, y, 10);
   smallNote(doc, PAGE.marginLeft, y, SMALL_NOTE_TEXT);
   y += 9;
 
-  y = ensureRoom(doc, y, 24, header1);
+  y = ensureLetterRoom(doc, y, 24);
   y = drawSummaryLines(doc, y);
   y += 12;
 
-  y = ensureRoom(doc, y, 20, header1);
+  y = ensureLetterRoom(doc, y, 20);
   y = drawParagraph(
     doc,
     "Eine korrigierte Rechnung erhalten Sie ggf. separat. Ein bereits gezahlter Betrag wird Ihnen in den nächsten Tagen auf Ihr Konto zurücküberwiesen.",
@@ -124,28 +131,19 @@ function buildPdf() {
   );
   y += 10;
 
-  y = ensureRoom(doc, y, 16, header1);
-  y = drawSignature(doc, y);
-  y += 10;
+  y = ensureLetterRoom(doc, y, 16);
+  drawSignature(doc, y);
 
-  y = ensureRoom(doc, y, 14, header1);
-  drawParagraph(doc, FOOTER_NOTE, PAGE.marginLeft, y, PAGE.contentWidth, { fontSize: 7.5, color: COLORS.muted });
-
-  finalizePdf(doc);
+  finalizeLetterPdf(doc);
   return Buffer.from(doc.output("arraybuffer"));
 }
 
 async function buildDocx() {
   const children = [
-    ...docxHeader(TITLE, SUBTITLE),
-    ...docxFieldsBlock([
-      [
-        { label: "Stornorechnung-Nr.:", labelPct: 14, valuePct: 16 },
-        { label: "Datum:", labelPct: 8, valuePct: 12 },
-        { label: "Bezug: Rechnung Nr. [Nummer] vom [Datum]", labelPct: 28, valuePct: 22 },
-      ],
-      [{ label: "Kunde (Name, Anschrift):", labelPct: 25, valuePct: 75 }],
-    ]),
+    ...docxLetterHeader(),
+    docxAddressAndInfoBlock({ infoFields: INFO_FIELDS }),
+    docxSpacer(200),
+    docxSubjectLine(TITLE),
     docxParagraph(
       "Sehr geehrte Damen und Herren, hiermit stornieren wir unsere Rechnung Nr. [Nummer] vom [Datum] vollständig. Die genannte Rechnung ist damit ungültig:",
     ),
@@ -162,7 +160,7 @@ async function buildDocx() {
       { spacingAfter: 300 },
     ),
     ...signatureParagraphs(300),
-    docxParagraph(FOOTER_NOTE, { size: 15, color: HEX.muted, spacingAfter: 0 }),
+    ...docxLetterFooter(),
   ];
 
   const document = new Document({

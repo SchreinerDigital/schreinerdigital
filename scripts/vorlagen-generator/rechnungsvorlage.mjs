@@ -6,7 +6,12 @@
 // invoice itself for automatic default against consumers after 30 days
 // (§ 286 Abs. 3 BGB) without a further reminder being necessary. The credit
 // note / cancellation-invoice variants live in their own standalone files
-// (gutschrift.mjs, storno-rechnung.mjs). Original wording throughout; every
+// (gutschrift.mjs, storno-rechnung.mjs).
+//
+// Laid out as a real DIN-5008-style business letter (address window, sender
+// line, info box, "[Ihr Firmenlogo]" placeholder) since this document is
+// meant to be sent out under the customer's OWN letterhead — not as a
+// schreiner.digital product page. Original wording throughout; every
 // company/person/address/amount reference is a literal bracketed
 // placeholder — nothing here is real business data.
 
@@ -15,35 +20,39 @@ import { Document, Packer } from "docx";
 import {
   PAGE,
   COLORS,
-  HEX,
-  drawPdfHeader,
-  finalizePdf,
-  ensureRoom,
+  drawLetterHeader,
+  drawAddressBlock,
+  drawInfoBox,
+  drawSubjectLine,
+  ensureLetterRoom,
+  finalizeLetterPdf,
   pdfText,
   drawParagraph,
   drawFieldsRow,
   drawTable,
   tableHeight,
-  docxHeader,
+  docxLetterHeader,
+  docxAddressAndInfoBlock,
+  docxSubjectLine,
+  docxLetterFooter,
   docxParagraph,
   docxFieldsBlock,
   docxDataTable,
   docxSpacer,
 } from "./branding.mjs";
 
-const TITLE = "RECHNUNG";
-const SUBTITLE = "Rechnung für erbrachte Leistungen – mit den Pflichtangaben nach § 14 UStG";
+const TITLE = "Rechnung";
 
 const ITEM_TABLE_HEADERS = ["Pos.", "Menge", "Einheit", "Bezeichnung", "Einzelpreis", "Gesamtpreis"];
 const ITEM_TABLE_PDF_COLS = [10, 16, 16, 68, 30, 30];
 const ITEM_TABLE_DOCX_COLS = [6, 9, 9, 40, 18, 18];
 
-const FOOTER_NOTE =
-  "[Ihre Firma] · [Straße Hausnummer] · [PLZ Ort] · Telefon: [Nummer] · [E-Mail] · [Website] · Bank: [Name] · IBAN: [IBAN] · BIC: [BIC] · Registergericht: [Ort], HRB [Nummer] · USt-IdNr.: [Nummer]";
+const INFO_FIELDS = [
+  { label: "Rechnungsnummer:", value: "[Nummer]" },
+  { label: "Rechnungsdatum:", value: "[Datum]" },
+  { label: "Leistungsdatum:", value: "[Datum]" },
+];
 
-// The three totals lines are identical (only the numbers filled in by hand
-// differ) between the invoice and the credit note, so both PDF and Word
-// build them from one shared helper.
 function drawSummaryLines(doc, y) {
   drawFieldsRow(doc, y, [{ label: "Nettobetrag:", x: 20, endX: 190 }]);
   y += 6;
@@ -77,20 +86,15 @@ function signatureParagraphs(spacingAfter) {
 
 function buildPdf() {
   const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
-  const header1 = { title: TITLE, subtitle: SUBTITLE };
-  let y = drawPdfHeader(doc, header1);
+  drawLetterHeader(doc);
+  let y = drawAddressBlock(doc);
+  drawInfoBox(doc, INFO_FIELDS);
+  y += 10;
 
-  drawFieldsRow(doc, y, [
-    { label: "Rechnungsnummer:", x: 20, endX: 74 },
-    { label: "Rechnungsdatum:", x: 78, endX: 132 },
-    { label: "Leistungsdatum:", x: 136, endX: 190 },
-  ]);
-  y += 9;
+  y = drawSubjectLine(doc, y, TITLE);
+  y += 3;
 
-  drawFieldsRow(doc, y, [{ label: "Kunde (Name, Anschrift):", x: 20, endX: 190 }]);
-  y += 9;
-
-  y = ensureRoom(doc, y, 14, header1);
+  y = ensureLetterRoom(doc, y, 14);
   y = drawParagraph(
     doc,
     "Sehr geehrte Damen und Herren, vereinbarungsgemäß berechnen wir Ihnen folgende Leistungen:",
@@ -101,7 +105,7 @@ function buildPdf() {
   );
   y += 8;
 
-  y = ensureRoom(doc, y, tableHeight({ rowCount: 6 }), header1);
+  y = ensureLetterRoom(doc, y, tableHeight({ rowCount: 6 }));
   y = drawTable(doc, {
     y,
     colWidths: ITEM_TABLE_PDF_COLS,
@@ -111,11 +115,11 @@ function buildPdf() {
   });
   y += 8;
 
-  y = ensureRoom(doc, y, 24, header1);
+  y = ensureLetterRoom(doc, y, 24);
   y = drawSummaryLines(doc, y);
   y += 12;
 
-  y = ensureRoom(doc, y, 26, header1);
+  y = ensureLetterRoom(doc, y, 26);
   y = drawParagraph(
     doc,
     "Bitte überweisen Sie den Rechnungsbetrag innerhalb von [Zahlungsziel, z. B. 14 Tage] auf das unten genannte Konto. Bei Zahlungsverzug sind wir berechtigt, Verzugszinsen gemäß § 288 BGB zu berechnen. Für Rückfragen stehen wir gerne zur Verfügung.",
@@ -126,28 +130,19 @@ function buildPdf() {
   );
   y += 10;
 
-  y = ensureRoom(doc, y, 16, header1);
-  y = drawSignature(doc, y);
-  y += 10;
+  y = ensureLetterRoom(doc, y, 16);
+  drawSignature(doc, y);
 
-  y = ensureRoom(doc, y, 14, header1);
-  drawParagraph(doc, FOOTER_NOTE, PAGE.marginLeft, y, PAGE.contentWidth, { fontSize: 7.5, color: COLORS.muted });
-
-  finalizePdf(doc);
+  finalizeLetterPdf(doc);
   return Buffer.from(doc.output("arraybuffer"));
 }
 
 async function buildDocx() {
   const children = [
-    ...docxHeader(TITLE, SUBTITLE),
-    ...docxFieldsBlock([
-      [
-        { label: "Rechnungsnummer:", labelPct: 12, valuePct: 21 },
-        { label: "Rechnungsdatum:", labelPct: 12, valuePct: 21 },
-        { label: "Leistungsdatum:", labelPct: 12, valuePct: 22 },
-      ],
-      [{ label: "Kunde (Name, Anschrift):", labelPct: 25, valuePct: 75 }],
-    ]),
+    ...docxLetterHeader(),
+    docxAddressAndInfoBlock({ infoFields: INFO_FIELDS }),
+    docxSpacer(200),
+    docxSubjectLine(TITLE),
     docxParagraph("Sehr geehrte Damen und Herren, vereinbarungsgemäß berechnen wir Ihnen folgende Leistungen:"),
     docxDataTable({
       headers: ITEM_TABLE_HEADERS,
@@ -161,7 +156,7 @@ async function buildDocx() {
       { spacingAfter: 300 },
     ),
     ...signatureParagraphs(300),
-    docxParagraph(FOOTER_NOTE, { size: 15, color: HEX.muted, spacingAfter: 0 }),
+    ...docxLetterFooter(),
   ];
 
   const document = new Document({

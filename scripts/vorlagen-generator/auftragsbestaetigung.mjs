@@ -1,38 +1,46 @@
 // auftragsbestaetigung.mjs — AUFTRAGSBESTÄTIGUNG (PDF + Word)
+//
+// Laid out as a real DIN-5008-style business letter (address window, sender
+// line, info box, "[Ihr Firmenlogo]" placeholder) since this document is
+// meant to be sent out under the customer's OWN letterhead.
 
 import { jsPDF } from "jspdf";
 import { Document, Packer } from "docx";
 import {
   PAGE,
   COLORS,
-  HEX,
-  drawPdfHeader,
-  finalizePdf,
-  ensureRoom,
+  drawLetterHeader,
+  drawAddressBlock,
+  drawInfoBox,
+  drawSubjectLine,
+  ensureLetterRoom,
+  finalizeLetterPdf,
   pdfText,
   drawParagraph,
   drawFieldsRow,
   drawTable,
   tableHeight,
-  docxHeader,
+  docxLetterHeader,
+  docxAddressAndInfoBlock,
+  docxSubjectLine,
+  docxLetterFooter,
   docxParagraph,
   docxFieldsBlock,
   docxDataTable,
   docxSpacer,
 } from "./branding.mjs";
 
-const TITLE = "AUFTRAGSBESTÄTIGUNG";
-const SUBTITLE = "Auftragserteilung des Kunden schriftlich bestätigen – der Vertrag kommt damit verbindlich zustande";
+const TITLE = "Auftragsbestätigung";
 
 const ITEM_TABLE_HEADERS = ["Pos.", "Menge", "Einheit", "Bezeichnung", "Einzelpreis", "Gesamtpreis"];
 const ITEM_TABLE_PDF_COLS = [10, 16, 16, 68, 30, 30];
 const ITEM_TABLE_DOCX_COLS = [6, 9, 9, 40, 18, 18];
 
-const FOOTER_NOTE =
-  "[Ihre Firma] · [Straße Hausnummer] · [PLZ Ort] · Telefon: [Nummer] · [E-Mail] · [Website] · Bank: [Name] · IBAN: [IBAN] · BIC: [BIC] · Registergericht: [Ort], HRB [Nummer] · USt-IdNr.: [Nummer]";
+const INFO_FIELDS = [
+  { label: "Auftragsnummer:", value: "[Nummer]" },
+  { label: "Datum:", value: "[Datum]" },
+];
 
-// The three totals lines are drawn as plain field rows (not a table row),
-// matching rechnungsvorlage.mjs's summary-line pattern.
 function drawSummaryLines(doc, y) {
   drawFieldsRow(doc, y, [{ label: "Nettobetrag:", x: 20, endX: 190 }]);
   y += 6;
@@ -66,19 +74,15 @@ function signatureParagraphs(spacingAfter) {
 
 function buildPdf() {
   const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
-  const header = { title: TITLE, subtitle: SUBTITLE };
-  let y = drawPdfHeader(doc, header);
+  drawLetterHeader(doc);
+  let y = drawAddressBlock(doc);
+  drawInfoBox(doc, INFO_FIELDS);
+  y += 10;
 
-  drawFieldsRow(doc, y, [
-    { label: "Auftragsnummer:", x: 20, endX: 100 },
-    { label: "Datum:", x: 104, endX: 190 },
-  ]);
-  y += 9;
+  y = drawSubjectLine(doc, y, TITLE);
+  y += 3;
 
-  drawFieldsRow(doc, y, [{ label: "Kunde (Name, Anschrift):", x: 20, endX: 190 }]);
-  y += 9;
-
-  y = ensureRoom(doc, y, 14, header);
+  y = ensureLetterRoom(doc, y, 14);
   y = drawParagraph(
     doc,
     "Sehr geehrte Damen und Herren, besten Dank für Ihre Auftragserteilung. Wir bestätigen Ihren Auftrag hiermit wie folgt:",
@@ -89,7 +93,7 @@ function buildPdf() {
   );
   y += 8;
 
-  y = ensureRoom(doc, y, tableHeight({ rowCount: 6 }), header);
+  y = ensureLetterRoom(doc, y, tableHeight({ rowCount: 6 }));
   y = drawTable(doc, {
     y,
     colWidths: ITEM_TABLE_PDF_COLS,
@@ -99,11 +103,11 @@ function buildPdf() {
   });
   y += 8;
 
-  y = ensureRoom(doc, y, 24, header);
+  y = ensureLetterRoom(doc, y, 24);
   y = drawSummaryLines(doc, y);
   y += 12;
 
-  y = ensureRoom(doc, y, 20, header);
+  y = ensureLetterRoom(doc, y, 20);
   y = drawParagraph(
     doc,
     "Für Rückfragen oder weitere Informationen stehen wir Ihnen selbstverständlich jederzeit gerne zur Verfügung.",
@@ -114,27 +118,19 @@ function buildPdf() {
   );
   y += 10;
 
-  y = ensureRoom(doc, y, 16, header);
-  y = drawSignature(doc, y);
-  y += 10;
+  y = ensureLetterRoom(doc, y, 16);
+  drawSignature(doc, y);
 
-  y = ensureRoom(doc, y, 14, header);
-  drawParagraph(doc, FOOTER_NOTE, PAGE.marginLeft, y, PAGE.contentWidth, { fontSize: 7.5, color: COLORS.muted });
-
-  finalizePdf(doc);
+  finalizeLetterPdf(doc);
   return Buffer.from(doc.output("arraybuffer"));
 }
 
 async function buildDocx() {
   const children = [
-    ...docxHeader(TITLE, SUBTITLE),
-    ...docxFieldsBlock([
-      [
-        { label: "Auftragsnummer:", labelPct: 18, valuePct: 32 },
-        { label: "Datum:", labelPct: 10, valuePct: 40 },
-      ],
-      [{ label: "Kunde (Name, Anschrift):", labelPct: 25, valuePct: 75 }],
-    ]),
+    ...docxLetterHeader(),
+    docxAddressAndInfoBlock({ infoFields: INFO_FIELDS }),
+    docxSpacer(200),
+    docxSubjectLine(TITLE),
     docxParagraph(
       "Sehr geehrte Damen und Herren, besten Dank für Ihre Auftragserteilung. Wir bestätigen Ihren Auftrag hiermit wie folgt:",
     ),
@@ -150,7 +146,7 @@ async function buildDocx() {
       { spacingAfter: 300 },
     ),
     ...signatureParagraphs(300),
-    docxParagraph(FOOTER_NOTE, { size: 15, color: HEX.muted, spacingAfter: 200 }),
+    ...docxLetterFooter(),
   ];
 
   const document = new Document({

@@ -1,21 +1,30 @@
 // anzahlungsrechnung.mjs — ANZAHLUNGSRECHNUNG (PDF + Word)
+//
+// Laid out as a real DIN-5008-style business letter (address window, sender
+// line, info box, "[Ihr Firmenlogo]" placeholder) since this document is
+// meant to be sent out under the customer's OWN letterhead.
 
 import { jsPDF } from "jspdf";
 import { Document, Packer } from "docx";
 import {
   PAGE,
   COLORS,
-  HEX,
-  drawPdfHeader,
-  finalizePdf,
-  ensureRoom,
+  drawLetterHeader,
+  drawAddressBlock,
+  drawInfoBox,
+  drawSubjectLine,
+  ensureLetterRoom,
+  finalizeLetterPdf,
   pdfText,
   drawParagraph,
   sectionLabel,
   drawFieldsRow,
   drawTable,
   tableHeight,
-  docxHeader,
+  docxLetterHeader,
+  docxAddressAndInfoBlock,
+  docxSubjectLine,
+  docxLetterFooter,
   docxSectionLabel,
   docxParagraph,
   docxFieldsBlock,
@@ -23,15 +32,16 @@ import {
   docxSpacer,
 } from "./branding.mjs";
 
-const TITLE = "ANZAHLUNGSRECHNUNG";
-const SUBTITLE = "Abschlagsrechnung (Akontorechnung) für eine vereinbarte Anzahlung vor Projektbeginn";
+const TITLE = "Anzahlungsrechnung";
 
 const ITEM_TABLE_HEADERS = ["Pos.", "Menge", "Einheit", "Bezeichnung", "Einzelpreis", "Gesamtpreis"];
 const ITEM_TABLE_PDF_COLS = [10, 16, 16, 68, 30, 30];
 const ITEM_TABLE_DOCX_COLS = [6, 9, 9, 40, 18, 18];
 
-const FOOTER_NOTE =
-  "[Ihre Firma] · [Straße Hausnummer] · [PLZ Ort] · Telefon: [Nummer] · [E-Mail] · [Website] · Bank: [Name] · IBAN: [IBAN] · BIC: [BIC] · Registergericht: [Ort], HRB [Nummer] · USt-IdNr.: [Nummer]";
+const INFO_FIELDS = [
+  { label: "Rechnungsnummer:", value: "[Nummer]" },
+  { label: "Rechnungsdatum:", value: "[Datum]" },
+];
 
 // Totals for the underlying order value (Auftragswert).
 function drawAuftragswertSummary(doc, y) {
@@ -85,19 +95,15 @@ function signatureParagraphs(spacingAfter) {
 
 function buildPdf() {
   const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
-  const header = { title: TITLE, subtitle: SUBTITLE };
-  let y = drawPdfHeader(doc, header);
+  drawLetterHeader(doc);
+  let y = drawAddressBlock(doc);
+  drawInfoBox(doc, INFO_FIELDS);
+  y += 10;
 
-  drawFieldsRow(doc, y, [
-    { label: "Rechnungsnummer:", x: 20, endX: 100 },
-    { label: "Rechnungsdatum:", x: 104, endX: 190 },
-  ]);
-  y += 9;
+  y = drawSubjectLine(doc, y, TITLE);
+  y += 3;
 
-  drawFieldsRow(doc, y, [{ label: "Kunde (Name, Anschrift):", x: 20, endX: 190 }]);
-  y += 9;
-
-  y = ensureRoom(doc, y, 14, header);
+  y = ensureLetterRoom(doc, y, 14);
   y = drawParagraph(
     doc,
     "Sehr geehrte Damen und Herren, besten Dank für Ihre Auftragserteilung. Wir berechnen Ihnen folgende vereinbarte Leistungen:",
@@ -108,7 +114,7 @@ function buildPdf() {
   );
   y += 8;
 
-  y = ensureRoom(doc, y, tableHeight({ rowCount: 5 }), header);
+  y = ensureLetterRoom(doc, y, tableHeight({ rowCount: 5 }));
   y = drawTable(doc, {
     y,
     colWidths: ITEM_TABLE_PDF_COLS,
@@ -118,21 +124,21 @@ function buildPdf() {
   });
   y += 8;
 
-  y = ensureRoom(doc, y, 24, header);
+  y = ensureLetterRoom(doc, y, 24);
   y = drawAuftragswertSummary(doc, y);
   y += 10;
 
-  y = ensureRoom(doc, y, 20, header);
+  y = ensureLetterRoom(doc, y, 20);
   sectionLabel(doc, PAGE.marginLeft, y, "ANZAHLUNG");
   y += 6;
   drawFieldsRow(doc, y, [{ label: "Anzahlung in % des Auftragswerts:", x: 20, endX: 190 }]);
   y += 9;
 
-  y = ensureRoom(doc, y, 24, header);
+  y = ensureLetterRoom(doc, y, 24);
   y = drawAnzahlungSummary(doc, y);
   y += 12;
 
-  y = ensureRoom(doc, y, 20, header);
+  y = ensureLetterRoom(doc, y, 20);
   y = drawParagraph(
     doc,
     "Bitte überweisen Sie den Anzahlungsbetrag innerhalb von [Zahlungsziel, z. B. 7 Tage] auf das unten genannte Konto. Nach Zahlungseingang beginnen wir mit der vereinbarten Leistung.",
@@ -143,27 +149,19 @@ function buildPdf() {
   );
   y += 10;
 
-  y = ensureRoom(doc, y, 16, header);
-  y = drawSignature(doc, y);
-  y += 10;
+  y = ensureLetterRoom(doc, y, 16);
+  drawSignature(doc, y);
 
-  y = ensureRoom(doc, y, 14, header);
-  drawParagraph(doc, FOOTER_NOTE, PAGE.marginLeft, y, PAGE.contentWidth, { fontSize: 7.5, color: COLORS.muted });
-
-  finalizePdf(doc);
+  finalizeLetterPdf(doc);
   return Buffer.from(doc.output("arraybuffer"));
 }
 
 async function buildDocx() {
   const children = [
-    ...docxHeader(TITLE, SUBTITLE),
-    ...docxFieldsBlock([
-      [
-        { label: "Rechnungsnummer:", labelPct: 16, valuePct: 34 },
-        { label: "Rechnungsdatum:", labelPct: 16, valuePct: 34 },
-      ],
-      [{ label: "Kunde (Name, Anschrift):", labelPct: 25, valuePct: 75 }],
-    ]),
+    ...docxLetterHeader(),
+    docxAddressAndInfoBlock({ infoFields: INFO_FIELDS }),
+    docxSpacer(200),
+    docxSubjectLine(TITLE),
     docxParagraph(
       "Sehr geehrte Damen und Herren, besten Dank für Ihre Auftragserteilung. Wir berechnen Ihnen folgende vereinbarte Leistungen:",
     ),
@@ -182,7 +180,7 @@ async function buildDocx() {
       { spacingAfter: 300 },
     ),
     ...signatureParagraphs(300),
-    docxParagraph(FOOTER_NOTE, { size: 15, color: HEX.muted, spacingAfter: 200 }),
+    ...docxLetterFooter(),
   ];
 
   const document = new Document({

@@ -1,135 +1,143 @@
-// angebotsvorlage.mjs — Template 3: Angebotsvorlage (PDF + Word)
+// angebotsvorlage.mjs — ANGEBOT (PDF + Word)
 //
 // Customer-facing quote document. Original wording (not derived from any
 // third-party template). Every company/person/address reference is a
 // literal bracketed placeholder — nothing here is real business data.
+//
+// Laid out as a real DIN-5008-style business letter (address window, sender
+// line, info box, "[Ihr Firmenlogo]" placeholder) since this document is
+// meant to be sent out under the customer's OWN letterhead — not as a
+// schreiner.digital product page.
 
 import { jsPDF } from "jspdf";
 import { Document, Packer } from "docx";
 import {
   PAGE,
   COLORS,
-  drawPdfHeader,
-  finalizePdf,
-  ensureRoom,
+  drawLetterHeader,
+  drawAddressBlock,
+  drawInfoBox,
+  drawSubjectLine,
+  ensureLetterRoom,
+  finalizeLetterPdf,
   pdfText,
   drawParagraph,
-  drawField,
+  drawFieldsRow,
   drawTable,
   tableHeight,
-  docxWordmarkParagraph,
-  docxSubtitleParagraph,
+  docxLetterHeader,
+  docxAddressAndInfoBlock,
+  docxSubjectLine,
+  docxLetterFooter,
   docxParagraph,
-  docxSpacer,
-  docxFieldsRow,
+  docxFieldsBlock,
   docxDataTable,
-  docxRightLabelsTable,
+  docxSpacer,
 } from "./branding.mjs";
 
-const SUBTITLE = "Vorlage für ein rechtssicheres Angebot";
+const TITLE = "Angebot";
 
-const ABSENDER_LINES = ["[Ihre Firma GmbH]", "[Straße, Hausnummer]", "[PLZ, Ort]", "[Telefon] · [E-Mail]"];
-const EMPFAENGER_LINES = ["[Name des Kunden]", "[Straße, Hausnummer]", "[PLZ, Ort]"];
 const INTRO_TEXT =
   "Sehr geehrte(r) [Anrede Kunde], vielen Dank für Ihre Anfrage. Wir unterbreiten Ihnen hiermit folgendes Angebot:";
 const BINDING_TEXT =
-  "Dieses Angebot ist verbindlich und gilt bis zum ______ . Nach § 145 BGB sind wir an dieses Angebot gebunden, sobald Sie es annehmen. Möchten Sie sich unverbindlich nachverhandeln vorbehalten, kennzeichnen Sie das Angebot ausdrücklich als freibleibend.";
+  "Dieses Angebot ist verbindlich und gilt bis zum [Datum]. Nach § 145 BGB sind wir an dieses Angebot gebunden, sobald Sie es annehmen. Möchten Sie sich eine unverbindliche Nachverhandlung vorbehalten, kennzeichnen Sie das Angebot ausdrücklich als freibleibend.";
+
+const ITEM_TABLE_HEADERS = ["Pos.", "Menge", "Einheit", "Bezeichnung", "Einzelpreis", "Gesamtpreis"];
+const ITEM_TABLE_PDF_COLS = [10, 16, 16, 68, 30, 30];
+const ITEM_TABLE_DOCX_COLS = [6, 9, 9, 40, 18, 18];
+
+const INFO_FIELDS = [
+  { label: "Datum:", value: "[Datum]" },
+  { label: "Angebotsnummer:", value: "[Nummer]" },
+];
+
+function drawSummaryLines(doc, y) {
+  drawFieldsRow(doc, y, [{ label: "Nettobetrag:", x: 20, endX: 190 }]);
+  y += 6;
+  drawFieldsRow(doc, y, [{ label: "zzgl. 19 % USt.:", x: 20, endX: 190 }]);
+  y += 6;
+  drawFieldsRow(doc, y, [{ label: "Gesamtbetrag (brutto):", x: 20, endX: 190 }]);
+  return y;
+}
+
+function summaryFieldsBlock() {
+  return docxFieldsBlock([
+    [{ label: "Nettobetrag:", labelPct: 35, valuePct: 65 }],
+    [{ label: "zzgl. 19 % USt.:", labelPct: 35, valuePct: 65 }],
+    [{ label: "Gesamtbetrag (brutto):", labelPct: 35, valuePct: 65 }],
+  ]);
+}
+
+function drawSignature(doc, y) {
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  doc.setTextColor(...COLORS.ink);
+  pdfText(doc, "Mit freundlichen Grüßen", PAGE.marginLeft, y);
+  y += 6;
+  pdfText(doc, "[Ihr Name]", PAGE.marginLeft, y);
+  return y;
+}
+
+function signatureParagraphs(spacingAfter) {
+  return [docxParagraph("Mit freundlichen Grüßen", { spacingAfter: 20 }), docxParagraph("[Ihr Name]", { spacingAfter })];
+}
 
 function buildPdf() {
   const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
-  const header = { title: null, subtitle: SUBTITLE };
-  let y = drawPdfHeader(doc, header);
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(9);
-  doc.setTextColor(...COLORS.ink);
-  ABSENDER_LINES.forEach((line, i) => pdfText(doc, line, PAGE.marginLeft, y + i * 4.2));
-  y += ABSENDER_LINES.length * 4.2 + 6;
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(9);
-  doc.setTextColor(...COLORS.ink);
-  EMPFAENGER_LINES.forEach((line, i) => pdfText(doc, line, PAGE.marginLeft, y + i * 4.2));
-  y += EMPFAENGER_LINES.length * 4.2 + 10;
-
-  drawField(doc, { x: 20, y, label: "Datum:", endX: 80 });
-  drawField(doc, { x: 90, y, label: "Angebotsnummer:", endX: 190 });
-  y += 14;
-
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(20);
-  doc.setTextColor(...COLORS.ink);
-  pdfText(doc, "Angebot", PAGE.marginLeft, y);
+  drawLetterHeader(doc);
+  let y = drawAddressBlock(doc);
+  drawInfoBox(doc, INFO_FIELDS);
   y += 10;
 
-  y = drawParagraph(doc, INTRO_TEXT, PAGE.marginLeft, y, PAGE.contentWidth, { fontSize: 9.5 });
+  y = drawSubjectLine(doc, y, TITLE);
+  y += 3;
+
+  y = ensureLetterRoom(doc, y, 14);
+  y = drawParagraph(doc, INTRO_TEXT, PAGE.marginLeft, y, PAGE.contentWidth, { fontSize: 9 });
   y += 8;
 
-  const posCols = [14, 18, 20, 70, 24, 24];
-  const posHeight = tableHeight({ rowCount: 6 });
-  y = ensureRoom(doc, y, posHeight, header);
+  y = ensureLetterRoom(doc, y, tableHeight({ rowCount: 6 }));
   y = drawTable(doc, {
     y,
-    colWidths: posCols,
-    headers: ["Pos.", "Menge", "Einheit", "Bezeichnung", "Einzelpreis", "Gesamtpreis"],
+    colWidths: ITEM_TABLE_PDF_COLS,
+    headers: ITEM_TABLE_HEADERS,
     rowCount: 6,
     fontSize: 7.5,
   });
   y += 8;
 
-  y = ensureRoom(doc, y, 24, header);
-  drawField(doc, { x: 90, y, label: "Nettobetrag:", endX: 190 });
-  y += 6;
-  drawField(doc, { x: 90, y, label: "zzgl. 19 % USt.:", endX: 190 });
-  y += 6;
-  drawField(doc, { x: 90, y, label: "Gesamtbetrag (brutto):", endX: 190 });
+  y = ensureLetterRoom(doc, y, 24);
+  y = drawSummaryLines(doc, y);
   y += 12;
 
-  y = ensureRoom(doc, y, 20, header);
+  y = ensureLetterRoom(doc, y, 20);
   y = drawParagraph(doc, BINDING_TEXT, PAGE.marginLeft, y, PAGE.contentWidth, { fontSize: 8.5 });
   y += 10;
 
-  y = ensureRoom(doc, y, 26, header);
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(9);
-  doc.setTextColor(...COLORS.ink);
-  pdfText(doc, "Für Rückfragen stehen wir Ihnen gerne zur Verfügung.", PAGE.marginLeft, y);
-  y += 12;
-  pdfText(doc, "Mit freundlichen Grüßen", PAGE.marginLeft, y);
-  y += 6;
-  pdfText(doc, "[Ihr Name]", PAGE.marginLeft, y);
+  y = ensureLetterRoom(doc, y, 16);
+  drawSignature(doc, y);
 
-  finalizePdf(doc);
+  finalizeLetterPdf(doc);
   return Buffer.from(doc.output("arraybuffer"));
 }
 
 async function buildDocx() {
   const children = [
-    docxWordmarkParagraph(),
-    docxSubtitleParagraph(SUBTITLE),
-    ...ABSENDER_LINES.map((line) => docxParagraph(line, { spacingAfter: 20 })),
+    ...docxLetterHeader(),
+    docxAddressAndInfoBlock({ infoFields: INFO_FIELDS }),
     docxSpacer(200),
-    ...EMPFAENGER_LINES.map((line) => docxParagraph(line, { spacingAfter: 20 })),
-    docxSpacer(300),
-    docxFieldsRow([
-      { label: "Datum:", labelPct: 12, valuePct: 33 },
-      { label: "Angebotsnummer:", labelPct: 20, valuePct: 35 },
-    ]),
-    docxSpacer(200),
-    docxParagraph("Angebot", { bold: true, size: 40, spacingAfter: 200 }),
-    docxParagraph(INTRO_TEXT, { spacingAfter: 200 }),
+    docxSubjectLine(TITLE),
+    docxParagraph(INTRO_TEXT),
     docxDataTable({
-      headers: ["Pos.", "Menge", "Einheit", "Bezeichnung", "Einzelpreis", "Gesamtpreis"],
-      colPcts: [8, 12, 12, 40, 14, 14],
+      headers: ITEM_TABLE_HEADERS,
+      colPcts: ITEM_TABLE_DOCX_COLS,
       rowCount: 6,
     }),
     docxSpacer(200),
-    docxRightLabelsTable(["Nettobetrag:", "zzgl. 19 % USt.:", "Gesamtbetrag (brutto):"]),
-    docxSpacer(200),
+    ...summaryFieldsBlock(),
     docxParagraph(BINDING_TEXT, { size: 18, color: "646460", spacingAfter: 300 }),
-    docxParagraph("Für Rückfragen stehen wir Ihnen gerne zur Verfügung.", { spacingAfter: 300 }),
-    docxParagraph("Mit freundlichen Grüßen", { spacingAfter: 20 }),
-    docxParagraph("[Ihr Name]", { spacingAfter: 0 }),
+    ...signatureParagraphs(300),
+    ...docxLetterFooter(),
   ];
 
   const document = new Document({

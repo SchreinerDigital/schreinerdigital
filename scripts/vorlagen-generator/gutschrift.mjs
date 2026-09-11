@@ -1,4 +1,8 @@
 // gutschrift.mjs — GUTSCHRIFT (PDF + Word)
+//
+// Laid out as a real DIN-5008-style business letter (address window, sender
+// line, info box, "[Ihr Firmenlogo]" placeholder) since this document is
+// meant to be sent out under the customer's OWN letterhead.
 
 import { jsPDF } from "jspdf";
 import { Document, Packer } from "docx";
@@ -6,36 +10,42 @@ import {
   PAGE,
   COLORS,
   HEX,
-  drawPdfHeader,
-  finalizePdf,
-  ensureRoom,
+  drawLetterHeader,
+  drawAddressBlock,
+  drawInfoBox,
+  drawSubjectLine,
+  ensureLetterRoom,
+  finalizeLetterPdf,
   pdfText,
   drawParagraph,
   drawFieldsRow,
   drawTable,
   tableHeight,
-  docxHeader,
+  docxLetterHeader,
+  docxAddressAndInfoBlock,
+  docxSubjectLine,
+  docxLetterFooter,
   docxParagraph,
   docxFieldsBlock,
   docxDataTable,
   docxSpacer,
 } from "./branding.mjs";
 
-const TITLE = "GUTSCHRIFT";
-const SUBTITLE =
-  "Teilweise oder vollständige Gutschrift zu einer bereits gestellten Rechnung – z. B. bei Reklamation oder Rücksendung";
+const TITLE = "Gutschrift";
 
 const ITEM_TABLE_HEADERS = ["Pos.", "Menge", "Einheit", "Bezeichnung", "Einzelpreis", "Gesamtpreis"];
 const ITEM_TABLE_PDF_COLS = [10, 16, 16, 68, 30, 30];
 const ITEM_TABLE_DOCX_COLS = [6, 9, 9, 40, 18, 18];
 
-const FOOTER_NOTE =
-  "[Ihre Firma] · [Straße Hausnummer] · [PLZ Ort] · Telefon: [Nummer] · [E-Mail] · [Website] · Bank: [Name] · IBAN: [IBAN] · BIC: [BIC] · Registergericht: [Ort], HRB [Nummer] · USt-IdNr.: [Nummer]";
+const INFO_FIELDS = [
+  { label: "Gutschrift-Nr.:", value: "[Nummer]" },
+  { label: "Datum:", value: "[Datum]" },
+  { label: "Bezug:", value: "Rechnung Nr. [Nummer] vom [Datum]" },
+];
 
 // This kaufmännische/umsatzsteuerliche Gutschrift disambiguation runs well
-// past one line, so it is drawn with drawParagraph (wrapped) rather than the
-// single-line smallNote helper — using the same italic/7.5pt/muted styling
-// smallNote applies.
+// past one line, so it is drawn with drawParagraph (wrapped) rather than a
+// single-line note.
 const HINT_NOTE =
   'Hinweis: Diese Gutschrift ist eine kaufmännische Gutschrift (Preisnachlass/Korrektur). Sie ist nicht zu verwechseln mit der umsatzsteuerlichen „Gutschrift" nach § 14 Abs. 2 Satz 2 UStG, bei der der Leistungsempfänger selbst abrechnet.';
 
@@ -75,20 +85,15 @@ function signatureParagraphs(spacingAfter) {
 
 function buildPdf() {
   const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
-  const header1 = { title: TITLE, subtitle: SUBTITLE };
-  let y = drawPdfHeader(doc, header1);
+  drawLetterHeader(doc);
+  let y = drawAddressBlock(doc);
+  drawInfoBox(doc, INFO_FIELDS);
+  y += 10;
 
-  drawFieldsRow(doc, y, [
-    { label: "Gutschrift-Nr.:", x: 20, endX: 72 },
-    { label: "Datum:", x: 76, endX: 110 },
-    { label: "Bezug: Rechnung Nr. [Nummer] vom [Datum]", x: 114, endX: 190 },
-  ]);
-  y += 9;
+  y = drawSubjectLine(doc, y, TITLE);
+  y += 3;
 
-  drawFieldsRow(doc, y, [{ label: "Kunde (Name, Anschrift):", x: 20, endX: 190 }]);
-  y += 9;
-
-  y = ensureRoom(doc, y, 14, header1);
+  y = ensureLetterRoom(doc, y, 14);
   y = drawParagraph(
     doc,
     "Sehr geehrte Damen und Herren, gemäß unserer Vereinbarung schreiben wir Ihnen folgende Leistungen gut:",
@@ -99,7 +104,7 @@ function buildPdf() {
   );
   y += 8;
 
-  y = ensureRoom(doc, y, tableHeight({ rowCount: 4 }), header1);
+  y = ensureLetterRoom(doc, y, tableHeight({ rowCount: 4 }));
   y = drawTable(doc, {
     y,
     colWidths: ITEM_TABLE_PDF_COLS,
@@ -109,11 +114,11 @@ function buildPdf() {
   });
   y += 8;
 
-  y = ensureRoom(doc, y, 24, header1);
+  y = ensureLetterRoom(doc, y, 24);
   y = drawSummaryLines(doc, y);
   y += 12;
 
-  y = ensureRoom(doc, y, 20, header1);
+  y = ensureLetterRoom(doc, y, 20);
   y = drawParagraph(
     doc,
     "Wir überweisen Ihnen den Gutschriftsbetrag innerhalb der nächsten Tage auf Ihr Konto. Für Rückfragen stehen wir Ihnen gerne zur Verfügung.",
@@ -124,37 +129,28 @@ function buildPdf() {
   );
   y += 10;
 
-  y = ensureRoom(doc, y, 16, header1);
+  y = ensureLetterRoom(doc, y, 16);
   y = drawSignature(doc, y);
   y += 10;
 
-  y = ensureRoom(doc, y, 14, header1);
-  y = drawParagraph(doc, FOOTER_NOTE, PAGE.marginLeft, y, PAGE.contentWidth, { fontSize: 7.5, color: COLORS.muted });
-  y += 6;
-
-  y = ensureRoom(doc, y, 14, header1);
+  y = ensureLetterRoom(doc, y, 10);
   drawParagraph(doc, HINT_NOTE, PAGE.marginLeft, y, PAGE.contentWidth, {
-    fontSize: 7.5,
-    lineHeight: 3.6,
+    fontSize: 7,
+    lineHeight: 3.3,
     color: COLORS.muted,
     font: "italic",
   });
 
-  finalizePdf(doc);
+  finalizeLetterPdf(doc);
   return Buffer.from(doc.output("arraybuffer"));
 }
 
 async function buildDocx() {
   const children = [
-    ...docxHeader(TITLE, SUBTITLE),
-    ...docxFieldsBlock([
-      [
-        { label: "Gutschrift-Nr.:", labelPct: 14, valuePct: 16 },
-        { label: "Datum:", labelPct: 8, valuePct: 12 },
-        { label: "Bezug: Rechnung Nr. [Nummer] vom [Datum]", labelPct: 28, valuePct: 22 },
-      ],
-      [{ label: "Kunde (Name, Anschrift):", labelPct: 25, valuePct: 75 }],
-    ]),
+    ...docxLetterHeader(),
+    docxAddressAndInfoBlock({ infoFields: INFO_FIELDS }),
+    docxSpacer(200),
+    docxSubjectLine(TITLE),
     docxParagraph("Sehr geehrte Damen und Herren, gemäß unserer Vereinbarung schreiben wir Ihnen folgende Leistungen gut:"),
     docxDataTable({
       headers: ITEM_TABLE_HEADERS,
@@ -168,8 +164,8 @@ async function buildDocx() {
       { spacingAfter: 300 },
     ),
     ...signatureParagraphs(300),
-    docxParagraph(FOOTER_NOTE, { size: 15, color: HEX.muted, spacingAfter: 200 }),
-    docxParagraph(HINT_NOTE, { italics: true, size: 15, color: HEX.muted, spacingAfter: 0 }),
+    ...docxLetterFooter(),
+    docxParagraph(HINT_NOTE, { italics: true, size: 14, color: HEX.muted, spacingAfter: 0 }),
   ];
 
   const document = new Document({
