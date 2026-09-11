@@ -230,20 +230,47 @@ const LETTER = {
   footerRuleY: 258,
 };
 
-// Right-aligned "schreiner.digital" wordmark, two-tone (ink + accent),
-// matching drawWordmark()'s styling but right-aligned as one unit instead
-// of left-aligned.
+// Ink at ~55% opacity over white (site header uses "text-ink/55" for the
+// ruler motif under ".digital") — pre-blended since jsPDF strokes don't
+// take an alpha channel here.
+const RULER_COLOR = [130, 127, 125];
+
+// Right-aligned "schreiner.digital" wordmark, two-tone (ink + accent) with
+// the ruler-tick motif under ".digital" — matching
+// src/components/brand/wordmark.tsx's Wordmark + RulerBar (the site
+// header's actual logo) but right-aligned as one unit instead of left.
 function drawWordmarkRight(doc, rightX, y, fontSize = 20) {
   const prefix = "schreiner";
   const suffix = ".digital";
   doc.setFont("helvetica", "bold");
   doc.setFontSize(fontSize);
-  const totalWidth = doc.getTextWidth(prefix) + doc.getTextWidth(suffix);
-  const startX = rightX - totalWidth;
+  const prefixWidth = doc.getTextWidth(prefix);
+  const suffixWidth = doc.getTextWidth(suffix);
+  const startX = rightX - prefixWidth - suffixWidth;
   doc.setTextColor(...COLORS.ink);
   pdfText(doc, prefix, startX, y);
   doc.setTextColor(...COLORS.accent);
-  pdfText(doc, suffix, startX + doc.getTextWidth(prefix), y);
+  pdfText(doc, suffix, startX + prefixWidth, y);
+
+  // RulerBar: a rounded outline bar sized to 94% of ".digital"'s width,
+  // right-aligned under it, with 9 alternating tick marks (viewBox
+  // "0 0 140 12", ticks at every 10% from x=14 to x=126, alternating
+  // 6/12 and 8/12 of the bar's height).
+  const emMm = fontSize * 0.3528; // 1pt = 0.3528mm
+  const barWidth = suffixWidth * 0.94;
+  const barHeight = emMm * 0.42;
+  const barX = rightX - barWidth;
+  const barY = y + emMm * 0.3;
+  doc.setDrawColor(...RULER_COLOR);
+  doc.setLineWidth(0.15);
+  doc.roundedRect(barX, barY, barWidth, barHeight, 0.3, 0.3, "D");
+  const tickTop = barY + barHeight * (1 / 12);
+  const tickShortBottom = barY + barHeight * (7 / 12);
+  const tickTallBottom = barY + barHeight * (9 / 12);
+  for (let i = 1; i <= 9; i++) {
+    const tx = barX + barWidth * (i / 10);
+    doc.line(tx, tickTop, tx, i % 2 === 0 ? tickTallBottom : tickShortBottom);
+  }
 }
 
 // Right-aligned logo area + accent rule. Returns LETTER.blockStartY, where
