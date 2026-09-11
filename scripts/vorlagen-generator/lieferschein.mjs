@@ -1,8 +1,9 @@
 // lieferschein.mjs — LIEFERSCHEIN (PDF + Word)
 //
-// Laid out as a real DIN-5008-style business letter (address window, sender
-// line, info box, "[Ihr Firmenlogo]" placeholder) since this document is
-// meant to be sent out under the customer's OWN letterhead.
+// Laid out as a real DIN-5008-style business letter, matching the exact
+// structure of the user's own Drive originals (verified against a PDF
+// export of Rechnungsvorlage.docx, same document family) — just restyled
+// in schreiner.digital's design (accent-colored rules, house font).
 
 import { jsPDF } from "jspdf";
 import { Document, Packer } from "docx";
@@ -48,12 +49,11 @@ const INFO_FIELDS = [
 function buildPdf() {
   const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
   drawLetterHeader(doc);
-  let y = drawAddressBlock(doc);
-  drawInfoBox(doc, INFO_FIELDS);
-  y += 10;
+  const addressEndY = drawAddressBlock(doc);
+  const infoEndY = drawInfoBox(doc, INFO_FIELDS);
+  let y = Math.max(addressEndY, infoEndY) + 10;
 
   y = drawSubjectLine(doc, y, TITLE);
-  y += 3;
 
   y = ensureLetterRoom(doc, y, 14);
   y = drawParagraph(doc, INTRO_TEXT, PAGE.marginLeft, y, PAGE.contentWidth, { fontSize: 9 });
@@ -86,7 +86,7 @@ function buildPdf() {
 async function buildDocx() {
   const children = [
     ...docxLetterHeader(),
-    docxAddressAndInfoBlock({ infoFields: INFO_FIELDS }),
+    ...docxAddressAndInfoBlock({ infoFields: INFO_FIELDS }),
     docxSpacer(200),
     docxSubjectLine(TITLE),
     docxParagraph(INTRO_TEXT),

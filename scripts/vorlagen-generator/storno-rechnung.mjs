@@ -1,8 +1,9 @@
 // storno-rechnung.mjs — STORNORECHNUNG (PDF + Word)
 //
-// Laid out as a real DIN-5008-style business letter (address window, sender
-// line, info box, "[Ihr Firmenlogo]" placeholder) since this document is
-// meant to be sent out under the customer's OWN letterhead.
+// Laid out as a real DIN-5008-style business letter, matching the exact
+// structure of the user's own Drive originals (verified against a PDF
+// export of Rechnungsvorlage.docx, same document family) — just restyled
+// in schreiner.digital's design (accent-colored rules, house font).
 
 import { jsPDF } from "jspdf";
 import { Document, Packer } from "docx";
@@ -14,20 +15,21 @@ import {
   drawAddressBlock,
   drawInfoBox,
   drawSubjectLine,
+  drawTotalsBlock,
+  totalsBlockHeight,
   ensureLetterRoom,
   finalizeLetterPdf,
   pdfText,
   drawParagraph,
-  drawFieldsRow,
   drawTable,
   tableHeight,
   smallNote,
   docxLetterHeader,
   docxAddressAndInfoBlock,
   docxSubjectLine,
+  docxTotalsBlock,
   docxLetterFooter,
   docxParagraph,
-  docxFieldsBlock,
   docxDataTable,
   docxSpacer,
 } from "./branding.mjs";
@@ -47,25 +49,11 @@ const INFO_FIELDS = [
 const SMALL_NOTE_TEXT =
   '(Positionen und Beträge entsprechen der stornierten Rechnung, ausgewiesen als Abzug, z. B. „./. 250,00 €".)';
 
-// Same shape as the invoice's totals lines (only the numbers filled in by
-// hand differ) — kept as a local, unexported helper so this file stands on
-// its own rather than importing from rechnungsvorlage.mjs.
-function drawSummaryLines(doc, y) {
-  drawFieldsRow(doc, y, [{ label: "Nettobetrag:", x: 20, endX: 190 }]);
-  y += 6;
-  drawFieldsRow(doc, y, [{ label: "zzgl. USt. (19 %):", x: 20, endX: 190 }]);
-  y += 6;
-  drawFieldsRow(doc, y, [{ label: "Rechnungsbetrag:", x: 20, endX: 190 }]);
-  return y;
-}
-
-function summaryFieldsBlock() {
-  return docxFieldsBlock([
-    [{ label: "Nettobetrag:", labelPct: 35, valuePct: 65 }],
-    [{ label: "zzgl. USt. (19 %):", labelPct: 35, valuePct: 65 }],
-    [{ label: "Rechnungsbetrag:", labelPct: 35, valuePct: 65 }],
-  ]);
-}
+const TOTALS_ROWS = [
+  { label: "Nettobetrag" },
+  { label: "zzgl. 19 % USt." },
+  { label: "Rechnungsbetrag", bold: true, shaded: true },
+];
 
 function drawSignature(doc, y) {
   doc.setFont("helvetica", "normal");
@@ -84,12 +72,11 @@ function signatureParagraphs(spacingAfter) {
 function buildPdf() {
   const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
   drawLetterHeader(doc);
-  let y = drawAddressBlock(doc);
-  drawInfoBox(doc, INFO_FIELDS);
-  y += 10;
+  const addressEndY = drawAddressBlock(doc);
+  const infoEndY = drawInfoBox(doc, INFO_FIELDS);
+  let y = Math.max(addressEndY, infoEndY) + 10;
 
   y = drawSubjectLine(doc, y, TITLE);
-  y += 3;
 
   y = ensureLetterRoom(doc, y, 14);
   y = drawParagraph(
@@ -102,7 +89,7 @@ function buildPdf() {
   );
   y += 8;
 
-  y = ensureLetterRoom(doc, y, tableHeight({ rowCount: 4 }));
+  y = ensureLetterRoom(doc, y, tableHeight({ rowCount: 4 }) + 10 + totalsBlockHeight(TOTALS_ROWS.length));
   y = drawTable(doc, {
     y,
     colWidths: ITEM_TABLE_PDF_COLS,
@@ -112,12 +99,10 @@ function buildPdf() {
   });
   y += 4;
 
-  y = ensureLetterRoom(doc, y, 10);
   smallNote(doc, PAGE.marginLeft, y, SMALL_NOTE_TEXT);
-  y += 9;
+  y += 6;
 
-  y = ensureLetterRoom(doc, y, 24);
-  y = drawSummaryLines(doc, y);
+  y = drawTotalsBlock(doc, y, TOTALS_ROWS);
   y += 12;
 
   y = ensureLetterRoom(doc, y, 20);
@@ -141,7 +126,7 @@ function buildPdf() {
 async function buildDocx() {
   const children = [
     ...docxLetterHeader(),
-    docxAddressAndInfoBlock({ infoFields: INFO_FIELDS }),
+    ...docxAddressAndInfoBlock({ infoFields: INFO_FIELDS }),
     docxSpacer(200),
     docxSubjectLine(TITLE),
     docxParagraph(
@@ -152,9 +137,10 @@ async function buildDocx() {
       colPcts: ITEM_TABLE_DOCX_COLS,
       rowCount: 4,
     }),
-    docxSpacer(200),
+    docxSpacer(150),
     docxParagraph(SMALL_NOTE_TEXT, { italics: true, size: 15, color: HEX.muted, spacingAfter: 200 }),
-    ...summaryFieldsBlock(),
+    docxTotalsBlock(TOTALS_ROWS),
+    docxSpacer(300),
     docxParagraph(
       "Eine korrigierte Rechnung erhalten Sie ggf. separat. Ein bereits gezahlter Betrag wird Ihnen in den nächsten Tagen auf Ihr Konto zurücküberwiesen.",
       { spacingAfter: 300 },

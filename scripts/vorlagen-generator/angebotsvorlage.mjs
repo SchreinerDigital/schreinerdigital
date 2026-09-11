@@ -4,10 +4,10 @@
 // third-party template). Every company/person/address reference is a
 // literal bracketed placeholder — nothing here is real business data.
 //
-// Laid out as a real DIN-5008-style business letter (address window, sender
-// line, info box, "[Ihr Firmenlogo]" placeholder) since this document is
-// meant to be sent out under the customer's OWN letterhead — not as a
-// schreiner.digital product page.
+// Laid out as a real DIN-5008-style business letter, matching the exact
+// structure of the user's own Drive originals (verified against a PDF
+// export of Rechnungsvorlage.docx, same document family) — just restyled
+// in schreiner.digital's design (accent-colored rules, house font).
 
 import { jsPDF } from "jspdf";
 import { Document, Packer } from "docx";
@@ -18,19 +18,20 @@ import {
   drawAddressBlock,
   drawInfoBox,
   drawSubjectLine,
+  drawTotalsBlock,
+  totalsBlockHeight,
   ensureLetterRoom,
   finalizeLetterPdf,
   pdfText,
   drawParagraph,
-  drawFieldsRow,
   drawTable,
   tableHeight,
   docxLetterHeader,
   docxAddressAndInfoBlock,
   docxSubjectLine,
+  docxTotalsBlock,
   docxLetterFooter,
   docxParagraph,
-  docxFieldsBlock,
   docxDataTable,
   docxSpacer,
 } from "./branding.mjs";
@@ -51,22 +52,11 @@ const INFO_FIELDS = [
   { label: "Angebotsnummer:", value: "[Nummer]" },
 ];
 
-function drawSummaryLines(doc, y) {
-  drawFieldsRow(doc, y, [{ label: "Nettobetrag:", x: 20, endX: 190 }]);
-  y += 6;
-  drawFieldsRow(doc, y, [{ label: "zzgl. 19 % USt.:", x: 20, endX: 190 }]);
-  y += 6;
-  drawFieldsRow(doc, y, [{ label: "Gesamtbetrag (brutto):", x: 20, endX: 190 }]);
-  return y;
-}
-
-function summaryFieldsBlock() {
-  return docxFieldsBlock([
-    [{ label: "Nettobetrag:", labelPct: 35, valuePct: 65 }],
-    [{ label: "zzgl. 19 % USt.:", labelPct: 35, valuePct: 65 }],
-    [{ label: "Gesamtbetrag (brutto):", labelPct: 35, valuePct: 65 }],
-  ]);
-}
+const TOTALS_ROWS = [
+  { label: "Nettobetrag" },
+  { label: "zzgl. 19 % USt." },
+  { label: "Gesamtbetrag (brutto)", bold: true, shaded: true },
+];
 
 function drawSignature(doc, y) {
   doc.setFont("helvetica", "normal");
@@ -85,18 +75,17 @@ function signatureParagraphs(spacingAfter) {
 function buildPdf() {
   const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
   drawLetterHeader(doc);
-  let y = drawAddressBlock(doc);
-  drawInfoBox(doc, INFO_FIELDS);
-  y += 10;
+  const addressEndY = drawAddressBlock(doc);
+  const infoEndY = drawInfoBox(doc, INFO_FIELDS);
+  let y = Math.max(addressEndY, infoEndY) + 10;
 
   y = drawSubjectLine(doc, y, TITLE);
-  y += 3;
 
   y = ensureLetterRoom(doc, y, 14);
   y = drawParagraph(doc, INTRO_TEXT, PAGE.marginLeft, y, PAGE.contentWidth, { fontSize: 9 });
   y += 8;
 
-  y = ensureLetterRoom(doc, y, tableHeight({ rowCount: 6 }));
+  y = ensureLetterRoom(doc, y, tableHeight({ rowCount: 6 }) + totalsBlockHeight(TOTALS_ROWS.length));
   y = drawTable(doc, {
     y,
     colWidths: ITEM_TABLE_PDF_COLS,
@@ -104,11 +93,8 @@ function buildPdf() {
     rowCount: 6,
     fontSize: 7.5,
   });
-  y += 8;
-
-  y = ensureLetterRoom(doc, y, 24);
-  y = drawSummaryLines(doc, y);
-  y += 12;
+  y = drawTotalsBlock(doc, y, TOTALS_ROWS);
+  y += 10;
 
   y = ensureLetterRoom(doc, y, 20);
   y = drawParagraph(doc, BINDING_TEXT, PAGE.marginLeft, y, PAGE.contentWidth, { fontSize: 8.5 });
@@ -124,7 +110,7 @@ function buildPdf() {
 async function buildDocx() {
   const children = [
     ...docxLetterHeader(),
-    docxAddressAndInfoBlock({ infoFields: INFO_FIELDS }),
+    ...docxAddressAndInfoBlock({ infoFields: INFO_FIELDS }),
     docxSpacer(200),
     docxSubjectLine(TITLE),
     docxParagraph(INTRO_TEXT),
@@ -133,8 +119,8 @@ async function buildDocx() {
       colPcts: ITEM_TABLE_DOCX_COLS,
       rowCount: 6,
     }),
-    docxSpacer(200),
-    ...summaryFieldsBlock(),
+    docxTotalsBlock(TOTALS_ROWS),
+    docxSpacer(300),
     docxParagraph(BINDING_TEXT, { size: 18, color: "646460", spacingAfter: 300 }),
     ...signatureParagraphs(300),
     ...docxLetterFooter(),

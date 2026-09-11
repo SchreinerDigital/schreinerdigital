@@ -1,8 +1,9 @@
 // anzahlungsrechnung.mjs — ANZAHLUNGSRECHNUNG (PDF + Word)
 //
-// Laid out as a real DIN-5008-style business letter (address window, sender
-// line, info box, "[Ihr Firmenlogo]" placeholder) since this document is
-// meant to be sent out under the customer's OWN letterhead.
+// Laid out as a real DIN-5008-style business letter, matching the exact
+// structure of the user's own Drive originals (verified against a PDF
+// export of Rechnungsvorlage.docx, same document family) — just restyled
+// in schreiner.digital's design (accent-colored rules, house font).
 
 import { jsPDF } from "jspdf";
 import { Document, Packer } from "docx";
@@ -13,6 +14,8 @@ import {
   drawAddressBlock,
   drawInfoBox,
   drawSubjectLine,
+  drawTotalsBlock,
+  totalsBlockHeight,
   ensureLetterRoom,
   finalizeLetterPdf,
   pdfText,
@@ -24,6 +27,7 @@ import {
   docxLetterHeader,
   docxAddressAndInfoBlock,
   docxSubjectLine,
+  docxTotalsBlock,
   docxLetterFooter,
   docxSectionLabel,
   docxParagraph,
@@ -39,45 +43,21 @@ const ITEM_TABLE_PDF_COLS = [10, 16, 16, 68, 30, 30];
 const ITEM_TABLE_DOCX_COLS = [6, 9, 9, 40, 18, 18];
 
 const INFO_FIELDS = [
-  { label: "Rechnungsnummer:", value: "[Nummer]" },
   { label: "Rechnungsdatum:", value: "[Datum]" },
+  { label: "Rechnungsnummer:", value: "[Nummer]" },
 ];
 
-// Totals for the underlying order value (Auftragswert).
-function drawAuftragswertSummary(doc, y) {
-  drawFieldsRow(doc, y, [{ label: "Nettobetrag (Auftragswert):", x: 20, endX: 190 }]);
-  y += 6;
-  drawFieldsRow(doc, y, [{ label: "zzgl. USt. (19 %):", x: 20, endX: 190 }]);
-  y += 6;
-  drawFieldsRow(doc, y, [{ label: "Bruttobetrag (Auftragswert):", x: 20, endX: 190 }]);
-  return y;
-}
+const AUFTRAGSWERT_ROWS = [
+  { label: "Nettobetrag (Auftragswert)" },
+  { label: "zzgl. 19 % USt." },
+  { label: "Bruttobetrag (Auftragswert)", bold: true, shaded: true },
+];
 
-function auftragswertSummaryFieldsBlock() {
-  return docxFieldsBlock([
-    [{ label: "Nettobetrag (Auftragswert):", labelPct: 35, valuePct: 65 }],
-    [{ label: "zzgl. USt. (19 %):", labelPct: 35, valuePct: 65 }],
-    [{ label: "Bruttobetrag (Auftragswert):", labelPct: 35, valuePct: 65 }],
-  ]);
-}
-
-// Totals for the deposit actually due now (Anzahlung).
-function drawAnzahlungSummary(doc, y) {
-  drawFieldsRow(doc, y, [{ label: "Anzahlungsbetrag netto:", x: 20, endX: 190 }]);
-  y += 6;
-  drawFieldsRow(doc, y, [{ label: "zzgl. USt. (19 %):", x: 20, endX: 190 }]);
-  y += 6;
-  drawFieldsRow(doc, y, [{ label: "Anzahlungsbetrag gesamt:", x: 20, endX: 190 }]);
-  return y;
-}
-
-function anzahlungSummaryFieldsBlock() {
-  return docxFieldsBlock([
-    [{ label: "Anzahlungsbetrag netto:", labelPct: 35, valuePct: 65 }],
-    [{ label: "zzgl. USt. (19 %):", labelPct: 35, valuePct: 65 }],
-    [{ label: "Anzahlungsbetrag gesamt:", labelPct: 35, valuePct: 65 }],
-  ]);
-}
+const ANZAHLUNG_ROWS = [
+  { label: "Anzahlungsbetrag netto" },
+  { label: "zzgl. 19 % USt." },
+  { label: "Anzahlungsbetrag gesamt", bold: true, shaded: true },
+];
 
 function drawSignature(doc, y) {
   doc.setFont("helvetica", "normal");
@@ -96,12 +76,11 @@ function signatureParagraphs(spacingAfter) {
 function buildPdf() {
   const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
   drawLetterHeader(doc);
-  let y = drawAddressBlock(doc);
-  drawInfoBox(doc, INFO_FIELDS);
-  y += 10;
+  const addressEndY = drawAddressBlock(doc);
+  const infoEndY = drawInfoBox(doc, INFO_FIELDS);
+  let y = Math.max(addressEndY, infoEndY) + 10;
 
   y = drawSubjectLine(doc, y, TITLE);
-  y += 3;
 
   y = ensureLetterRoom(doc, y, 14);
   y = drawParagraph(
@@ -114,31 +93,28 @@ function buildPdf() {
   );
   y += 8;
 
-  y = ensureLetterRoom(doc, y, tableHeight({ rowCount: 5 }));
+  y = ensureLetterRoom(doc, y, tableHeight({ rowCount: 3 }) + totalsBlockHeight(AUFTRAGSWERT_ROWS.length));
   y = drawTable(doc, {
     y,
     colWidths: ITEM_TABLE_PDF_COLS,
     headers: ITEM_TABLE_HEADERS,
-    rowCount: 5,
+    rowCount: 3,
     fontSize: 7.5,
   });
-  y += 8;
-
-  y = ensureLetterRoom(doc, y, 24);
-  y = drawAuftragswertSummary(doc, y);
-  y += 10;
-
-  y = ensureLetterRoom(doc, y, 20);
-  sectionLabel(doc, PAGE.marginLeft, y, "ANZAHLUNG");
+  y = drawTotalsBlock(doc, y, AUFTRAGSWERT_ROWS);
   y += 6;
+
+  y = ensureLetterRoom(doc, y, 18);
+  sectionLabel(doc, PAGE.marginLeft, y, "ANZAHLUNG");
+  y += 5;
   drawFieldsRow(doc, y, [{ label: "Anzahlung in % des Auftragswerts:", x: 20, endX: 190 }]);
-  y += 9;
+  y += 7;
 
-  y = ensureLetterRoom(doc, y, 24);
-  y = drawAnzahlungSummary(doc, y);
-  y += 12;
+  y = ensureLetterRoom(doc, y, totalsBlockHeight(ANZAHLUNG_ROWS.length));
+  y = drawTotalsBlock(doc, y, ANZAHLUNG_ROWS);
+  y += 6;
 
-  y = ensureLetterRoom(doc, y, 20);
+  y = ensureLetterRoom(doc, y, 14);
   y = drawParagraph(
     doc,
     "Bitte überweisen Sie den Anzahlungsbetrag innerhalb von [Zahlungsziel, z. B. 7 Tage] auf das unten genannte Konto. Nach Zahlungseingang beginnen wir mit der vereinbarten Leistung.",
@@ -147,9 +123,9 @@ function buildPdf() {
     PAGE.contentWidth,
     { fontSize: 9 },
   );
-  y += 10;
+  y += 6;
 
-  y = ensureLetterRoom(doc, y, 16);
+  y = ensureLetterRoom(doc, y, 12);
   drawSignature(doc, y);
 
   finalizeLetterPdf(doc);
@@ -159,7 +135,7 @@ function buildPdf() {
 async function buildDocx() {
   const children = [
     ...docxLetterHeader(),
-    docxAddressAndInfoBlock({ infoFields: INFO_FIELDS }),
+    ...docxAddressAndInfoBlock({ infoFields: INFO_FIELDS }),
     docxSpacer(200),
     docxSubjectLine(TITLE),
     docxParagraph(
@@ -168,13 +144,14 @@ async function buildDocx() {
     docxDataTable({
       headers: ITEM_TABLE_HEADERS,
       colPcts: ITEM_TABLE_DOCX_COLS,
-      rowCount: 5,
+      rowCount: 3,
     }),
+    docxTotalsBlock(AUFTRAGSWERT_ROWS),
     docxSpacer(200),
-    ...auftragswertSummaryFieldsBlock(),
     docxSectionLabel("ANZAHLUNG"),
     ...docxFieldsBlock([[{ label: "Anzahlung in % des Auftragswerts:", labelPct: 40, valuePct: 60 }]]),
-    ...anzahlungSummaryFieldsBlock(),
+    docxTotalsBlock(ANZAHLUNG_ROWS),
+    docxSpacer(300),
     docxParagraph(
       "Bitte überweisen Sie den Anzahlungsbetrag innerhalb von [Zahlungsziel, z. B. 7 Tage] auf das unten genannte Konto. Nach Zahlungseingang beginnen wir mit der vereinbarten Leistung.",
       { spacingAfter: 300 },

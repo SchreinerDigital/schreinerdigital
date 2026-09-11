@@ -193,16 +193,19 @@ export function ensureRoom(doc, y, needed, header) {
 //
 // Used by the Auftragsabwicklung document family (Angebot, Auftragsbestä-
 // tigung, Rechnung, Mahnungen, Gutschrift, Lieferschein, ...): real business
-// correspondence the customer sends out under their OWN letterhead. Unlike
-// the product-style drawPdfHeader() above (schreiner.digital wordmark, used
-// for internal checklists/planners), these documents show a "[Ihr Firmen-
-// logo]" placeholder instead, plus the sender reference line, address
-// window and info box conventional in German business letters. The
-// schreiner.digital credit shrinks to a small footer line instead of a
-// full-width top banner, so the document looks like a real, ready-to-send
-// letter rather than a shop product page.
+// correspondence the customer sends out under their OWN letterhead. Layout
+// verified against the user's real Drive original (PDF export of
+// Rechnungsvorlage.docx): a right-aligned "[Ihr Firmenlogo]" wordmark under
+// an accent-colored rule; the sender's own address right-aligned in the top
+// area; below that, the recipient address window (left) and an info box
+// (right, "Label: Value" lines) starting at the same height; a small muted
+// sender-reference line directly BELOW the recipient address (not above);
+// a large document-title heading; an item table whose totals continue as
+// extra full-width rows (the last one bold + shaded); and a two-column
+// footer (contact | bank+legal) under a second accent-colored rule.
 
 export const LETTER_SENDER_LINE = "[Ihre Firma] · [Straße Hausnummer] · [PLZ Ort]";
+export const LETTER_SENDER_ADDRESS = ["[Ihre Firma]", "[Straße Hausnummer]", "[PLZ Ort]"];
 export const LETTER_ADDRESS_PLACEHOLDER = ["[Name des Kunden]", "[Straße Hausnummer]", "[PLZ Ort]"];
 export const LETTER_FOOTER_CONTACT = [
   "[Ihre Firma]",
@@ -217,103 +220,139 @@ export const LETTER_FOOTER_BANK = [
 ];
 
 const LETTER = {
-  logoX: PAGE.marginLeft,
-  logoY: 14,
-  logoWidth: 60,
-  logoHeight: 18,
-  ruleY: 34,
-  senderLineY: 43,
-  addressStartY: 50,
+  logoY: 20,
+  ruleY: 27,
+  senderAddrStartY: 44,
+  senderAddrLineGap: 5,
+  blockStartY: 62,
   addressLineGap: 5,
-  infoBoxX: 122,
-  infoBoxWidth: 68,
-  infoStartY: 43,
-  infoLineGap: 5.5,
-  footerRuleY: 266,
+  infoLineGap: 6,
+  footerRuleY: 258,
 };
 
-// Dashed placeholder box standing in for the customer's own company logo.
-function drawLetterLogoPlaceholder(doc) {
-  doc.setDrawColor(...COLORS.border);
-  doc.setLineWidth(0.3);
-  doc.setLineDashPattern([1.5, 1.2], 0);
-  doc.rect(LETTER.logoX, LETTER.logoY, LETTER.logoWidth, LETTER.logoHeight, "D");
-  doc.setLineDashPattern([], 0);
-  doc.setFont("helvetica", "italic");
-  doc.setFontSize(8);
-  doc.setTextColor(...COLORS.muted);
-  pdfText(doc, "[Ihr Firmenlogo]", LETTER.logoX + LETTER.logoWidth / 2, LETTER.logoY + LETTER.logoHeight / 2 + 1.2, {
-    align: "center",
+// Right-aligned "[Ihr Firmenlogo]" wordmark placeholder + accent rule.
+// Returns LETTER.blockStartY, where the sender address / recipient address
+// / info box may begin.
+export function drawLetterHeader(doc) {
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(20);
+  doc.setTextColor(...COLORS.ink);
+  pdfText(doc, "[Ihr Firmenlogo]", PAGE.marginRight, LETTER.logoY, { align: "right" });
+
+  doc.setDrawColor(...COLORS.accent);
+  doc.setLineWidth(0.7);
+  doc.line(PAGE.marginLeft, LETTER.ruleY, PAGE.marginRight, LETTER.ruleY);
+  return LETTER.blockStartY;
+}
+
+// Sender's own address, right-aligned, in the gap between the header rule
+// and the recipient-address/info-box row.
+function drawSenderAddress(doc, lines) {
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  doc.setTextColor(...COLORS.ink);
+  let y = LETTER.senderAddrStartY;
+  lines.forEach((line) => {
+    pdfText(doc, line, PAGE.marginRight, y, { align: "right" });
+    y += LETTER.senderAddrLineGap;
   });
 }
 
-// Logo placeholder + header rule. Returns the y where the sender line /
-// address block / info box may begin (LETTER.senderLineY).
-export function drawLetterHeader(doc) {
-  drawLetterLogoPlaceholder(doc);
-  doc.setDrawColor(...COLORS.headerRule);
-  doc.setLineWidth(0.3);
-  doc.line(PAGE.marginLeft, LETTER.ruleY, PAGE.marginRight, LETTER.ruleY);
-  return LETTER.senderLineY;
-}
+// Recipient address window (left), plus the sender's own address (right-
+// aligned, drawn above it) and a small muted sender-reference line directly
+// BELOW the recipient address. Returns the y just below that reference
+// line, ready for drawSubjectLine (via Math.max with drawInfoBox's return).
+export function drawAddressBlock(
+  doc,
+  { addressLines = LETTER_ADDRESS_PLACEHOLDER, sender = LETTER_SENDER_LINE, senderAddress = LETTER_SENDER_ADDRESS } = {},
+) {
+  drawSenderAddress(doc, senderAddress);
 
-// Small underlined "Rücksendeangabe" sender line + recipient address block
-// (DIN-5008 address window). `sender` defaults to LETTER_SENDER_LINE,
-// `addressLines` to LETTER_ADDRESS_PLACEHOLDER. Returns the y just below
-// the last address line.
-export function drawAddressBlock(doc, { sender = LETTER_SENDER_LINE, addressLines = LETTER_ADDRESS_PLACEHOLDER } = {}) {
-  const y = LETTER.senderLineY;
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(7.5);
-  doc.setTextColor(...COLORS.muted);
-  pdfText(doc, sender, PAGE.marginLeft, y);
-  doc.setDrawColor(...COLORS.border);
-  doc.setLineWidth(0.2);
-  doc.line(PAGE.marginLeft, y + 1.2, PAGE.marginLeft + doc.getTextWidth(cleanText(sender)), y + 1.2);
-
-  let ay = LETTER.addressStartY;
+  let y = LETTER.blockStartY;
   doc.setFont("helvetica", "normal");
   doc.setFontSize(10);
   doc.setTextColor(...COLORS.ink);
   addressLines.forEach((line) => {
-    pdfText(doc, line, PAGE.marginLeft, ay);
-    ay += LETTER.addressLineGap;
+    pdfText(doc, line, PAGE.marginLeft, y);
+    y += LETTER.addressLineGap;
   });
-  return ay;
+
+  y += 3;
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8);
+  doc.setTextColor(...COLORS.muted);
+  pdfText(doc, sender, PAGE.marginLeft, y);
+  return y + 6;
 }
 
-// Right-aligned info box beside the address block, e.g. Datum /
-// Rechnungsnummer / Kundennummer. `fields`: [{ label, value }]. Returns the
-// y just below the last row.
+// Right-aligned info box beside the address block (Datum / Rechnungsnummer /
+// etc.), starting at the same height as the recipient address. `fields`:
+// entries are either `{ label, value }` (rendered as one right-aligned
+// "Label Value" line) or `{ note }` (a smaller muted line, e.g. the
+// Leistungsdatum disclosure). Returns the y just below the last row.
 export function drawInfoBox(doc, fields) {
-  const x = LETTER.infoBoxX;
-  const width = LETTER.infoBoxWidth;
-  let iy = LETTER.infoStartY;
-  doc.setFontSize(9);
-  fields.forEach(({ label, value }) => {
+  let y = LETTER.blockStartY;
+  fields.forEach((field) => {
+    if (field.note) {
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(7.5);
+      doc.setTextColor(...COLORS.muted);
+      pdfText(doc, field.note, PAGE.marginRight, y, { align: "right" });
+      y += 5;
+      return;
+    }
     doc.setFont("helvetica", "normal");
-    doc.setTextColor(...COLORS.muted);
-    pdfText(doc, label, x, iy);
-    doc.setFont("helvetica", "bold");
+    doc.setFontSize(10);
     doc.setTextColor(...COLORS.ink);
-    pdfText(doc, value, x + width, iy, { align: "right" });
-    iy += LETTER.infoLineGap;
+    pdfText(doc, `${field.label} ${field.value}`, PAGE.marginRight, y, { align: "right" });
+    y += LETTER.infoLineGap;
   });
-  return iy;
+  return y;
 }
 
-// Bold subject/title line (e.g. "Rechnung" or "1. MAHNUNG"). Returns the y
-// just below it, ready for the salutation.
+// Large bold subject/title line (e.g. "Rechnung" or "1. MAHNUNG"). Returns
+// the y just below it, ready for the salutation.
 export function drawSubjectLine(doc, y, text) {
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(13);
+  doc.setFontSize(26);
   doc.setTextColor(...COLORS.ink);
   pdfText(doc, text, PAGE.marginLeft, y);
-  return y + 9;
+  return y + 14;
 }
 
-// Unlike the product-style pages (a single thin credit line at y=289), a
-// letter's footer is a tall block starting at LETTER.footerRuleY (rule +
+// Full-width totals rows continuing directly below an item table (drawTable/
+// tableHeight), each with a thin top border matching the table's row
+// dividers. `rows`: [{ label, bold, shaded }] — the last row is typically
+// `{ bold: true, shaded: true }` (e.g. "Rechnungsbetrag"). Values are left
+// blank with a short underline (these are fillable templates, not filled
+// examples). Returns the y just below the last row.
+export function drawTotalsBlock(doc, y, rows) {
+  const rowHeight = 7;
+  rows.forEach(({ label, bold = false, shaded = false }) => {
+    if (shaded) {
+      doc.setFillColor(...COLORS.headerFill);
+      doc.rect(PAGE.marginLeft, y, PAGE.contentWidth, rowHeight, "F");
+    }
+    doc.setDrawColor(...COLORS.border);
+    doc.setLineWidth(0.2);
+    doc.line(PAGE.marginLeft, y, PAGE.marginRight, y);
+    doc.setFont("helvetica", bold ? "bold" : "normal");
+    doc.setFontSize(9);
+    doc.setTextColor(...COLORS.ink);
+    pdfText(doc, label, PAGE.marginLeft + 2, y + rowHeight / 2 + 1.4);
+    doc.setDrawColor(...COLORS.border);
+    doc.setLineWidth(0.25);
+    doc.line(PAGE.marginRight - 35, y + rowHeight - 2, PAGE.marginRight - 2, y + rowHeight - 2);
+    y += rowHeight;
+  });
+  return y;
+}
+
+export function totalsBlockHeight(rowCount, rowHeight = 7) {
+  return rowCount * rowHeight;
+}
+
+// A letter's footer is a tall block starting at LETTER.footerRuleY (rule +
 // two-column contact/bank text + credit line, ending around y=291) — so
 // body content needs to stop well above that, not at the generic
 // SAFE_BOTTOM used elsewhere in this file.
@@ -333,18 +372,25 @@ export function ensureLetterRoom(doc, y, needed) {
 // small schreiner.digital credit line. Called once per page by
 // finalizeLetterPdf.
 function drawLetterFooter(doc, { contactLines, bankLines, pageNumber, pageCount }) {
-  doc.setDrawColor(...COLORS.headerRule);
-  doc.setLineWidth(0.3);
+  doc.setDrawColor(...COLORS.accent);
+  doc.setLineWidth(0.7);
   doc.line(PAGE.marginLeft, LETTER.footerRuleY, PAGE.marginRight, LETTER.footerRuleY);
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(7.5);
+  doc.setTextColor(...COLORS.ink);
+  pdfText(doc, contactLines[0], PAGE.marginLeft, LETTER.footerRuleY + 5);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(...COLORS.muted);
+  let ly = LETTER.footerRuleY + 5 + 3.8;
+  contactLines.slice(1).forEach((line) => {
+    pdfText(doc, line, PAGE.marginLeft, ly);
+    ly += 3.8;
+  });
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(7.5);
   doc.setTextColor(...COLORS.muted);
-  let ly = LETTER.footerRuleY + 5;
-  contactLines.forEach((line) => {
-    pdfText(doc, line, PAGE.marginLeft, ly);
-    ly += 3.8;
-  });
   let ry = LETTER.footerRuleY + 5;
   bankLines.forEach((line) => {
     pdfText(doc, line, 106, ry);
@@ -556,108 +602,134 @@ export function docxHeader(title, subtitle) {
 }
 
 // --- DOCX LETTER LAYOUT (DIN-5008-style German business letter) ---------
-// DOCX counterpart of the PDF letter-layout helpers above; same rationale.
+// DOCX counterpart of the PDF letter-layout helpers above; same rationale
+// and same ground-truth geometry (right-aligned logo/sender-address, info
+// box starting level with the recipient address, sender-reference line
+// below it, large title, totals as table-continuation rows, accent rules).
 
-const dashedBorder = { style: BorderStyle.DASHED, size: 2, color: HEX.border };
-const allDashed = { top: dashedBorder, bottom: dashedBorder, left: dashedBorder, right: dashedBorder };
-
-function ruleParagraph(spacingBefore = 0, spacingAfter = 300) {
+function accentRuleParagraph(spacingBefore = 0, spacingAfter = 300) {
   return new Paragraph({
-    border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: HEX.border, space: 1 } },
+    border: { bottom: { style: BorderStyle.SINGLE, size: 14, color: HEX.accent, space: 1 } },
     spacing: { before: spacingBefore, after: spacingAfter },
     children: [new TextRun({ text: " " })],
   });
 }
 
-// "[Ihr Firmenlogo]" dashed placeholder box (left-aligned, not full width)
-// + header rule. Replaces docxHeader() for real business-letter documents.
+// Right-aligned "[Ihr Firmenlogo]" wordmark + accent header rule. Replaces
+// docxHeader() for real business-letter documents.
 export function docxLetterHeader() {
   return [
-    new Table({
-      width: { size: 100, type: WidthType.PERCENTAGE },
-      borders: allNone,
-      rows: [
-        new TableRow({
-          children: [
-            new TableCell({
-              width: { size: 38, type: WidthType.PERCENTAGE },
-              borders: allDashed,
-              margins: { top: 160, bottom: 160, left: 120, right: 120 },
-              children: [
-                new Paragraph({
-                  alignment: AlignmentType.CENTER,
-                  children: [new TextRun({ text: "[Ihr Firmenlogo]", italics: true, size: 16, color: HEX.muted })],
-                }),
-              ],
-            }),
-            new TableCell({
-              width: { size: 62, type: WidthType.PERCENTAGE },
-              borders: allNone,
-              children: [new Paragraph({ children: [new TextRun({ text: "" })] })],
-            }),
-          ],
-        }),
-      ],
+    new Paragraph({
+      alignment: AlignmentType.RIGHT,
+      spacing: { after: 200 },
+      children: [new TextRun({ text: "[Ihr Firmenlogo]", bold: true, size: 32, color: HEX.ink })],
     }),
-    ruleParagraph(200, 300),
+    accentRuleParagraph(0, 300),
   ];
 }
 
-// Sender line + recipient address block (left) beside a right-aligned info
-// box (Datum / Rechnungsnummer / etc.), as one borderless 2-column table —
-// the DOCX equivalent of drawAddressBlock()+drawInfoBox() side by side.
-// `infoFields`: [{ label, value }].
+// Sender's own address (right-aligned) + recipient address window (left,
+// with the small muted sender-reference line directly below it) beside a
+// right-aligned info box (Datum / Rechnungsnummer / etc.) starting level
+// with the recipient address — the DOCX equivalent of drawAddressBlock() +
+// drawInfoBox(). `infoFields` entries: `{ label, value }` or `{ note }`
+// (a smaller muted line, e.g. the Leistungsdatum disclosure).
 export function docxAddressAndInfoBlock({
   sender = LETTER_SENDER_LINE,
   addressLines = LETTER_ADDRESS_PLACEHOLDER,
+  senderAddress = LETTER_SENDER_ADDRESS,
   infoFields,
 }) {
+  const senderAddressParagraphs = senderAddress.map(
+    (line) =>
+      new Paragraph({
+        alignment: AlignmentType.RIGHT,
+        spacing: { after: 20 },
+        children: [new TextRun({ text: line, size: 20, color: HEX.ink })],
+      }),
+  );
+
   const addressCell = new TableCell({
     width: { size: 55, type: WidthType.PERCENTAGE },
     borders: allNone,
     children: [
-      new Paragraph({
-        border: { bottom: { style: BorderStyle.SINGLE, size: 2, color: HEX.border, space: 1 } },
-        spacing: { after: 160 },
-        children: [new TextRun({ text: sender, size: 15, color: HEX.muted })],
-      }),
       ...addressLines.map(
         (line) => new Paragraph({ spacing: { after: 40 }, children: [new TextRun({ text: line, size: 20, color: HEX.ink })] }),
       ),
+      new Paragraph({ spacing: { after: 0 }, children: [new TextRun({ text: sender, size: 16, color: HEX.muted })] }),
     ],
   });
   const infoCell = new TableCell({
     width: { size: 45, type: WidthType.PERCENTAGE },
     borders: allNone,
-    children: infoFields.map(
-      ({ label, value }) =>
-        new Paragraph({
-          alignment: AlignmentType.RIGHT,
-          spacing: { after: 60 },
-          children: [
-            new TextRun({ text: `${label} `, size: 18, color: HEX.muted }),
-            new TextRun({ text: value, bold: true, size: 18, color: HEX.ink }),
-          ],
-        }),
+    children: infoFields.map((field) =>
+      field.note
+        ? new Paragraph({
+            alignment: AlignmentType.RIGHT,
+            spacing: { after: 60 },
+            children: [new TextRun({ text: field.note, italics: true, size: 15, color: HEX.muted })],
+          })
+        : new Paragraph({
+            alignment: AlignmentType.RIGHT,
+            spacing: { after: 60 },
+            children: [new TextRun({ text: `${field.label} ${field.value}`, size: 20, color: HEX.ink })],
+          }),
     ),
   });
-  return new Table({ width: { size: 100, type: WidthType.PERCENTAGE }, rows: [new TableRow({ children: [addressCell, infoCell] })] });
+
+  return [
+    ...senderAddressParagraphs,
+    docxSpacer(160),
+    new Table({ width: { size: 100, type: WidthType.PERCENTAGE }, rows: [new TableRow({ children: [addressCell, infoCell] })] }),
+  ];
 }
 
-// Bold subject/title line, e.g. "Rechnung" or "1. MAHNUNG".
+// Large bold subject/title line, e.g. "Rechnung" or "1. MAHNUNG".
 export function docxSubjectLine(text) {
   return new Paragraph({
-    spacing: { before: 200, after: 200 },
-    children: [new TextRun({ text, bold: true, size: 26, color: HEX.ink })],
+    spacing: { before: 300, after: 300 },
+    children: [new TextRun({ text, bold: true, size: 52, color: HEX.ink })],
   });
 }
 
-// Footer rule + two-column table (contact info | bank & legal info) + a
-// small centered schreiner.digital credit line. Appended once at the end of
-// a letter-style document's children array.
+// Full-width totals rows continuing directly below a docxDataTable, each
+// with a thin top border matching the table's row dividers. `rows`:
+// [{ label, bold, shaded }] — the last row is typically
+// `{ bold: true, shaded: true }` (e.g. "Rechnungsbetrag"). The value cell
+// is left blank (these are fillable templates, not filled examples).
+export function docxTotalsBlock(rows) {
+  return new Table({
+    width: { size: 100, type: WidthType.PERCENTAGE },
+    rows: rows.map(({ label, bold = false, shaded = false }) => {
+      const shading = shaded ? { fill: HEX.headerFill } : undefined;
+      return new TableRow({
+        children: [
+          new TableCell({
+            width: { size: 65, type: WidthType.PERCENTAGE },
+            borders: { top: thinBorder, bottom: noBorder, left: noBorder, right: noBorder },
+            shading,
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: label, bold, size: 19, color: HEX.ink })] })],
+          }),
+          new TableCell({
+            width: { size: 35, type: WidthType.PERCENTAGE },
+            borders: { top: thinBorder, bottom: thinBorder, left: noBorder, right: noBorder },
+            shading,
+            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+            children: [new Paragraph({ children: [new TextRun({ text: " " })] })],
+          }),
+        ],
+      });
+    }),
+  });
+}
+
+// Footer accent rule + two-column table (contact info | bank & legal info)
+// + a small centered schreiner.digital credit line. Appended once at the
+// end of a letter-style document's children array.
 export function docxLetterFooter({ contactLines = LETTER_FOOTER_CONTACT, bankLines = LETTER_FOOTER_BANK } = {}) {
   return [
-    ruleParagraph(300, 200),
+    accentRuleParagraph(300, 200),
     new Table({
       width: { size: 100, type: WidthType.PERCENTAGE },
       borders: allNone,
@@ -668,7 +740,11 @@ export function docxLetterFooter({ contactLines = LETTER_FOOTER_CONTACT, bankLin
               width: { size: 50, type: WidthType.PERCENTAGE },
               borders: allNone,
               children: contactLines.map(
-                (l) => new Paragraph({ spacing: { after: 20 }, children: [new TextRun({ text: l, size: 15, color: HEX.muted })] }),
+                (l, i) =>
+                  new Paragraph({
+                    spacing: { after: 20 },
+                    children: [new TextRun({ text: l, bold: i === 0, size: 15, color: i === 0 ? HEX.ink : HEX.muted })],
+                  }),
               ),
             }),
             new TableCell({
