@@ -30,6 +30,7 @@ const columns = [
       { href: "/tools/durchbiegung", label: "Durchbiegungsrechner" },
       { href: "/tools/stundensatz", label: "Stundensatzrechner" },
       { href: "/tools/quell-schwund", label: "Quell- und Schwundrechner" },
+      { href: "/tools/falsche-gehrung", label: "Falsche-Gehrung-Rechner" },
     ],
   },
   {

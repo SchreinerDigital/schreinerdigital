@@ -58,6 +58,14 @@ export const tools: ToolDef[] = [
       "Maßänderung von Massivholz aus Holzart, Jahrringlage, Abmessungen und Holzfeuchte nach DIN 52184 berechnen.",
     ready: true,
   },
+  {
+    slug: "falsche-gehrung",
+    seoTitle: "Falsche Gehrung berechnen",
+    title: "Falsche-Gehrung-Rechner",
+    description:
+      "Schnittwinkel, Kappsägen-Einstellwerte, Versatzmaß und Gehrungslänge für Gehrungen mit unterschiedlichen Materialstärken oder beliebigem Eckwinkel berechnen.",
+    ready: true,
+  },
 ];
 
 export function getTool(slug: string): ToolDef | undefined {
