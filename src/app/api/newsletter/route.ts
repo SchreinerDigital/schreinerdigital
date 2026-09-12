@@ -9,6 +9,7 @@ const REDIRECTS: Record<string, string> = {
   homepage: "/",
   vorlagen: "/vorlagen/bestaetigt",
   cad: "/cad/bestaetigt",
+  auftragsabwicklung: "/vorlagen/auftragsabwicklung/bestaetigt",
 };
 
 export async function POST(request: Request) {

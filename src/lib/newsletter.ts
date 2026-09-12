@@ -19,10 +19,24 @@ export interface NewsletterSignup {
 
 export type NewsletterResult = { ok: true } | { ok: false; error: string };
 
-function readConfig() {
+/**
+ * Sources with their own dedicated Brevo list + DOI template (separate from
+ * the shared BREVO_LIST_ID/BREVO_DOI_TEMPLATE_ID "Newsletter" list) – e.g.
+ * a themed email series that shouldn't mix into the general list. A source
+ * not listed here falls back to the generic list/template below.
+ */
+const SOURCE_ENV_OVERRIDES: Record<string, { listIdEnv: string; templateIdEnv: string }> = {
+  auftragsabwicklung: {
+    listIdEnv: "BREVO_AUFTRAGSABWICKLUNG_LIST_ID",
+    templateIdEnv: "BREVO_AUFTRAGSABWICKLUNG_DOI_TEMPLATE_ID",
+  },
+};
+
+function readConfig(source: string) {
   const apiKey = process.env.BREVO_API_KEY;
-  const listId = process.env.BREVO_LIST_ID;
-  const templateId = process.env.BREVO_DOI_TEMPLATE_ID;
+  const override = SOURCE_ENV_OVERRIDES[source];
+  const listId = process.env[override?.listIdEnv ?? "BREVO_LIST_ID"];
+  const templateId = process.env[override?.templateIdEnv ?? "BREVO_DOI_TEMPLATE_ID"];
   if (!apiKey || !listId || !templateId) return null;
   return { apiKey, listId: Number(listId), templateId: Number(templateId) };
 }
@@ -32,10 +46,10 @@ export async function subscribeToNewsletter({
   redirectionUrl,
   source,
 }: NewsletterSignup): Promise<NewsletterResult> {
-  const config = readConfig();
+  const config = readConfig(source);
   if (!config) {
     console.error(
-      "Newsletter-Anmeldung fehlgeschlagen: BREVO_API_KEY/BREVO_LIST_ID/BREVO_DOI_TEMPLATE_ID nicht gesetzt.",
+      `Newsletter-Anmeldung fehlgeschlagen (source=${source}): Brevo-Konfiguration (API-Key/Liste/DOI-Vorlage) nicht gesetzt.`,
     );
     return { ok: false, error: "Newsletter ist derzeit nicht verfügbar." };
   }

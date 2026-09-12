@@ -5,12 +5,13 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 type Status = "idle" | "loading" | "success" | "error";
-type Source = "homepage" | "vorlagen" | "cad";
+type Source = "homepage" | "vorlagen" | "cad" | "auftragsabwicklung";
 
 const CONSENT_TEXT: Record<Source, string> = {
   homepage: "Ich melde mich zum Newsletter an",
   vorlagen: "Ich melde mich zum Newsletter an",
   cad: "Ich möchte per E-Mail benachrichtigt werden, sobald der Kauf der CAD-Vorlagen möglich ist",
+  auftragsabwicklung: "Ich melde mich zur Lehrzettel-Serie „Auftragsabwicklung“ an",
 };
 
 export function NewsletterForm({

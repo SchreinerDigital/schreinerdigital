@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Badge } from "@/components/ui/badge";
@@ -124,6 +125,20 @@ export default function VorlagenPage() {
                   </li>
                 ))}
               </ul>
+
+              {kat === "Kommunikation & Verwaltung" && (
+                <div className="mt-6 rounded-[var(--radius)] border border-dashed border-border-strong bg-surface p-5">
+                  <p className="text-sm text-ink-muted">
+                    Angebot, Rechnung, Mahnung &amp; Co. rechtlich richtig
+                    aufsetzen? In unserer kostenlosen{" "}
+                    <Link href="/vorlagen/auftragsabwicklung" className="font-medium text-accent hover:underline">
+                      Lehrzettel-Serie „Auftragsabwicklung“
+                    </Link>{" "}
+                    erklären wir zu jedem dieser Dokumente die wichtigsten
+                    rechtlichen Grundlagen – in zehn kurzen E-Mails.
+                  </p>
+                </div>
+              )}
             </section>
           );
         })}
