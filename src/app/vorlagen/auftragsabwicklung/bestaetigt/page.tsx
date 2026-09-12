@@ -26,8 +26,9 @@ export default function AuftragsabwicklungBestaetigtPage() {
       <p className="mt-4 max-w-2xl text-lg text-ink-muted">
         Die erste Ausgabe der Lehrzettel-Serie „Auftragsabwicklung“ bekommst
         du in Kürze, die restlichen neun folgen danach in regelmäßigem
-        Abstand. Du kannst dich jederzeit über den Abmeldelink in jeder
-        E-Mail wieder abmelden.
+        Abstand. Parallel dazu bist du jetzt auch für den allgemeinen
+        schreiner.digital-Newsletter angemeldet. Du kannst dich jederzeit
+        über den Abmeldelink in jeder E-Mail wieder abmelden.
       </p>
 
       <ButtonLink href="/vorlagen" size="lg" variant="secondary" className="mt-8">

@@ -39,6 +39,10 @@ const FAQ: { q: string; a: string }[] = [
     a: "Nein, die Anmeldung und alle zehn Ausgaben sind kostenlos.",
   },
   {
+    q: "Bekomme ich dann auch den normalen Newsletter?",
+    a: "Ja. Mit der Anmeldung zur Serie meldest du dich in einem Schritt automatisch auch für den allgemeinen schreiner.digital-Newsletter an. Beide laufen parallel – die zehn Lehrzettel-Ausgaben zusätzlich zu den regulären Newsletter-Mails.",
+  },
+  {
     q: "Wie melde ich mich wieder ab?",
     a: "Über den Abmeldelink in jeder E-Mail, jederzeit mit einem Klick.",
   },
@@ -60,7 +64,9 @@ export default function AuftragsabwicklungNewsletterPage() {
         <h2 className="text-lg font-medium text-ink">Jetzt anmelden</h2>
         <p className="mt-1.5 text-sm text-ink-muted">
           Eine Ausgabe direkt nach der Bestätigung, danach im Abstand von
-          mehreren Tagen bis alle zehn da sind.
+          mehreren Tagen bis alle zehn da sind – parallel dazu meldest du
+          dich in einem Schritt automatisch auch für den allgemeinen
+          schreiner.digital-Newsletter an.
         </p>
         <NewsletterForm source="auftragsabwicklung" submitLabel="Serie abonnieren" className="mt-5" />
       </div>

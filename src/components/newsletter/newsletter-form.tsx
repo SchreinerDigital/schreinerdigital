@@ -11,7 +11,8 @@ const CONSENT_TEXT: Record<Source, string> = {
   homepage: "Ich melde mich zum Newsletter an",
   vorlagen: "Ich melde mich zum Newsletter an",
   cad: "Ich möchte per E-Mail benachrichtigt werden, sobald der Kauf der CAD-Vorlagen möglich ist",
-  auftragsabwicklung: "Ich melde mich zur Lehrzettel-Serie „Auftragsabwicklung“ an",
+  auftragsabwicklung:
+    "Ich melde mich zur Lehrzettel-Serie „Auftragsabwicklung“ und zum allgemeinen schreiner.digital-Newsletter an",
 };
 
 export function NewsletterForm({

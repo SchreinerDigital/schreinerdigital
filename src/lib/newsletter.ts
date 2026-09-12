@@ -25,10 +25,17 @@ export type NewsletterResult = { ok: true } | { ok: false; error: string };
  * a themed email series that shouldn't mix into the general list. A source
  * not listed here falls back to the generic list/template below.
  */
-const SOURCE_ENV_OVERRIDES: Record<string, { listIdEnv: string; templateIdEnv: string }> = {
+const SOURCE_ENV_OVERRIDES: Record<
+  string,
+  { listIdEnv: string; templateIdEnv: string; alsoJoinGeneralList?: boolean }
+> = {
   auftragsabwicklung: {
     listIdEnv: "BREVO_AUFTRAGSABWICKLUNG_LIST_ID",
     templateIdEnv: "BREVO_AUFTRAGSABWICKLUNG_DOI_TEMPLATE_ID",
+    // One confirmation click enrolls the contact in both lists at once, so
+    // the themed series and the general newsletter run in parallel from
+    // the same signup instead of requiring a second opt-in later.
+    alsoJoinGeneralList: true,
   },
 };
 
@@ -38,7 +45,14 @@ function readConfig(source: string) {
   const listId = process.env[override?.listIdEnv ?? "BREVO_LIST_ID"];
   const templateId = process.env[override?.templateIdEnv ?? "BREVO_DOI_TEMPLATE_ID"];
   if (!apiKey || !listId || !templateId) return null;
-  return { apiKey, listId: Number(listId), templateId: Number(templateId) };
+
+  const listIds = [Number(listId)];
+  if (override?.alsoJoinGeneralList) {
+    const generalListId = process.env.BREVO_LIST_ID;
+    if (generalListId) listIds.push(Number(generalListId));
+  }
+
+  return { apiKey, listIds, templateId: Number(templateId) };
 }
 
 export async function subscribeToNewsletter({
@@ -64,7 +78,7 @@ export async function subscribeToNewsletter({
       },
       body: JSON.stringify({
         email,
-        includeListIds: [config.listId],
+        includeListIds: config.listIds,
         templateId: config.templateId,
         redirectionUrl,
         attributes: { SIGNUP_SOURCE: source },
