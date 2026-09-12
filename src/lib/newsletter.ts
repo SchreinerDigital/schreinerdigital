@@ -27,7 +27,18 @@ export type NewsletterResult = { ok: true } | { ok: false; error: string };
  */
 const SOURCE_ENV_OVERRIDES: Record<
   string,
-  { listIdEnv: string; templateIdEnv: string; alsoJoinGeneralList?: boolean }
+  {
+    listIdEnv: string;
+    templateIdEnv: string;
+    alsoJoinGeneralList?: boolean;
+    /**
+     * Starts the contact at episode 0 of a drip series (see
+     * src/app/api/cron/auftragsabwicklung-drip/route.ts), which picks up
+     * contacts whose AA_NEXT_SEND has passed – i.e. once they actually
+     * confirm the double opt-in and land on the list.
+     */
+    startsDrip?: boolean;
+  }
 > = {
   auftragsabwicklung: {
     listIdEnv: "BREVO_AUFTRAGSABWICKLUNG_LIST_ID",
@@ -36,6 +47,7 @@ const SOURCE_ENV_OVERRIDES: Record<
     // the themed series and the general newsletter run in parallel from
     // the same signup instead of requiring a second opt-in later.
     alsoJoinGeneralList: true,
+    startsDrip: true,
   },
 };
 
@@ -68,6 +80,14 @@ export async function subscribeToNewsletter({
     return { ok: false, error: "Newsletter ist derzeit nicht verfügbar." };
   }
 
+  const attributes: Record<string, string | number> = { SIGNUP_SOURCE: source };
+  if (SOURCE_ENV_OVERRIDES[source]?.startsDrip) {
+    // Picked up by the drip cron once the contact actually lands on the
+    // list (i.e. after the double opt-in click) – see startsDrip above.
+    attributes.AA_EPISODE = 0;
+    attributes.AA_NEXT_SEND = new Date().toISOString().slice(0, 10);
+  }
+
   try {
     const res = await fetch("https://api.brevo.com/v3/contacts/doubleOptinConfirmation", {
       method: "POST",
@@ -81,7 +101,7 @@ export async function subscribeToNewsletter({
         includeListIds: config.listIds,
         templateId: config.templateId,
         redirectionUrl,
-        attributes: { SIGNUP_SOURCE: source },
+        attributes,
       }),
     });
 

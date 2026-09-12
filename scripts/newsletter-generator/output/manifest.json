@@ -1,0 +1,72 @@
+[
+  {
+    "episode": 1,
+    "file": "01-angebot.md",
+    "subject": "Das Angebot – ab wann bist du eigentlich daran gebunden?",
+    "preheader": "Ein unbedachter Satz im Angebot kann dich an einen Preis binden, den du eigentlich nur \"ungefähr\" gemeint hast.",
+    "htmlFile": "01-01-angebot.html"
+  },
+  {
+    "episode": 2,
+    "file": "02-auftragsbestaetigung.md",
+    "subject": "Die Auftragsbestätigung – Formsache oder der eigentliche Vertragsschluss?",
+    "preheader": "In manchen Fällen schließt nicht dein Angebot den Vertrag – sondern erst diese kurze Bestätigung.",
+    "htmlFile": "02-02-auftragsbestaetigung.html"
+  },
+  {
+    "episode": 3,
+    "file": "03-anzahlungsrechnung.md",
+    "subject": "Anzahlungsrechnung – der Steuertermin, den viele übersehen",
+    "preheader": "Sobald das Geld auf deinem Konto ist, will das Finanzamt seinen Anteil – auch wenn die Küche noch gar nicht gebaut ist.",
+    "htmlFile": "03-03-anzahlungsrechnung.html"
+  },
+  {
+    "episode": 4,
+    "file": "04-lieferschein.md",
+    "subject": "Der Lieferschein – von niemandem vorgeschrieben, trotzdem dein bester Beweis",
+    "preheader": "Kein Gesetz verlangt einen Lieferschein. Im Streitfall bist du trotzdem froh, wenn du einen hast.",
+    "htmlFile": "04-04-lieferschein.html"
+  },
+  {
+    "episode": 5,
+    "file": "05-rechnung.md",
+    "subject": "Die Rechnung – 10 Pflichtangaben, ohne die es teuer werden kann",
+    "preheader": "Fehlt eine Pflichtangabe, kann dein Kunde die Vorsteuer nicht ziehen – und das Finanzamt hakt bei dir nach.",
+    "htmlFile": "05-05-rechnung.html"
+  },
+  {
+    "episode": 6,
+    "file": "06-zahlungserinnerung.md",
+    "subject": "Die Zahlungserinnerung – freundlich bleiben, ohne dein Geld zu vergessen",
+    "preheader": "Rechtlich brauchst du sie oft gar nicht mehr. Menschlich ist sie trotzdem der bessere erste Schritt.",
+    "htmlFile": "06-06-zahlungserinnerung.html"
+  },
+  {
+    "episode": 7,
+    "file": "07-mahnung-1.md",
+    "subject": "Die 1. Mahnung – was jetzt rechtlich passiert und was sie kosten darf",
+    "preheader": "Verzugszinsen sind kein Fantasiebetrag – das Gesetz gibt eine konkrete Rechenformel vor.",
+    "htmlFile": "07-07-mahnung-1.html"
+  },
+  {
+    "episode": 8,
+    "file": "08-mahnung-2.md",
+    "subject": "Die 2. Mahnung – und der weit verbreitete Irrtum über \"drei Mahnungen\"",
+    "preheader": "Nein, das Gesetz schreibt keine feste Anzahl an Mahnungen vor, bevor du gerichtlich vorgehen darfst.",
+    "htmlFile": "08-08-mahnung-2.html"
+  },
+  {
+    "episode": 9,
+    "file": "09-gutschrift.md",
+    "subject": "Gutschrift – das Wort, das im Handwerk fast immer falsch benutzt wird",
+    "preheader": "Was du meinst, wenn du \"Gutschrift\" sagst, ist steuerlich etwas ganz anderes als das, was das Gesetz darunter versteht.",
+    "htmlFile": "09-09-gutschrift.html"
+  },
+  {
+    "episode": 10,
+    "file": "10-storno-rechnung.md",
+    "subject": "Stornorechnung – warum \"einfach löschen\" die schlechteste Idee ist",
+    "preheader": "Eine fehlerhafte, aber bereits gestellte Rechnung verschwindet nicht dadurch, dass du sie aus dem Ordner nimmst.",
+    "htmlFile": "10-10-storno-rechnung.html"
+  }
+]
