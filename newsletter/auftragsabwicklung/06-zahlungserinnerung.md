@@ -32,7 +32,7 @@ Die Zahlungserinnerung ist kein rechtliches Muss, aber ein guter Stil – sie gi
 
 ---
 
-Unsere **Zahlungserinnerung-Vorlage** ist bewusst freundlich formuliert, ganz ohne Drohkulisse. Kostenlos unter [schreiner.digital/vorlagen](/vorlagen).
+Unsere **Zahlungserinnerung-Vorlage** ist bewusst freundlich formuliert, ganz ohne Drohkulisse. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
 
 In der nächsten Ausgabe: Die erste Mahnung – was jetzt rechtlich wirklich passiert und was sie dich kosten darf.
 

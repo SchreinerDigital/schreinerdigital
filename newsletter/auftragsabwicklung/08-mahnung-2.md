@@ -32,7 +32,7 @@ Zwei Mahnungen sind guter Stil, keine gesetzliche Pflicht. Wichtiger als die Anz
 
 ---
 
-Unsere Vorlage für die **2. Mahnung** kündigt die nächsten Schritte klar an, ohne über das Ziel hinauszuschießen. Kostenlos unter [schreiner.digital/vorlagen](/vorlagen).
+Unsere Vorlage für die **2. Mahnung** kündigt die nächsten Schritte klar an, ohne über das Ziel hinauszuschießen. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
 
 In der nächsten Ausgabe: Die Gutschrift – und warum der Begriff im Handwerk oft falsch verwendet wird.
 

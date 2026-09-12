@@ -32,7 +32,7 @@ Ein Lieferschein kostet dich beim Erstellen zwei Minuten. Im Streitfall über ei
 
 ---
 
-Unsere **Lieferschein-Vorlage** hat Unterschriftenfeld und Empfangsbestätigung direkt eingebaut. Kostenlos unter [schreiner.digital/vorlagen](/vorlagen).
+Unsere **Lieferschein-Vorlage** hat Unterschriftenfeld und Empfangsbestätigung direkt eingebaut. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
 
 In der nächsten Ausgabe: Die Rechnung – und die zehn Pflichtangaben, ohne die dein Kunde nicht einmal die Vorsteuer ziehen kann.
 

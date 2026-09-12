@@ -31,7 +31,7 @@ Bei Anzahlungen zählt für das Finanzamt der Tag des Zahlungseingangs, nicht de
 
 ---
 
-Unsere **Anzahlungsrechnung-Vorlage** trennt Auftragswert und Anzahlungsbetrag sauber und ist wie alle Vorlagen bereits im schreiner.digital-Design gestaltet. Kostenlos unter [schreiner.digital/vorlagen](/vorlagen).
+Unsere **Anzahlungsrechnung-Vorlage** trennt Auftragswert und Anzahlungsbetrag sauber und ist wie alle Vorlagen dieser Serie bereits im schreiner.digital-Design fertig gestaltet. Sie erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
 
 In der nächsten Ausgabe: Der Lieferschein – warum ihn niemand vorschreibt und warum du ihn trotzdem willst.
 

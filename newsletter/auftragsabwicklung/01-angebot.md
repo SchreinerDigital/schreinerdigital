@@ -29,7 +29,7 @@ Ein Angebot ohne Frist ist eine offene Baustelle – irgendwann kann jemand hine
 
 ---
 
-Unsere **Angebotsvorlage** hat eine Gültigkeitsdauer-Zeile und die freibleibend-Klausel bereits eingebaut – im echten DIN-5008-Briefformat, mit deinem Logo. Kostenlos unter [schreiner.digital/vorlagen](/vorlagen).
+Unsere **Angebotsvorlage** hat eine Gültigkeitsdauer-Zeile und die freibleibend-Klausel bereits eingebaut – im echten DIN-5008-Briefformat, mit deinem Logo. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
 
 In der nächsten Ausgabe: Warum die Auftragsbestätigung mehr ist als eine Formalie – und wann sie sogar den Vertrag erst zustande bringt.
 

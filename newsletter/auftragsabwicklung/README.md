@@ -31,6 +31,15 @@ Vorlage; im Fließtext einen Verweis auf die passende, bereits gebaute Vorlage
 unter `/vorlagen` (die einzelnen Vorlagen haben keine eigene Detailseite,
 deshalb verlinken alle Ausgaben einheitlich auf die Übersichtsseite).
 
+**Wichtig:** `/vorlagen` ist aktuell komplett als „Coming Soon" gebaut (siehe
+`src/components/downloads/vorlagen.config.ts`) – kein Download-Button
+funktioniert, es gibt nur eine „Benachrichtige mich"-Anmeldung, da der Kauf
+(kein Stripe) noch nicht live ist. Die Newsletter-Texte versprechen deshalb
+bewusst keinen sofortigen/kostenlosen Download, sondern kündigen nur an, dass
+die passende Vorlage mit den Vorlagen-Paketen erscheint. Sobald der Kauf
+freigeschaltet wird, kann diese Formulierung in allen 10 Dateien noch einmal
+angepasst werden.
+
 ## Format
 
 Bewusst als reines Markdown geschrieben, noch nicht als HTML-E-Mail-Template:

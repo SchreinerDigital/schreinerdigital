@@ -37,7 +37,7 @@ Eine falsche Rechnung verschwindet nicht durchs Löschen – nur durch eine orde
 
 ---
 
-Unsere **Stornorechnung-Vorlage** hat Nummerierung, Originalbezug und Minus-Ausweis bereits richtig vorbereitet. Kostenlos unter [schreiner.digital/vorlagen](/vorlagen) – wie alle zehn Vorlagen aus dieser Serie, im echten DIN-5008-Format und im schreiner.digital-Design.
+Unsere **Stornorechnung-Vorlage** hat Nummerierung, Originalbezug und Minus-Ausweis bereits richtig vorbereitet – wie alle zehn Vorlagen aus dieser Serie, im echten DIN-5008-Format und im schreiner.digital-Design. Sie erscheinen mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
 
 Danke, dass du die ganze Serie mitgelesen hast. Falls eine Ausgabe besonders hilfreich war (oder du einen Fehler entdeckt hast): Antworte einfach auf diese Mail.
 

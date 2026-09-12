@@ -33,7 +33,7 @@ Eine Gutschrift korrigiert einen *Teil* einer ansonsten korrekten Rechnung. War 
 
 ---
 
-Unsere **Gutschrift-Vorlage** enthält den klarstellenden Hinweis zur Abgrenzung bereits vorformuliert. Kostenlos unter [schreiner.digital/vorlagen](/vorlagen).
+Unsere **Gutschrift-Vorlage** enthält den klarstellenden Hinweis zur Abgrenzung bereits vorformuliert. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
 
 In der letzten Ausgabe dieser Serie: Die Stornorechnung – und warum du eine fehlerhafte Rechnung niemals einfach löschen solltest.
 

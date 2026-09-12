@@ -34,7 +34,7 @@ Die erste Mahnung ist mehr als eine Erinnerung mit strengerem Tonfall: Sie macht
 
 ---
 
-Unsere Vorlage für die **1. Mahnung** hat Platz für die Verzugszinsberechnung bereits vorgesehen. Kostenlos unter [schreiner.digital/vorlagen](/vorlagen).
+Unsere Vorlage für die **1. Mahnung** hat Platz für die Verzugszinsberechnung bereits vorgesehen. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
 
 In der nächsten Ausgabe: Die 2. Mahnung – der letzte Schritt, bevor Inkasso oder Mahnverfahren ins Spiel kommen.
 

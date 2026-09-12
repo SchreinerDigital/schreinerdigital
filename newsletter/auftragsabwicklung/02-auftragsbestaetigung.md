@@ -33,7 +33,7 @@ Die Auftragsbestätigung ist selten reine Förmlichkeit – sie ist dein schrift
 
 ---
 
-Unsere **Vorlage für Auftragsbestätigungen** hält Leistungsumfang, Preis und Zahlungsbedingungen sauber strukturiert fest. Kostenlos unter [schreiner.digital/vorlagen](/vorlagen).
+Unsere **Vorlage für Auftragsbestätigungen** hält Leistungsumfang, Preis und Zahlungsbedingungen sauber strukturiert fest. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
 
 In der nächsten Ausgabe: Die Anzahlungsrechnung – und der Steuertermin, den viele übersehen.
 
