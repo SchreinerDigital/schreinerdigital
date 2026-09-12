@@ -66,7 +66,32 @@ function tone(status: FitStatus) {
 
 // --- PDF GENERATOR --- (unchanged from the reference calculator: pure jsPDF drawing)
 
-const generatePDF = (
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
+  let binary = "";
+  const bytes = new Uint8Array(buffer);
+  const chunkSize = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+  }
+  return btoa(binary);
+}
+
+let brandFontBase64Cache: string | null = null;
+
+// jsPDF only ships Helvetica/Times/Courier; the real wordmark font (site
+// header, next/font/google Space_Grotesk) is fetched from a public static
+// asset and embedded here so the exported PDF's logo matches the actual
+// brand instead of silently falling back to Helvetica.
+async function registerBrandFont(doc: jsPDF) {
+  if (!brandFontBase64Cache) {
+    const res = await fetch("/fonts/SpaceGrotesk-Bold.ttf");
+    brandFontBase64Cache = arrayBufferToBase64(await res.arrayBuffer());
+  }
+  doc.addFileToVFS("SpaceGrotesk-Bold.ttf", brandFontBase64Cache);
+  doc.addFont("SpaceGrotesk-Bold.ttf", "SpaceGrotesk", "bold");
+}
+
+const generatePDF = async (
   results: CalculationResult,
   wallWidth: string,
   wallHeight: string,
@@ -74,6 +99,7 @@ const generatePDF = (
   dinSide: string,
 ) => {
   const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
+  await registerBrandFont(doc);
 
   // Helper to replace "ß" and "ẞ" to avoid character encoding bugs in standard pdf fonts
   const cleanText = (text: string): string => {
@@ -85,7 +111,7 @@ const generatePDF = (
   const textPrefix = "schreiner";
   const textSuffix = ".digital";
 
-  doc.setFont("helvetica", "bold");
+  doc.setFont("SpaceGrotesk", "bold");
   doc.setFontSize(17);
   doc.setTextColor(17, 24, 39); // deep charcoal
 
@@ -737,7 +763,9 @@ Berechnet mit dem Online-Türenmaß-Rechner auf www.schreinerdigital.de`;
 
   const handleDownloadPDF = () => {
     if (results) {
-      generatePDF(results, wallWidth, wallHeight, wallThickness, dinSide);
+      generatePDF(results, wallWidth, wallHeight, wallThickness, dinSide).catch((err: unknown) => {
+        console.error("PDF-Erstellung fehlgeschlagen:", err);
+      });
     }
   };
 
