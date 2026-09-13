@@ -523,11 +523,14 @@ async function generateMiterPdf(inputs: MiterInputs, results: MiterCalculationRe
     accent: [2, 132, 199],
   });
 
-  // --- 5. Kontrollmaß ---
+  // --- 5. Kontrollmaß --- (hell statt dunkel hinterlegt, damit es beim
+  // Ausdruck nicht literweise Tinte/Toner braucht)
   const miterBoxY = cardY + cardH + 7;
   const miterBoxH = 18;
-  doc.setFillColor(27, 23, 18);
-  doc.roundedRect(pageMargin, miterBoxY, contentWidth, miterBoxH, 2.5, 2.5, "F");
+  doc.setFillColor(250, 248, 244);
+  doc.setDrawColor(255, 122, 26);
+  doc.setLineWidth(0.6);
+  doc.roundedRect(pageMargin, miterBoxY, contentWidth, miterBoxH, 2.5, 2.5, "FD");
   doc.setFillColor(255, 122, 26);
   doc.roundedRect(pageMargin, miterBoxY, 3.5, miterBoxH, 1, 1, "F");
   doc.setFont("helvetica", "bold");
@@ -536,7 +539,7 @@ async function generateMiterPdf(inputs: MiterInputs, results: MiterCalculationRe
   doc.text("LÄNGE DER GEHRUNG (SELBSTKONTROLLE)", pageMargin + 8, miterBoxY + 7.5);
   doc.setFont("helvetica", "normal");
   doc.setFontSize(7.5);
-  doc.setTextColor(214, 201, 179);
+  doc.setTextColor(108, 98, 82);
   doc.text("Kontrollmaß der Schnittkante am Holz: Beide Teile müssen nach dem Schnitt exakt diese Länge haben.", pageMargin + 8, miterBoxY + 13);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(16);
