@@ -66,17 +66,41 @@ function Field({
   );
 }
 
+// Ein gemeinsames Tone-System statt einzelner Hex-Werte je Regler, damit
+// Text (mit dark:-Variante) und der native Regler-Schieber (nur ein
+// Hex-Wert möglich, kein dark:) auf denselben Farbfamilien wie im Rest der
+// Seite (tone() in anderen Rechnern) beruhen.
+type Tone = "green" | "amber" | "red" | "sky" | "purple";
+
+const TONE_TEXT: Record<Tone, string> = {
+  green: "text-emerald-700 dark:text-emerald-400",
+  amber: "text-amber-700 dark:text-amber-400",
+  red: "text-red-700 dark:text-red-400",
+  sky: "text-sky-700 dark:text-sky-400",
+  purple: "text-purple-700 dark:text-purple-400",
+};
+
+// Tailwind-500-Werte: als Marker-Farbe für hell UND dunkel ausgelegt, da
+// <input type="range" accent-color> keine dark:-Variante kennt.
+const TONE_ACCENT: Record<Tone, string> = {
+  green: "#10b981",
+  amber: "#f59e0b",
+  red: "#ef4444",
+  sky: "#0ea5e9",
+  purple: "#a855f7",
+};
+
 function Slider({
   label,
   value,
   onChange,
-  color,
+  tone,
   tooltip,
 }: {
   label: string;
   value: number;
   onChange: (v: number) => void;
-  color: string;
+  tone: Tone;
   tooltip?: string;
 }) {
   return (
@@ -86,9 +110,7 @@ function Slider({
           {label}
           {tooltip && <InfoTooltip text={tooltip} />}
         </span>
-        <span className="font-mono text-sm font-bold" style={{ color }}>
-          {value}%
-        </span>
+        <span className={cn("font-mono text-sm font-bold", TONE_TEXT[tone])}>{value}%</span>
       </div>
       <input
         type="range"
@@ -97,18 +119,14 @@ function Slider({
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
         className="h-1.5 w-full cursor-pointer rounded-full"
-        style={{ accentColor: color }}
+        style={{ accentColor: TONE_ACCENT[tone] }}
       />
     </div>
   );
 }
 
-function Hint({ color, children }: { color: string; children: ReactNode }) {
-  return (
-    <p className="mt-1.5 text-xs font-medium" style={{ color }}>
-      {children}
-    </p>
-  );
+function Hint({ tone, children }: { tone: Tone; children: ReactNode }) {
+  return <p className={cn("mt-1.5 text-xs font-medium", TONE_TEXT[tone])}>{children}</p>;
 }
 
 function WarningBox({ danger, children }: { danger?: boolean; children: ReactNode }) {
@@ -160,10 +178,10 @@ function Row({
 
 // --- Status colors & messages, ported 1:1 from the reference calculator ---
 
-function nonWageColor(pct: number) {
-  if (pct < 20) return "#e67e22";
-  if (pct > 60) return "#c0392b";
-  return "#27ae60";
+function nonWageTone(pct: number): Tone {
+  if (pct < 20) return "amber";
+  if (pct > 60) return "red";
+  return "green";
 }
 
 function nonWageMessage(pct: number) {
@@ -182,29 +200,21 @@ function nonWageMessage(pct: number) {
   return null;
 }
 
-function unproductiveColor(pct: number) {
-  if (pct <= 40) return "#27ae60";
-  if (pct <= 50) return "#e67e22";
-  return "#c0392b";
+function unproductiveTone(pct: number): Tone {
+  if (pct <= 40) return "green";
+  if (pct <= 50) return "amber";
+  return "red";
 }
 
 function unproductiveMessage(pct: number) {
   if (pct <= 25) {
-    return { kind: "hint" as const, color: "#27ae60", text: "✔️ Effizienter Bereich (≤25%)" };
+    return { kind: "hint" as const, text: "✔️ Effizienter Bereich (≤25%)" };
   }
   if (pct <= 40) {
-    return {
-      kind: "hint" as const,
-      color: "#27ae60",
-      text: "✔️ Normaler Bereich im Handwerk (25–40%)",
-    };
+    return { kind: "hint" as const, text: "✔️ Normaler Bereich im Handwerk (25–40%)" };
   }
   if (pct <= 50) {
-    return {
-      kind: "hint" as const,
-      color: "#e67e22",
-      text: "⚠️ Erhöht (40-50%) - kann Rentabilität beeinträchtigen.",
-    };
+    return { kind: "hint" as const, text: "⚠️ Erhöht (40-50%) - kann Rentabilität beeinträchtigen." };
   }
   return {
     kind: "box" as const,
@@ -213,13 +223,13 @@ function unproductiveMessage(pct: number) {
   };
 }
 
-function profitColor(pct: number) {
-  if (pct < 5) return "#c0392b";
-  if (pct <= 15) return "#27ae60";
-  if (pct <= 18) return "#2980b9";
-  if (pct <= 25) return "#8e44ad";
-  if (pct <= 40) return "#e67e22";
-  return "#c0392b";
+function profitTone(pct: number): Tone {
+  if (pct < 5) return "red";
+  if (pct <= 15) return "green";
+  if (pct <= 18) return "sky";
+  if (pct <= 25) return "purple";
+  if (pct <= 40) return "amber";
+  return "red";
 }
 
 function profitMessage(pct: number) {
@@ -227,27 +237,19 @@ function profitMessage(pct: number) {
     return { kind: "box" as const, danger: true, text: "Zu niedrig: Evtl. nicht kostendeckend." };
   }
   if (pct <= 10) {
-    return { kind: "hint" as const, color: "#27ae60", text: "✔️ 1-Mann-Bereich (5–10%)" };
+    return { kind: "hint" as const, text: "✔️ 1-Mann-Bereich (5–10%)" };
   }
   if (pct <= 15) {
-    return { kind: "hint" as const, color: "#27ae60", text: "✔️ Kleiner Betrieb (10–15%)" };
+    return { kind: "hint" as const, text: "✔️ Kleiner Betrieb (10–15%)" };
   }
   if (pct <= 18) {
-    return { kind: "hint" as const, color: "#2980b9", text: "✔️ Mittelgroßer Betrieb (15–18%)" };
+    return { kind: "hint" as const, text: "✔️ Mittelgroßer Betrieb (15–18%)" };
   }
   if (pct <= 25) {
-    return {
-      kind: "hint" as const,
-      color: "#8e44ad",
-      text: "✔️ Spezialgewerk / Ladenbau (18–25%)",
-    };
+    return { kind: "hint" as const, text: "✔️ Spezialgewerk / Ladenbau (18–25%)" };
   }
   if (pct <= 40) {
-    return {
-      kind: "hint" as const,
-      color: "#e67e22",
-      text: "✔️ Hoch / Spezial (25-40%) – evtl. prüfen",
-    };
+    return { kind: "hint" as const, text: "✔️ Hoch / Spezial (25-40%) – evtl. prüfen" };
   }
   return {
     kind: "box" as const,
@@ -328,11 +330,11 @@ export function StundensatzRechner() {
     profitMargin,
   ]);
 
-  const nwColor = nonWageColor(nonWagePercent);
+  const nwTone = nonWageTone(nonWagePercent);
   const nwMessage = nonWageMessage(nonWagePercent);
-  const upColor = unproductiveColor(unproductivePercent);
+  const upTone = unproductiveTone(unproductivePercent);
   const upMessage = unproductiveMessage(unproductivePercent);
-  const pfColor = profitColor(profitMargin);
+  const pfTone = profitTone(profitMargin);
   const pfMessage = profitMessage(profitMargin);
 
   return (
@@ -426,7 +428,7 @@ export function StundensatzRechner() {
             label="Lohnnebenkosten"
             value={nonWagePercent}
             onChange={setNonWagePercent}
-            color={nwColor}
+            tone={nwTone}
             tooltip={NON_WAGE_TOOLTIP}
           />
           {nwMessage && <WarningBox danger={nwMessage.danger}>{nwMessage.text}</WarningBox>}
@@ -445,11 +447,11 @@ export function StundensatzRechner() {
             label="Unproduktive Zeit"
             value={unproductivePercent}
             onChange={setUnproductivePercent}
-            color={upColor}
+            tone={upTone}
             tooltip={UNPRODUCTIVE_TOOLTIP}
           />
           {upMessage.kind === "hint" ? (
-            <Hint color={upMessage.color}>{upMessage.text}</Hint>
+            <Hint tone={upTone}>{upMessage.text}</Hint>
           ) : (
             <WarningBox danger={upMessage.danger}>{upMessage.text}</WarningBox>
           )}
@@ -460,11 +462,11 @@ export function StundensatzRechner() {
             label="Wagnis & Gewinn"
             value={profitMargin}
             onChange={setProfitMargin}
-            color={pfColor}
+            tone={pfTone}
             tooltip={PROFIT_TOOLTIP}
           />
           {pfMessage.kind === "hint" ? (
-            <Hint color={pfMessage.color}>{pfMessage.text}</Hint>
+            <Hint tone={pfTone}>{pfMessage.text}</Hint>
           ) : (
             <WarningBox danger={pfMessage.danger}>{pfMessage.text}</WarningBox>
           )}
