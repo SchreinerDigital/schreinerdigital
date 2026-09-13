@@ -91,6 +91,18 @@ async function registerBrandFont(doc: jsPDF) {
   doc.addFont("SpaceGrotesk-Bold.ttf", "SpaceGrotesk", "bold");
 }
 
+// Status-Palette (deckt sich mit tone() oben: emerald/amber/red), als RGB-
+// Tripel für jsPDF – dieselbe Statusfarbe wie im Web-UI, nur fürs PDF.
+const STATUS_PALETTE: Record<FitStatus, { soft: [number, number, number]; border: [number, number, number]; text: [number, number, number] }> = {
+  green: { soft: [220, 252, 231], border: [167, 243, 208], text: [4, 120, 87] },
+  yellow: { soft: [254, 243, 199], border: [253, 230, 138], text: [146, 64, 14] },
+  red: { soft: [254, 226, 226], border: [252, 165, 165], text: [185, 28, 28] },
+  info: { soft: [224, 242, 254], border: [186, 230, 253], text: [3, 105, 161] },
+};
+
+const statusLabel = (status: FitStatus) =>
+  status === "green" ? "Optimal" : status === "red" ? "Sondermass" : "Grenzbereich";
+
 const generatePDF = async (
   results: CalculationResult,
   wallWidth: string,
@@ -107,119 +119,100 @@ const generatePDF = async (
     return text.replace(/ß/g, "ss").replace(/ẞ/g, "SS");
   };
 
-  // 1. Header Section - Dynamic Vector Logo (schreiner.digital + ruler)
-  const textPrefix = "schreiner";
-  const textSuffix = ".digital";
+  const pageMargin = 20;
+  const contentWidth = 170;
+  const rightEdge = 190;
 
+  // --- 1. Kopfzeile (identisch zu den anderen Rechner-PDFs) ---
   doc.setFont("SpaceGrotesk", "bold");
   doc.setFontSize(17);
-  doc.setTextColor(17, 24, 39); // deep charcoal
+  doc.setTextColor(27, 23, 18);
+  const brandWidth = doc.getTextWidth("schreiner");
+  const domainWidth = doc.getTextWidth(".digital");
+  doc.text("schreiner", pageMargin, 20);
+  doc.setTextColor(255, 122, 26);
+  doc.text(".digital", pageMargin + brandWidth, 20);
 
-  const prefixWidth = doc.getTextWidth(textPrefix);
-  const suffixWidth = doc.getTextWidth(textSuffix);
-
-  // Draw Logo text
-  const logoBaselineY = 19;
-  doc.text(textPrefix, 20, logoBaselineY);
-  doc.text(textSuffix, 20 + prefixWidth, logoBaselineY);
-
-  // Draw Ruler precisely underneath ".digital"
-  const rulerX = 20 + prefixWidth + 0.4;
-  const rulerY = 21.0;
-  const rulerWidth = suffixWidth - 0.4;
-  const rulerHeight = 3.2;
-
-  doc.setDrawColor(17, 24, 39);
+  const rulerX = pageMargin + brandWidth + 0.3;
+  const rulerWidth = domainWidth - 0.3;
+  doc.setDrawColor(27, 23, 18);
   doc.setLineWidth(0.35);
-  doc.rect(rulerX, rulerY, rulerWidth, rulerHeight, "D");
-
-  const ticksCount = 10;
+  doc.rect(rulerX, 22, rulerWidth, 2.8, "D");
   doc.setLineWidth(0.25);
-  for (let i = 0; i <= ticksCount; i++) {
-    const tickX = rulerX + i * (rulerWidth / ticksCount);
-    let tickLength = 0.9; // standard tick
-    if (i === 0 || i === ticksCount) {
-      tickLength = 0; // border takes care of it
-    } else if (i === 5) {
-      tickLength = 1.6; // middle tick
-    } else if (i % 2 === 0) {
-      tickLength = 1.2; // half ticks
-    }
-    if (tickLength > 0) {
-      doc.line(tickX, rulerY, tickX, rulerY + tickLength);
-    }
+  for (let t = 0; t <= 10; t++) {
+    const tickX = rulerX + (rulerWidth / 10) * t;
+    let tickHeight = 0.7;
+    if (t === 0 || t === 10) tickHeight = 0;
+    else if (t === 5) tickHeight = 1.4;
+    else if (t % 2 === 0) tickHeight = 1.0;
+    if (tickHeight > 0) doc.line(tickX, 22, tickX, 22 + tickHeight);
   }
 
-  // Right-aligned header info - only date as requested
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(9.5);
-  doc.setTextColor(71, 85, 105);
-  doc.text(`Datum: ${new Date().toLocaleDateString("de-DE")}`, 190, 19, { align: "right" });
-
-  // Thin separator line
-  doc.setDrawColor(226, 232, 240);
-  doc.setLineWidth(0.3);
-  doc.line(20, 26, 190, 26);
-
-  // 2. Document Title & Subtitle (ß corrected to SS/ss, with generous spacing)
+  doc.setFillColor(242, 237, 228);
+  doc.setDrawColor(230, 221, 206);
+  doc.roundedRect(rightEdge - 62, 14.5, 62, 10, 2, 2, "FD");
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(13);
-  doc.setTextColor(15, 23, 42);
-  doc.text("AUFMASSBLATT & BESTELLEMPFEHLUNG", 20, 40);
+  doc.setFontSize(7.5);
+  doc.setTextColor(146, 64, 14);
+  doc.text("TÜRENTECHNIK", rightEdge - 59, 18.8);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(108, 98, 82);
+  doc.text(`Datum: ${new Date().toLocaleDateString("de-DE")}`, rightEdge - 4, 18.8, { align: "right" });
+
+  doc.setDrawColor(230, 221, 206);
+  doc.setLineWidth(0.4);
+  doc.line(pageMargin, 27.5, rightEdge, 27.5);
+
+  // --- 2. Titel & Metadaten ---
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(15);
+  doc.setTextColor(27, 23, 18);
+  doc.text("AUFMASSBLATT & BESTELLEMPFEHLUNG", pageMargin, 36);
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(8.5);
-  doc.setTextColor(100, 116, 139);
-  doc.text("Geprüfte Bestell- und Aufmaßdaten für Innentüren und Zargen nach DIN 18101", 20, 44.5);
+  doc.setTextColor(108, 98, 82);
+  doc.text("Geprüfte Bestell- und Aufmaßdaten für Innentüren und Zargen nach DIN 18101", pageMargin, 41);
 
-  // 3. Metadata details (compact & elegant, with breathable vertical spacing)
   doc.setFont("helvetica", "bold");
   doc.setFontSize(8);
-  doc.setTextColor(71, 85, 105);
-  doc.text("Anschlagrichtung:", 20, 52.5);
+  doc.setTextColor(108, 98, 82);
+  doc.text("Anschlagrichtung:", pageMargin, 48);
   doc.setFont("helvetica", "normal");
-  doc.setTextColor(15, 23, 42);
-  doc.text(`DIN ${dinSide}`, 47, 52.5);
+  doc.setTextColor(27, 23, 18);
+  doc.text(`DIN ${dinSide}`, pageMargin + 27, 48);
 
   doc.setFont("helvetica", "bold");
-  doc.setTextColor(71, 85, 105);
-  doc.text("Berechnungstyp:", 80, 52.5);
+  doc.setTextColor(108, 98, 82);
+  doc.text("Berechnungstyp:", pageMargin + 60, 48);
   doc.setFont("helvetica", "normal");
-  doc.setTextColor(15, 23, 42);
-  doc.text("Innentüren nach DIN 18101 (Normabgleich)", 105, 52.5);
+  doc.setTextColor(27, 23, 18);
+  doc.text("Innentüren nach DIN 18101 (Normabgleich)", pageMargin + 85, 48);
 
-  // 4. "BESTELLDATEN FÜR DEN FACHHANDEL" Card - Highly Prominent
-  const cardX = 20;
-  const cardY = 60;
-  const cardW = 170;
+  // --- 3. "BESTELLDATEN FÜR DEN FACHHANDEL" Karte ---
+  const cardX = pageMargin;
+  const cardY = 53;
+  const cardW = contentWidth;
   const cardH = 36;
 
-  // Background for the coupon card (clean slate-50)
-  doc.setFillColor(248, 250, 252);
-  doc.rect(cardX, cardY, cardW, cardH, "F");
+  doc.setFillColor(250, 248, 244);
+  doc.setDrawColor(230, 221, 206);
+  doc.setLineWidth(0.4);
+  doc.roundedRect(cardX, cardY, cardW, cardH, 2.5, 2.5, "FD");
+  doc.setFillColor(242, 237, 228);
+  doc.roundedRect(cardX + 0.2, cardY + 0.2, cardW - 0.4, 8, 2, 2, "F");
+  doc.rect(cardX + 0.2, cardY + 6, cardW - 0.4, 2.2, "F");
 
-  // Solid dark slate border for ultimate structure
-  doc.setDrawColor(30, 41, 59); // slate-800
-  doc.setLineWidth(0.45);
-  doc.rect(cardX, cardY, cardW, cardH, "D");
-
-  // Title inside the shopping card
   doc.setFont("helvetica", "bold");
   doc.setFontSize(9.5);
-  doc.setTextColor(15, 23, 42); // deep slate-900
-  doc.text("BESTELLDATEN FÜR DEN FACHHANDEL / BAUMARKT", cardX + 6, cardY + 6.5);
+  doc.setTextColor(27, 23, 18);
+  doc.text("BESTELLDATEN FÜR DEN FACHHANDEL / BAUMARKT", cardX + 6, cardY + 5.8);
 
   doc.setFont("helvetica", "italic");
   doc.setFontSize(7.5);
-  doc.setTextColor(71, 85, 105); // slate-600
-  doc.text("Legen Sie diese geprüften Bestellmaße direkt dem Verkaufsberater vor.", cardX + 6, cardY + 10.5);
+  doc.setTextColor(108, 98, 82);
+  doc.text("Legen Sie diese geprüften Bestellmaße direkt dem Verkaufsberater vor.", cardX + 6, cardY + 15.5);
 
-  // Subtle separator line below header in the card
-  doc.setDrawColor(226, 232, 240);
-  doc.setLineWidth(0.25);
-  doc.line(cardX + 6, cardY + 12.5, cardX + cardW - 6, cardY + 12.5);
-
-  // Layout the 4 columns for: Breite, Höhe, Wandstärke, Anschlag
   const colWidth = cardW / 4;
   const cols = [
     {
@@ -245,61 +238,49 @@ const generatePDF = async (
 
   cols.forEach((col, i) => {
     const colX = cardX + i * colWidth + colWidth / 2;
-    const textY = cardY + 19;
+    const textY = cardY + 20.5;
 
-    // Draw item separator line (except the last one)
     if (i < 3) {
-      doc.setDrawColor(203, 213, 225); // slate-300
+      doc.setDrawColor(230, 221, 206);
       doc.setLineWidth(0.25);
-      doc.line(cardX + (i + 1) * colWidth, cardY + 15.5, cardX + (i + 1) * colWidth, cardY + 32);
+      doc.line(cardX + (i + 1) * colWidth, cardY + 15, cardX + (i + 1) * colWidth, cardY + 31);
     }
 
-    // Label
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8);
-    doc.setTextColor(100, 116, 139);
+    doc.setTextColor(108, 98, 82);
     doc.text(col.label, colX, textY, { align: "center" });
 
-    // Value (Enlarged to stand out significantly!)
     doc.setFont("helvetica", "bold");
     doc.setFontSize(13);
-    if (col.isSonder) {
-      doc.setTextColor(185, 28, 28); // clean red for Sondermass
-    } else {
-      doc.setTextColor(15, 23, 42); // slate-900
-    }
+    const valueColor: [number, number, number] = col.isSonder ? STATUS_PALETTE.red.text : [255, 122, 26];
+    doc.setTextColor(...valueColor);
     doc.text(col.value, colX, textY + 6.5, { align: "center" });
 
-    // Subtitle
     doc.setFont("helvetica", "normal");
     doc.setFontSize(7);
-    doc.setTextColor(148, 163, 184);
+    doc.setTextColor(146, 135, 119);
     doc.text(col.subtitle, colX, textY + 11, { align: "center" });
   });
 
-  // 5. Rohbau-Istmaße & Toleranzprüfung Table (Secondary layout)
+  // --- 4. Rohbau-Istmaße & Toleranzprüfung ---
+  const tableTitleY = cardY + cardH + 8;
   doc.setFont("helvetica", "bold");
   doc.setFontSize(9.5);
-  doc.setTextColor(71, 85, 105); // slate-600 for softer presence
-  doc.text("ROHBAU-ISTMASSE & TOLERANZPRÜFUNG (Messergebnisse)", 20, 104);
+  doc.setTextColor(27, 23, 18);
+  doc.text("ROHBAU-ISTMASSE & TOLERANZPRÜFUNG (Messergebnisse)", pageMargin, tableTitleY);
+  doc.setDrawColor(230, 221, 206);
+  doc.setLineWidth(0.35);
+  doc.line(pageMargin, tableTitleY + 3, rightEdge, tableTitleY + 3);
 
-  // Table header line
-  doc.setDrawColor(203, 213, 225);
-  doc.setLineWidth(0.25);
-  doc.line(20, 107, 190, 107);
-
-  // Header texts
+  const headerY = tableTitleY + 7;
   doc.setFont("helvetica", "bold");
   doc.setFontSize(8);
-  doc.setTextColor(100, 116, 139); // soft slate
-  doc.text("Mass-Typ / Dimension", 24, 111);
-  doc.text("Messwert (Ist-Mass)", 70, 111);
-  doc.text("Toleranz-Status", 110, 111);
-  doc.text("Norm-Mass (Soll)", 155, 111);
-
-  doc.setDrawColor(226, 232, 240);
-  doc.setLineWidth(0.15);
-  doc.line(20, 113, 190, 113);
+  doc.setTextColor(108, 98, 82);
+  doc.text("Mass-Typ / Dimension", pageMargin + 4, headerY);
+  doc.text("Messwert (Ist-Mass)", pageMargin + 50, headerY);
+  doc.text("Toleranz-Status", pageMargin + 90, headerY);
+  doc.text("Norm-Mass (Soll)", pageMargin + 135, headerY);
 
   const rows = [
     { label: "Breite der Maueröffnung", measured: `${wallWidth} mm`, detail: results.details.width },
@@ -307,151 +288,116 @@ const generatePDF = async (
     { label: "Wandstärke (Mauerstärke)", measured: `${wallThickness} mm`, detail: results.details.thickness },
   ];
 
-  let rowY = 114;
-  rows.forEach((row, i) => {
-    // Subtle background for alternating rows
-    if (i % 2 === 1) {
-      doc.setFillColor(250, 251, 252);
-      doc.rect(20, rowY, 170, 8.0, "F");
-    }
+  let rowY = headerY + 4;
+  const rowH = 10.5;
+  rows.forEach((row) => {
+    const palette = STATUS_PALETTE[row.detail.status];
+    doc.setFillColor(...palette.soft);
+    doc.roundedRect(pageMargin, rowY, contentWidth, rowH, 1.5, 1.5, "F");
+    doc.setFillColor(...palette.text);
+    doc.rect(pageMargin, rowY, 1.4, rowH, "F");
 
-    // Row texts (Slightly smaller, secondary)
     doc.setFont("helvetica", "bold");
     doc.setFontSize(8);
-    doc.setTextColor(51, 65, 85);
-    doc.text(row.label, 24, rowY + 5.2);
+    doc.setTextColor(27, 23, 18);
+    doc.text(row.label, pageMargin + 4, rowY + rowH / 2 + 1);
 
     doc.setFont("helvetica", "normal");
-    doc.setTextColor(71, 85, 105);
-    doc.text(row.measured, 70, rowY + 5.2);
+    doc.setTextColor(108, 98, 82);
+    doc.text(row.measured, pageMargin + 50, rowY + rowH / 2 + 1);
 
-    // Clean text status with color, e.g. "Optimal", "Grenzbereich", "Sondermass"
-    let statusText = "Optimal";
-    let r = 21,
-      g = 128,
-      b = 61; // Optimal green
-    if (row.detail.status === "yellow") {
-      statusText = "Grenzbereich";
-      r = 180;
-      g = 83;
-      b = 9; // Grenzbereich amber
-    } else if (row.detail.status === "red") {
-      statusText = "Sondermass";
-      r = 185;
-      g = 28;
-      b = 28; // Sondermass red
-    }
+    doc.setFillColor(255, 255, 255);
+    const badgeText = statusLabel(row.detail.status);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(7.5);
+    const badgeW = doc.getTextWidth(badgeText) + 6;
+    doc.roundedRect(pageMargin + 90, rowY + rowH / 2 - 3, badgeW, 6, 3, 3, "F");
+    doc.setTextColor(...palette.text);
+    doc.text(badgeText, pageMargin + 90 + badgeW / 2, rowY + rowH / 2 + 1.2, { align: "center" });
 
     doc.setFont("helvetica", "bold");
-    doc.setTextColor(r, g, b);
-    doc.text(statusText, 110, rowY + 5.2);
-
-    // Nennmaß/Norm-Maß
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(51, 65, 85);
+    doc.setFontSize(8);
+    doc.setTextColor(27, 23, 18);
     const normVal = row.detail.norm === "SONDER" ? "Sondermass" : `${row.detail.norm} mm`;
-    doc.text(normVal, 155, rowY + 5.2);
+    doc.text(normVal, pageMargin + 135, rowY + rowH / 2 + 1);
 
-    // Divider line between rows
-    doc.setDrawColor(241, 245, 249);
-    doc.setLineWidth(0.12);
-    doc.line(20, rowY + 8.0, 190, rowY + 8.0);
-
-    rowY += 8.0;
+    rowY += rowH + 2;
   });
 
-  // Solid line closing the table
-  doc.setDrawColor(226, 232, 240);
-  doc.setLineWidth(0.2);
-  doc.line(20, rowY, 190, rowY);
-
-  // 6. Detailed Advice Section (Secondary appearance)
-  let currentY = rowY + 9;
+  // --- 5. Montagehinweise & Auswertung ---
+  let currentY = rowY + 5;
   doc.setFont("helvetica", "bold");
   doc.setFontSize(9.5);
-  doc.setTextColor(71, 85, 105); // softer presence
-  doc.text("MONTAGEHINWEISE & AUSWERTUNG", 20, currentY);
+  doc.setTextColor(27, 23, 18);
+  doc.text("MONTAGEHINWEISE & AUSWERTUNG", pageMargin, currentY);
+  doc.setDrawColor(230, 221, 206);
+  doc.setLineWidth(0.35);
+  doc.line(pageMargin, currentY + 3, rightEdge, currentY + 3);
 
-  // Draw a subtle line underneath the header
-  doc.setDrawColor(226, 232, 240);
-  doc.setLineWidth(0.25);
-  doc.line(20, currentY + 2.5, 190, currentY + 2.5);
-
-  currentY += 7.5;
+  currentY += 8;
 
   const advices = [
-    { title: "Breitenmessung:", text: results.details.width.advice, color: results.details.width.status },
-    { title: "Höhenmessung:", text: results.details.height.advice, color: results.details.height.status },
-    { title: "Wandstärkenmessung:", text: results.details.thickness.advice, color: results.details.thickness.status },
+    { title: "Breitenmessung:", text: results.details.width.advice, status: results.details.width.status },
+    { title: "Höhenmessung:", text: results.details.height.advice, status: results.details.height.status },
+    { title: "Wandstärkenmessung:", text: results.details.thickness.advice, status: results.details.thickness.status },
   ];
 
   advices.forEach((adv) => {
-    // Left marker line
-    let r = 100,
-      g = 116,
-      b = 139; // slate-400
-    if (adv.color === "yellow") {
-      r = 217;
-      g = 119;
-      b = 6; // amber
-    } else if (adv.color === "red") {
-      r = 220;
-      g = 38;
-      b = 38; // red
-    } else if (adv.color === "green") {
-      r = 34;
-      g = 197;
-      b = 94; // green
-    }
+    const palette = STATUS_PALETTE[adv.status];
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(7.8);
+    const adviceLines = doc.splitTextToSize(cleanText(adv.text), contentWidth - 14);
+    const textBlockH = adviceLines.length * 3.4;
+    const boxH = 4 + 4.2 + textBlockH + 3;
+
+    doc.setFillColor(...palette.soft);
+    doc.roundedRect(pageMargin, currentY, contentWidth, boxH, 2, 2, "F");
+    doc.setFillColor(...palette.text);
+    doc.roundedRect(pageMargin, currentY, 1.4, boxH, 0.7, 0.7, "F");
 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(8);
-    doc.setTextColor(51, 65, 85);
-    doc.text(adv.title, 23, currentY + 3);
+    doc.setTextColor(...palette.text);
+    doc.text(adv.title, pageMargin + 5, currentY + 5.3);
 
     doc.setFont("helvetica", "normal");
-    doc.setFontSize(7.5); // slightly smaller advice text
-    doc.setTextColor(71, 85, 105); // softer gray text
+    doc.setFontSize(7.8);
+    doc.setTextColor(27, 23, 18);
+    doc.text(adviceLines, pageMargin + 5, currentY + 9.5);
 
-    const adviceLines = doc.splitTextToSize(cleanText(adv.text), 164);
-    // Draw wrapped lines
-    doc.text(adviceLines, 23, currentY + 6.5);
-
-    // Increment Y
-    const blockHeight = 6.5 + adviceLines.length * 3.3;
-    // Draw a very subtle indicator line if text is longer
-    doc.setDrawColor(r, g, b);
-    doc.setLineWidth(0.65);
-    doc.line(20, currentY, 20, currentY + blockHeight);
-
-    currentY += blockHeight + 3.0;
+    currentY += boxH + 3.5;
   });
 
-  // 8. Footer Section
+  // --- 6. Fußzeile ---
   const footerY = 266;
-  doc.setDrawColor(226, 232, 240);
-  doc.setLineWidth(0.4);
-  doc.line(20, footerY, 190, footerY);
+  doc.setDrawColor(230, 221, 206);
+  doc.setLineWidth(0.35);
+  doc.line(pageMargin, footerY, rightEdge, footerY);
 
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(7.5);
-  doc.setTextColor(30, 41, 59);
-  doc.text("Wichtiger Hinweis:", 20, footerY + 4.5);
+  doc.setFont("SpaceGrotesk", "bold");
+  doc.setFontSize(8.5);
+  doc.setTextColor(27, 23, 18);
+  doc.text("schreiner", pageMargin, footerY + 6);
+  doc.setTextColor(255, 122, 26);
+  doc.text(".digital", pageMargin + doc.getTextWidth("schreiner"), footerY + 6);
 
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(7);
-  doc.setTextColor(100, 116, 139);
-  const disclaimerText =
-    "Diese Empfehlung basiert auf der DIN 18101 Normung. Alle Maße sind bauseits vor der Bestellung zu prüfen. Einbaufehler, lotrechte Abweichungen und bauseitige Gegebenheiten können die Passform beeinflussen. Berechnungen erfolgen ohne Gewähr.";
-  const wrappedDisclaimer = doc.splitTextToSize(cleanText(disclaimerText), 170);
-  doc.text(wrappedDisclaimer, 20, footerY + 8);
+  doc.setFontSize(7.2);
+  doc.setTextColor(108, 98, 82);
+  doc.text("Rechner-Tools für den modernen Schreineralltag", pageMargin, footerY + 10.5);
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(8);
-  doc.setTextColor(30, 41, 59);
-  doc.text("Berechnet mit dem Online-Türenmaß-Rechner auf www.schreinerdigital.de", 105, footerY + 19, {
-    align: "center",
-  });
+  doc.setTextColor(27, 23, 18);
+  doc.text("www.schreiner.digital", rightEdge, footerY + 6, { align: "right" });
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(6.8);
+  doc.setTextColor(146, 135, 119);
+  const disclaimerText =
+    "Diese Empfehlung basiert auf der DIN 18101 Normung. Alle Maße sind bauseits vor der Bestellung zu prüfen. Einbaufehler, lotrechte Abweichungen und bauseitige Gegebenheiten können die Passform beeinflussen. Berechnungen erfolgen ohne Gewähr.";
+  const wrappedDisclaimer = doc.splitTextToSize(cleanText(disclaimerText), 90);
+  doc.text(wrappedDisclaimer, rightEdge, footerY + 10.5, { align: "right" });
 
   // Download PDF
   const filename = `Aufmassblatt_DIN18101_${wallWidth}x${wallHeight}.pdf`;
