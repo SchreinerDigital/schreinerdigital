@@ -36,6 +36,7 @@ const navGroups: NavGroup[] = [
       { href: "/beschlaege", label: "Beschläge" },
       { href: "/oberflaechen", label: "Oberflächen" },
       { href: "/maschinen-werkzeuge", label: "Maschinen & Werkzeuge" },
+      { href: "/tueren-abc", label: "Türen-ABC" },
     ],
   },
   {

@@ -25,6 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/beschlaege`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/oberflaechen`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/maschinen-werkzeuge`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE_URL}/tueren-abc`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE_URL}/digitalisierung`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE_URL}/digitalisierung/cad-cam-software`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/digitalisierung/kalkulationssoftware`, changeFrequency: "monthly", priority: 0.7 },

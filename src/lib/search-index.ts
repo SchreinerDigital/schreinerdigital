@@ -1,5 +1,6 @@
 import "server-only";
 import { getAllMeta } from "@/lib/content";
+import { tuerenAbcKategorien } from "@/content/tueren-abc";
 import { tools } from "@/components/tools/tools.config";
 import { vorlagen } from "@/components/downloads/vorlagen.config";
 import { cadPakete, cadProdukte, CATEGORY_LABELS as CAD_CATEGORY_LABELS } from "@/components/downloads/cad.config";
@@ -92,6 +93,13 @@ export async function buildSearchIndex(): Promise<SearchDoc[]> {
       description:
         "Formatkreissäge, Bandsäge, Fräse, CNC-Bearbeitungszentrum und Handwerkzeuge: Aufbau, Sicherheitsnormen und Praxistipps für die Schreinerwerkstatt.",
       url: "/maschinen-werkzeuge",
+      category: "Übersicht",
+    },
+    {
+      title: "Türen-ABC – Glossar für Zargen, Beschläge und Türnormen",
+      description:
+        "Über 110 Fachbegriffe rund um Türen: Zargenarten, DIN 18101, Brand- und Schallschutzklassen, Türblattaufbau, Beschläge und Dichtungen – verständlich erklärt.",
+      url: "/tueren-abc",
       category: "Übersicht",
     },
     {
@@ -354,6 +362,18 @@ export async function buildSearchIndex(): Promise<SearchDoc[]> {
       category: "Maschine & Werkzeug",
       keywords: [m.kurzname, m.kategorie, m.norm, ...(m.synonyms ?? [])].filter(truthy),
     });
+  }
+
+  for (const k of tuerenAbcKategorien) {
+    for (const b of k.begriffe) {
+      docs.push({
+        title: b.term,
+        description: b.definition,
+        url: `/tueren-abc#${b.slug}`,
+        category: "Türen-ABC",
+        keywords: [k.name],
+      });
+    }
   }
 
   for (const t of tools.filter((t) => t.ready)) {

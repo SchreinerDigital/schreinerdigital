@@ -129,6 +129,22 @@ export interface MaschineMeta {
   draft?: boolean;
 }
 
+/** A single glossary entry in the Türen-ABC. */
+export interface TuerenAbcBegriff {
+  slug: string;
+  term: string;
+  definition: string;
+}
+
+/** A thematic group of glossary entries in the Türen-ABC. */
+export interface TuerenAbcKategorie {
+  slug: string;
+  name: string;
+  /** Path to the category header image under /public, e.g. "/tueren-abc/beschlaege.jpg" */
+  bild?: string;
+  begriffe: TuerenAbcBegriff[];
+}
+
 export type ContentCollection =
   | "holzarten"
   | "plattenwerkstoffe"
