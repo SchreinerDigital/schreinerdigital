@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
 import type { TuerenAbcKategorie } from "@/types/content";
 import { cn } from "@/lib/cn";
 
@@ -22,10 +22,38 @@ function SearchIcon({ className }: { className?: string }) {
   );
 }
 
+function ArrowLeftIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M19 12H5M12 19l-7-7 7-7" />
+    </svg>
+  );
+}
+
+function subscribeToHashChange(callback: () => void) {
+  window.addEventListener("hashchange", callback);
+  return () => window.removeEventListener("hashchange", callback);
+}
+function getHashSnapshot() {
+  return window.location.hash.slice(1) || null;
+}
+function getServerHashSnapshot() {
+  return null;
+}
+
 /**
  * Builds a lookup for auto-linking cross-references: any exact, word-bounded
- * occurrence of another term's name inside a definition becomes a jump link
- * to that term's own entry (Wikipedia-style). Matching is case-sensitive
+ * occurrence of another term's name inside a definition becomes a click
+ * target that selects that term (Wikipedia-style). Matching is case-sensitive
  * (German nouns are capitalized) and longest-candidate-first, so e.g.
  * "Türblattaufbau" is preferred over a would-be partial hit on "Türblatt".
  */
@@ -57,6 +85,7 @@ function renderDefinition(
   definition: string,
   currentSlug: string,
   index: { pattern: RegExp | null; slugByText: Map<string, string> },
+  onSelect: (slug: string) => void,
 ): ReactNode {
   if (!index.pattern) return definition;
   const parts: ReactNode[] = [];
@@ -70,13 +99,14 @@ function renderDefinition(
     const slug = index.slugByText.get(matchedText.toLowerCase());
     if (slug && slug !== currentSlug) {
       parts.push(
-        <a
+        <button
           key={key++}
-          href={`#${slug}`}
-          className="underline decoration-ink-faint decoration-dotted underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+          type="button"
+          onClick={() => onSelect(slug)}
+          className="inline border-0 bg-transparent p-0 font-[inherit] text-[inherit] underline decoration-ink-faint decoration-dotted underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
         >
           {matchedText}
-        </a>,
+        </button>,
       );
     } else {
       parts.push(matchedText);
@@ -89,9 +119,46 @@ function renderDefinition(
 
 export function TuerenAbcGlossar({ kategorien }: { kategorien: TuerenAbcKategorie[] }) {
   const [query, setQuery] = useState("");
-  const [activeKategorie, setActiveKategorie] = useState<string | null>(kategorien[0]?.slug ?? null);
-  const sectionRefs = useRef(new Map<string, HTMLElement>());
   const crossRefIndex = useCrossReferenceIndex(kategorien);
+
+  const bySlug = useMemo(() => {
+    const map = new Map<
+      string,
+      { term: string; definition: string; slug: string; kategorieName: string; kategorieSlug: string }
+    >();
+    for (const k of kategorien) {
+      for (const b of k.begriffe) {
+        map.set(b.slug, { ...b, kategorieName: k.name, kategorieSlug: k.slug });
+      }
+    }
+    return map;
+  }, [kategorien]);
+
+  // Deep-linking: /tueren-abc#slug pre-selects that term (used by the site-wide search index).
+  // useSyncExternalStore is the React-sanctioned way to read a browser-only value like the URL
+  // hash without a hydration mismatch: it renders `null` (matching the server) on first paint,
+  // then swaps in the real hash right after hydration completes, with no console error.
+  const urlHash = useSyncExternalStore(subscribeToHashChange, getHashSnapshot, getServerHashSnapshot);
+  // undefined = user hasn't clicked anything yet, so defer to the URL hash above.
+  // null = user explicitly went back to the overview. A slug = an explicit selection.
+  const [clickedSlug, setClickedSlug] = useState<string | null | undefined>(undefined);
+  const selectedSlug =
+    clickedSlug !== undefined ? clickedSlug : urlHash && bySlug.has(urlHash) ? urlHash : null;
+
+  // Selecting a term collapses the (potentially very long, scrolled-into) index down to one
+  // short card, which can otherwise leave the viewport stranded past the end of the page (e.g.
+  // in the footer). Bring the new detail card into view, and keep the sidebar's active entry
+  // in view too (relevant when the selection changed via an in-definition cross-reference click).
+  useEffect(() => {
+    if (!selectedSlug) return;
+    document.getElementById(selectedSlug)?.scrollIntoView({ block: "start" });
+    document.getElementById(`toc-${selectedSlug}`)?.scrollIntoView({ block: "nearest" });
+  }, [selectedSlug]);
+
+  function selectTerm(slug: string | null) {
+    setClickedSlug(slug);
+    window.history.replaceState(null, "", slug ? `#${slug}` : window.location.pathname);
+  }
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -107,26 +174,46 @@ export function TuerenAbcGlossar({ kategorien }: { kategorien: TuerenAbcKategori
   }, [kategorien, query]);
 
   const totalMatches = filtered.reduce((sum, k) => sum + k.begriffe.length, 0);
+  const selected = selectedSlug ? bySlug.get(selectedSlug) : undefined;
 
-  // Scrollspy: highlights whichever category section is currently at the top
-  // of the viewport in the desktop sidebar. Re-attaches whenever the search
-  // filter changes which sections actually exist in the DOM.
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting);
-        if (visible.length === 0) return;
-        const topMost = visible.reduce((a, b) =>
-          a.boundingClientRect.top <= b.boundingClientRect.top ? a : b,
-        );
-        const slug = topMost.target.getAttribute("data-kategorie-slug");
-        if (slug) setActiveKategorie(slug);
-      },
-      { rootMargin: "-96px 0px -70% 0px", threshold: 0 },
-    );
-    for (const el of sectionRefs.current.values()) observer.observe(el);
-    return () => observer.disconnect();
-  }, [filtered]);
+  const tocList = (
+    <div className="space-y-5 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:pb-8 lg:pr-2">
+      {filtered.length === 0 ? (
+        <p className="rounded-[var(--radius)] border border-dashed border-border-strong bg-surface p-6 text-sm text-ink-muted">
+          Keine Begriffe gefunden. Versuch es mit einem anderen Suchwort.
+        </p>
+      ) : (
+        filtered.map((k) => (
+          <div key={k.slug}>
+            <p
+              className={cn(
+                "text-sm font-semibold transition-colors",
+                selected?.kategorieSlug === k.slug ? "text-accent" : "text-ink",
+              )}
+            >
+              {k.name}
+            </p>
+            <ul className="mt-2 space-y-1.5 border-l border-border pl-3">
+              {k.begriffe.map((b) => (
+                <li key={b.slug} id={`toc-${b.slug}`}>
+                  <button
+                    type="button"
+                    onClick={() => selectTerm(b.slug)}
+                    className={cn(
+                      "block w-full text-left text-sm transition-colors",
+                      selectedSlug === b.slug ? "font-semibold text-accent" : "text-ink-muted hover:text-ink",
+                    )}
+                  >
+                    {b.term}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      )}
+    </div>
+  );
 
   return (
     <div>
@@ -146,101 +233,52 @@ export function TuerenAbcGlossar({ kategorien }: { kategorien: TuerenAbcKategori
         <span className="underline decoration-ink-faint decoration-dotted underline-offset-4">
           Gepunktet unterstrichene
         </span>{" "}
-        Begriffe in den Definitionen sind mit dem jeweiligen Glossareintrag verlinkt.
+        Begriffe in den Definitionen springen direkt zum jeweiligen Glossareintrag.
       </p>
-
-      {/* Mobile / tablet: horizontal category scroller replaces the sidebar below lg. */}
-      <nav
-        aria-label="Kategorien"
-        className="sticky top-16 z-10 -mx-4 mt-6 overflow-x-auto bg-paper/90 px-4 py-3 backdrop-blur lg:hidden"
-      >
-        <ul className="flex gap-1 text-sm">
-          {filtered.map((k) => (
-            <li key={k.slug}>
-              <a
-                href={`#${k.slug}`}
-                className="block whitespace-nowrap rounded-full px-3 py-1.5 font-medium text-ink-muted transition-colors hover:bg-surface-2 hover:text-ink"
-              >
-                {k.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
       {query && (
         <p className="mt-4 text-sm text-ink-faint">
           {totalMatches} Treffer für „{query}“
         </p>
       )}
 
-      {filtered.length === 0 ? (
-        <p className="mt-8 rounded-[var(--radius)] border border-dashed border-border-strong bg-surface p-8 text-sm text-ink-muted">
-          Keine Begriffe gefunden. Versuch es mit einem anderen Suchwort.
-        </p>
-      ) : (
-        <div className="mt-8 lg:grid lg:grid-cols-[15rem_1fr] lg:items-start lg:gap-10">
-          {/* Desktop: a persistent table of contents instead of a flat scroll — click any
-              category or term to jump straight to it; the active category stays highlighted
-              as you scroll (scrollspy). */}
-          <nav aria-label="Inhaltsverzeichnis" className="hidden lg:block">
-            <div className="sticky top-24 max-h-[calc(100vh-7rem)] space-y-5 overflow-y-auto pb-8 pr-2">
-              {filtered.map((k) => (
-                <div key={k.slug}>
-                  <a
-                    href={`#${k.slug}`}
-                    className={cn(
-                      "block text-sm font-semibold transition-colors",
-                      activeKategorie === k.slug ? "text-accent" : "text-ink hover:text-accent",
-                    )}
-                  >
-                    {k.name}
-                  </a>
-                  <ul className="mt-2 space-y-1.5 border-l border-border pl-3">
-                    {k.begriffe.map((b) => (
-                      <li key={b.slug}>
-                        <a
-                          href={`#${b.slug}`}
-                          className="block text-sm text-ink-muted transition-colors hover:text-ink"
-                        >
-                          {b.term}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </nav>
+      <div className="mt-8 lg:grid lg:grid-cols-[15rem_1fr] lg:items-start lg:gap-10">
+        <nav
+          aria-label="Inhaltsverzeichnis"
+          className={cn(selectedSlug ? "hidden lg:block" : "block")}
+        >
+          {tocList}
+        </nav>
 
-          <div className="min-w-0 space-y-12">
-            {filtered.map((k) => (
-              <section
-                key={k.slug}
-                id={k.slug}
-                data-kategorie-slug={k.slug}
-                ref={(el) => {
-                  if (el) sectionRefs.current.set(k.slug, el);
-                  else sectionRefs.current.delete(k.slug);
-                }}
-                className="scroll-mt-32"
-              >
-                <h2 className="text-xl font-semibold text-ink">{k.name}</h2>
-                <dl className="mt-4 divide-y divide-border border-t border-border">
-                  {k.begriffe.map((b) => (
-                    <div key={b.slug} id={b.slug} className="scroll-mt-32 py-4">
-                      <dt className="font-semibold text-ink">{b.term}</dt>
-                      <dd className="mt-1.5 text-sm leading-relaxed text-ink-muted">
-                        {renderDefinition(b.definition, b.slug, crossRefIndex)}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </section>
-            ))}
-          </div>
+        <div className={cn("min-w-0", selectedSlug ? "block" : "hidden lg:block")}>
+          <button
+            type="button"
+            onClick={() => selectTerm(null)}
+            className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-ink-muted hover:text-ink lg:hidden"
+          >
+            <ArrowLeftIcon className="size-4" />
+            Zurück zur Übersicht
+          </button>
+
+          {!selected ? (
+            <div className="hidden rounded-[var(--radius)] border border-dashed border-border-strong bg-surface p-8 text-center text-sm text-ink-muted lg:block">
+              Wähle links einen Begriff aus, um die Definition zu sehen.
+            </div>
+          ) : (
+            <div
+              id={selected.slug}
+              className="scroll-mt-24 rounded-[var(--radius)] border border-border bg-surface p-6 sm:p-8"
+            >
+              <p className="font-mono text-xs uppercase tracking-wider text-ink-faint">
+                {selected.kategorieName}
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold text-ink">{selected.term}</h2>
+              <p className="mt-4 text-base leading-relaxed text-ink-muted">
+                {renderDefinition(selected.definition, selected.slug, crossRefIndex, selectTerm)}
+              </p>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }
