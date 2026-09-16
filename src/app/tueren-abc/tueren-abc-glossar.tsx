@@ -228,17 +228,8 @@ export function TuerenAbcGlossar({ kategorien }: { kategorien: TuerenAbcKategori
                 <h2 className="text-xl font-semibold text-ink">{k.name}</h2>
                 <dl className="mt-4 divide-y divide-border border-t border-border">
                   {k.begriffe.map((b) => (
-                    <div key={b.slug} id={b.slug} className="group scroll-mt-32 py-4">
-                      <dt className="font-semibold text-ink">
-                        {b.term}{" "}
-                        <a
-                          href={`#${b.slug}`}
-                          aria-label={`Anker-Link zu ${b.term}`}
-                          className="text-ink-faint opacity-0 transition-opacity hover:text-accent group-hover:opacity-100"
-                        >
-                          #
-                        </a>
-                      </dt>
+                    <div key={b.slug} id={b.slug} className="scroll-mt-32 py-4">
+                      <dt className="font-semibold text-ink">{b.term}</dt>
                       <dd className="mt-1.5 text-sm leading-relaxed text-ink-muted">
                         {renderDefinition(b.definition, b.slug, crossRefIndex)}
                       </dd>

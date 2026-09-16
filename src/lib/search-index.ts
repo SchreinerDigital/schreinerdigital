@@ -96,9 +96,9 @@ export async function buildSearchIndex(): Promise<SearchDoc[]> {
       category: "Übersicht",
     },
     {
-      title: "Türen-ABC – Glossar für Zargen, Beschläge und Türnormen",
+      title: "Türenwissen: Grundlagen, Maße und Türen-ABC",
       description:
-        "Über 110 Fachbegriffe rund um Türen: Zargenarten, DIN 18101, Brand- und Schallschutzklassen, Türblattaufbau, Beschläge und Dichtungen – verständlich erklärt.",
+        "Gefälzt oder stumpf, DIN links oder rechts, 2- oder 3-teiliges Band, Standardmaße nach DIN 18101 – plus ein Glossar mit 110 Fachbegriffen rund um Türen, mit Zeichnungen erklärt.",
       url: "/tueren-abc",
       category: "Übersicht",
     },
