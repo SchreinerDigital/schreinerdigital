@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <!-- Frästisch -->
+  <rect x="40" y="150" width="320" height="20" fill="#f2ede4" stroke="#6c6252" stroke-width="3"/>
+  <!-- Parallelanschlag -->
+  <rect x="230" y="130" width="110" height="16" fill="#ffffff" stroke="#6c6252" stroke-width="2.5"/>
+  <!-- Frässpindel mit Werkzeug -->
+  <rect x="190" y="90" width="20" height="60" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2.5"/>
+  <path d="M188 150 l-8 20 h40 l-8 -20 Z" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2.5"/>
+  <path d="M195 150 v20 M205 150 v20" stroke="#ff7a1a" stroke-width="1.2"/>
+  <!-- Standbeine -->
+  <rect x="70" y="170" width="14" height="90" fill="#f2ede4" stroke="#6c6252" stroke-width="2.5"/>
+  <rect x="316" y="170" width="14" height="90" fill="#f2ede4" stroke="#6c6252" stroke-width="2.5"/>
+</svg>

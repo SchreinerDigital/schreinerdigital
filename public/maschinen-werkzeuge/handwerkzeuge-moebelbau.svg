@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <!-- Hobel -->
+  <path d="M60 190 q10 -34 90 -34 q90 0 100 34 q4 14 -10 16 L70 206 q-14 -2 -10 -16 Z"
+        fill="#f2ede4" stroke="#6c6252" stroke-width="3" stroke-linejoin="round"/>
+  <rect x="150" y="150" width="12" height="34" fill="#ffffff" stroke="#6c6252" stroke-width="2"/>
+  <path d="M150 184 l3 22 h6 l3 -22 Z" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2"/>
+  <!-- Stechbeitel -->
+  <g transform="translate(230,60) rotate(25)">
+    <rect x="0" y="0" width="14" height="70" rx="4" fill="#ffffff" stroke="#6c6252" stroke-width="2.5"/>
+    <path d="M0 70 h14 l-7 26 Z" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2.5"/>
+  </g>
+  <!-- Klüpfel (Schlägel) -->
+  <g transform="translate(300,150) rotate(-15)">
+    <rect x="-10" y="0" width="20" height="60" rx="6" fill="#f2ede4" stroke="#6c6252" stroke-width="2.5"/>
+    <rect x="-32" y="60" width="64" height="34" rx="6" fill="#ffffff" stroke="#6c6252" stroke-width="2.5"/>
+  </g>
+</svg>

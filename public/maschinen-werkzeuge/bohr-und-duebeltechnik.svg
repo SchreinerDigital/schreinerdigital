@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <!-- Werkstück -->
+  <rect x="60" y="180" width="280" height="40" fill="#f2ede4" stroke="#6c6252" stroke-width="3"/>
+  <!-- Bohrgehäuse -->
+  <rect x="120" y="80" width="160" height="40" rx="4" fill="#ffffff" stroke="#6c6252" stroke-width="2.5"/>
+  <!-- Mehrspindel-Bohrreihe -->
+  <g stroke="#ff7a1a" stroke-width="3">
+    <line x1="150" y1="120" x2="150" y2="178"/>
+    <line x1="180" y1="120" x2="180" y2="178"/>
+    <line x1="210" y1="120" x2="210" y2="178"/>
+    <line x1="240" y1="120" x2="240" y2="178"/>
+    <line x1="270" y1="120" x2="270" y2="178"/>
+  </g>
+  <g fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2">
+    <path d="M144 178 l6 12 l6 -12 Z"/>
+    <path d="M174 178 l6 12 l6 -12 Z"/>
+    <path d="M204 178 l6 12 l6 -12 Z"/>
+    <path d="M234 178 l6 12 l6 -12 Z"/>
+    <path d="M264 178 l6 12 l6 -12 Z"/>
+  </g>
+</svg>

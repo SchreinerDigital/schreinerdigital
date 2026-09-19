@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <!-- Gestell -->
+  <rect x="60" y="200" width="280" height="18" fill="#f2ede4" stroke="#6c6252" stroke-width="3"/>
+  <!-- Umlenkrollen -->
+  <circle cx="110" cy="110" r="28" fill="#ffffff" stroke="#6c6252" stroke-width="3"/>
+  <circle cx="290" cy="110" r="28" fill="#ffffff" stroke="#6c6252" stroke-width="3"/>
+  <!-- Schleifband, um beide Rollen -->
+  <path d="M110 82 H290 M110 138 H290" stroke="#ff7a1a" stroke-width="3" fill="none"/>
+  <path d="M82 110 A28 28 0 0 1 110 82" stroke="#ff7a1a" stroke-width="3" fill="none"/>
+  <path d="M110 138 A28 28 0 0 1 82 110" stroke="#ff7a1a" stroke-width="3" fill="none"/>
+  <path d="M290 82 A28 28 0 0 1 318 110" stroke="#ff7a1a" stroke-width="3" fill="none"/>
+  <path d="M318 110 A28 28 0 0 1 290 138" stroke="#ff7a1a" stroke-width="3" fill="none"/>
+  <!-- Werkstück unter dem Band -->
+  <rect x="150" y="150" width="100" height="16" fill="#f4e8d8" stroke="#6c6252" stroke-width="2"/>
+</svg>

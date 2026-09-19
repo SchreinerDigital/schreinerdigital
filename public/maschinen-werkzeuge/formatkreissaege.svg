@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <!-- Sägetisch -->
+  <rect x="40" y="150" width="320" height="20" fill="#f2ede4" stroke="#6c6252" stroke-width="3"/>
+  <!-- Formatschlitten/Anschlag -->
+  <rect x="60" y="130" width="120" height="20" fill="#ffffff" stroke="#6c6252" stroke-width="2.5"/>
+  <line x1="230" y1="150" x2="230" y2="90" stroke="#928777" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <!-- Sägeblatt, durch den Tisch ragend -->
+  <circle cx="230" cy="150" r="60" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2.5"/>
+  <circle cx="230" cy="150" r="10" fill="#faf8f4" stroke="#ff7a1a" stroke-width="2"/>
+  <path d="M230 90 v-10 M230 210 v10 M170 150 h-10 M290 150 h10 M188 108 l-7-7 M272 108 l7-7 M188 192 l-7 7 M272 192 l7 7" stroke="#ff7a1a" stroke-width="2.5"/>
+  <!-- Standbeine -->
+  <rect x="70" y="170" width="14" height="90" fill="#f2ede4" stroke="#6c6252" stroke-width="2.5"/>
+  <rect x="316" y="170" width="14" height="90" fill="#f2ede4" stroke="#6c6252" stroke-width="2.5"/>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <!-- C-Rahmen -->
+  <path d="M150 270 L150 200 L110 200 L110 40 L150 40 L150 20 L260 20 L260 100 L230 100 L230 40 L190 40 L190 200 L230 200 L230 130 L260 130 L260 270 Z"
+        fill="#f2ede4" stroke="#6c6252" stroke-width="3" stroke-linejoin="round"/>
+  <!-- oberes Rad -->
+  <circle cx="190" cy="80" r="55" fill="#ffffff" stroke="#6c6252" stroke-width="3"/>
+  <!-- unteres Rad -->
+  <circle cx="190" cy="220" r="55" fill="#ffffff" stroke="#6c6252" stroke-width="3"/>
+  <!-- Sägeband -->
+  <line x1="150" y1="30" x2="150" y2="270" stroke="#ff7a1a" stroke-width="3"/>
+  <line x1="230" y1="30" x2="230" y2="270" stroke="#ff7a1a" stroke-width="1.5" stroke-dasharray="2 3" opacity="0.5"/>
+  <!-- Tisch -->
+  <rect x="60" y="195" width="160" height="14" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2"/>
+</svg>

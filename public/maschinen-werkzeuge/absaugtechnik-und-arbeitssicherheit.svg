@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <!-- Absaugbehälter -->
+  <path d="M240 60 h70 v90 l-35 60 l-35 -60 Z" fill="#f2ede4" stroke="#6c6252" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="275" cy="105" r="14" fill="#ffffff" stroke="#6c6252" stroke-width="2"/>
+  <!-- Absaugschlauch zur Maschine -->
+  <path d="M240 90 Q170 90 150 140 Q135 175 90 175" fill="none" stroke="#ff7a1a" stroke-width="10" stroke-linecap="round"/>
+  <path d="M240 90 Q170 90 150 140 Q135 175 90 175" fill="none" stroke="#f4e8d8" stroke-width="4" stroke-linecap="round"/>
+  <!-- angeschlossene Maschine (angedeutet) -->
+  <rect x="50" y="165" width="60" height="60" fill="#ffffff" stroke="#6c6252" stroke-width="2.5"/>
+  <!-- Schutzausrüstung: Gehörschutz -->
+  <path d="M300 190 a26 26 0 0 1 52 0" fill="none" stroke="#6c6252" stroke-width="3"/>
+  <rect x="292" y="188" width="14" height="26" rx="6" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2"/>
+  <rect x="346" y="188" width="14" height="26" rx="6" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2"/>
+</svg>

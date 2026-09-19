@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <!-- Maschinenbett / Tisch -->
+  <rect x="40" y="210" width="320" height="20" fill="#f2ede4" stroke="#6c6252" stroke-width="3"/>
+  <!-- Werkstück auf dem Tisch -->
+  <rect x="90" y="196" width="220" height="14" fill="#ffffff" stroke="#6c6252" stroke-width="2"/>
+  <!-- Portal (Gantry) -->
+  <rect x="55" y="60" width="16" height="150" fill="#f2ede4" stroke="#6c6252" stroke-width="2.5"/>
+  <rect x="330" y="60" width="16" height="150" fill="#f2ede4" stroke="#6c6252" stroke-width="2.5"/>
+  <rect x="55" y="60" width="291" height="16" fill="#f2ede4" stroke="#6c6252" stroke-width="2.5"/>
+  <!-- Spindelschlitten -->
+  <rect x="180" y="76" width="50" height="30" fill="#ffffff" stroke="#6c6252" stroke-width="2.5"/>
+  <rect x="197" y="106" width="16" height="70" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2.5"/>
+  <path d="M197 176 l8 20 l8 -20 Z" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2"/>
+  <!-- Achspfeile X/Y/Z -->
+  <path d="M250 240 h30 M275 234 l5 6 l-5 6" fill="none" stroke="#928777" stroke-width="2"/>
+  <path d="M250 240 v-28 M244 218 l6 -8 l6 8" fill="none" stroke="#928777" stroke-width="2"/>
+  <text x="284" y="244" font-size="13" fill="#928777" font-family="sans-serif">X</text>
+  <text x="252" y="204" font-size="13" fill="#928777" font-family="sans-serif">Y</text>
+</svg>
