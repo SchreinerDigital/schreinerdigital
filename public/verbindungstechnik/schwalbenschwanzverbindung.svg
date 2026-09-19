@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <!-- linkes Brett (Zinken) -->
+  <rect x="60" y="40" width="140" height="220" rx="3" fill="#f2ede4" stroke="#6c6252" stroke-width="3"/>
+  <!-- rechtes Brett (Gegenstück) -->
+  <rect x="200" y="40" width="140" height="220" rx="3" fill="#ffffff" stroke="#6c6252" stroke-width="3"/>
+  <!-- Schwalbenschwanz-Zinken (trapezförmig), über die Stoßfuge greifend -->
+  <path d="M170 60 L230 60 L215 108 L185 108 Z" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2.5"/>
+  <path d="M170 140 L230 140 L215 188 L185 188 Z" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2.5"/>
+  <path d="M170 220 L230 220 L215 260 L185 260 Z" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2.5"/>
+  <!-- Stoßfuge -->
+  <line x1="200" y1="40" x2="200" y2="260" stroke="#928777" stroke-width="1" stroke-dasharray="3 3"/>
+</svg>

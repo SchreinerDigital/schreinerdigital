@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <!-- langer Fries, in zwei Teilen gestoßen -->
+  <rect x="30" y="125" width="170" height="50" fill="#f2ede4" stroke="#6c6252" stroke-width="3"/>
+  <rect x="200" y="125" width="170" height="50" fill="#ffffff" stroke="#6c6252" stroke-width="3"/>
+  <!-- Keilnut mit eingetriebenem Keil (Französischer Keilverschluss) -->
+  <path d="M186 125 L214 125 L206 175 L178 175 Z" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2.5"/>
+</svg>

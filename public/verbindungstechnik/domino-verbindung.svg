@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <rect x="60" y="50" width="150" height="200" fill="#f2ede4" stroke="#6c6252" stroke-width="3"/>
+  <rect x="210" y="50" width="150" height="200" fill="#ffffff" stroke="#6c6252" stroke-width="3"/>
+  <!-- gefräste Langlöcher (angedeutet) -->
+  <rect x="185" y="128" width="30" height="44" rx="8" fill="none" stroke="#928777" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <rect x="205" y="128" width="30" height="44" rx="8" fill="none" stroke="#928777" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <!-- loser rechteckiger Domino-Dübel -->
+  <rect x="177" y="122" width="66" height="56" rx="10" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2.5"/>
+</svg>

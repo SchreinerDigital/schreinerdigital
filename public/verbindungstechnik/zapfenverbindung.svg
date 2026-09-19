@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <!-- Zarge/Pfosten (Zapfenloch-Bauteil) -->
+  <rect x="250" y="30" width="110" height="240" rx="3" fill="#f2ede4" stroke="#6c6252" stroke-width="3"/>
+  <!-- Angedeutetes Zapfenloch (verdeckt) -->
+  <rect x="250" y="122" width="46" height="56" fill="none" stroke="#928777" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <!-- Rahmenholz mit Zapfen -->
+  <rect x="45" y="105" width="195" height="90" rx="3" fill="#ffffff" stroke="#6c6252" stroke-width="3"/>
+  <!-- Zapfen, in das Zapfenloch eingreifend -->
+  <rect x="228" y="135" width="72" height="30" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2.5"/>
+  <!-- Brüstungslinien -->
+  <line x1="240" y1="105" x2="240" y2="135" stroke="#928777" stroke-width="1.5"/>
+  <line x1="240" y1="165" x2="240" y2="195" stroke="#928777" stroke-width="1.5"/>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <!-- waagrechte Platte mit Exzentertopf (Aufsicht) -->
+  <rect x="40" y="170" width="290" height="80" fill="#f2ede4" stroke="#6c6252" stroke-width="3"/>
+  <circle cx="255" cy="210" r="32" fill="#faf8f4" stroke="#6c6252" stroke-width="2.5"/>
+  <circle cx="255" cy="210" r="16" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2.5"/>
+  <path d="M247 205 Q255 195 263 205" fill="none" stroke="#ff7a1a" stroke-width="2"/>
+  <line x1="248" y1="216" x2="262" y2="204" stroke="#1b1712" stroke-width="2"/>
+  <!-- Rotationspfeil -->
+  <path d="M255 168 A30 30 0 0 1 283 195" fill="none" stroke="#928777" stroke-width="2"/>
+  <path d="M277 190 L283 195 L288 187" fill="none" stroke="#928777" stroke-width="2"/>
+  <!-- senkrechte Platte mit Verbindungsbolzen -->
+  <rect x="330" y="60" width="30" height="220" fill="#ffffff" stroke="#6c6252" stroke-width="3"/>
+  <rect x="255" y="203" width="80" height="14" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2.5"/>
+  <circle cx="343" cy="210" r="9" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2"/>
+</svg>

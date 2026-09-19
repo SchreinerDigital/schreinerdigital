@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <rect x="90" y="40" width="105" height="220" fill="#f2ede4" stroke="#6c6252" stroke-width="3"/>
+  <rect x="205" y="40" width="105" height="220" fill="#ffffff" stroke="#6c6252" stroke-width="3"/>
+  <!-- Leimfuge -->
+  <line x1="200" y1="40" x2="200" y2="260" stroke="#ff7a1a" stroke-width="4"/>
+  <!-- Pressdruck-Pfeile -->
+  <path d="M150 70 L192 70 M182 62 L192 70 L182 78" fill="none" stroke="#6c6252" stroke-width="2.5"/>
+  <path d="M250 70 L208 70 M218 62 L208 70 L218 78" fill="none" stroke="#6c6252" stroke-width="2.5"/>
+  <path d="M150 230 L192 230 M182 222 L192 230 L182 238" fill="none" stroke="#6c6252" stroke-width="2.5"/>
+  <path d="M250 230 L208 230 M218 222 L208 230 L218 238" fill="none" stroke="#6c6252" stroke-width="2.5"/>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <rect x="60" y="50" width="150" height="200" fill="#f2ede4" stroke="#6c6252" stroke-width="3"/>
+  <rect x="210" y="50" width="150" height="200" fill="#ffffff" stroke="#6c6252" stroke-width="3"/>
+  <!-- Riffeldübel, die Fuge überbrückend -->
+  <g fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2.5">
+    <rect x="178" y="95" width="64" height="18" rx="9"/>
+    <rect x="178" y="192" width="64" height="18" rx="9"/>
+  </g>
+  <g stroke="#ff7a1a" stroke-width="1.2">
+    <path d="M190 95 v18 M202 95 v18 M214 95 v18 M226 95 v18"/>
+    <path d="M190 192 v18 M202 192 v18 M214 192 v18 M226 192 v18"/>
+  </g>
+</svg>

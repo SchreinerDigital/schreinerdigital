@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <!-- linkes Holz: volle Stärke, im Überlappungsbereich nur untere Hälfte ausgeklinkt -->
+  <path d="M50 90 L220 90 L220 140 L300 140 L300 190 L50 190 Z" fill="#f2ede4" stroke="#6c6252" stroke-width="3" stroke-linejoin="round"/>
+  <!-- rechtes Holz: volle Stärke, im Überlappungsbereich nur obere Hälfte ausgeklinkt -->
+  <path d="M220 90 L350 90 L350 190 L300 190 L300 140 L220 140 Z" fill="#ffffff" stroke="#6c6252" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Überlappungsbereich hervorgehoben -->
+  <line x1="220" y1="90" x2="220" y2="140" stroke="#ff7a1a" stroke-width="2.5"/>
+  <line x1="300" y1="140" x2="300" y2="190" stroke="#ff7a1a" stroke-width="2.5"/>
+  <line x1="220" y1="140" x2="300" y2="140" stroke="#ff7a1a" stroke-width="2.5" stroke-dasharray="5 3"/>
+</svg>

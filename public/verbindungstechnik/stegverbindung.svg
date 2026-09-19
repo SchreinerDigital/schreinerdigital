@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#faf8f4"/>
+  <!-- Pfosten mit durchgehendem Zapfenloch -->
+  <rect x="170" y="30" width="90" height="240" rx="3" fill="#f2ede4" stroke="#6c6252" stroke-width="3"/>
+  <line x1="170" y1="122" x2="260" y2="122" stroke="#928777" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="170" y1="178" x2="260" y2="178" stroke="#928777" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <!-- Rahmenholz mit durchgestecktem Zapfen (Steg), der übersteht -->
+  <rect x="40" y="115" width="140" height="70" rx="3" fill="#ffffff" stroke="#6c6252" stroke-width="3"/>
+  <rect x="150" y="135" width="150" height="30" fill="#f4e8d8" stroke="#ff7a1a" stroke-width="2.5"/>
+  <!-- Keil im überstehenden Zapfenkopf -->
+  <path d="M275 135 L285 122 L295 135 Z" fill="#1b1712"/>
+  <line x1="285" y1="135" x2="285" y2="122" stroke="#1b1712" stroke-width="2"/>
+  <!-- leichtes Aufspreizen am Kopf -->
+  <path d="M300 137 L290 150 M300 163 L290 150" stroke="#ff7a1a" stroke-width="2" fill="none"/>
+</svg>

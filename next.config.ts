@@ -4,6 +4,13 @@ import createMDX from "@next/mdx";
 const nextConfig: NextConfig = {
   // Allow pages/routes to be authored as .md / .mdx in addition to the usual extensions.
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+  images: {
+    // Steckbrief-Diagramme (Verbindungstechnik etc.) sind selbst erzeugte, statische
+    // SVGs unter public/ – kein Nutzer-Upload, daher unbedenklich zuzulassen.
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
   async redirects() {
     return [
       {
