@@ -6,10 +6,13 @@ import { Container } from "@/components/ui/container";
 export function ToolShell({
   title,
   description,
+  wide = false,
   children,
 }: {
   title: string;
   description?: string;
+  /** Wider container for tools with multi-column layouts (e.g. a visualizer alongside inputs). */
+  wide?: boolean;
   children: ReactNode;
 }) {
   const jsonLd = {
@@ -24,7 +27,7 @@ export function ToolShell({
   };
 
   return (
-    <Container className="max-w-2xl py-12 sm:py-16">
+    <Container className={wide ? "max-w-6xl py-12 sm:py-16" : "max-w-2xl py-12 sm:py-16"}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

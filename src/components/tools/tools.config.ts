@@ -66,6 +66,14 @@ export const tools: ToolDef[] = [
       "Schnittwinkel, Kappsägen-Einstellwerte, Versatzmaß und Gehrungslänge für Gehrungen mit unterschiedlichen Materialstärken oder beliebigem Eckwinkel berechnen.",
     ready: true,
   },
+  {
+    slug: "schwalbenschwanz",
+    seoTitle: "Schwalbenschwanz berechnen: Zinken, Winkel & Schnittmaße",
+    title: "Schwalbenschwanz-Rechner",
+    description:
+      "Zinkenanzahl, Zinkenwinkel und Anreißmaße für offene oder halbverdeckte Schwalbenschwanzverbindungen aus Brettbreite und -stärke berechnen – mit 3D-Ansicht und 1:1-Druckschablone.",
+    ready: true,
+  },
 ];
 
 export function getTool(slug: string): ToolDef | undefined {
