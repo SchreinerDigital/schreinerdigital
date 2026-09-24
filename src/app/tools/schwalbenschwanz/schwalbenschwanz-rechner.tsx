@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
+import { jsPDF } from "jspdf";
 import {
   AlertTriangle,
   Box,
@@ -10,6 +11,7 @@ import {
   ChevronDown,
   ChevronUp,
   Copy,
+  Download,
   Layers,
   ListOrdered,
   Printer,
@@ -1079,6 +1081,305 @@ function TableBody({
   );
 }
 
+// --- 1:1 print template PDF ---------------------------------------------------
+//
+// Generates a branded, single-page PDF instead of relying on window.print() +
+// print CSS: the previous DOM approach printed the sheet repeatedly because
+// the modal's `position: fixed` backdrop was never neutralized for print, so
+// the `position: absolute` template kept resolving against (and repeating
+// alongside) that fixed ancestor across every page the still-tall, only
+// visibility:hidden rest of the app paginated into. A generated PDF has no
+// such ancestor/pagination to go wrong, and the page itself is dimensioned to
+// exactly match the drawn template, so "actual size" printing is unambiguous
+// even for very wide boards. Mirrors the branded-PDF pattern already used in
+// falsche-gehrung-rechner.tsx / tuerenmass-rechner.tsx.
+
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
+  let binary = "";
+  const bytes = new Uint8Array(buffer);
+  const chunkSize = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+  }
+  return btoa(binary);
+}
+
+let brandFontBase64Cache: string | null = null;
+
+async function registerBrandFont(doc: jsPDF) {
+  if (!brandFontBase64Cache) {
+    const res = await fetch("/fonts/SpaceGrotesk-Bold.ttf");
+    brandFontBase64Cache = arrayBufferToBase64(await res.arrayBuffer());
+  }
+  doc.addFileToVFS("SpaceGrotesk-Bold.ttf", brandFontBase64Cache);
+  doc.addFont("SpaceGrotesk-Bold.ttf", "SpaceGrotesk", "bold");
+}
+
+const PDF_INK: [number, number, number] = [27, 23, 18];
+const PDF_MUTED: [number, number, number] = [108, 98, 82];
+const PDF_MUTED_LIGHT: [number, number, number] = [146, 135, 119];
+const PDF_BORDER: [number, number, number] = [230, 221, 206];
+const PDF_ACCENT: [number, number, number] = [255, 122, 26];
+const PDF_WOOD_FILL: [number, number, number] = [254, 243, 199];
+const PDF_WASTE_FILL: [number, number, number] = [243, 244, 246];
+const PDF_WASTE_TEXT: [number, number, number] = [239, 68, 68];
+
+/** Draws a closed, filled+stroked N-gon from absolute point coordinates (mm). */
+function pdfPolygon(doc: jsPDF, points: [number, number][], style: string) {
+  const [start, ...rest] = points;
+  let [px, py] = start;
+  const segments: [number, number][] = rest.map(([x, y]) => {
+    const seg: [number, number] = [x - px, y - py];
+    [px, py] = [x, y];
+    return seg;
+  });
+  doc.lines(segments, start[0], start[1], [1, 1], style, true);
+}
+
+async function generateDovetailPdf(params: DovetailParams, summary: CalculationSummary): Promise<void> {
+  const { unit, boardWidth, boardThickness } = params;
+  const toMm = (v: number) => (unit === "inch" ? v * 25.4 : v);
+  const widthMm = toMm(boardWidth);
+  const thickMm = toMm(boardThickness);
+  const gaugeMm = toMm(summary.gaugeDepth);
+  const unitLabel = unit === "mm" ? "mm" : "in";
+  const fmtParam = (v: number) => num(v, unit === "mm" ? 1 : 3);
+
+  const pageMargin = 16;
+  const pageWidth = Math.max(widthMm + 2 * pageMargin, 190);
+  const contentWidth = pageWidth - 2 * pageMargin;
+  const rightEdge = pageWidth - pageMargin;
+  const drawX = pageMargin + (contentWidth - widthMm) / 2;
+
+  // Every Y position is computed as a plain number before the page is
+  // created (jsPDF needs the final height up front), then reused as-is for
+  // the actual drawing calls below — one source of truth, so the computed
+  // page height can never drift out of sync with what gets drawn onto it.
+  const wordmarkY = 14;
+  const dividerY = 21.5;
+  const titleY = 28;
+  const badgesY = 31.5;
+  const badgeH = 7.5;
+  const calLabelY = badgesY + badgeH + 6;
+  const calBarY = calLabelY + 3;
+  const calBarH = 3;
+  const calSubtextY = calBarY + calBarH + 3.5;
+  const section1TitleY = calSubtextY + 8;
+  const section1BoxY = section1TitleY + 2.5;
+  const section1BoxH = gaugeMm;
+  const section2TitleY = section1BoxY + section1BoxH + 14;
+  const section2BoxY = section2TitleY + 2.5;
+  const section2BoxH = thickMm;
+  const footerLineY = section2BoxY + section2BoxH + 10;
+  const footerWordmarkY = footerLineY + 6;
+  const footerTaglineY = footerLineY + 10.5;
+  const pageHeight = footerTaglineY + pageMargin;
+
+  // jsPDF silently swaps a custom [w,h] format's dimensions to force its
+  // orientation param to match (e.g. "p" forces height >= width) — pass the
+  // orientation that already matches so it never overrides these numbers.
+  const orientation = pageWidth > pageHeight ? "l" : "p";
+  const doc = new jsPDF({ orientation, unit: "mm", format: [pageWidth, pageHeight] });
+  await registerBrandFont(doc);
+
+  // --- Kopfzeile: Wortmarke + Lineal-Deko + Datums-Badge ---
+  doc.setFont("SpaceGrotesk", "bold");
+  doc.setFontSize(17);
+  doc.setTextColor(...PDF_INK);
+  const brandWidth = doc.getTextWidth("schreiner");
+  const domainWidth = doc.getTextWidth(".digital");
+  doc.text("schreiner", pageMargin, wordmarkY);
+  doc.setTextColor(...PDF_ACCENT);
+  doc.text(".digital", pageMargin + brandWidth, wordmarkY);
+
+  const rulerX = pageMargin + brandWidth + 0.3;
+  const rulerWidth = domainWidth - 0.3;
+  const rulerY = wordmarkY + 2;
+  doc.setDrawColor(...PDF_INK);
+  doc.setLineWidth(0.35);
+  doc.rect(rulerX, rulerY, rulerWidth, 2.8, "D");
+  doc.setLineWidth(0.25);
+  for (let t = 0; t <= 10; t++) {
+    const tickX = rulerX + (rulerWidth / 10) * t;
+    let tickHeight = 0.7;
+    if (t === 0 || t === 10) tickHeight = 0;
+    else if (t === 5) tickHeight = 1.4;
+    else if (t % 2 === 0) tickHeight = 1.0;
+    if (tickHeight > 0) doc.line(tickX, rulerY, tickX, rulerY + tickHeight);
+  }
+
+  doc.setFillColor(242, 237, 228);
+  doc.setDrawColor(...PDF_BORDER);
+  doc.roundedRect(rightEdge - 62, wordmarkY - 5.5, 62, 10, 2, 2, "FD");
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(7.5);
+  doc.setTextColor(146, 64, 14);
+  doc.text("HOLZTECHNIK", rightEdge - 59, wordmarkY - 1.2);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(...PDF_MUTED);
+  doc.text(`Datum: ${new Date().toLocaleDateString("de-DE")}`, rightEdge - 4, wordmarkY - 1.2, { align: "right" });
+
+  doc.setDrawColor(...PDF_BORDER);
+  doc.setLineWidth(0.4);
+  doc.line(pageMargin, dividerY, rightEdge, dividerY);
+
+  // --- Titel ---
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(13);
+  doc.setTextColor(...PDF_INK);
+  doc.text("1:1-DRUCKSCHABLONE: SCHWALBENSCHWANZVERBINDUNG", pageMargin, titleY);
+
+  // --- Parameter-Badges ---
+  const badgeGap = 3;
+  const colW = (contentWidth - 3 * badgeGap) / 4;
+  const badges: [string, string][] = [
+    ["Breite", `${fmtParam(boardWidth)} ${unitLabel}`],
+    ["Stärke", `${fmtParam(boardThickness)} ${unitLabel}`],
+    ["Winkel", `${summary.ratioString} (${num(summary.angleDegrees, 1)}°)`],
+    ["Schwalben", `${summary.tailCount}`],
+  ];
+  badges.forEach(([label, value], i) => {
+    const x = pageMargin + i * (colW + badgeGap);
+    doc.setFillColor(250, 248, 244);
+    doc.setDrawColor(...PDF_BORDER);
+    doc.roundedRect(x, badgesY, colW, badgeH, 1.5, 1.5, "FD");
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(7);
+    doc.setTextColor(...PDF_MUTED);
+    doc.text(label, x + 3, badgesY + 3.2);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(8);
+    doc.setTextColor(...PDF_INK);
+    doc.text(value, x + 3, badgesY + 6.3);
+  });
+
+  // --- Kalibrierungsbalken ---
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(7);
+  doc.setTextColor(...PDF_INK);
+  doc.text("KONTROLL-MASSSTAB (VOR DEM ZUSCHNEIDEN MIT LINEAL PRÜFEN)", pageMargin, calLabelY);
+  const barX = rightEdge - 50;
+  doc.setFillColor(...PDF_INK);
+  doc.rect(barX, calBarY, 50, calBarH, "F");
+  doc.setFillColor(255, 255, 255);
+  [0, 25, 50].forEach((t) => doc.rect(barX + t - 0.15, calBarY, 0.3, calBarH, "F"));
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(6.5);
+  doc.setTextColor(...PDF_MUTED);
+  doc.text(
+    "Muss nach dem Ausdruck exakt 50 mm messen – sonst Druckerskalierung auf 100 % / „Tatsächliche Größe“ prüfen.",
+    pageMargin,
+    calSubtextY,
+  );
+
+  const drawSectionChrome = (title: string, sectionTitleY: number, boxY: number, boxH: number) => {
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.setTextColor(...PDF_INK);
+    doc.text(title, pageMargin, sectionTitleY);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(6.5);
+    doc.setTextColor(...PDF_MUTED_LIGHT);
+    doc.text("✕ = Abfall / auszustemmen", rightEdge, sectionTitleY, { align: "right" });
+
+    doc.setDrawColor(...PDF_INK);
+    doc.setLineWidth(0.3);
+    doc.rect(drawX, boxY, widthMm, boxH, "D");
+    doc.setDrawColor(...PDF_MUTED_LIGHT);
+    doc.setLineWidth(0.2);
+    doc.setLineDashPattern([1, 0.8], 0);
+    doc.line(drawX, boxY + boxH, drawX + widthMm, boxY + boxH);
+    doc.setLineDashPattern([], 0);
+  };
+
+  const drawElementLabel = (x: number, y: number, isWood: boolean, label: string) => {
+    if (isWood) {
+      doc.setFont("courier", "bold");
+      doc.setFontSize(6.5);
+      doc.setTextColor(...PDF_INK);
+      doc.text(label, x, y, { align: "center" });
+    } else {
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(8);
+      doc.setTextColor(...PDF_WASTE_TEXT);
+      doc.text("✕", x, y, { align: "center" });
+    }
+  };
+
+  // --- 1. Schwalbenbrett (Stirnholz-Trapeze) ---
+  drawSectionChrome("1. SCHWALBENBRETT (STIRNHOLZ & SCHULTER)", section1TitleY, section1BoxY, section1BoxH);
+  const baseline1 = section1BoxY + section1BoxH;
+  summary.elements.forEach((el) => {
+    const lBase = drawX + toMm(el.leftBase);
+    const rBase = drawX + toMm(el.rightBase);
+    const lTip = drawX + toMm(el.leftTip);
+    const rTip = drawX + toMm(el.rightTip);
+    const isWood = el.type === "tail";
+    doc.setFillColor(...(isWood ? PDF_WOOD_FILL : PDF_WASTE_FILL));
+    doc.setDrawColor(...PDF_INK);
+    doc.setLineWidth(0.25);
+    pdfPolygon(
+      doc,
+      [
+        [lBase, baseline1],
+        [lTip, section1BoxY],
+        [rTip, section1BoxY],
+        [rBase, baseline1],
+      ],
+      "FD",
+    );
+    drawElementLabel((lBase + rBase + lTip + rTip) / 4, section1BoxY + section1BoxH / 2 + 1, isWood, el.label);
+  });
+
+  // --- 2. Zinkenbrett (rechteckige Aufteilung, Breitseiten-Ansicht) ---
+  drawSectionChrome("2. ZINKENBRETT (1:1-PAPIERSCHABLONE)", section2TitleY, section2BoxY, section2BoxH);
+  const baseline2 = section2BoxY + section2BoxH;
+  summary.elements.forEach((el) => {
+    const lX = drawX + toMm(el.leftTip);
+    const rX = drawX + toMm(el.rightTip);
+    const isWood = el.type === "pin" || el.type === "half_pin";
+    doc.setFillColor(...(isWood ? PDF_WOOD_FILL : PDF_WASTE_FILL));
+    doc.setDrawColor(...PDF_INK);
+    doc.setLineWidth(0.25);
+    pdfPolygon(
+      doc,
+      [
+        [lX, baseline2],
+        [lX, section2BoxY],
+        [rX, section2BoxY],
+        [rX, baseline2],
+      ],
+      "FD",
+    );
+    drawElementLabel((lX + rX) / 2, section2BoxY + section2BoxH / 2 + 1, isWood, el.label);
+  });
+
+  // --- Fußzeile ---
+  doc.setDrawColor(...PDF_BORDER);
+  doc.setLineWidth(0.35);
+  doc.line(pageMargin, footerLineY, rightEdge, footerLineY);
+  doc.setFont("SpaceGrotesk", "bold");
+  doc.setFontSize(8.5);
+  doc.setTextColor(...PDF_INK);
+  doc.text("schreiner", pageMargin, footerWordmarkY);
+  doc.setTextColor(...PDF_ACCENT);
+  doc.text(".digital", pageMargin + doc.getTextWidth("schreiner"), footerWordmarkY);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(7.2);
+  doc.setTextColor(...PDF_MUTED);
+  doc.text("1:1-Maßstab • keine Druckerskalierung anwenden", pageMargin, footerTaglineY);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(...PDF_INK);
+  doc.text("www.schreiner.digital", rightEdge, footerWordmarkY, { align: "right" });
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(6.8);
+  doc.setTextColor(...PDF_MUTED_LIGHT);
+  doc.text("Geometrisch berechnete Schablone. Vor Gebrauch Kontrollmaßstab prüfen.", rightEdge, footerTaglineY, { align: "right" });
+
+  const fileName = `Schwalbenschwanz-Schablone_${fmtParam(boardWidth)}x${fmtParam(boardThickness)}${unitLabel}_${summary.tailCount}Schwalben.pdf`;
+  doc.save(fileName);
+}
+
 // --- Print template modal -----------------------------------------------------
 
 function PrintTemplateModal({
@@ -1092,6 +1393,8 @@ function PrintTemplateModal({
   summary: CalculationSummary;
   params: DovetailParams;
 }) {
+  const [isGenerating, setIsGenerating] = useState(false);
+
   if (!isOpen) return null;
 
   const { unit, boardWidth, boardThickness } = params;
@@ -1100,28 +1403,19 @@ function PrintTemplateModal({
   const thickMm = unit === "inch" ? boardThickness * 25.4 : boardThickness;
   const gaugeMm = unit === "inch" ? summary.gaugeDepth * 25.4 : summary.gaugeDepth;
 
+  const handleDownloadPdf = async () => {
+    setIsGenerating(true);
+    try {
+      await generateDovetailPdf(params, summary);
+    } catch (err) {
+      console.error("Fehler bei der PDF-Erstellung:", err);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-ink/60 p-4 backdrop-blur-xs">
-      {/* Scoped to this modal (only present in the DOM while it's open), so printing any
-          other page of the site is unaffected. Without it the browser prints the whole
-          document behind the modal too, and repeats this fixed-position overlay on every
-          page that content paginates into. */}
-      <style>{`
-        @media print {
-          body * { visibility: hidden; }
-          #printable-template, #printable-template * { visibility: visible; }
-          #printable-template {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            margin: 0;
-            padding: 10mm;
-            border: none;
-            box-shadow: none;
-          }
-        }
-      `}</style>
       <div className="flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-border bg-paper shadow-2xl">
         <div className="flex items-center justify-between border-b border-border bg-surface px-6 py-4">
           <div>
@@ -1130,17 +1424,18 @@ function PrintTemplateModal({
               1:1 Druckschablone (maßstabsgetreu zum Aufkleben)
             </h3>
             <p className="mt-0.5 text-xs text-ink-muted">
-              Drucken Sie diese Schablone im Druckdialog mit „Tatsächliche Größe / 100 % Skalierung“ aus.
+              Laden Sie die Schablone als PDF herunter und drucken Sie sie mit „Tatsächliche Größe / 100 % Skalierung“ aus.
             </p>
           </div>
           <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => window.print()}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-4 py-2 text-xs font-semibold text-accent-contrast transition-colors hover:bg-accent-hover"
+              onClick={handleDownloadPdf}
+              disabled={isGenerating}
+              className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-4 py-2 text-xs font-semibold text-accent-contrast transition-colors hover:bg-accent-hover disabled:opacity-50"
             >
-              <Printer className="size-4" />
-              Jetzt drucken
+              <Download className="size-4" />
+              {isGenerating ? "Generiere PDF…" : "Als PDF herunterladen"}
             </button>
             <button type="button" onClick={onClose} className="rounded-lg p-2 text-ink-faint transition-colors hover:bg-surface hover:text-ink">
               <X className="size-5" />
@@ -1160,7 +1455,7 @@ function PrintTemplateModal({
             </div>
           </div>
 
-          <div id="printable-template" className="w-full max-w-2xl rounded-lg border border-border bg-surface p-8 shadow-md">
+          <div className="w-full max-w-2xl rounded-lg border border-border bg-surface p-8 shadow-md">
             <div className="mb-6 flex items-end justify-between border-b-2 border-ink pb-3">
               <div>
                 <h1 className="text-lg font-black tracking-tight text-ink">SCHWALBENSCHWANZ-SCHABLONE (1:1)</h1>
