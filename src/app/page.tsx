@@ -184,6 +184,8 @@ const toolExamples: Record<string, string> = {
   durchbiegung: "2,38 mm",
   stundensatz: "64,15 €/h",
   "quell-schwund": "+1,53 mm",
+  "falsche-gehrung": "63,4° / 26,6°",
+  schwalbenschwanz: "6 Schwalben",
 };
 
 const toolHighlights: Record<string, string> = {
@@ -193,6 +195,8 @@ const toolHighlights: Record<string, string> = {
   durchbiegung: "Tragfähigkeit von Regal- und Schrankböden prüfen.",
   stundensatz: "Deinen kostendeckenden Stundensatz ermitteln.",
   "quell-schwund": "Holzbewegung durch Feuchte sicher einplanen.",
+  "falsche-gehrung": "Gehrungswinkel bei unterschiedlichen Materialstärken berechnen.",
+  schwalbenschwanz: "Zinkenanzahl und Anreißmaße für Schwalbenschwänze berechnen.",
 };
 
 function ScaleWeightIcon({ className }: { className?: string }) {
@@ -254,6 +258,25 @@ function WoodMovementIcon({ className }: { className?: string }) {
   );
 }
 
+function MiterAngleIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M4 19h16" />
+      <path d="M4 19 17 6" />
+      <path d="M10.5 19a6.5 6.5 0 0 1 3.5-5.79" />
+    </svg>
+  );
+}
+
+function DovetailIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M4 19h16" />
+      <path d="M8 19l2-11h4l2 11" />
+    </svg>
+  );
+}
+
 const toolIcons: Record<string, typeof ScaleWeightIcon> = {
   plattengewicht: ScaleWeightIcon,
   tuerenmass: DoorIcon,
@@ -261,6 +284,8 @@ const toolIcons: Record<string, typeof ScaleWeightIcon> = {
   durchbiegung: BeamBendIcon,
   stundensatz: ClockIcon,
   "quell-schwund": WoodMovementIcon,
+  "falsche-gehrung": MiterAngleIcon,
+  schwalbenschwanz: DovetailIcon,
 };
 
 function ArrowIcon({ className }: { className?: string }) {
@@ -287,10 +312,14 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero – forced dark (via the `dark` class) regardless of the site theme,
-          since the photo needs a dark scrim for the overlaid text to stay legible. */}
-      <section className="dark relative isolate overflow-hidden border-b border-border">
-        <div className="absolute inset-0 -z-10">
+      {/* Hero – photo, top ruler ticks and text forced dark (via the `dark` class)
+          regardless of the site theme, since the photo needs a dark scrim for the
+          overlaid text to stay legible. The section itself is kept OUT of that
+          scope so the bottom-edge fade below reads the real, active theme's paper
+          color – otherwise the scrim's near-black tone met the next section as a
+          hard seam whenever the site was actually in light mode. */}
+      <section className="relative isolate overflow-hidden border-b border-border">
+        <div className="dark absolute inset-0 -z-10">
           <Image
             src="/hero-workshop.jpg"
             alt="Laptop mit 3D-Möbelentwurf auf einem Werkstatttisch, umgeben von Holzmustern und Skizzenbüchern, im Hintergrund eine Schreinerwerkstatt mit Werkzeugwand"
@@ -301,12 +330,16 @@ export default async function HomePage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-paper from-15% via-paper/80 via-45% to-transparent to-85%" />
         </div>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-paper sm:h-32"
+        />
 
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-1.5 ruler-ticks-lg opacity-60"
+          className="dark pointer-events-none absolute inset-x-0 top-0 h-1.5 ruler-ticks-lg opacity-60"
         />
-        <Container className="py-14 sm:py-16 lg:py-20">
+        <Container className="dark py-14 sm:py-16 lg:py-20">
           <div className="max-w-xl">
             <Eyebrow>Handwerk trifft Präzision</Eyebrow>
             <h1 className="mt-5 text-4xl leading-[1.05] font-bold text-balance text-ink sm:text-5xl lg:text-6xl">
@@ -396,9 +429,9 @@ export default async function HomePage() {
                 Smarte Rechner für <span className="text-accent">bessere</span> Ergebnisse
               </h2>
               <p className="mt-4 text-ink-muted">
-                Sechs Rechner für den Werkstattalltag – von Plattengewicht
-                über Türmaße bis zur Holzbewegung nach DIN 52184. Ergebnis in
-                Sekunden, ohne Anmeldung.
+                Acht Rechner für den Werkstattalltag – von Plattengewicht
+                über Gehrungswinkel bis zur Schwalbenschwanzverbindung.
+                Ergebnis in Sekunden, ohne Anmeldung.
               </p>
               <ButtonLink href="/tools" variant="secondary" className="mt-6">
                 Alle Rechner ansehen
