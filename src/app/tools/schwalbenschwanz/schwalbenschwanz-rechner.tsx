@@ -1102,6 +1102,26 @@ function PrintTemplateModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-ink/60 p-4 backdrop-blur-xs">
+      {/* Scoped to this modal (only present in the DOM while it's open), so printing any
+          other page of the site is unaffected. Without it the browser prints the whole
+          document behind the modal too, and repeats this fixed-position overlay on every
+          page that content paginates into. */}
+      <style>{`
+        @media print {
+          body * { visibility: hidden; }
+          #printable-template, #printable-template * { visibility: visible; }
+          #printable-template {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            margin: 0;
+            padding: 10mm;
+            border: none;
+            box-shadow: none;
+          }
+        }
+      `}</style>
       <div className="flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-border bg-paper shadow-2xl">
         <div className="flex items-center justify-between border-b border-border bg-surface px-6 py-4">
           <div>
