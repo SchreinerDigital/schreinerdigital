@@ -35,14 +35,37 @@ function ClearIcon({ className }: { className?: string }) {
 
 const RESULT_LIMIT = 8;
 
+/** A doc plus its tokenized description, used only for matching (see below). */
+type IndexedDoc = SearchDoc & { descriptionWords: string[] };
+
+// Common German function words: they show up in almost every description, so
+// left in, a query could fuzzy-match one of them instead of a real keyword.
+const STOPWORDS = new Set([
+  "der", "die", "das", "und", "für", "von", "mit", "bei", "auf", "aus", "als",
+  "ein", "ist", "sich", "den", "dem", "des", "dass", "wie", "zur", "zum",
+  "oder", "nicht", "im", "in", "zu", "am", "an",
+]);
+
+/**
+ * Splits free text into whole words (dropping short/stopword noise) so Fuse
+ * fuzzy-matches the query against real words, not arbitrary substrings that
+ * happen to span into an unrelated compound (e.g. "eiche" inside "Speicher"
+ * or "Bereich") – German's long compound words make that coincidence common.
+ */
+function tokenize(text: string): string[] {
+  return text
+    .split(/[^\p{L}\p{N}]+/u)
+    .filter((w) => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
+}
+
 /** Icon button that expands in place into a search field – no modal, no page overlay. */
 export function SiteSearch() {
   const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
-  const [docs, setDocs] = useState<SearchDoc[] | null>(null);
-  const [fuse, setFuse] = useState<Fuse<SearchDoc> | null>(null);
+  const [docs, setDocs] = useState<IndexedDoc[] | null>(null);
+  const [fuse, setFuse] = useState<Fuse<IndexedDoc> | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -60,18 +83,22 @@ export function SiteSearch() {
       .then((r) => r.json())
       .then((data: SearchDoc[]) => {
         if (cancelled) return;
-        setDocs(data);
+        const indexed: IndexedDoc[] = data.map((d) => ({
+          ...d,
+          descriptionWords: tokenize(d.description),
+        }));
+        setDocs(indexed);
         setFuse(
-          new Fuse(data, {
+          new Fuse(indexed, {
             keys: [
               { name: "title", weight: 0.5 },
               { name: "keywords", weight: 0.3 },
-              { name: "description", weight: 0.15 },
+              { name: "descriptionWords", weight: 0.15 },
               { name: "category", weight: 0.05 },
             ],
-            threshold: 0.35,
+            threshold: 0.3,
             ignoreLocation: true,
-            minMatchCharLength: 2,
+            minMatchCharLength: 3,
           }),
         );
       })
