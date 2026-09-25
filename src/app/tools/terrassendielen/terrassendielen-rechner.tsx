@@ -858,10 +858,10 @@ async function generateTerracePdf(
   doc.setFont("helvetica", "bold");
   doc.setFontSize(9.5);
   doc.setTextColor(...PDF_INK);
-  doc.text("MASSSTABSGETREUER VERLEGEPLAN (DIELEN + UNTERKONSTRUKTION)", pageMargin, diagramTitleY);
+  doc.text("VERLEGEPLAN (DIELEN + UNTERKONSTRUKTION)", pageMargin, diagramTitleY);
 
   const diagramBoxY = diagramTitleY + 3;
-  const diagramBoxH = 78;
+  const diagramBoxH = 118;
   doc.setFillColor(250, 248, 244);
   doc.setDrawColor(...PDF_BORDER);
   doc.setLineWidth(0.4);
