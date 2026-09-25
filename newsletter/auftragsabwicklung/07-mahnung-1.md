@@ -34,7 +34,11 @@ Die erste Mahnung ist mehr als eine Erinnerung mit strengerem Tonfall: Sie macht
 
 ---
 
-Unsere Vorlage für die **1. Mahnung** hat Platz für die Verzugszinsberechnung bereits vorgesehen. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
+Unsere Vorlage für die **1. Mahnung** ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
+
+[INFO] Auch die Mahnung ist ein versandter Geschäftsbrief und fällt unter die 6-Jahres-Frist (wie Angebot, Auftragsbestätigung, Lieferschein und Zahlungserinnerung). Digital archiviert muss sie ebenso GoBD-konform unveränderbar abgelegt sein. Wie das praktisch geht, liest du unter [Aufbewahrungspflichten & GoBD](/betrieb-und-recht/aufbewahrungspflichten-gobd).
+
+Noch mehr fertige Vorlagen für die Auftragsabwicklung findest du auf [unserer Vorlagen-Seite](/vorlagen). Und wer Mahnungen und Verzugszinsen nicht mehr von Hand nachrechnen will: [hier gibt's einen Überblick zu ERP- und Kalkulationsprogrammen](/digitalisierung/kalkulationssoftware) für Schreinereien.
 
 In der nächsten Ausgabe: Die 2. Mahnung – der letzte Schritt, bevor Inkasso oder Mahnverfahren ins Spiel kommen.
 
