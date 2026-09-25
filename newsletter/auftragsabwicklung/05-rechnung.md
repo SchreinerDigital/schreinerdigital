@@ -54,7 +54,9 @@ Zehn Pflichtangaben, zwei Sonderhinweise (6-Monats-Frist, Aufbewahrungshinweis f
 
 ---
 
-Unsere **Rechnungsvorlage** enthält alle zehn Pflichtangaben, den Leistungsdatum-Hinweis und den Verzugshinweis bereits vorformuliert. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
+Unsere **Rechnungsvorlage** enthält alle zehn Pflichtangaben und den Leistungsdatum-Hinweis bereits vorformuliert. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
+
+Noch mehr fertige Vorlagen für die Auftragsabwicklung findest du auf [unserer Vorlagen-Seite](/vorlagen). Und wer Rechnungen nicht mehr einzeln in Word schreiben will: [hier gibt's einen Überblick zu ERP- und Kalkulationsprogrammen](/digitalisierung/kalkulationssoftware) für Schreinereien.
 
 In der nächsten Ausgabe: Die Zahlungserinnerung – der freundliche erste Schritt, bevor es förmlich wird.
 
