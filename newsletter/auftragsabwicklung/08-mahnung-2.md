@@ -34,6 +34,10 @@ Zwei Mahnungen sind guter Stil, keine gesetzliche Pflicht. Wichtiger als die Anz
 
 Unsere Vorlage für die **2. Mahnung** kündigt die nächsten Schritte klar an, ohne über das Ziel hinauszuschießen. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
 
+[INFO] Auch die Mahnung ist ein versandter Geschäftsbrief und fällt unter die 6-Jahres-Frist (wie Angebot, Auftragsbestätigung und die 1. Mahnung). Digital archiviert muss sie ebenso GoBD-konform unveränderbar abgelegt sein. Wie das praktisch geht, liest du unter [Aufbewahrungspflichten & GoBD](/betrieb-und-recht/aufbewahrungspflichten-gobd).
+
+Noch mehr fertige Vorlagen für die Auftragsabwicklung findest du auf [unserer Vorlagen-Seite](/vorlagen). Und wer Mahnstufen und Verzugszinsen nicht mehr von Hand nachhalten will: [hier gibt's einen Überblick zu ERP- und Kalkulationsprogrammen](/digitalisierung/kalkulationssoftware) für Schreinereien.
+
 In der nächsten Ausgabe: Die Gutschrift – und warum der Begriff im Handwerk oft falsch verwendet wird.
 
 *Alle Angaben ohne Gewähr und keine Rechtsberatung im Einzelfall.*
