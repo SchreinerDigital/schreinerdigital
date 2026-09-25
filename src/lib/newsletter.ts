@@ -115,3 +115,58 @@ export async function subscribeToNewsletter({
     return { ok: false, error: "Anmeldung fehlgeschlagen. Bitte versuche es erneut." };
   }
 }
+
+/**
+ * Verschickt ein clientseitig erzeugtes Rechner-PDF als Anhang per Brevo
+ * Transactional-Email (statt es nur direkt herunterzuladen). Nutzt eine
+ * eigene Transaktions-Vorlage (BREVO_PDF_EMAIL_TEMPLATE_ID) mit {{ params.TOOL_NAME }}
+ * / {{ params.FILE_NAME }} als Platzhalter – ein Template für alle Rechner.
+ *
+ * https://developers.brevo.com/reference/sendtransacemail
+ */
+export async function sendCalculatorPdfByEmail({
+  email,
+  fileName,
+  pdfBase64,
+  toolName,
+}: {
+  email: string;
+  fileName: string;
+  pdfBase64: string;
+  toolName: string;
+}): Promise<NewsletterResult> {
+  const apiKey = process.env.BREVO_API_KEY;
+  const templateId = process.env.BREVO_PDF_EMAIL_TEMPLATE_ID;
+  if (!apiKey || !templateId) {
+    console.error(
+      "PDF-E-Mail-Versand fehlgeschlagen: Brevo-Konfiguration (API-Key/Vorlage) nicht gesetzt.",
+    );
+    return { ok: false, error: "Der PDF-Versand ist derzeit nicht verfügbar." };
+  }
+
+  try {
+    const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "api-key": apiKey,
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify({
+        to: [{ email }],
+        templateId: Number(templateId),
+        params: { TOOL_NAME: toolName, FILE_NAME: fileName },
+        attachment: [{ name: fileName, content: pdfBase64 }],
+      }),
+    });
+
+    if (res.ok) return { ok: true };
+
+    const body = await res.json().catch(() => null);
+    console.error("Brevo-Fehler beim PDF-Versand:", res.status, body);
+    return { ok: false, error: "Versand fehlgeschlagen. Bitte versuche es erneut." };
+  } catch (err) {
+    console.error("Netzwerkfehler beim PDF-Versand:", err);
+    return { ok: false, error: "Versand fehlgeschlagen. Bitte versuche es erneut." };
+  }
+}

@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { num } from "@/lib/format";
+import { PdfEmailButton } from "@/components/tools/pdf-email-button";
 import { calculateTerrace } from "./calculator";
 import { WOOD_PRESETS } from "./presets";
 import { TerraceVisualizer } from "./terrassendielen-visualizer";
@@ -600,15 +601,21 @@ function MaterialBill({
           </h2>
           <p className="mt-0.5 text-xs text-ink-muted">Dielen, Unterkonstruktion, Schrauben und Zubehör für dein Projekt</p>
         </div>
-        <button
-          type="button"
-          onClick={onPrint}
-          disabled={isGenerating}
-          className="flex shrink-0 items-center justify-center gap-1.5 rounded-lg border border-accent/40 bg-accent-soft px-3.5 py-1.5 text-xs font-semibold text-accent shadow-2xs transition-colors hover:bg-accent-soft/70 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          <Download className="size-3.5" />
-          {isGenerating ? "Generiere PDF…" : "Als PDF drucken"}
-        </button>
+        <div className="flex shrink-0 items-center gap-2">
+          <button
+            type="button"
+            onClick={onPrint}
+            disabled={isGenerating}
+            className="flex shrink-0 items-center justify-center gap-1.5 rounded-lg border border-accent/40 bg-accent-soft px-3.5 py-1.5 text-xs font-semibold text-accent shadow-2xs transition-colors hover:bg-accent-soft/70 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <Download className="size-3.5" />
+            {isGenerating ? "Generiere PDF…" : "Als PDF drucken"}
+          </button>
+          <PdfEmailButton
+            getPdf={() => generateTerracePdf(inputs, results, activeScrapMode)}
+            source="terrassendielen"
+          />
+        </div>
       </div>
 
       <div className="overflow-x-auto">
@@ -753,7 +760,7 @@ async function generateTerracePdf(
   inputs: TerraceInputs,
   results: CalculationResults,
   activeScrapMode: "with" | "without",
-): Promise<void> {
+): Promise<{ doc: jsPDF; fileName: string }> {
   const { substructure, fastening, rowsCount, runLength, crossSpan } = results;
   const active = activeScrapMode === "with" ? results.withScrap : results.withoutScrap;
   const activeRows = active.simulatedRows;
@@ -1117,7 +1124,7 @@ async function generateTerracePdf(
   doc.text("Alle Berechnungen ohne Gewähr. Vor Ort Aufmaß prüfen.", rightEdge, footerY + 10.5, { align: "right" });
 
   const fileName = `Terrassendielen_${num(inputs.length, 1)}x${num(inputs.width, 1)}m_${rowsCount}Reihen.pdf`;
-  doc.save(fileName);
+  return { doc, fileName };
 }
 
 /* ---------------------------------------------------------------------- */
@@ -1160,7 +1167,8 @@ export function TerrassendielenRechner() {
   const handleDownloadPdf = async () => {
     setIsGenerating(true);
     try {
-      await generateTerracePdf(inputs, results, scrapMode);
+      const { doc, fileName } = await generateTerracePdf(inputs, results, scrapMode);
+      doc.save(fileName);
     } catch (err) {
       console.error("PDF-Generierung fehlgeschlagen:", err);
     } finally {

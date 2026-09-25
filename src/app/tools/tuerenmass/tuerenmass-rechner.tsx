@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Copy, Check, Download } from "lucide-react";
 import { jsPDF } from "jspdf";
 import { InfoTooltip } from "@/components/tools/info-tooltip";
+import { PdfEmailButton } from "@/components/tools/pdf-email-button";
 import { cn } from "@/lib/cn";
 
 // --- DATA & TYPES ---
@@ -399,9 +400,8 @@ const generatePDF = async (
   const wrappedDisclaimer = doc.splitTextToSize(cleanText(disclaimerText), 90);
   doc.text(wrappedDisclaimer, rightEdge, footerY + 10.5, { align: "right" });
 
-  // Download PDF
   const filename = `Aufmassblatt_DIN18101_${wallWidth}x${wallHeight}.pdf`;
-  doc.save(filename);
+  return { doc, fileName: filename };
 };
 
 // --- APP COMPONENT ---
@@ -709,9 +709,11 @@ Berechnet mit dem Online-Türenmaß-Rechner auf www.schreinerdigital.de`;
 
   const handleDownloadPDF = () => {
     if (results) {
-      generatePDF(results, wallWidth, wallHeight, wallThickness, dinSide).catch((err: unknown) => {
-        console.error("PDF-Erstellung fehlgeschlagen:", err);
-      });
+      generatePDF(results, wallWidth, wallHeight, wallThickness, dinSide)
+        .then(({ doc, fileName }) => doc.save(fileName))
+        .catch((err: unknown) => {
+          console.error("PDF-Erstellung fehlgeschlagen:", err);
+        });
     }
   };
 
@@ -875,6 +877,11 @@ Berechnet mit dem Online-Türenmaß-Rechner auf www.schreinerdigital.de`;
               <Download size={16} />
               Aufmaßblatt als PDF
             </button>
+            <PdfEmailButton
+              getPdf={() => generatePDF(results, wallWidth, wallHeight, wallThickness, dinSide)}
+              source="tuerenmass"
+              panelClassName="right-0"
+            />
           </div>
 
           <div className="space-y-3">

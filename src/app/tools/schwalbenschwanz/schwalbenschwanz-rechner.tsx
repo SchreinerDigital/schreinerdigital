@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { num } from "@/lib/format";
+import { PdfEmailButton } from "@/components/tools/pdf-email-button";
 import { ANGLE_PRESETS, angleToRatio, calculateAutoTailCount, calculateDovetail } from "./dovetail-calculator";
 import type { CalculationSummary, DovetailParams, UnitSystem } from "./types";
 
@@ -1136,7 +1137,10 @@ function pdfPolygon(doc: jsPDF, points: [number, number][], style: string) {
   doc.lines(segments, start[0], start[1], [1, 1], style, true);
 }
 
-async function generateDovetailPdf(params: DovetailParams, summary: CalculationSummary): Promise<void> {
+async function generateDovetailPdf(
+  params: DovetailParams,
+  summary: CalculationSummary,
+): Promise<{ doc: jsPDF; fileName: string }> {
   const { unit, boardWidth, boardThickness } = params;
   const toMm = (v: number) => (unit === "inch" ? v * 25.4 : v);
   const widthMm = toMm(boardWidth);
@@ -1377,7 +1381,7 @@ async function generateDovetailPdf(params: DovetailParams, summary: CalculationS
   doc.text("Geometrisch berechnete Schablone. Vor Gebrauch Kontrollmaßstab prüfen.", rightEdge, footerTaglineY, { align: "right" });
 
   const fileName = `Schwalbenschwanz-Schablone_${fmtParam(boardWidth)}x${fmtParam(boardThickness)}${unitLabel}_${summary.tailCount}Schwalben.pdf`;
-  doc.save(fileName);
+  return { doc, fileName };
 }
 
 // --- Print template modal -----------------------------------------------------
@@ -1406,7 +1410,8 @@ function PrintTemplateModal({
   const handleDownloadPdf = async () => {
     setIsGenerating(true);
     try {
-      await generateDovetailPdf(params, summary);
+      const { doc, fileName } = await generateDovetailPdf(params, summary);
+      doc.save(fileName);
     } catch (err) {
       console.error("Fehler bei der PDF-Erstellung:", err);
     } finally {
@@ -1437,6 +1442,10 @@ function PrintTemplateModal({
               <Download className="size-4" />
               {isGenerating ? "Generiere PDF…" : "Als PDF herunterladen"}
             </button>
+            <PdfEmailButton
+              getPdf={() => generateDovetailPdf(params, summary)}
+              source="schwalbenschwanz"
+            />
             <button type="button" onClick={onClose} className="rounded-lg p-2 text-ink-faint transition-colors hover:bg-surface hover:text-ink">
               <X className="size-5" />
             </button>

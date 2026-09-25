@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { ArrowLeftRight, Download, Minus, Plus } from "lucide-react";
 import { jsPDF } from "jspdf";
+import { PdfEmailButton } from "@/components/tools/pdf-email-button";
 
 // --- TYPES & CALCULATION (unchanged from the reference calculator) --------
 //
@@ -196,7 +197,10 @@ function formatMax2Dec(val: number | string): string {
   return rounded.toFixed(2).replace(/(\.[0-9]*[1-9])0+$|\.00$/, "$1");
 }
 
-async function generateMiterPdf(inputs: MiterInputs, results: MiterCalculationResult): Promise<void> {
+async function generateMiterPdf(
+  inputs: MiterInputs,
+  results: MiterCalculationResult,
+): Promise<{ doc: jsPDF; fileName: string }> {
   const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
   await registerBrandFont(doc);
 
@@ -571,7 +575,7 @@ async function generateMiterPdf(inputs: MiterInputs, results: MiterCalculationRe
 
   const polyTag = inputs.angleMode === "polygon" ? `_${inputs.polygonCorners}Eck` : "";
   const fileName = `Zuschnittplan_Falsche_Gehrung_${formatMax2Dec(materialA)}x${formatMax2Dec(materialB)}mm${polyTag}_${formatMax2Dec(angle)}Grad.pdf`;
-  doc.save(fileName);
+  return { doc, fileName };
 }
 
 // --- GEOMETRY SKETCH (SVG) ---------------------------------------------------
@@ -742,7 +746,8 @@ export function FalscheGehrungRechner() {
   async function handleDownloadPdf() {
     setPdfGenerating(true);
     try {
-      await generateMiterPdf(inputs, results);
+      const { doc, fileName } = await generateMiterPdf(inputs, results);
+      doc.save(fileName);
     } catch (err) {
       console.error("Fehler bei der PDF-Erstellung:", err);
     } finally {
@@ -1005,15 +1010,23 @@ export function FalscheGehrungRechner() {
           </div>
         </div>
 
-        <button
-          type="button"
-          onClick={handleDownloadPdf}
-          disabled={pdfGenerating || !results.isValid}
-          className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-accent px-4 py-3 text-sm font-semibold text-accent-contrast shadow-xs transition-colors hover:bg-accent-hover disabled:opacity-50"
-        >
-          <Download className="size-4" />
-          <span>{pdfGenerating ? "Generiere PDF …" : "Zuschnittplan als PDF"}</span>
-        </button>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={handleDownloadPdf}
+            disabled={pdfGenerating || !results.isValid}
+            className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg bg-accent px-4 py-3 text-sm font-semibold text-accent-contrast shadow-xs transition-colors hover:bg-accent-hover disabled:opacity-50"
+          >
+            <Download className="size-4" />
+            <span>{pdfGenerating ? "Generiere PDF …" : "Zuschnittplan als PDF"}</span>
+          </button>
+          <PdfEmailButton
+            getPdf={() => generateMiterPdf(inputs, results)}
+            source="falsche-gehrung"
+            className="shrink-0"
+            panelClassName="right-0"
+          />
+        </div>
       </div>
 
       <div className="rounded-lg border border-border bg-paper p-3 text-xs text-ink-muted">
