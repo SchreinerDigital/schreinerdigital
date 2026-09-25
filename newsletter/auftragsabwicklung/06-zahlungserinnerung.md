@@ -34,6 +34,10 @@ Die Zahlungserinnerung ist kein rechtliches Muss, aber ein guter Stil – sie gi
 
 Unsere **Zahlungserinnerung-Vorlage** ist bewusst freundlich formuliert, ganz ohne Drohkulisse. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
 
+[INFO] Auch die Zahlungserinnerung ist ein versandter Geschäftsbrief und fällt damit unter die 6-Jahres-Frist (wie Angebot und Auftragsbestätigung, siehe Ausgabe 1). Digital archiviert muss sie ebenso GoBD-konform unveränderbar abgelegt sein. Wie das praktisch geht, liest du unter [Aufbewahrungspflichten & GoBD](/betrieb-und-recht/aufbewahrungspflichten-gobd).
+
+Noch mehr fertige Vorlagen für die Auftragsabwicklung findest du auf [unserer Vorlagen-Seite](/vorlagen). Und wer den Überblick über offene Rechnungen nicht mehr von Hand pflegen will: [hier gibt's einen Überblick zu ERP- und Kalkulationsprogrammen](/digitalisierung/kalkulationssoftware) für Schreinereien.
+
 In der nächsten Ausgabe: Die erste Mahnung – was jetzt rechtlich wirklich passiert und was sie dich kosten darf.
 
 *Alle Angaben ohne Gewähr und keine Rechtsberatung im Einzelfall.*
