@@ -17,12 +17,6 @@ Ein Kunde bekommt nachträglich einen Preisnachlass, weil eine Leistung nicht wi
 
 Das Problem: Verwendest du "Gutschrift" im kaufmännischen Sinn, kann das bei genauer Lektüre wie eine umsatzsteuerliche Gutschrift wirken – mit der missverständlichen Implikation, der *Kunde* würde gegenüber dir abrechnen. Deshalb hat sich in der Praxis die Empfehlung durchgesetzt, entweder den Begriff "Gutschrift" durch einen klaren Hinweis zu ergänzen oder ganz auf Alternativen wie "Rechnungskorrektur" oder "Preisnachlass" auszuweichen.
 
-## Was in eine kaufmännische Gutschrift gehört
-
-- Eindeutiger Bezug auf die ursprüngliche Rechnung (Nummer und Datum)
-- Der korrigierte oder nachgelassene Betrag, inklusive anteiliger Umsatzsteuer
-- Ein klarstellender Hinweis, dass es sich um eine kaufmännische Gutschrift (Preisnachlass/Korrektur) handelt – nicht um eine umsatzsteuerliche Gutschrift nach § 14 Abs. 2 Satz 2 UStG
-
 ## Wann du stattdessen eine Stornorechnung brauchst
 
 Eine Gutschrift korrigiert einen *Teil* einer ansonsten korrekten Rechnung. War die ursprüngliche Rechnung dagegen komplett fehlerhaft oder hinfällig (falscher Kunde, falscher Auftrag, doppelt gestellt), brauchst du keine Teilkorrektur, sondern die vollständige Stornierung – das Thema der nächsten und letzten Ausgabe dieser Serie.
@@ -31,9 +25,19 @@ Eine Gutschrift korrigiert einen *Teil* einer ansonsten korrekten Rechnung. War 
 
 "Gutschrift" ist im Alltag ein bequemes Wort – steuerlich aber ein Begriff mit zwei Bedeutungen. Ein kurzer Klarstellungssatz auf dem Dokument verhindert Verwechslungen, ohne dass du auf den vertrauten Begriff verzichten musst.
 
+## Was gehört in die Gutschrift?
+
+- Eindeutiger Bezug auf die ursprüngliche Rechnung (Nummer und Datum)
+- Der korrigierte oder nachgelassene Betrag, inklusive anteiliger Umsatzsteuer
+- Ein klarstellender Hinweis, dass es sich um eine kaufmännische Gutschrift (Preisnachlass/Korrektur) handelt – nicht um eine umsatzsteuerliche Gutschrift nach § 14 Abs. 2 Satz 2 UStG
+
 ---
 
-Unsere **Gutschrift-Vorlage** enthält den klarstellenden Hinweis zur Abgrenzung bereits vorformuliert. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
+Unsere **Gutschrift-Vorlage** ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
+
+[INFO] Als Rechnungskorrektur mit eigenem Steuerausweis zählt die Gutschrift wie die Rechnung selbst zu den Buchungsbelegen – Aufbewahrungsfrist 8 Jahre statt der 6 Jahre für reine Geschäftsbriefe. Digital archiviert muss sie ebenso GoBD-konform unveränderbar abgelegt sein. Wie das praktisch geht, liest du unter [Aufbewahrungspflichten & GoBD](/betrieb-und-recht/aufbewahrungspflichten-gobd).
+
+Noch mehr fertige Vorlagen für die Auftragsabwicklung findest du auf [unserer Vorlagen-Seite](/vorlagen). Und wer Gutschriften und Rechnungskorrekturen nicht mehr einzeln in Word erstellen will: [hier gibt's einen Überblick zu ERP- und Kalkulationsprogrammen](/digitalisierung/kalkulationssoftware) für Schreinereien.
 
 In der letzten Ausgabe dieser Serie: Die Stornorechnung – und warum du eine fehlerhafte Rechnung niemals einfach löschen solltest.
 
