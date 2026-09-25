@@ -100,15 +100,20 @@ function renderMainBlocks(md) {
   return out.join("\n");
 }
 
+// Box-Stil für den ersten Absatz (Vorlagen-Verweis, alle 10 Ausgaben) sowie für
+// jeden weiteren Absatz, der mit "[INFO]" markiert ist (z. B. ein zusätzlicher
+// Praxis-Hinweis wie die GoBD-Falle in Ausgabe 1).
 function renderFooterBlock(footerMd) {
   const paras = footerMd.trim().split(/\n\s*\n/).filter(Boolean);
   return paras
     .map((raw, idx) => {
-      const trimmed = raw.trim();
+      let trimmed = raw.trim();
+      const isInfoBox = trimmed.startsWith("[INFO]");
+      if (isInfoBox) trimmed = trimmed.slice("[INFO]".length).trim();
       const isDisclaimer = trimmed.startsWith("*") && trimmed.endsWith("*") && !trimmed.startsWith("**");
       const text = isDisclaimer ? trimmed.slice(1, -1) : trimmed;
       const inline = renderInline(text);
-      if (idx === 0) {
+      if (idx === 0 || isInfoBox) {
         return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 20px 0;"><tr><td style="background-color:${ACCENT_SOFT};border:1px solid ${BORDER_STRONG};border-radius:10px;padding:16px 18px;"><p style="margin:0;font-size:14.5px;line-height:1.6;color:${INK};">${inline}</p></td></tr></table>`;
       }
       if (isDisclaimer) {
