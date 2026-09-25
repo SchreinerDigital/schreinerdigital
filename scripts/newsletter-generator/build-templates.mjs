@@ -28,24 +28,34 @@ function renderInline(text) {
   let s = escapeHtml(text);
   s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, url) => {
     const href = url.startsWith("/") ? SITE_URL + url : url;
-    return `<a href="${href}" style="color:#ff7a1a;text-decoration:underline;">${label}</a>`;
+    return `<a href="${href}" style="color:${ACCENT};text-decoration:underline;">${label}</a>`;
   });
   s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
   s = s.replace(/\*([^*]+)\*/g, "<em>$1</em>");
   return s;
 }
 
-const h1 = (t) => `<h1 style="margin:0 0 18px 0;font-size:23px;line-height:1.3;color:#1b1712;">${t}</h1>`;
+// Farb-Tokens 1:1 aus src/app/globals.css (Light-Mode) übernommen, damit der
+// Newsletter dieselbe Palette wie die Website nutzt statt eigener Näherungswerte.
+const INK = "#1b1712";
+const INK_MUTED = "#6c6252";
+const INK_FAINT = "#928777";
+const BORDER = "#e6ddce";
+const BORDER_STRONG = "#d6c9b3";
+const ACCENT = "#ff7a1a";
+const ACCENT_SOFT = "#f4e8d8";
+
+const h1 = (t) => `<h1 style="margin:0 0 18px 0;font-size:23px;line-height:1.3;color:${INK};">${t}</h1>`;
 const h2 = (t) =>
-  `<h2 style="margin:26px 0 10px 0;font-size:17px;line-height:1.4;color:#1b1712;padding-bottom:6px;border-bottom:1px solid #eee;">${t}</h2>`;
-const p = (t) => `<p style="margin:0 0 16px 0;font-size:15px;line-height:1.65;color:#3a3a3a;">${t}</p>`;
+  `<h2 style="margin:26px 0 10px 0;font-size:17px;line-height:1.4;color:${INK};padding-bottom:6px;border-bottom:1px solid ${BORDER};">${t}</h2>`;
+const p = (t) => `<p style="margin:0 0 16px 0;font-size:15px;line-height:1.65;color:${INK_MUTED};">${t}</p>`;
 const ul = (items) =>
   `<ul style="margin:0 0 16px 0;padding:0 0 0 20px;">${items
-    .map((it) => `<li style="margin:0 0 8px 0;font-size:15px;line-height:1.6;color:#3a3a3a;">${it}</li>`)
+    .map((it) => `<li style="margin:0 0 8px 0;font-size:15px;line-height:1.6;color:${INK_MUTED};">${it}</li>`)
     .join("")}</ul>`;
 const ol = (items) =>
   `<ol style="margin:0 0 16px 0;padding:0 0 0 20px;">${items
-    .map((it) => `<li style="margin:0 0 8px 0;font-size:15px;line-height:1.6;color:#3a3a3a;">${it}</li>`)
+    .map((it) => `<li style="margin:0 0 8px 0;font-size:15px;line-height:1.6;color:${INK_MUTED};">${it}</li>`)
     .join("")}</ol>`;
 
 function renderMainBlocks(md) {
@@ -99,10 +109,10 @@ function renderFooterBlock(footerMd) {
       const text = isDisclaimer ? trimmed.slice(1, -1) : trimmed;
       const inline = renderInline(text);
       if (idx === 0) {
-        return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 20px 0;"><tr><td style="background-color:#f4e8d8;border:1px solid #e8d0a0;border-radius:10px;padding:16px 18px;"><p style="margin:0;font-size:14.5px;line-height:1.6;color:#1b1712;">${inline}</p></td></tr></table>`;
+        return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 20px 0;"><tr><td style="background-color:${ACCENT_SOFT};border:1px solid ${BORDER_STRONG};border-radius:10px;padding:16px 18px;"><p style="margin:0;font-size:14.5px;line-height:1.6;color:${INK};">${inline}</p></td></tr></table>`;
       }
       if (isDisclaimer) {
-        return `<p style="margin:20px 0 0 0;font-size:12px;line-height:1.6;color:#9a9a9a;font-style:italic;">${inline}</p>`;
+        return `<p style="margin:20px 0 0 0;font-size:12px;line-height:1.6;color:${INK_FAINT};font-style:italic;">${inline}</p>`;
       }
       return p(inline);
     })
@@ -118,24 +128,26 @@ function buildHtml({ episode, mainHtml, footerHtml }) {
         <td align="center">
           <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background-color:#ffffff;border-radius:12px;overflow:hidden;">
             <tr>
-              <td style="padding:32px 36px 8px 36px;">
-                <p style="margin:0;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#ff7a1a;font-weight:bold;">schreiner.digital</p>
-                <p style="margin:4px 0 0 0;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:#928777;">Lehrzettel-Serie &middot; Auftragsabwicklung &middot; Ausgabe ${episode}/${TOTAL_EPISODES}</p>
+              <td style="padding:28px 36px 16px 36px;border-bottom:1px solid ${BORDER};">
+                <p style="margin:0;font-size:20px;line-height:1;letter-spacing:-0.02em;">
+                  <span style="font-weight:bold;color:${INK};">schreiner</span><span style="font-weight:bold;color:${ACCENT};">.digital</span>
+                </p>
+                <p style="margin:8px 0 0 0;font-size:12px;letter-spacing:0.03em;color:${INK_FAINT};">Lehrzettel-Serie &middot; Auftragsabwicklung &middot; Ausgabe ${episode}/${TOTAL_EPISODES}</p>
               </td>
             </tr>
             <tr>
-              <td style="padding:12px 36px 8px 36px;">
+              <td style="padding:20px 36px 8px 36px;">
 ${mainHtml}
 ${footerHtml}
               </td>
             </tr>
             <tr>
-              <td style="padding:20px 36px 32px 36px;border-top:1px solid #eee;">
-                <p style="margin:0 0 6px 0;font-size:12px;line-height:1.6;color:#a0a0a0;">
+              <td style="padding:20px 36px 32px 36px;border-top:1px solid ${BORDER};">
+                <p style="margin:0 0 6px 0;font-size:12px;line-height:1.6;color:${INK_FAINT};">
                   Du bekommst diese E-Mail, weil du dich f&uuml;r die Lehrzettel-Serie &bdquo;Auftragsabwicklung&ldquo; auf schreiner.digital angemeldet hast.
                 </p>
-                <p style="margin:0;font-size:12px;line-height:1.6;color:#a0a0a0;">
-                  <a href="{{ unsubscribe }}" style="color:#928777;text-decoration:underline;">Newsletter abbestellen</a>
+                <p style="margin:0;font-size:12px;line-height:1.6;color:${INK_FAINT};">
+                  <a href="{{ unsubscribe }}" style="color:${INK_FAINT};text-decoration:underline;">Newsletter abbestellen</a>
                 </p>
               </td>
             </tr>
