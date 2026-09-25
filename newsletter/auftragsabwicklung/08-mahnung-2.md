@@ -17,7 +17,7 @@ Zwei Mahnungen haben sich in der Praxis trotzdem etabliert – nicht aus rechtli
 
 ## Und danach?
 
-Bleibt auch die zweite Mahnung erfolglos, hast du im Wesentlichen drei Wege: das gerichtliche Mahnverfahren (kostengünstig, gut geeignet bei unbestrittenen Forderungen), ein Inkassounternehmen (nimmt dir den Aufwand ab, kostet aber eine Provision) oder direkt eine Klage bei strittigen Fällen. Welcher Weg passt, hängt vom Einzelfall und der Höhe der Forderung ab – das würde hier den Rahmen sprengen, ist aber ein gutes Thema, falls du dazu mehr lesen willst.
+Bleibt auch die zweite Mahnung erfolglos, hast du im Wesentlichen drei Wege: das gerichtliche Mahnverfahren (kostengünstig, gut geeignet bei unbestrittenen Forderungen), ein Inkassounternehmen (nimmt dir den Aufwand ab, kostet aber eine Provision) oder direkt eine Klage bei strittigen Fällen. Welcher Weg passt, hängt vom Einzelfall und der Höhe der Forderung ab – ausführlich dazu (inklusive Ablauf, Kosten und Fristen) liest du in [Mahnverfahren, Inkasso oder Klage?](/betrieb-und-recht/mahnverfahren-inkasso-klage).
 
 ## Auf den Punkt
 

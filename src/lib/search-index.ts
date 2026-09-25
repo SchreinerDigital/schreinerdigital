@@ -244,6 +244,13 @@ export async function buildSearchIndex(): Promise<SearchDoc[]> {
       category: "Betrieb & Recht",
     },
     {
+      title: "Mahnverfahren, Inkasso oder Klage?",
+      description:
+        "Wenn auch die zweite Mahnung erfolglos bleibt: gerichtliches Mahnverfahren, Inkassounternehmen oder Klage im Vergleich.",
+      url: "/betrieb-und-recht/mahnverfahren-inkasso-klage",
+      category: "Betrieb & Recht",
+    },
+    {
       title: "Arbeitsvorbereitung in der Werkstatt",
       description:
         "Von der Auftragsklärung bis zur Reihenfolgeplanung: wie Aufträge reibungslos durch die Werkstatt laufen.",

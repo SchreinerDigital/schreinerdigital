@@ -45,6 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/betrieb-und-recht/meisterpflicht-handwerksordnung`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/betrieb-und-recht/aufbewahrungspflichten-gobd`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/betrieb-und-recht/datenschutz-dsgvo`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/betrieb-und-recht/mahnverfahren-inkasso-klage`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/betrieb-und-recht/e-rechnung`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/betrieb-und-recht/zeitmanagement`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/betrieb-und-recht/arbeitsvorbereitung`, changeFrequency: "monthly", priority: 0.7 },

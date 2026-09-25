@@ -41,6 +41,11 @@ const rechtUndPflichten = [
     titel: "Zeitmanagement & Arbeitszeiterfassung",
     text: "Warum Arbeitszeiterfassung bereits verpflichtend ist und welche Erfassungsmethoden sich für Werkstätten eignen.",
   },
+  {
+    href: "/betrieb-und-recht/mahnverfahren-inkasso-klage",
+    titel: "Mahnverfahren, Inkasso oder Klage?",
+    text: "Wenn auch die zweite Mahnung erfolglos bleibt: gerichtliches Mahnverfahren, Inkassounternehmen oder Klage im Vergleich.",
+  },
 ];
 
 const betriebsfuehrung = [
