@@ -730,7 +730,10 @@ Berechnet mit dem Online-Türenmaß-Rechner auf www.schreinerdigital.de`;
         <label htmlFor="wall-width" className="block">
           <span className="mb-1.5 flex items-center text-sm font-medium text-ink-muted">
             Rohbaubreite (Breite der Maueröffnung)
-            <InfoTooltip text="Messen Sie die lichte Breite an mindestens 3 Stellen (oben, mitte, unten) und tragen Sie das schmalste gemessene Maß in mm ein." />
+            <InfoTooltip
+              text="Messen Sie die lichte Breite an mindestens 3 Stellen (oben, mitte, unten) und tragen Sie das schmalste gemessene Maß in mm ein."
+              align="right"
+            />
           </span>
           <div className="relative">
             <input
@@ -752,7 +755,10 @@ Berechnet mit dem Online-Türenmaß-Rechner auf www.schreinerdigital.de`;
         <label htmlFor="wall-height" className="block">
           <span className="mb-1.5 flex items-center text-sm font-medium text-ink-muted">
             Rohbauhöhe (Höhe der Maueröffnung)
-            <InfoTooltip text="Messen Sie die lichte Höhe ab Oberkante Fertigfußboden (OFF) bis zur Sturzunterkante links & rechts. Tragen Sie das kürzere Maß ein." />
+            <InfoTooltip
+              text="Messen Sie die lichte Höhe ab Oberkante Fertigfußboden (OFF) bis zur Sturzunterkante links & rechts. Tragen Sie das kürzere Maß ein."
+              align="right"
+            />
           </span>
           <div className="relative">
             <input
@@ -774,7 +780,10 @@ Berechnet mit dem Online-Türenmaß-Rechner auf www.schreinerdigital.de`;
         <label htmlFor="wall-thickness" className="block">
           <span className="mb-1.5 flex items-center text-sm font-medium text-ink-muted">
             Wandstärke (Mauerstärke inkl. Putz/Fliesen)
-            <InfoTooltip text="Messen Sie die Wanddicke an mehreren Stellen inkl. Putz, Fliesen oder Trockenbau. Tragen Sie die dickste Stelle in mm ein." />
+            <InfoTooltip
+              text="Messen Sie die Wanddicke an mehreren Stellen inkl. Putz, Fliesen oder Trockenbau. Tragen Sie die dickste Stelle in mm ein."
+              align="right"
+            />
           </span>
           <div className="relative">
             <input
