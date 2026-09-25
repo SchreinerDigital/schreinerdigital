@@ -31,9 +31,24 @@ Schick die Auftragsbestätigung *bevor* du Material bestellst oder Werkstattzeit
 
 Die Auftragsbestätigung ist selten reine Förmlichkeit – sie ist dein schriftlicher Nachweis darüber, was genau vereinbart wurde. Im Streitfall zählt, was auf dem Papier steht, nicht was am Telefon gesagt wurde.
 
+## Was gehört in die Auftragsbestätigung?
+
+- **Bezug zum Angebot** – Angebotsnummer und -datum, damit klar ist, worauf sich die Bestätigung bezieht.
+- **Anschrift und Datum.**
+- **Vollständige Leistungsbeschreibung mit Positionen** – Menge, Einheit, Bezeichnung, genauso detailliert wie im Angebot.
+- **Preis, netto und brutto** – mit korrektem USt.-Satz oder Kleinunternehmer-Hinweis nach § 19 UStG.
+- **Zahlungsbedingungen** – Zahlungsziel, vereinbarte Anzahlung.
+- **Voraussichtlicher Ausführungs- oder Liefertermin.**
+
+Wichtig dabei: Weicht deine Auftragsbestätigung inhaltlich vom Angebot ab – anderer Preis, andere Menge, eine zusätzliche Position –, ist das rechtlich keine bloße Bestätigung mehr. Nach § 150 Abs. 2 BGB gilt eine Annahme mit Änderungen als Ablehnung verbunden mit einem neuen Antrag. Du brauchst dann eine erneute, ausdrückliche Zustimmung des Kunden, sonst ist der Vertrag zu den neuen Bedingungen nicht wirksam zustande gekommen.
+
 ---
 
 Unsere **Vorlage für Auftragsbestätigungen** hält Leistungsumfang, Preis und Zahlungsbedingungen sauber strukturiert fest. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
+
+[INFO] Gilt genau wie beim Angebot (Ausgabe 1): Auch die Auftragsbestätigung ist ein aufbewahrungspflichtiger Geschäftsbrief (6 Jahre) und muss, wenn du sie digital archivierst, GoBD-konform unveränderbar abgelegt sein – ein normaler Word-Ordner reicht nicht. Wie das praktisch geht, liest du unter [Aufbewahrungspflichten & GoBD](/betrieb-und-recht/aufbewahrungspflichten-gobd).
+
+Noch mehr fertige Vorlagen für die Auftragsabwicklung findest du auf [unserer Vorlagen-Seite](/vorlagen). Und wer Angebot und Auftragsbestätigung nicht mehr einzeln in Word tippen will: [hier gibt's einen Überblick zu ERP- und Kalkulationsprogrammen](/digitalisierung/kalkulationssoftware) für Schreinereien.
 
 In der nächsten Ausgabe: Die Anzahlungsrechnung – und der Steuertermin, den viele übersehen.
 
