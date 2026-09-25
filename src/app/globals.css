@@ -60,6 +60,31 @@
   --ring: #ff7a1a;
 }
 
+/* Terrassendielen-Rechner: Farben der 2D-CAD-Verlegeplan-Zeichenfläche (SVG).
+   Eigene, schmale Tokengruppe statt der globalen Seiten-Tokens, da die
+   Zeichnung bewusst wie ein physisches Planblatt wirken soll - im Dunkelmodus
+   exakt auf den Kastenhintergrund (#1c1712) abgestimmt, damit kein heller
+   Zettel im dunklen UI "schwebt". */
+.terrace-plan {
+  --plan-paper: #fcfaf7;
+  --plan-grid: #ede7dc;
+  --plan-muted: #78716c;
+  --plan-terrace-fill: #f3eee5;
+  --plan-pill-bg: #ffffff;
+  --plan-pill-border: #d6d3d1;
+  --plan-pill-text: #1c1917;
+}
+
+.dark .terrace-plan {
+  --plan-paper: #1c1712;
+  --plan-grid: #2b2118;
+  --plan-muted: #9c8f7a;
+  --plan-terrace-fill: #26201a;
+  --plan-pill-bg: #2b2118;
+  --plan-pill-border: #4a3d2b;
+  --plan-pill-text: #ece4d7;
+}
+
 @theme inline {
   --color-paper: var(--paper);
   --color-surface: var(--surface);

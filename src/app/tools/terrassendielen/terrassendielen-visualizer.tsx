@@ -94,6 +94,19 @@ export function TerraceVisualizer({ results, inputs, activeScrapMode }: TerraceV
     joistPositions.push(runLength);
   }
 
+  // Bemaßung der Terrassenbreite (rechts): hochkant statt liegend, sonst ragt
+  // die Beschriftung bei der bisherigen liegenden Pille über den rechten
+  // canvasWidth-Rand hinaus und wird abgeschnitten. Schmale/hohe Pille +
+  // gedrehter Text lösen das (analog zur bereits gedrehten PDF-Beschriftung).
+  const crossLabelBaseX = padLeft + runLength * scale + (hasWasteZone ? withoutScrap.wastedMetersPerRow * scale : 0);
+  const crossLineX = crossLabelBaseX + (hasWasteZone ? 16 : 20);
+  const crossPillW = 16;
+  const crossPillH = 54;
+  const crossPillX = crossLineX + 10;
+  const crossPillY = padTop + (crossSpan * scale) / 2 - crossPillH / 2;
+  const crossTextX = crossPillX + crossPillW / 2;
+  const crossTextY = crossPillY + crossPillH / 2 + 3.5;
+
   return (
     <div
       className="flex h-full flex-col justify-between space-y-3.5 rounded-[var(--radius)] border border-border bg-surface p-4 sm:p-5"
@@ -166,7 +179,10 @@ export function TerraceVisualizer({ results, inputs, activeScrapMode }: TerraceV
         </div>
       </div>
 
-      <div className="relative min-h-[260px] flex-1 overflow-hidden rounded-[var(--radius)] border border-border-strong bg-[#fcfaf7] shadow-inner dark:bg-[#1c1712]">
+      <div
+        className="terrace-plan relative min-h-[260px] flex-1 overflow-hidden rounded-[var(--radius)] border border-border-strong shadow-inner"
+        style={{ backgroundColor: "var(--plan-paper)" }}
+      >
         <div ref={scrollRef} className="absolute inset-0 flex items-start justify-center overflow-auto p-1.5">
           <svg
             viewBox={`0 0 ${canvasWidth} ${canvasHeight}`}
@@ -176,7 +192,7 @@ export function TerraceVisualizer({ results, inputs, activeScrapMode }: TerraceV
           >
             <defs>
               <pattern id="planGrid" width="20" height="20" patternUnits="userSpaceOnUse">
-                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#ede7dc" strokeWidth="0.8" />
+                <path d="M 20 0 L 0 0 0 20" fill="none" style={{ stroke: "var(--plan-grid)" }} strokeWidth="0.8" />
               </pattern>
 
               <linearGradient id="woodFull" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -202,17 +218,25 @@ export function TerraceVisualizer({ results, inputs, activeScrapMode }: TerraceV
               </pattern>
 
               <marker id="arrowhead" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
-                <polygon points="0 0.8, 7 3.5, 0 6.2" fill="#57534e" />
+                <polygon points="0 0.8, 7 3.5, 0 6.2" style={{ fill: "var(--plan-muted)" }} />
               </marker>
               <marker id="arrowhead-start" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto-start-reverse">
-                <polygon points="0 0.8, 7 3.5, 0 6.2" fill="#57534e" />
+                <polygon points="0 0.8, 7 3.5, 0 6.2" style={{ fill: "var(--plan-muted)" }} />
               </marker>
             </defs>
 
-            <rect width={canvasWidth} height={canvasHeight} fill="#fcfaf7" />
+            <rect width={canvasWidth} height={canvasHeight} style={{ fill: "var(--plan-paper)" }} />
             <rect width={canvasWidth} height={canvasHeight} fill="url(#planGrid)" />
 
-            <rect x={padLeft} y={padTop} width={runLength * scale} height={crossSpan * scale} fill="#f3eee5" stroke="#78716c" strokeWidth="1.2" rx="1" />
+            <rect
+              x={padLeft}
+              y={padTop}
+              width={runLength * scale}
+              height={crossSpan * scale}
+              style={{ fill: "var(--plan-terrace-fill)", stroke: "var(--plan-muted)" }}
+              strokeWidth="1.2"
+              rx="1"
+            />
 
             {hasWasteZone && (
               <g id="waste-zone-background">
@@ -269,7 +293,7 @@ export function TerraceVisualizer({ results, inputs, activeScrapMode }: TerraceV
 
                   return (
                     <g key={`row-${row.rowIndex}`}>
-                      <text x={padLeft - 8} y={ry + currentBoardHeight / 2 + 3} textAnchor="end" fontSize="9" fill="#78716c" fontFamily="monospace" fontWeight="600">
+                      <text x={padLeft - 8} y={ry + currentBoardHeight / 2 + 3} textAnchor="end" fontSize="9" style={{ fill: "var(--plan-muted)" }} fontFamily="monospace" fontWeight="600">
                         R{row.rowIndex + 1}
                       </text>
 
@@ -376,54 +400,54 @@ export function TerraceVisualizer({ results, inputs, activeScrapMode }: TerraceV
             )}
 
             <g id="dimension-run">
-              <line x1={padLeft} y1={padTop - 18} x2={padLeft + runLength * scale} y2={padTop - 18} stroke="#57534e" strokeWidth="1" markerStart="url(#arrowhead-start)" markerEnd="url(#arrowhead)" />
-              <line x1={padLeft} y1={padTop - 25} x2={padLeft} y2={padTop - 4} stroke="#78716c" strokeWidth="1" />
-              <line x1={padLeft + runLength * scale} y1={padTop - 25} x2={padLeft + runLength * scale} y2={padTop - 4} stroke="#78716c" strokeWidth="1" />
-              <rect x={padLeft + (runLength * scale) / 2 - 45} y={padTop - 30} width="90" height="17" fill="#ffffff" stroke="#d6d3d1" strokeWidth="1" rx="4" />
-              <text x={padLeft + (runLength * scale) / 2} y={padTop - 18} textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#1c1917" fontFamily="monospace">
+              <line x1={padLeft} y1={padTop - 18} x2={padLeft + runLength * scale} y2={padTop - 18} style={{ stroke: "var(--plan-muted)" }} strokeWidth="1" markerStart="url(#arrowhead-start)" markerEnd="url(#arrowhead)" />
+              <line x1={padLeft} y1={padTop - 25} x2={padLeft} y2={padTop - 4} style={{ stroke: "var(--plan-muted)" }} strokeWidth="1" />
+              <line x1={padLeft + runLength * scale} y1={padTop - 25} x2={padLeft + runLength * scale} y2={padTop - 4} style={{ stroke: "var(--plan-muted)" }} strokeWidth="1" />
+              <rect x={padLeft + (runLength * scale) / 2 - 45} y={padTop - 30} width="90" height="17" style={{ fill: "var(--plan-pill-bg)", stroke: "var(--plan-pill-border)" }} strokeWidth="1" rx="4" />
+              <text x={padLeft + (runLength * scale) / 2} y={padTop - 18} textAnchor="middle" fontSize="10.5" fontWeight="700" style={{ fill: "var(--plan-pill-text)" }} fontFamily="monospace">
                 {runLength.toFixed(2)} m {isLengthwise ? "(Länge)" : "(Breite)"}
               </text>
             </g>
 
             <g id="dimension-cross">
               <line
-                x1={padLeft + runLength * scale + (hasWasteZone ? withoutScrap.wastedMetersPerRow * scale + 16 : 20)}
+                x1={crossLineX}
                 y1={padTop}
-                x2={padLeft + runLength * scale + (hasWasteZone ? withoutScrap.wastedMetersPerRow * scale + 16 : 20)}
+                x2={crossLineX}
                 y2={padTop + crossSpan * scale}
-                stroke="#57534e"
+                style={{ stroke: "var(--plan-muted)" }}
                 strokeWidth="1"
                 markerStart="url(#arrowhead-start)"
                 markerEnd="url(#arrowhead)"
               />
               <rect
-                x={padLeft + runLength * scale + (hasWasteZone ? withoutScrap.wastedMetersPerRow * scale + 28 : 30)}
-                y={padTop + (crossSpan * scale) / 2 - 8}
-                width="56"
-                height="16"
-                fill="#ffffff"
-                stroke="#d6d3d1"
+                x={crossPillX}
+                y={crossPillY}
+                width={crossPillW}
+                height={crossPillH}
+                style={{ fill: "var(--plan-pill-bg)", stroke: "var(--plan-pill-border)" }}
                 strokeWidth="1"
                 rx="4"
               />
               <text
-                x={padLeft + runLength * scale + (hasWasteZone ? withoutScrap.wastedMetersPerRow * scale + 56 : 58)}
-                y={padTop + (crossSpan * scale) / 2 + 4}
+                x={crossTextX}
+                y={crossTextY}
                 textAnchor="middle"
                 fontSize="10"
                 fontWeight="700"
-                fill="#1c1917"
+                style={{ fill: "var(--plan-pill-text)" }}
                 fontFamily="monospace"
+                transform={`rotate(-90 ${crossTextX} ${crossTextY})`}
               >
                 {crossSpan.toFixed(2)} m
               </text>
             </g>
 
             <g id="dimension-joist-note">
-              <text x={padLeft} y={padTop + crossSpan * scale + 28} fontSize="10" fill="#57534e" fontFamily="sans-serif" fontWeight="500">
+              <text x={padLeft} y={padTop + crossSpan * scale + 28} fontSize="10" style={{ fill: "var(--plan-muted)" }} fontFamily="sans-serif" fontWeight="500">
                 Unterkonstruktion: {substructure.joistCount} Balken im Abstand von {substructure.spacingCm} cm (Strichlinien)
               </text>
-              <text x={padLeft + runLength * scale} y={padTop + crossSpan * scale + 28} textAnchor="end" fontSize="10" fill="#57534e" fontFamily="sans-serif" fontWeight="500">
+              <text x={padLeft + runLength * scale} y={padTop + crossSpan * scale + 28} textAnchor="end" fontSize="10" style={{ fill: "var(--plan-muted)" }} fontFamily="sans-serif" fontWeight="500">
                 Modus: {activeScrapMode === "with" ? "Wilder Verband" : "Klassisch (ohne Verwertung)"} · {rowsCount} Reihen
               </text>
             </g>
