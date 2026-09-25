@@ -34,6 +34,10 @@ Ein Lieferschein kostet dich beim Erstellen zwei Minuten. Im Streitfall über ei
 
 Unsere **Lieferschein-Vorlage** hat Unterschriftenfeld und Empfangsbestätigung direkt eingebaut. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
 
+[INFO] Auch digital gilt: Bewahrst du Lieferscheine elektronisch auf, muss die Ablage GoBD-konform unveränderbar sein – die 6-Jahres-Frist allein reicht nicht. Wie das praktisch geht, liest du unter [Aufbewahrungspflichten & GoBD](/betrieb-und-recht/aufbewahrungspflichten-gobd).
+
+Noch mehr fertige Vorlagen für die Auftragsabwicklung findest du auf [unserer Vorlagen-Seite](/vorlagen). Und wer Lieferscheine nicht mehr einzeln in Word ausfüllen will: [hier gibt's einen Überblick zu ERP- und Kalkulationsprogrammen](/digitalisierung/kalkulationssoftware) für Schreinereien.
+
 In der nächsten Ausgabe: Die Rechnung – und die zehn Pflichtangaben, ohne die dein Kunde nicht einmal die Vorsteuer ziehen kann.
 
 *Alle Angaben ohne Gewähr und keine Rechtsberatung im Einzelfall.*
