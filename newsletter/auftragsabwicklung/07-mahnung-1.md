@@ -21,16 +21,16 @@ Fehlte dieser Hinweis in deiner Rechnung, oder war die Fälligkeit unklar, tritt
 
 **Die 40-Euro-Pauschale (§ 288 Abs. 5 BGB).** Ist dein Kunde kein Verbraucher, sondern selbst Unternehmer, steht dir bei Verzug zusätzlich zu den Verzugszinsen eine Pauschale von 40 € zu – unabhängig vom tatsächlichen Mahnaufwand.
 
-## Was in eine gute erste Mahnung gehört
+## Auf den Punkt
+
+Die erste Mahnung ist mehr als eine Erinnerung mit strengerem Tonfall: Sie macht einen bereits eingetretenen (oder jetzt eintretenden) Verzug sichtbar – inklusive der Zinsen und Pauschalen, die dir das Gesetz dafür zuspricht.
+
+## Was gehört in die 1. Mahnung?
 
 - Bezug auf die ursprüngliche Rechnung (Nummer, Datum, Betrag)
 - Eine neue, klar terminierte Zahlungsfrist
 - Die konkret bezifferten Verzugszinsen (oder zumindest der Hinweis, dass sie berechnet werden)
 - Ein sachlicher, bestimmter – aber noch nicht drohender – Ton. Die Eskalationsstufe kommt erst in Ausgabe 8.
-
-## Auf den Punkt
-
-Die erste Mahnung ist mehr als eine Erinnerung mit strengerem Tonfall: Sie macht einen bereits eingetretenen (oder jetzt eintretenden) Verzug sichtbar – inklusive der Zinsen und Pauschalen, die dir das Gesetz dafür zuspricht.
 
 ---
 

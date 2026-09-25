@@ -15,13 +15,6 @@ Ein Irrglaube hält sich hartnäckig: dass man erst nach der dritten Mahnung ger
 
 Zwei Mahnungen haben sich in der Praxis trotzdem etabliert – nicht aus rechtlicher Notwendigkeit, sondern weil sie dem Kunden erkennbar mehrere faire Gelegenheiten geben, bevor es teurer und förmlicher wird. Das erleichtert auch dir die Argumentation, sollte es tatsächlich vor Gericht gehen.
 
-## Was die zweite Mahnung anders macht
-
-- **Klarer Ton, aber sachlich.** Die zweite Mahnung darf deutlicher werden als die erste, sollte aber trotzdem nicht drohend oder beleidigend formuliert sein – auch aus Eigeninteresse: Ein unangemessener Ton kann dir im Streitfall selbst schaden.
-- **Konkrete Ankündigung der nächsten Schritte.** Ein Hinweis, dass bei weiterem Zahlungsverzug ein Inkassounternehmen beauftragt oder das gerichtliche Mahnverfahren eingeleitet wird, macht deutlich: Das ist ernst gemeint.
-- **Aktualisierte Verzugszinsen.** Die Zinsen aus § 288 BGB laufen weiter – die Summe in der zweiten Mahnung ist entsprechend höher als in der ersten.
-- **Eine letzte, kurze Zahlungsfrist** – üblich sind wenige Tage bis maximal zwei Wochen.
-
 ## Und danach?
 
 Bleibt auch die zweite Mahnung erfolglos, hast du im Wesentlichen drei Wege: das gerichtliche Mahnverfahren (kostengünstig, gut geeignet bei unbestrittenen Forderungen), ein Inkassounternehmen (nimmt dir den Aufwand ab, kostet aber eine Provision) oder direkt eine Klage bei strittigen Fällen. Welcher Weg passt, hängt vom Einzelfall und der Höhe der Forderung ab – das würde hier den Rahmen sprengen, ist aber ein gutes Thema, falls du dazu mehr lesen willst.
@@ -29,6 +22,13 @@ Bleibt auch die zweite Mahnung erfolglos, hast du im Wesentlichen drei Wege: das
 ## Auf den Punkt
 
 Zwei Mahnungen sind guter Stil, keine gesetzliche Pflicht. Wichtiger als die Anzahl ist, dass jede Mahnung sachlich bleibt, die Zahlen stimmen und die nächsten Schritte klar benannt sind.
+
+## Was gehört in die 2. Mahnung?
+
+- **Klarer Ton, aber sachlich.** Die zweite Mahnung darf deutlicher werden als die erste, sollte aber trotzdem nicht drohend oder beleidigend formuliert sein – auch aus Eigeninteresse: Ein unangemessener Ton kann dir im Streitfall selbst schaden.
+- **Konkrete Ankündigung der nächsten Schritte.** Ein Hinweis, dass bei weiterem Zahlungsverzug ein Inkassounternehmen beauftragt oder das gerichtliche Mahnverfahren eingeleitet wird, macht deutlich: Das ist ernst gemeint.
+- **Aktualisierte Verzugszinsen.** Die Zinsen aus § 288 BGB laufen weiter – die Summe in der zweiten Mahnung ist entsprechend höher als in der ersten.
+- **Eine letzte, kurze Zahlungsfrist** – üblich sind wenige Tage bis maximal zwei Wochen.
 
 ---
 
