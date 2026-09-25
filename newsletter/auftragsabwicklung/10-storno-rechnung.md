@@ -15,14 +15,6 @@ Der naheliegende Impuls ist, die Rechnung einfach zu löschen oder zu vernichten
 
 Der korrekte Weg: die fehlerhafte Rechnung vollständig stornieren und, falls nötig, neu und korrekt ausstellen.
 
-## So wird eine Stornorechnung richtig aufgebaut
-
-- **Eindeutige Kennzeichnung** als "Stornorechnung" oder "Rechnungskorrektur" – nicht einfach als weitere normale Rechnung.
-- **Eine eigene, neue fortlaufende Rechnungsnummer** – niemals die Nummer der stornierten Original-Rechnung wiederverwenden.
-- **Klarer Bezug auf das Original**: Nummer und Datum der stornierten Rechnung müssen erkennbar sein.
-- **Beträge als Abzug ausgewiesen**, typischerweise mit einem Minus-Vorzeichen (z. B. "./. 250,00 €") – inklusive der anteiligen, ebenfalls stornierten Umsatzsteuer.
-- Bei Bedarf eine **neue, korrekte Rechnung** im Anschluss, mit wiederum eigener Rechnungsnummer.
-
 ## Stornorechnung oder Gutschrift – was jetzt?
 
 Nach der letzten Ausgabe drängt sich die Frage auf: Storno oder Gutschrift? Die Faustregel: Ist die Rechnung als Ganzes falsch (falscher Empfänger, falscher Betrag, doppelt gestellt), brauchst du die vollständige Stornorechnung. Ist die Rechnung im Kern richtig und es geht nur um einen nachträglichen Teilnachlass, reicht die kaufmännische Gutschrift aus Ausgabe 9.
@@ -35,9 +27,21 @@ Vom Angebot bis zur Stornorechnung hat jedes Dokument in der Auftragsabwicklung 
 
 Eine falsche Rechnung verschwindet nicht durchs Löschen – nur durch eine ordentliche Stornorechnung mit eigener Nummer, klarem Bezug zum Original und ausgewiesenem Minusbetrag.
 
+## Was gehört in die Stornorechnung?
+
+- **Eindeutige Kennzeichnung** als "Stornorechnung" oder "Rechnungskorrektur" – nicht einfach als weitere normale Rechnung.
+- **Eine eigene, neue fortlaufende Rechnungsnummer** – niemals die Nummer der stornierten Original-Rechnung wiederverwenden.
+- **Klarer Bezug auf das Original**: Nummer und Datum der stornierten Rechnung müssen erkennbar sein.
+- **Beträge als Abzug ausgewiesen**, typischerweise mit einem Minus-Vorzeichen (z. B. "./. 250,00 €") – inklusive der anteiligen, ebenfalls stornierten Umsatzsteuer.
+- Bei Bedarf eine **neue, korrekte Rechnung** im Anschluss, mit wiederum eigener Rechnungsnummer.
+
 ---
 
 Unsere **Stornorechnung-Vorlage** hat Nummerierung, Originalbezug und Minus-Ausweis bereits richtig vorbereitet – wie alle zehn Vorlagen aus dieser Serie, im echten DIN-5008-Format und im schreiner.digital-Design. Sie erscheinen mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
+
+[INFO] Als Rechnungskorrektur mit eigenem Steuerausweis zählt die Stornorechnung wie die Rechnung selbst zu den Buchungsbelegen – Aufbewahrungsfrist 8 Jahre statt der 6 Jahre für reine Geschäftsbriefe. Digital archiviert muss sie ebenso GoBD-konform unveränderbar abgelegt sein, zusammen mit der ursprünglichen, stornierten Rechnung. Wie das praktisch geht, liest du unter [Aufbewahrungspflichten & GoBD](/betrieb-und-recht/aufbewahrungspflichten-gobd).
+
+Noch mehr fertige Vorlagen für die Auftragsabwicklung findest du auf [unserer Vorlagen-Seite](/vorlagen). Und wer Stornorechnungen und Rechnungskorrekturen nicht mehr einzeln in Word erstellen will: [hier gibt's einen Überblick zu ERP- und Kalkulationsprogrammen](/digitalisierung/kalkulationssoftware) für Schreinereien.
 
 Danke, dass du die ganze Serie mitgelesen hast. Falls eine Ausgabe besonders hilfreich war (oder du einen Fehler entdeckt hast): Antworte einfach auf diese Mail.
 
