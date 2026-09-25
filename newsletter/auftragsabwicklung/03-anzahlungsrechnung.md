@@ -29,9 +29,23 @@ Eine Anzahlungsrechnung ist eine vollwertige Rechnung und muss dieselben Pflicht
 
 Bei Anzahlungen zählt für das Finanzamt der Tag des Zahlungseingangs, nicht der Tag der fertigen Leistung. Wer das im Blick behält, erlebt bei der nächsten Umsatzsteuer-Voranmeldung keine Überraschung.
 
+## Was gehört in die Anzahlungsrechnung?
+
+Die allgemeinen Rechnungspflichtangaben gelten auch hier (dazu mehr in Ausgabe 5) – spezifisch für die Anzahlungsrechnung kommt hinzu:
+
+- **Eindeutige Kennzeichnung als Anzahlungs- oder Abschlagsrechnung** – keine normale Rechnung, damit in der Buchhaltung nichts verwechselt wird.
+- **Bezug zum zugrunde liegenden Auftrag oder Angebot** – Nummer und Datum, damit klar ist, worauf sich die Anzahlung bezieht.
+- **Der Anzahlungsbetrag selbst** – als fester Betrag oder Prozentsatz vom Gesamtauftragswert, netto ausgewiesen, mit gesondert berechneter Umsatzsteuer auf genau diesen Teilbetrag (nicht auf die Gesamtsumme).
+- **Zahlungsfrist** für die Anzahlung.
+- **Hinweis, dass es sich um eine Teilzahlung handelt** – der Restbetrag folgt mit der Schlussrechnung.
+
 ---
 
 Unsere **Anzahlungsrechnung-Vorlage** trennt Auftragswert und Anzahlungsbetrag sauber und ist wie alle Vorlagen dieser Serie bereits im schreiner.digital-Design fertig gestaltet. Sie erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
+
+[INFO] Hier gilt eine strengere Frist als bei Angebot und Auftragsbestätigung: Die Anzahlungsrechnung ist eine echte Rechnung und damit ein Buchungsbeleg – Aufbewahrungsfrist 8 Jahre statt der 6 Jahre für Geschäftsbriefe. Digital archiviert muss sie ebenso GoBD-konform unveränderbar abgelegt sein. Wie das praktisch geht, liest du unter [Aufbewahrungspflichten & GoBD](/betrieb-und-recht/aufbewahrungspflichten-gobd).
+
+Noch mehr fertige Vorlagen für die Auftragsabwicklung findest du auf [unserer Vorlagen-Seite](/vorlagen). Und wer Anzahlungen und USt.-Aufteilung nicht mehr von Hand nachrechnen will: [hier gibt's einen Überblick zu ERP- und Kalkulationsprogrammen](/digitalisierung/kalkulationssoftware) für Schreinereien.
 
 In der nächsten Ausgabe: Der Lieferschein – warum ihn niemand vorschreibt und warum du ihn trotzdem willst.
 
