@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import { cn } from "@/lib/cn";
 import type { CalculationResults, TerraceInputs, BoardPiece } from "./types";
@@ -33,6 +33,7 @@ export function TerraceVisualizer({ results, inputs, activeScrapMode }: TerraceV
   const scrollRef = useRef<HTMLDivElement>(null);
   const [containerSize, setContainerSize] = useState({ width: 900, height: 380 });
   const [zoom, setZoom] = useState(1);
+  const [isPanning, setIsPanning] = useState(false);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -44,6 +45,43 @@ export function TerraceVisualizer({ results, inputs, activeScrapMode }: TerraceV
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
+  // Klick-und-Ziehen zum Verschieben (Pan): Start-Position + Start-Scroll in
+  // einer Ref statt State, da mousemove sehr häufig feuert und wir dafür
+  // keine Re-Renders auslösen wollen - die Scrollposition wird direkt am
+  // DOM-Element gesetzt.
+  const panStateRef = useRef<{ startX: number; startY: number; startScrollLeft: number; startScrollTop: number } | null>(null);
+
+  useEffect(() => {
+    const handlePointerMove = (e: MouseEvent) => {
+      const pan = panStateRef.current;
+      const el = scrollRef.current;
+      if (!pan || !el) return;
+      el.scrollLeft = pan.startScrollLeft - (e.clientX - pan.startX);
+      el.scrollTop = pan.startScrollTop - (e.clientY - pan.startY);
+    };
+    const handlePointerUp = () => {
+      if (panStateRef.current) {
+        panStateRef.current = null;
+        setIsPanning(false);
+      }
+    };
+    window.addEventListener("mousemove", handlePointerMove);
+    window.addEventListener("mouseup", handlePointerUp);
+    return () => {
+      window.removeEventListener("mousemove", handlePointerMove);
+      window.removeEventListener("mouseup", handlePointerUp);
+    };
+  }, []);
+
+  const handlePanStart = (e: React.MouseEvent) => {
+    if (e.button !== 0) return;
+    const el = scrollRef.current;
+    if (!el) return;
+    e.preventDefault();
+    panStateRef.current = { startX: e.clientX, startY: e.clientY, startScrollLeft: el.scrollLeft, startScrollTop: el.scrollTop };
+    setIsPanning(true);
+  };
 
   const { runLength, crossSpan, rowsCount, withScrap, withoutScrap, substructure } = results;
 
@@ -75,9 +113,66 @@ export function TerraceVisualizer({ results, inputs, activeScrapMode }: TerraceV
   const svgDisplayHeight = canvasHeight * displayScale;
   const canZoomIn = zoom < ZOOM_MAX - 0.001;
   const canZoomOut = zoom > ZOOM_MIN + 0.001;
-  const zoomIn = () => setZoom((z) => Math.min(ZOOM_MAX, Math.round((z + ZOOM_STEP) * 100) / 100));
-  const zoomOut = () => setZoom((z) => Math.max(ZOOM_MIN, Math.round((z - ZOOM_STEP) * 100) / 100));
-  const zoomReset = () => setZoom(1);
+  const clampZoom = (z: number) => Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, Math.round(z * 100) / 100));
+
+  // Zoomt so, dass der Punkt unter dem Mauszeiger (bzw. bei Klick auf die
+  // +/- Buttons: die Mitte der sichtbaren Fläche) an derselben Stelle bleiben
+  // bleibt - die Scrollposition wird danach im Effekt unten passend
+  // nachgezogen, sobald die neue Größe gerendert ist.
+  const pendingAnchorRef = useRef<{ fracX: number; fracY: number; viewportX: number; viewportY: number } | null>(null);
+
+  const applyZoomAt = (deltaZoom: number, clientX?: number, clientY?: number) => {
+    const el = scrollRef.current;
+    const newZoom = clampZoom(zoom + deltaZoom);
+    if (!el || svgDisplayWidth <= 0 || svgDisplayHeight <= 0) {
+      setZoom(newZoom);
+      return;
+    }
+    const rect = el.getBoundingClientRect();
+    const viewportX = clientX !== undefined ? clientX - rect.left : el.clientWidth / 2;
+    const viewportY = clientY !== undefined ? clientY - rect.top : el.clientHeight / 2;
+    const fracX = (el.scrollLeft + viewportX) / svgDisplayWidth;
+    const fracY = (el.scrollTop + viewportY) / svgDisplayHeight;
+    pendingAnchorRef.current = { fracX, fracY, viewportX, viewportY };
+    setZoom(newZoom);
+  };
+
+  useLayoutEffect(() => {
+    const el = scrollRef.current;
+    const anchor = pendingAnchorRef.current;
+    if (!el || !anchor) return;
+    el.scrollLeft = anchor.fracX * svgDisplayWidth - anchor.viewportX;
+    el.scrollTop = anchor.fracY * svgDisplayHeight - anchor.viewportY;
+    pendingAnchorRef.current = null;
+  }, [svgDisplayWidth, svgDisplayHeight]);
+
+  const zoomIn = () => applyZoomAt(ZOOM_STEP);
+  const zoomOut = () => applyZoomAt(-ZOOM_STEP);
+  const zoomReset = () => {
+    pendingAnchorRef.current = { fracX: 0, fracY: 0, viewportX: 0, viewportY: 0 };
+    setZoom(1);
+  };
+
+  // Zoom per Mausrad: nativer (nicht-passiver) Listener, damit preventDefault
+  // zuverlässig funktioniert und die Seite dabei nicht mitscrollt. Über eine
+  // Ref statt Dependency-Array angebunden, damit der Listener nicht bei
+  // jedem Render neu (de)registriert werden muss.
+  const applyZoomAtRef = useRef(applyZoomAt);
+  useEffect(() => {
+    applyZoomAtRef.current = applyZoomAt;
+  });
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const direction = e.deltaY < 0 ? 1 : -1;
+      applyZoomAtRef.current(direction * ZOOM_STEP, e.clientX, e.clientY);
+    };
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    return () => el.removeEventListener("wheel", handleWheel);
+  }, []);
 
   const isLengthwise = inputs.orientation === "lengthwise";
   const boardWidthM = inputs.boardWidth / 1000;
@@ -183,12 +278,19 @@ export function TerraceVisualizer({ results, inputs, activeScrapMode }: TerraceV
         className="terrace-plan relative min-h-[260px] flex-1 overflow-hidden rounded-[var(--radius)] border border-border-strong shadow-inner"
         style={{ backgroundColor: "var(--plan-paper)" }}
       >
-        <div ref={scrollRef} className="absolute inset-0 flex items-start justify-center overflow-auto p-1.5">
+        <div
+          ref={scrollRef}
+          onMouseDown={handlePanStart}
+          className={cn(
+            "absolute inset-0 flex overflow-auto p-1.5",
+            isPanning ? "cursor-grabbing" : "cursor-grab",
+          )}
+        >
           <svg
             viewBox={`0 0 ${canvasWidth} ${canvasHeight}`}
             width={svgDisplayWidth}
             height={svgDisplayHeight}
-            className="block shrink-0 select-none"
+            className="m-auto block shrink-0 select-none"
           >
             <defs>
               <pattern id="planGrid" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -484,7 +586,7 @@ export function TerraceVisualizer({ results, inputs, activeScrapMode }: TerraceV
           </button>
         </div>
 
-        {hoveredPiece && (
+        {hoveredPiece && !isPanning && (
           <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-lg border border-border-strong bg-surface/95 px-3.5 py-1.5 font-mono text-xs text-ink shadow-md backdrop-blur-xs">
             <span className={cn("inline-block size-2 rounded-full", hoveredPiece.isWaste ? "bg-red-500" : "bg-accent")} />
             {hoveredPiece.isWaste ? (
