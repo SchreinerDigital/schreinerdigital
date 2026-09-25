@@ -96,7 +96,7 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
-  const navRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
 
   // Close any open menu whenever the route actually changes (React's
   // "adjusting state on prop change" pattern — no effect needed).
@@ -138,65 +138,136 @@ export function SiteHeader() {
           <span className="sr-only">schreiner.digital – Startseite</span>
         </Link>
 
-        <nav ref={navRef} className="hidden items-center gap-1 xl:flex">
-          {navGroups.map((g) => (
-            <div key={g.id} className="relative">
-              <button
-                type="button"
-                aria-expanded={openGroup === g.id}
-                aria-haspopup="menu"
-                onClick={() => setOpenGroup((v) => (v === g.id ? null : g.id))}
-                className={cn(
-                  "flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 text-sm font-medium transition-colors",
-                  isGroupActive(g) ? "text-accent" : "text-ink-muted hover:text-ink",
-                )}
-              >
-                {g.label}
-                <ChevronIcon
+        <div ref={navRef} className="contents">
+          <nav className="hidden items-center gap-1 xl:flex">
+            {navGroups.map((g) => (
+              <div key={g.id} className="relative">
+                <button
+                  type="button"
+                  aria-expanded={openGroup === g.id}
+                  aria-haspopup="menu"
+                  onClick={() => setOpenGroup((v) => (v === g.id ? null : g.id))}
                   className={cn(
-                    "size-3.5 transition-transform",
-                    openGroup === g.id && "rotate-180",
+                    "flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 text-sm font-medium transition-colors",
+                    isGroupActive(g) ? "text-accent" : "text-ink-muted hover:text-ink",
                   )}
-                />
-              </button>
-
-              {openGroup === g.id && (
-                <div
-                  role="menu"
-                  className="absolute left-0 top-full z-10 mt-2 w-56 rounded-[var(--radius)] border border-border bg-surface p-1.5 shadow-lg"
                 >
-                  {g.overviewHref && (
-                    <>
+                  {g.label}
+                  <ChevronIcon
+                    className={cn(
+                      "size-3.5 transition-transform",
+                      openGroup === g.id && "rotate-180",
+                    )}
+                  />
+                </button>
+
+                {openGroup === g.id && (
+                  <div
+                    role="menu"
+                    className="absolute left-0 top-full z-10 mt-2 w-56 rounded-[var(--radius)] border border-border bg-surface p-1.5 shadow-lg"
+                  >
+                    {g.overviewHref && (
+                      <>
+                        <Link
+                          href={g.overviewHref}
+                          role="menuitem"
+                          className="block rounded-md px-3 py-2 text-sm font-medium text-ink hover:bg-surface-2"
+                        >
+                          {g.overviewLabel ?? `Alle ${g.label} ansehen`}
+                        </Link>
+                        <div className="my-1 border-t border-border" />
+                      </>
+                    )}
+                    {g.items.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        role="menuitem"
+                        className={cn(
+                          "block rounded-md px-3 py-2 text-sm",
+                          isActive(item.href)
+                            ? "bg-accent-soft text-accent"
+                            : "text-ink-muted hover:bg-surface-2 hover:text-ink",
+                        )}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </nav>
+
+          {/* Zwischen md und xl fehlt sonst jede Navigation (die volle Textnav
+              braucht ~650px und passt erst ab xl) - dieses eine Dropdown
+              bündelt alle Gruppen, damit der Header auf Tablet-Breiten nicht
+              mit einer großen leeren Lücke neben dem Logo wirkt. */}
+          <div className="relative hidden md:flex xl:hidden">
+            <button
+              type="button"
+              aria-expanded={openGroup === "compact"}
+              aria-haspopup="menu"
+              onClick={() => setOpenGroup((v) => (v === "compact" ? null : "compact"))}
+              className={cn(
+                "flex items-center gap-1.5 whitespace-nowrap rounded-full border border-border px-3 py-2 text-sm font-medium transition-colors",
+                openGroup === "compact" ? "text-accent" : "text-ink-muted hover:text-ink",
+              )}
+            >
+              Alle Bereiche
+              <ChevronIcon
+                className={cn(
+                  "size-3.5 transition-transform",
+                  openGroup === "compact" && "rotate-180",
+                )}
+              />
+            </button>
+
+            {openGroup === "compact" && (
+              <div
+                role="menu"
+                className="absolute left-1/2 top-full z-10 mt-2 max-h-[70vh] w-[32rem] max-w-[calc(100vw-2rem)] -translate-x-1/2 overflow-y-auto rounded-[var(--radius)] border border-border bg-surface p-3 shadow-lg columns-2 gap-x-4"
+              >
+                {navGroups.map((g) => (
+                  <div key={g.id} className="mb-3 break-inside-avoid">
+                    <div
+                      className={cn(
+                        "px-2 pb-1 text-xs font-semibold uppercase tracking-wide",
+                        isGroupActive(g) ? "text-accent" : "text-ink-faint",
+                      )}
+                    >
+                      {g.label}
+                    </div>
+                    {g.overviewHref && (
                       <Link
                         href={g.overviewHref}
                         role="menuitem"
-                        className="block rounded-md px-3 py-2 text-sm font-medium text-ink hover:bg-surface-2"
+                        className="block rounded-md px-2 py-1.5 text-sm font-medium text-ink hover:bg-surface-2"
                       >
                         {g.overviewLabel ?? `Alle ${g.label} ansehen`}
                       </Link>
-                      <div className="my-1 border-t border-border" />
-                    </>
-                  )}
-                  {g.items.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      role="menuitem"
-                      className={cn(
-                        "block rounded-md px-3 py-2 text-sm",
-                        isActive(item.href)
-                          ? "bg-accent-soft text-accent"
-                          : "text-ink-muted hover:bg-surface-2 hover:text-ink",
-                      )}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </nav>
+                    )}
+                    {g.items.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        role="menuitem"
+                        className={cn(
+                          "block rounded-md px-2 py-1.5 text-sm",
+                          isActive(item.href)
+                            ? "bg-accent-soft text-accent"
+                            : "text-ink-muted hover:bg-surface-2 hover:text-ink",
+                        )}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
 
         <div className="flex items-center gap-2">
           <SiteSearch />
