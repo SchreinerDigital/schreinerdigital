@@ -279,6 +279,7 @@ export function QuellSchwundRechner() {
             <span className="flex items-center">
               Holzart
               <InfoTooltip
+                align="left"
                 text={`• Tangential: ${species.tangentialCoef}% je 1% Feuchte (bei liegenden Ringen, arbeitet am stärksten)\n• Radial: ${species.radialCoef}% je 1% Feuchte (bei stehenden Ringen, sehr formstabil)\n• Fasersättigung: ca. ${species.fsp}% Holzfeuchte (Holz arbeitet nur unterhalb dieses Wertes)`}
               />
             </span>
@@ -430,7 +431,6 @@ export function QuellSchwundRechner() {
               <span className="mb-1.5 flex items-center text-sm font-medium text-ink-muted">
                 Ausgangsfeuchte u₁
                 <InfoTooltip
-                  align="left"
                   text="Die Feuchte des Holzes beim Zuschnitt in der Werkstatt. Möbelholz liegt meist bei 8–10 %, getrocknetes Bauholz bei ca. 15 %."
                 />
               </span>
@@ -546,7 +546,10 @@ export function QuellSchwundRechner() {
         <div className="space-y-4">
           <h2 className="flex items-center text-base font-medium text-ink">
             Ergebnis
-            <InfoTooltip text="Berechnet die Maßänderung aus differentiellem Schwundmaß, Jahrringlage und Feuchteänderung nach DIN 52184." />
+            <InfoTooltip
+              align="left"
+              text="Berechnet die Maßänderung aus differentiellem Schwundmaß, Jahrringlage und Feuchteänderung nach DIN 52184."
+            />
           </h2>
 
           <div
