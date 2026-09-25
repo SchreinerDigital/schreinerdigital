@@ -747,6 +747,7 @@ const PDF_BORDER: [number, number, number] = [230, 221, 206];
 const PDF_ACCENT: [number, number, number] = [255, 122, 26];
 const PDF_ACCENT_SOFT: [number, number, number] = [254, 243, 199];
 const PDF_JOIST: [number, number, number] = [100, 116, 139];
+const PDF_WOOD: [number, number, number] = [207, 162, 110];
 
 async function generateTerracePdf(
   inputs: TerraceInputs,
@@ -874,64 +875,89 @@ async function generateTerracePdf(
   const drawAreaW = contentWidth - drawPadLeft - drawPadRight;
   const drawAreaH = diagramBoxH - drawPadTop - drawPadBottom;
   const drawScale = Math.min(drawAreaW / runLength, drawAreaH / crossSpan);
-  const drawOriginX = pageMargin + drawPadLeft;
-  const drawOriginY = diagramBoxY + drawPadTop;
+  const usedW = runLength * drawScale;
+  const usedH = crossSpan * drawScale;
+  // Zeichnung im Kasten zentrieren statt oben links zu verankern - bei stark
+  // länglichen Terrassen (z.B. 20 x 10 m) bleibt sonst einseitig viel Leerraum.
+  const drawOriginX = pageMargin + drawPadLeft + (drawAreaW - usedW) / 2;
+  const drawOriginY = diagramBoxY + drawPadTop + (drawAreaH - usedH) / 2;
 
-  // Terrassen-Rechteck
-  doc.setDrawColor(...PDF_INK);
-  doc.setLineWidth(0.3);
-  doc.rect(drawOriginX, drawOriginY, runLength * drawScale, crossSpan * drawScale, "D");
-
-  // Unterkonstruktion (Strichlinien)
+  // Unterkonstruktion (Strichlinien) - wird zweimal gezeichnet (vor und nach
+  // den Dielen), siehe Begründung weiter unten.
   const joistSpacingM = Math.max(0.2, inputs.joistSpacing / 100);
   const joistPositions: number[] = [];
   for (let pos = 0; pos <= runLength + 0.05; pos += joistSpacingM) {
     joistPositions.push(Math.min(pos, runLength));
   }
   if (joistPositions[joistPositions.length - 1] < runLength - 0.05) joistPositions.push(runLength);
-  doc.setDrawColor(...PDF_JOIST);
-  doc.setLineWidth(0.5);
-  doc.setLineDashPattern([1.4, 1], 0);
-  joistPositions.forEach((pos) => {
-    const jx = drawOriginX + pos * drawScale;
-    doc.line(jx, drawOriginY, jx, drawOriginY + crossSpan * drawScale);
-  });
-  doc.setLineDashPattern([], 0);
+  const drawJoistLines = () => {
+    doc.setDrawColor(...PDF_JOIST);
+    doc.setLineWidth(0.5);
+    doc.setLineDashPattern([1.4, 1], 0);
+    joistPositions.forEach((pos) => {
+      const jx = drawOriginX + pos * drawScale;
+      doc.line(jx, drawOriginY, jx, drawOriginY + usedH);
+    });
+    doc.setLineDashPattern([], 0);
+  };
+  drawJoistLines();
 
   // Dielenreihen
   const boardWidthM = inputs.boardWidth / 1000;
   const gapM = inputs.gap / 1000;
   const rowHeightPx = boardWidthM * drawScale;
   const gapPx = gapM * drawScale;
-  activeRows.forEach((row) => {
-    const ry = drawOriginY + row.rowIndex * (rowHeightPx + gapPx);
-    const isLastRow = row.rowIndex === rowsCount - 1;
-    const currentBoardHeight =
-      isLastRow && results.lastBoardTrimNeeded ? (results.lastBoardCutWidth / 1000) * drawScale : rowHeightPx;
+  const rowPitchPx = rowHeightPx + gapPx;
+  // Unterhalb dieses Reihenabstands lässt sich im Druck keine einzelne Fuge
+  // mehr sauber auflösen - bei großen Terrassen (z.B. 20 x 10 m, 60+ Reihen)
+  // würden einzeln umrandete Rechtecke nur noch als unleserlicher Rasterbrei
+  // erscheinen. Ab hier wird stattdessen eine geschlossene Dielenfläche mit
+  // grob gerasterten Trennlinien gezeichnet; die exakten Stückzahlen stehen
+  // ohnehin in der Einkaufsliste.
+  const DENSE_ROW_THRESHOLD_MM = 1.8;
+  const isDenseLayout = rowPitchPx < DENSE_ROW_THRESHOLD_MM;
 
-    row.pieces.forEach((piece) => {
-      const px = drawOriginX + piece.startX * drawScale;
-      const pWidth = piece.length * drawScale;
-      const isReused = piece.isOffcut && activeScrapMode === "with";
-      const pieceFill: [number, number, number] = isReused ? PDF_ACCENT_SOFT : [255, 255, 255];
-      doc.setFillColor(...pieceFill);
-      doc.setDrawColor(...PDF_INK);
-      doc.setLineWidth(0.2);
-      doc.rect(px, ry, pWidth, currentBoardHeight, "FD");
+  if (isDenseLayout) {
+    doc.setFillColor(...PDF_WOOD);
+    doc.setDrawColor(...PDF_INK);
+    doc.setLineWidth(0.3);
+    doc.rect(drawOriginX, drawOriginY, usedW, usedH, "FD");
+
+    const rowStride = Math.max(1, Math.ceil(DENSE_ROW_THRESHOLD_MM / rowPitchPx));
+    doc.setDrawColor(...PDF_MUTED_LIGHT);
+    doc.setLineWidth(0.15);
+    for (let r = rowStride; r < rowsCount; r += rowStride) {
+      const ly = drawOriginY + r * rowPitchPx;
+      doc.line(drawOriginX, ly, drawOriginX + usedW, ly);
+    }
+  } else {
+    doc.setDrawColor(...PDF_INK);
+    doc.setLineWidth(0.3);
+    doc.rect(drawOriginX, drawOriginY, usedW, usedH, "D");
+
+    activeRows.forEach((row) => {
+      const ry = drawOriginY + row.rowIndex * rowPitchPx;
+      const isLastRow = row.rowIndex === rowsCount - 1;
+      const currentBoardHeight =
+        isLastRow && results.lastBoardTrimNeeded ? (results.lastBoardCutWidth / 1000) * drawScale : rowHeightPx;
+
+      row.pieces.forEach((piece) => {
+        const px = drawOriginX + piece.startX * drawScale;
+        const pWidth = piece.length * drawScale;
+        const isReused = piece.isOffcut && activeScrapMode === "with";
+        const pieceFill: [number, number, number] = isReused ? PDF_ACCENT_SOFT : [255, 255, 255];
+        doc.setFillColor(...pieceFill);
+        doc.setDrawColor(...PDF_INK);
+        doc.setLineWidth(0.2);
+        doc.rect(px, ry, pWidth, currentBoardHeight, "FD");
+      });
     });
-  });
+  }
 
   // UK-Strichlinien liegen unter den Dielen, deshalb hier als Overlay erneut
   // gezeichnet, damit sie durch die deckenden Dielenflächen sichtbar bleiben
   // (identisch zum zweistufigen Aufbau im Bildschirm-Visualizer).
-  doc.setDrawColor(...PDF_JOIST);
-  doc.setLineWidth(0.5);
-  doc.setLineDashPattern([1.4, 1], 0);
-  joistPositions.forEach((pos) => {
-    const jx = drawOriginX + pos * drawScale;
-    doc.line(jx, drawOriginY, jx, drawOriginY + crossSpan * drawScale);
-  });
-  doc.setLineDashPattern([], 0);
+  drawJoistLines();
 
   // Maßpfeile
   doc.setFont("helvetica", "bold");
@@ -945,11 +971,14 @@ async function generateTerracePdf(
   doc.setFont("helvetica", "normal");
   doc.setFontSize(7);
   doc.setTextColor(...PDF_MUTED);
-  doc.text(`Unterkonstruktion: ${substructure.joistCount} Balken im Achsabstand von ${substructure.spacingCm} cm (Strichlinien)`, pageMargin, diagramBoxY + diagramBoxH + 4.5);
+  const joistNoteBase = `Unterkonstruktion: ${substructure.joistCount} Balken im Achsabstand von ${substructure.spacingCm} cm (Strichlinien)`;
+  const joistNote = isDenseLayout ? `${joistNoteBase} · Plan bei dieser Größe vereinfacht, Details in der Einkaufsliste` : joistNoteBase;
+  doc.text(joistNote, pageMargin, diagramBoxY + diagramBoxH + 4.5);
 
   // Legende
   const legendY = diagramBoxY + diagramBoxH + 9.5;
-  doc.setFillColor(255, 255, 255);
+  const deckSwatchFill: [number, number, number] = isDenseLayout ? PDF_WOOD : [255, 255, 255];
+  doc.setFillColor(...deckSwatchFill);
   doc.setDrawColor(...PDF_INK);
   doc.setLineWidth(0.25);
   doc.rect(pageMargin, legendY - 2.6, 4, 2.6, "FD");
@@ -957,7 +986,7 @@ async function generateTerracePdf(
   doc.setTextColor(...PDF_MUTED);
   doc.text(`Terrassendiele (${inputs.boardWidth} mm Breite)`, pageMargin + 6, legendY);
 
-  if (activeScrapMode === "with") {
+  if (activeScrapMode === "with" && !isDenseLayout) {
     doc.setFillColor(...PDF_ACCENT_SOFT);
     doc.rect(pageMargin + 68, legendY - 2.6, 4, 2.6, "FD");
     doc.text("Wiederverwendetes Reststück", pageMargin + 74, legendY);

@@ -1,8 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Minus, Plus } from "lucide-react";
 import { cn } from "@/lib/cn";
 import type { CalculationResults, TerraceInputs, BoardPiece } from "./types";
+
+const ZOOM_MIN = 0.5;
+const ZOOM_MAX = 3;
+const ZOOM_STEP = 0.25;
 
 interface TerraceVisualizerProps {
   results: CalculationResults;
@@ -25,6 +30,21 @@ export function TerraceVisualizer({ results, inputs, activeScrapMode }: TerraceV
     wasteLength?: number;
   } | null>(null);
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [containerSize, setContainerSize] = useState({ width: 900, height: 380 });
+  const [zoom, setZoom] = useState(1);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver((entries) => {
+      const rect = entries[0]?.contentRect;
+      if (rect) setContainerSize({ width: rect.width, height: rect.height });
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const { runLength, crossSpan, rowsCount, withScrap, withoutScrap, substructure } = results;
 
   const activeRows = activeScrapMode === "with" ? withScrap.simulatedRows : withoutScrap.simulatedRows;
@@ -41,6 +61,23 @@ export function TerraceVisualizer({ results, inputs, activeScrapMode }: TerraceV
   const scale = availableWidth / runLength;
   const availableHeight = crossSpan * scale;
   const canvasHeight = Math.max(380, availableHeight + padTop + padBottom);
+
+  // "Zoom" ist relativ zur Einpassung in den sichtbaren Kasten (baseScale) zu
+  // verstehen: 100 % zeigt den kompletten Plan ohne Scrollen (wie bisher),
+  // Werte darüber vergrößern gezielt und erfordern dann Scrollen/Pannen -
+  // genau dafür sind bei großen Terrassen die Zoom-Buttons gedacht.
+  const baseScale =
+    containerSize.width > 0 && containerSize.height > 0
+      ? Math.min(containerSize.width / canvasWidth, containerSize.height / canvasHeight)
+      : 1;
+  const displayScale = baseScale * zoom;
+  const svgDisplayWidth = canvasWidth * displayScale;
+  const svgDisplayHeight = canvasHeight * displayScale;
+  const canZoomIn = zoom < ZOOM_MAX - 0.001;
+  const canZoomOut = zoom > ZOOM_MIN + 0.001;
+  const zoomIn = () => setZoom((z) => Math.min(ZOOM_MAX, Math.round((z + ZOOM_STEP) * 100) / 100));
+  const zoomOut = () => setZoom((z) => Math.max(ZOOM_MIN, Math.round((z - ZOOM_STEP) * 100) / 100));
+  const zoomReset = () => setZoom(1);
 
   const isLengthwise = inputs.orientation === "lengthwise";
   const boardWidthM = inputs.boardWidth / 1000;
@@ -129,9 +166,14 @@ export function TerraceVisualizer({ results, inputs, activeScrapMode }: TerraceV
         </div>
       </div>
 
-      <div className="relative flex min-h-[260px] flex-1 items-center justify-center overflow-hidden rounded-[var(--radius)] border border-border-strong bg-[#fcfaf7] shadow-inner dark:bg-[#1c1712]">
-        <div className="w-full overflow-x-auto p-1.5">
-          <svg viewBox={`0 0 ${canvasWidth} ${canvasHeight}`} className="block h-auto w-full select-none" style={{ maxHeight: "410px" }}>
+      <div className="relative min-h-[260px] flex-1 overflow-hidden rounded-[var(--radius)] border border-border-strong bg-[#fcfaf7] shadow-inner dark:bg-[#1c1712]">
+        <div ref={scrollRef} className="absolute inset-0 flex items-start justify-center overflow-auto p-1.5">
+          <svg
+            viewBox={`0 0 ${canvasWidth} ${canvasHeight}`}
+            width={svgDisplayWidth}
+            height={svgDisplayHeight}
+            className="block shrink-0 select-none"
+          >
             <defs>
               <pattern id="planGrid" width="20" height="20" patternUnits="userSpaceOnUse">
                 <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#ede7dc" strokeWidth="0.8" />
@@ -386,6 +428,36 @@ export function TerraceVisualizer({ results, inputs, activeScrapMode }: TerraceV
               </text>
             </g>
           </svg>
+        </div>
+
+        <div className="absolute right-3 top-3 flex items-center gap-0.5 rounded-lg border border-border-strong bg-surface/95 p-1 shadow-md backdrop-blur-xs">
+          <button
+            type="button"
+            onClick={zoomOut}
+            disabled={!canZoomOut}
+            aria-label="Verlegeplan verkleinern"
+            className="rounded-md p-1 text-ink-muted transition-colors hover:bg-surface-2 hover:text-ink disabled:pointer-events-none disabled:opacity-40"
+          >
+            <Minus className="size-3.5" />
+          </button>
+          <button
+            type="button"
+            onClick={zoomReset}
+            aria-label="Zoom auf 100 % zurücksetzen"
+            title="Zoom zurücksetzen"
+            className="min-w-11 rounded-md px-1.5 py-1 text-center font-mono text-[11px] text-ink-muted transition-colors hover:bg-surface-2 hover:text-ink"
+          >
+            {Math.round(zoom * 100)}%
+          </button>
+          <button
+            type="button"
+            onClick={zoomIn}
+            disabled={!canZoomIn}
+            aria-label="Verlegeplan vergrößern"
+            className="rounded-md p-1 text-ink-muted transition-colors hover:bg-surface-2 hover:text-ink disabled:pointer-events-none disabled:opacity-40"
+          >
+            <Plus className="size-3.5" />
+          </button>
         </div>
 
         {hoveredPiece && (
