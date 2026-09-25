@@ -186,6 +186,7 @@ const toolExamples: Record<string, string> = {
   "quell-schwund": "+1,53 mm",
   "falsche-gehrung": "63,4° / 26,6°",
   schwalbenschwanz: "6 Schwalben",
+  terrassendielen: "38 Dielen",
 };
 
 const toolHighlights: Record<string, string> = {
@@ -197,6 +198,7 @@ const toolHighlights: Record<string, string> = {
   "quell-schwund": "Holzbewegung durch Feuchte sicher einplanen.",
   "falsche-gehrung": "Gehrungswinkel bei unterschiedlichen Materialstärken berechnen.",
   schwalbenschwanz: "Zinkenanzahl und Anreißmaße für Schwalbenschwänze berechnen.",
+  terrassendielen: "Dielenbedarf und Unterkonstruktion für die Terrasse berechnen.",
 };
 
 function ScaleWeightIcon({ className }: { className?: string }) {
@@ -277,6 +279,15 @@ function DovetailIcon({ className }: { className?: string }) {
   );
 }
 
+function DeckBoardsIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M3 7h18M3 12h18M3 17h18" />
+      <path d="M8 4v16M16 4v16" strokeDasharray="1.5 2" />
+    </svg>
+  );
+}
+
 const toolIcons: Record<string, typeof ScaleWeightIcon> = {
   plattengewicht: ScaleWeightIcon,
   tuerenmass: DoorIcon,
@@ -286,6 +297,7 @@ const toolIcons: Record<string, typeof ScaleWeightIcon> = {
   "quell-schwund": WoodMovementIcon,
   "falsche-gehrung": MiterAngleIcon,
   schwalbenschwanz: DovetailIcon,
+  terrassendielen: DeckBoardsIcon,
 };
 
 function ArrowIcon({ className }: { className?: string }) {
@@ -429,9 +441,9 @@ export default async function HomePage() {
                 Smarte Rechner für <span className="text-accent">bessere</span> Ergebnisse
               </h2>
               <p className="mt-4 text-ink-muted">
-                Acht Rechner für den Werkstattalltag – von Plattengewicht
-                über Gehrungswinkel bis zur Schwalbenschwanzverbindung.
-                Ergebnis in Sekunden, ohne Anmeldung.
+                Neun Rechner für den Werkstattalltag – von Plattengewicht
+                über Gehrungswinkel bis zur Terrassendiele. Ergebnis in
+                Sekunden, ohne Anmeldung.
               </p>
               <ButtonLink href="/tools" variant="secondary" className="mt-6">
                 Alle Rechner ansehen

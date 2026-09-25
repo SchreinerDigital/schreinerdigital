@@ -74,6 +74,14 @@ export const tools: ToolDef[] = [
       "Zinkenanzahl, Zinkenwinkel und Anreißmaße für offene oder halbverdeckte Schwalbenschwanzverbindungen aus Brettbreite und -stärke berechnen – mit 3D-Ansicht und 1:1-Druckschablone.",
     ready: true,
   },
+  {
+    slug: "terrassendielen",
+    seoTitle: "Terrassendielen berechnen: Bedarf, Verschnitt & Unterkonstruktion",
+    title: "Terrassendielen-Rechner",
+    description:
+      "Dielenreihen, Laufmeter, Schrauben und Unterkonstruktion für deine Terrasse berechnen – mit und ohne Reststück-Nutzung im direkten Vergleich, inklusive Verlegeplan und Einkaufsliste.",
+    ready: true,
+  },
 ];
 
 export function getTool(slug: string): ToolDef | undefined {
