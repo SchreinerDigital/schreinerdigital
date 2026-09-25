@@ -16,9 +16,9 @@ export const MATERIALS_METRIC: Record<string, Record<string, number>> = {
     Leichtbauplatte: 300,
     MDF: 750,
     "Multiplex Birke": 680,
-    "Multiplex Buche": 750,
+    "Multiplex Buche": 720,
     OSB: 600,
-    Spanplatte: 650,
+    Spanplatte: 680,
     Tischlerplatte: 450,
   },
   Hölzer: {
