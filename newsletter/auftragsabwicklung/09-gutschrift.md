@@ -33,7 +33,7 @@ Eine Gutschrift korrigiert einen *Teil* einer ansonsten korrekten Rechnung. War 
 
 ---
 
-Unsere **Gutschrift-Vorlage** ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
+Unsere **Gutschrift-Vorlage** enthält den klarstellenden Hinweis zur Abgrenzung bereits vorformuliert. Sie ist bereits fertig gestaltet und erscheint mit unseren Vorlagen-Paketen auf schreiner.digital/vorlagen – wir sagen dir rechtzeitig Bescheid.
 
 [INFO] Als Rechnungskorrektur mit eigenem Steuerausweis zählt die Gutschrift wie die Rechnung selbst zu den Buchungsbelegen – Aufbewahrungsfrist 8 Jahre statt der 6 Jahre für reine Geschäftsbriefe. Digital archiviert muss sie ebenso GoBD-konform unveränderbar abgelegt sein. Wie das praktisch geht, liest du unter [Aufbewahrungspflichten & GoBD](/betrieb-und-recht/aufbewahrungspflichten-gobd).
 
