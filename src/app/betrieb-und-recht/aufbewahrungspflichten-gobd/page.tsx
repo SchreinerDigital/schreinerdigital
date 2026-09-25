@@ -29,6 +29,30 @@ const fristen = [
   ],
 ];
 
+const archivOptionen = [
+  [
+    "Cloud-Buchhaltungssoftware mit Archivfunktion",
+    "Die meisten kleinen und mittleren Betriebe – oft ohnehin schon für Rechnungen im Einsatz",
+    "z. B. Lexoffice, sevDesk, DATEV Unternehmen online oder Buchhaltungsbutler. Unveränderbarkeit und Änderungsprotokoll sind eingebaut, eigene IT-Kenntnisse sind nicht nötig.",
+  ],
+  [
+    "Dediziertes Dokumentenmanagement-System (DMS)",
+    "Betriebe mit größeren Belegmengen, mehreren Standorten oder Mitarbeitenden im Rechnungswesen",
+    "z. B. DocuWare, ELO oder Lexware Archivierung. Mehr Funktionsumfang als eine reine Buchhaltungssoftware, dafür höherer Preis und Einrichtungsaufwand.",
+  ],
+  [
+    "Microsoft 365 / Google Workspace mit Aufbewahrungsrichtlinien",
+    "Betriebe, die eines der beiden Systeme ohnehin im Einsatz haben",
+    "Technisch möglich (z. B. über Microsoft Purview), aber nicht automatisch GoBD-konform ab Werk – Aufbewahrungsrichtlinien und Löschsperren müssen erst korrekt eingerichtet werden.",
+  ],
+];
+
+const nichtAusreichend = [
+  "Ein normaler Ordner auf Bürorechner, Server oder NAS ohne Versionskontrolle und Änderungsprotokoll",
+  "Ein E-Mail-Postfach als einziger Ablageort für empfangene Belege",
+  "Ein USB-Stick oder eine externe Festplatte ohne Zugriffs- und Änderungsschutz",
+];
+
 const scanSteps = [
   {
     title: "Papierbeleg digitalisieren",
@@ -68,6 +92,14 @@ const faqs = [
   {
     q: "Darf das Finanzamt auch auf Daten in einer Cloud-Software zugreifen?",
     a: "Ja. Das Zugriffsrecht der Finanzverwaltung nach § 147 Abs. 6 AO gilt unabhängig davon, ob die Buchführung lokal oder in einer Cloud – auch auf Servern im Ausland – geführt wird. Als Unternehmer musst du sicherstellen, dass der Zugriff im Bedarfsfall möglich ist.",
+  },
+  {
+    q: "Reicht eine Cloud-Buchhaltungssoftware wie Lexoffice oder sevDesk für die GoBD-konforme Archivierung?",
+    a: "In der Regel ja, wenn die Software eine unveränderbare, protokollierte Ablage bietet und das Ursprungsformat erhalten bleibt – das ist bei den gängigen Anbietern Standard. Frag im Zweifel beim Anbieter nach, ob eine GoBD-Konformität ausdrücklich zugesichert wird.",
+  },
+  {
+    q: "Brauche ich als kleiner Betrieb wirklich eine Verfahrensdokumentation?",
+    a: "Ja, auch als Kleinunternehmer nach § 19 UStG – die Umsatzsteuerbefreiung befreit nicht von der GoBD. Der Umfang darf sich aber an der Betriebsgröße orientieren: Für einen kleinen Betrieb reicht meist eine knappe, rund halbseitige Beschreibung, wie Angebote, Rechnungen & Co. erstellt, geprüft und archiviert werden.",
   },
 ];
 
@@ -138,6 +170,48 @@ export default function AufbewahrungspflichtenPage() {
               nachvollziehbar protokolliert sein.
             </li>
           </ul>
+        </GuideSection>
+
+        <GuideSection
+          title="So archivierst du richtig"
+          intro="Welche Lösung passt, hängt vor allem von der Beleg­menge und davon ab, welche Software ohnehin schon im Einsatz ist:"
+        >
+          <SpecTable
+            columns={["Ansatz", "Für wen geeignet", "Worauf achten"]}
+            rows={archivOptionen}
+            note="Angaben ohne Gewähr, Stand der Recherche. Nennung einzelner Anbieter dient nur der Einordnung, keine Empfehlung oder Vollständigkeit. Prüfe vor der Entscheidung, ob der jeweilige Anbieter eine GoBD-Konformität ausdrücklich zusichert."
+          />
+          <p className="mt-4 text-sm leading-relaxed text-ink-muted">
+            Einen tieferen Vergleich gängiger Branchenprogramme findest du unter{" "}
+            <Link href="/digitalisierung/kalkulationssoftware" className="text-accent hover:underline">
+              Kalkulations- und Auftragssoftware
+            </Link>{" "}
+            – einige davon decken Rechnungsstellung und Ablage bereits mit ab.
+          </p>
+          <p className="mt-4 text-sm font-semibold text-ink">Nicht ausreichend ist dagegen:</p>
+          <ul className="mt-2 list-disc space-y-2 pl-5 text-sm leading-relaxed text-ink-muted">
+            {nichtAusreichend.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </GuideSection>
+
+        <GuideSection
+          title="Die Verfahrensdokumentation nicht vergessen"
+          intro="Die GoBD verlangen zusätzlich zur richtigen Software eine schriftliche Verfahrensdokumentation – ein häufig übersehener Teil der Pflicht:"
+        >
+          <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+            Sie beschreibt, wie Belege in deinem Betrieb entstehen, geprüft,
+            abgelegt und wiedergefunden werden – damit ein Betriebsprüfer
+            nachvollziehen kann, dass dein Verfahren tatsächlich
+            GoBD-konform ist. Das gilt auch als Kleinunternehmer nach § 19
+            UStG: Die Umsatzsteuerbefreiung befreit nicht von dieser
+            Pflicht. Der Umfang darf sich aber an der Betriebsgröße
+            orientieren – für einen kleinen Betrieb reicht meist eine knappe,
+            rund halbseitige Beschreibung: welche Dokumente betroffen sind,
+            wie sie erstellt bzw. empfangen, geprüft und archiviert werden,
+            und wer im Betrieb dafür zuständig ist.
+          </p>
         </GuideSection>
 
         <GuideSection
