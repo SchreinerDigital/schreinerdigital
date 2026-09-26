@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-// Converts the 10 Markdown newsletters under newsletter/auftragsabwicklung/
-// into email-safe HTML (inline styles, table layout) matching the existing
+// Converts the Markdown newsletters under newsletter/<series>/ into
+// email-safe HTML (inline styles, table layout) matching the existing
 // Brevo DOI template's look. Writes one .html file per episode plus a
-// manifest.json (subject/preheader/htmlPath) into scripts/newsletter-generator/output/,
-// which the agent reads to create the Brevo SMTP templates via MCP.
+// manifest.json (subject/preheader/htmlPath) into each series' own output
+// folder, which the agent reads to create the Brevo SMTP templates via MCP.
 //
 // Run: node scripts/newsletter-generator/build-templates.mjs
 
@@ -13,12 +13,31 @@ import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SRC_DIR = path.join(__dirname, "../../newsletter/auftragsabwicklung");
-const OUT_DIR = path.join(__dirname, "output");
+const BASE_OUT_DIR = path.join(__dirname, "output");
 const SITE_URL = "https://schreiner.digital";
-const TOTAL_EPISODES = 10;
 
-fs.mkdirSync(OUT_DIR, { recursive: true });
+// Jede Serie hat einen eigenen Quellordner unter newsletter/ und einen
+// eigenen Ausgabeordner, damit neue Serien nie mit bestehenden
+// Episoden-Dateinamen kollidieren.
+const SERIES = [
+  {
+    label: "Auftragsabwicklung",
+    srcDir: path.join(__dirname, "../../newsletter/auftragsabwicklung"),
+    outDir: BASE_OUT_DIR,
+    // Eigene Brevo-Liste mit dediziertem Opt-in (siehe SOURCE_ENV_OVERRIDES
+    // in src/lib/newsletter.ts) – Hinweistext nennt die Serie deshalb
+    // namentlich.
+    signupReason: "die Lehrzettel-Serie &bdquo;Auftragsabwicklung&ldquo;",
+  },
+  {
+    label: "Tools erklärt",
+    srcDir: path.join(__dirname, "../../newsletter/tools-erklaert"),
+    outDir: path.join(BASE_OUT_DIR, "tools-erklaert"),
+    // Läuft über die allgemeine Newsletter-Liste, kein eigenes Opt-in –
+    // Hinweistext bleibt deshalb generisch.
+    signupReason: "den Newsletter",
+  },
+];
 
 function escapeHtml(str) {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -57,6 +76,10 @@ const ol = (items) =>
   `<ol style="margin:0 0 16px 0;padding:0 0 0 20px;">${items
     .map((it) => `<li style="margin:0 0 8px 0;font-size:15px;line-height:1.6;color:${INK_MUTED};">${it}</li>`)
     .join("")}</ol>`;
+const img = (src, alt) =>
+  `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 20px 0;"><tr><td style="border:1px solid ${BORDER};border-radius:10px;overflow:hidden;line-height:0;"><img src="${src}" alt="${alt}" width="560" style="display:block;width:100%;max-width:560px;height:auto;" /></td></tr></table>`;
+
+const IMAGE_RE = /^!\[([^\]]*)\]\(([^)]+)\)$/;
 
 function renderMainBlocks(md) {
   const lines = md.split("\n");
@@ -74,6 +97,11 @@ function renderMainBlocks(md) {
     } else if (line.startsWith("## ")) {
       out.push(h2(renderInline(line.slice(3).trim())));
       i++;
+    } else if (IMAGE_RE.test(line.trim())) {
+      const [, alt, url] = line.trim().match(IMAGE_RE);
+      const src = url.startsWith("/") ? SITE_URL + url : url;
+      out.push(img(src, escapeHtml(alt)));
+      i++;
     } else if (/^- /.test(line)) {
       const items = [];
       while (i < lines.length && /^- /.test(lines[i])) {
@@ -90,7 +118,12 @@ function renderMainBlocks(md) {
       out.push(ol(items));
     } else {
       const paraLines = [];
-      while (i < lines.length && lines[i].trim() !== "" && !/^#|^- |^\d+\.\s/.test(lines[i])) {
+      while (
+        i < lines.length &&
+        lines[i].trim() !== "" &&
+        !/^#|^- |^\d+\.\s/.test(lines[i]) &&
+        !IMAGE_RE.test(lines[i].trim())
+      ) {
         paraLines.push(lines[i]);
         i++;
       }
@@ -124,7 +157,7 @@ function renderFooterBlock(footerMd) {
     .join("\n");
 }
 
-function buildHtml({ episode, mainHtml, footerHtml }) {
+function buildHtml({ episode, total, label, signupReason, mainHtml, footerHtml }) {
   return `<!doctype html>
 <html lang="de">
   <body style="margin:0;padding:0;background-color:#faf8f4;font-family:Arial,Helvetica,sans-serif;">
@@ -137,7 +170,7 @@ function buildHtml({ episode, mainHtml, footerHtml }) {
                 <p style="margin:0;font-size:20px;line-height:1;letter-spacing:-0.02em;">
                   <span style="font-weight:bold;color:${INK};">schreiner</span><span style="font-weight:bold;color:${ACCENT};">.digital</span>
                 </p>
-                <p style="margin:8px 0 0 0;font-size:12px;letter-spacing:0.03em;color:${INK_FAINT};">Lehrzettel-Serie &middot; Auftragsabwicklung &middot; Ausgabe ${episode}/${TOTAL_EPISODES}</p>
+                <p style="margin:8px 0 0 0;font-size:12px;letter-spacing:0.03em;color:${INK_FAINT};">Lehrzettel-Serie &middot; ${label} &middot; Ausgabe ${episode}/${total}</p>
               </td>
             </tr>
             <tr>
@@ -149,7 +182,7 @@ ${footerHtml}
             <tr>
               <td style="padding:20px 36px 32px 36px;border-top:1px solid ${BORDER};">
                 <p style="margin:0 0 6px 0;font-size:12px;line-height:1.6;color:${INK_FAINT};">
-                  Du bekommst diese E-Mail, weil du dich f&uuml;r die Lehrzettel-Serie &bdquo;Auftragsabwicklung&ldquo; auf schreiner.digital angemeldet hast.
+                  Du bekommst diese E-Mail, weil du dich f&uuml;r ${signupReason} auf schreiner.digital angemeldet hast.
                 </p>
                 <p style="margin:0;font-size:12px;line-height:1.6;color:${INK_FAINT};">
                   <a href="{{ unsubscribe }}" style="color:${INK_FAINT};text-decoration:underline;">Newsletter abbestellen</a>
@@ -165,34 +198,52 @@ ${footerHtml}
 `;
 }
 
-const files = fs
-  .readdirSync(SRC_DIR)
-  .filter((f) => /^\d{2}-.*\.md$/.test(f))
-  .sort();
+let totalGenerated = 0;
 
-const manifest = [];
+for (const series of SERIES) {
+  if (!fs.existsSync(series.srcDir)) continue;
+  fs.mkdirSync(series.outDir, { recursive: true });
 
-files.forEach((file, idx) => {
-  const episode = idx + 1;
-  const raw = fs.readFileSync(path.join(SRC_DIR, file), "utf8");
-  const { data, content } = matter(raw);
-  const [mainMd, footerMd] = content.split(/\n---\n/);
+  const files = fs
+    .readdirSync(series.srcDir)
+    .filter((f) => /^\d{2}-.*\.md$/.test(f))
+    .sort();
 
-  const mainHtml = renderMainBlocks(mainMd);
-  const footerHtml = renderFooterBlock(footerMd);
-  const html = buildHtml({ episode, mainHtml, footerHtml });
+  const manifest = [];
 
-  const outFile = `${String(episode).padStart(2, "0")}-${path.basename(file, ".md")}.html`;
-  fs.writeFileSync(path.join(OUT_DIR, outFile), html, "utf8");
+  files.forEach((file, idx) => {
+    const episode = idx + 1;
+    const total = files.length;
+    const raw = fs.readFileSync(path.join(series.srcDir, file), "utf8");
+    const { data, content } = matter(raw);
+    const [mainMd, footerMd] = content.split(/\n---\n/);
 
-  manifest.push({
-    episode,
-    file,
-    subject: data.Betreff,
-    preheader: data.Preheader,
-    htmlFile: outFile,
+    const mainHtml = renderMainBlocks(mainMd);
+    const footerHtml = renderFooterBlock(footerMd);
+    const html = buildHtml({
+      episode,
+      total,
+      label: series.label,
+      signupReason: series.signupReason,
+      mainHtml,
+      footerHtml,
+    });
+
+    const outFile = `${String(episode).padStart(2, "0")}-${path.basename(file, ".md")}.html`;
+    fs.writeFileSync(path.join(series.outDir, outFile), html, "utf8");
+
+    manifest.push({
+      episode,
+      file,
+      subject: data.Betreff,
+      preheader: data.Preheader,
+      htmlFile: outFile,
+    });
   });
-});
 
-fs.writeFileSync(path.join(OUT_DIR, "manifest.json"), JSON.stringify(manifest, null, 2), "utf8");
-console.log(`Generated ${manifest.length} email templates into ${OUT_DIR}`);
+  fs.writeFileSync(path.join(series.outDir, "manifest.json"), JSON.stringify(manifest, null, 2), "utf8");
+  console.log(`Generated ${manifest.length} email templates (${series.label}) into ${series.outDir}`);
+  totalGenerated += manifest.length;
+}
+
+console.log(`Done: ${totalGenerated} email templates total.`);
