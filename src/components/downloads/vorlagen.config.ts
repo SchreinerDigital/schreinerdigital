@@ -43,6 +43,8 @@ export interface VorlageDef {
   editableFile?: string;
   /** Label for the editable file's download button, e.g. "Word", "Excel". */
   editableFormat?: "Word" | "Excel";
+  /** Outlook-Mailvorlage (.oft) under public/downloads/, statt PDF/Word. */
+  oftFile?: string;
 }
 
 export const vorlagen: VorlageDef[] = [
@@ -462,6 +464,99 @@ export const vorlagen: VorlageDef[] = [
     pdfFile: "gutschrift.pdf",
     editableFile: "gutschrift.docx",
     editableFormat: "Word",
+  },
+  {
+    slug: "outlook-zahlungserinnerung",
+    title: "Zahlungserinnerung – Outlook-Vorlage",
+    description:
+      "Fertige Outlook-Mailvorlage (.oft) für die freundliche erste Erinnerung an eine ausstehende Zahlung – direkt aus Outlook heraus, ohne neu zu tippen.",
+    kategorie: "Kommunikation & Verwaltung",
+    format: "Outlook (.oft)",
+    oftFile: "outlook-zahlungserinnerung.oft",
+  },
+  {
+    slug: "outlook-rechnung-versenden",
+    title: "Rechnung versenden – Outlook-Vorlage",
+    description: "Fertige Outlook-Mailvorlage (.oft) für den Versand der Rechnung nach Projektabschluss.",
+    kategorie: "Kommunikation & Verwaltung",
+    format: "Outlook (.oft)",
+    oftFile: "outlook-rechnung-versenden.oft",
+  },
+  {
+    slug: "outlook-nachfrage-angebot",
+    title: "Nachfrage zum Angebot – Outlook-Vorlage",
+    description:
+      "Fertige Outlook-Mailvorlage (.oft), um höflich nachzufragen, ob ein verschicktes Angebot noch interessant ist.",
+    kategorie: "Kommunikation & Verwaltung",
+    format: "Outlook (.oft)",
+    oftFile: "outlook-nachfrage-angebot.oft",
+  },
+  {
+    slug: "outlook-ab-akonto-versenden",
+    title: "Auftragsbestätigung & Akonto-Rechnung – Outlook-Vorlage",
+    description:
+      "Fertige Outlook-Mailvorlage (.oft) zum Versand von Auftragsbestätigung und Akonto-Rechnung nach Auftragserteilung.",
+    kategorie: "Kommunikation & Verwaltung",
+    format: "Outlook (.oft)",
+    oftFile: "outlook-ab-akonto-versenden.oft",
+  },
+  {
+    slug: "outlook-absage-angebotsabgabe",
+    title: "Absage Angebotsabgabe – Outlook-Vorlage",
+    description:
+      "Fertige Outlook-Mailvorlage (.oft), um eine Anfrage höflich abzulehnen, wenn kein Angebot abgegeben werden kann.",
+    kategorie: "Kommunikation & Verwaltung",
+    format: "Outlook (.oft)",
+    oftFile: "outlook-absage-angebotsabgabe.oft",
+  },
+  {
+    slug: "outlook-ausschreibung-absagen",
+    title: "Ausschreibung absagen – Outlook-Vorlage",
+    description: "Fertige Outlook-Mailvorlage (.oft), um die Teilnahme an einer Ausschreibung abzusagen.",
+    kategorie: "Kommunikation & Verwaltung",
+    format: "Outlook (.oft)",
+    oftFile: "outlook-ausschreibung-absagen.oft",
+  },
+  {
+    slug: "outlook-ausschreibung-bestaetigen",
+    title: "Ausschreibung bestätigen – Outlook-Vorlage",
+    description: "Fertige Outlook-Mailvorlage (.oft), um die Teilnahme an einer Ausschreibung zu bestätigen.",
+    kategorie: "Kommunikation & Verwaltung",
+    format: "Outlook (.oft)",
+    oftFile: "outlook-ausschreibung-bestaetigen.oft",
+  },
+  {
+    slug: "outlook-angebot-versenden",
+    title: "Angebot versenden – Outlook-Vorlage",
+    description: "Fertige Outlook-Mailvorlage (.oft) für den Versand eines Angebots nach einer Kundenanfrage.",
+    kategorie: "Kommunikation & Verwaltung",
+    format: "Outlook (.oft)",
+    oftFile: "outlook-angebot-versenden.oft",
+  },
+  {
+    slug: "outlook-absage-praktikumsplatz",
+    title: "Absage Praktikumsplatz – Outlook-Vorlage",
+    description: "Fertige Outlook-Mailvorlage (.oft) für die höfliche Absage einer Praktikumsbewerbung.",
+    kategorie: "Kommunikation & Verwaltung",
+    format: "Outlook (.oft)",
+    oftFile: "outlook-absage-praktikumsplatz.oft",
+  },
+  {
+    slug: "outlook-absage-ausbildungsplatz",
+    title: "Absage Ausbildungsplatz – Outlook-Vorlage",
+    description: "Fertige Outlook-Mailvorlage (.oft) für die höfliche Absage einer Ausbildungsbewerbung.",
+    kategorie: "Kommunikation & Verwaltung",
+    format: "Outlook (.oft)",
+    oftFile: "outlook-absage-ausbildungsplatz.oft",
+  },
+  {
+    slug: "outlook-mahnung-1",
+    title: "1. Mahnung – Outlook-Vorlage",
+    description:
+      "Fertige Outlook-Mailvorlage (.oft) für die erste förmliche Mahnung nach erfolgloser Zahlungserinnerung.",
+    kategorie: "Kommunikation & Verwaltung",
+    format: "Outlook (.oft)",
+    oftFile: "outlook-mahnung-1.oft",
   },
 ];
 
