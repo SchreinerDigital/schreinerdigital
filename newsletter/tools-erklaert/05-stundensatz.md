@@ -39,6 +39,6 @@ Den **Stundensatzrechner** nutzt du direkt im Browser, kostenlos und ohne Anmeld
 
 Wie du daraus eine tragfähige Preisstrategie entwickelst, liest du unter [Preisgestaltung & Wirtschaftlichkeit](/betrieb-und-recht/preisgestaltung-wirtschaftlichkeit).
 
-In der nächsten Ausgabe: Der Quell- und Schwundrechner – warum die Tischplatte im Sommer nicht mehr passt.
+In der nächsten Ausgabe: Der Quell- und Schwundrechner – warum die Schublade im Sommer plötzlich klemmt.
 
 *Alle Angaben ohne Gewähr und keine betriebswirtschaftliche Beratung im Einzelfall.*

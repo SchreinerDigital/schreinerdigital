@@ -61,6 +61,13 @@ export async function buildSearchIndex(): Promise<SearchDoc[]> {
       category: "Übersicht",
     },
     {
+      title: "Holzfeuchte richtig messen",
+      description:
+        "Widerstands- oder kapazitives Messgerät, richtige Messtiefe und Zielwerte je nach Einsatzort.",
+      url: "/holzarten/holzfeuchte-messen",
+      category: "Übersicht",
+    },
+    {
       title: "Plattenwerkstoffe im Überblick",
       description:
         "Span-, MDF-, OSB-, Multiplex- und Tischlerplatten im Vergleich: Aufbau, Rohdichte, Einsatzgrenzen und Hinweise zur Verarbeitung.",

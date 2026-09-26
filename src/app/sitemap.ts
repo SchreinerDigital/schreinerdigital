@@ -20,6 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: BASE_URL, changeFrequency: "weekly", priority: 1 },
     { url: `${BASE_URL}/holzarten`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/holzarten/grundlagen`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE_URL}/holzarten/holzfeuchte-messen`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/plattenwerkstoffe`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/verbindungstechnik`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/beschlaege`, changeFrequency: "weekly", priority: 0.9 },

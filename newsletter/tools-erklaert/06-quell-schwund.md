@@ -1,13 +1,13 @@
 ---
 Serie: Tools erklärt (6/9)
-Betreff: Warum die Tischplatte im Sommer nicht mehr passt
+Betreff: Warum die Schublade im Sommer plötzlich klemmt
 Preheader: Massivholz arbeitet mit der Luftfeuchte – wie viele Millimeter, verrät dir der Quell- und Schwundrechner vorher.
 Tool: Quell- und Schwundrechner (/tools/quell-schwund)
 ---
 
-# Warum die Tischplatte im Sommer nicht mehr passt
+# Warum die Schublade im Sommer plötzlich klemmt
 
-Eine Massivholzplatte, im Winter exakt eingepasst – im Sommer klemmt sie plötzlich in der Nut. Kein Fehler beim Bau, sondern Physik: Holz quillt und schwindet mit der Luftfeuchte. Der Quell- und Schwundrechner sagt dir vorher, wie viele Millimeter das ausmacht.
+Eine Schublade aus Massivholz, im Winter noch leichtgängig – im Sommer klemmt sie plötzlich und lässt sich nur noch mit Schwung schließen. Kein Fehler beim Bau, sondern Physik: Holz quillt und schwindet mit der Luftfeuchte. Der Quell- und Schwundrechner sagt dir vorher, wie viele Millimeter das ausmacht.
 
 ## So funktioniert's
 
@@ -37,7 +37,7 @@ Massivholz bewegt sich messbar mit der Luftfeuchte – wer die Dehnungsfuge vorh
 
 Den **Quell- und Schwundrechner** nutzt du direkt im Browser, kostenlos und ohne Anmeldung: [Jetzt berechnen](/tools/quell-schwund).
 
-Mehr Grundlagenwissen zu Faserverlauf und Eigenschaften einzelner Holzarten findest du unter [Holzarten](/holzarten).
+Wie du die Ausgangsfeuchte für diese Rechnung überhaupt zuverlässig misst, liest du unter [Holzfeuchte richtig messen](/holzarten/holzfeuchte-messen).
 
 In der nächsten Ausgabe: Der Falsche-Gehrung-Rechner – wenn zwei unterschiedlich dicke Werkstücke sauber auf Gehrung sollen.
 

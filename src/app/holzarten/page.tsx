@@ -47,6 +47,27 @@ export default async function HolzartenIndexPage() {
         </span>
       </Link>
 
+      <Link
+        href="/holzarten/holzfeuchte-messen"
+        className="group mt-4 flex flex-col gap-1 rounded-[var(--radius)] border border-border bg-surface p-5 transition-colors hover:border-accent sm:flex-row sm:items-center sm:justify-between"
+      >
+        <span>
+          <span className="block font-semibold text-ink">
+            Holzfeuchte richtig messen
+          </span>
+          <span className="mt-1 block text-sm text-ink-muted">
+            Widerstands- oder kapazitives Messgerät, richtige Messtiefe und
+            Zielwerte je nach Einsatzort.
+          </span>
+        </span>
+        <span className="mt-3 inline-flex shrink-0 items-center gap-1 text-sm font-medium text-accent sm:mt-0">
+          Zum Messleitfaden
+          <svg className="size-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </span>
+      </Link>
+
       {holzarten.length === 0 ? (
         <p className="mt-12 rounded-[var(--radius)] border border-dashed border-border-strong bg-surface p-8 text-sm text-ink-muted">
           Noch keine Holzarten veröffentlicht.

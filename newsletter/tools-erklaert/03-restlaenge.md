@@ -21,7 +21,7 @@ Außendurchmesser 400 mm, Innendurchmesser 200 mm, Kantendicke 2 mm:
 
 ![Restlängenrechner mit Beispielrechnung: 400/200/2mm ergibt 47,12 Meter Restlänge](/newsletter/tools/restlaenge-beispiel.png)
 
-Ergebnis: 47,12 m Restlänge – berechnet nach L = π × (D_außen² − D_innen²) / (4 × Banddicke).
+Ergebnis: 47,12 m Restlänge – ganz ohne Abrollen und Nachmessen.
 
 ## Gut zu wissen
 
