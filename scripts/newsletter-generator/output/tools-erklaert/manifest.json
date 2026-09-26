@@ -5,5 +5,61 @@
     "subject": "Plattengewicht in Sekunden – ohne Datenblatt zu wälzen",
     "preheader": "Für Tourenplanung, Beschlagwahl oder einfach um zu wissen, ob die Platte allein zu tragen ist.",
     "htmlFile": "01-01-plattengewicht.html"
+  },
+  {
+    "episode": 2,
+    "file": "02-tuerenmass.md",
+    "subject": "Türmaß in DIN-Norm oder Sondermaß? In Sekunden geklärt",
+    "preheader": "Rohbaumaße eintragen, sofort wissen ob eine Standardtür passt oder ein Sondermaß nötig ist – inklusive fertigem Aufmaßblatt.",
+    "htmlFile": "02-02-tuerenmass.html"
+  },
+  {
+    "episode": 3,
+    "file": "03-restlaenge.md",
+    "subject": "Wie viel Kantenband ist wirklich noch auf der Rolle?",
+    "preheader": "Drei Maße mit dem Zollstock messen, Restlänge in Metern ablesen – ganz ohne Abrollen und Nachmessen.",
+    "htmlFile": "03-03-restlaenge.html"
+  },
+  {
+    "episode": 4,
+    "file": "04-durchbiegung.md",
+    "subject": "Hält der Einlegeboden, oder biegt er durch?",
+    "preheader": "Werkstoff, Maße und Last eintragen – der Rechner sagt dir, ob dein Regalboden im grünen Bereich bleibt.",
+    "htmlFile": "04-04-durchbiegung.html"
+  },
+  {
+    "episode": 5,
+    "file": "05-stundensatz.md",
+    "subject": "Was kostet dich eine Arbeitsstunde wirklich?",
+    "preheader": "Lohn, Lohnnebenkosten, Gemeinkosten und Ausfallzeiten zusammengerechnet – der reale Stundensatz, mit dem du kalkulieren solltest.",
+    "htmlFile": "05-05-stundensatz.html"
+  },
+  {
+    "episode": 6,
+    "file": "06-quell-schwund.md",
+    "subject": "Warum die Tischplatte im Sommer nicht mehr passt",
+    "preheader": "Massivholz arbeitet mit der Luftfeuchte – wie viele Millimeter, verrät dir der Quell- und Schwundrechner vorher.",
+    "htmlFile": "06-06-quell-schwund.html"
+  },
+  {
+    "episode": 7,
+    "file": "07-falsche-gehrung.md",
+    "subject": "Zwei unterschiedlich dicke Werkstücke sauber auf Gehrung",
+    "preheader": "Bei ungleichen Materialstärken ist die Gehrung eben nicht einfach 45° – der Rechner liefert die exakten Sägewinkel.",
+    "htmlFile": "07-07-falsche-gehrung.html"
+  },
+  {
+    "episode": 8,
+    "file": "08-schwalbenschwanz.md",
+    "subject": "Schwalbenschwanzverbindung anreißen, ohne zu rechnen",
+    "preheader": "Winkel, Anzahl und Aufteilung der Schwalben direkt als fertige Anreißmaße – für Schublade oder Korpus.",
+    "htmlFile": "08-08-schwalbenschwanz.html"
+  },
+  {
+    "episode": 9,
+    "file": "09-terrassendielen.md",
+    "subject": "Der Verlegeplan, der dir das Aufmaß am Material erspart",
+    "preheader": "Terrassenmaße rein, fertiger Verlegeplan mit Materialliste raus – inklusive Ersparnis durch Reststück-Nutzung.",
+    "htmlFile": "09-09-terrassendielen.html"
   }
 ]
