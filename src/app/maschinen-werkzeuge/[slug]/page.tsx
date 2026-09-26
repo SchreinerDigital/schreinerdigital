@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getEntry, getSlugs } from "@/lib/content";
+import { getRelatedEntries } from "@/lib/related";
+import { RelatedPages } from "@/components/content/related-pages";
 import { Container } from "@/components/ui/container";
 import { siteConfig } from "@/lib/site";
 
@@ -33,6 +35,7 @@ export default async function MaschineWerkzeugPage({
   if (!entry) notFound();
 
   const { default: Content, meta } = entry;
+  const related = await getRelatedEntries("maschinen-werkzeuge", meta, "kategorie");
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -95,6 +98,8 @@ export default async function MaschineWerkzeugPage({
       <article className="prose prose-schreiner mt-8 max-w-2xl">
         <Content />
       </article>
+
+      <RelatedPages basePath="/maschinen-werkzeuge" heading="Weitere Maschinen & Werkzeuge" items={related} />
     </Container>
   );
 }

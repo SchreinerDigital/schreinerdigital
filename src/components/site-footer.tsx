@@ -38,6 +38,7 @@ const columns = [
   {
     title: "Rechtliches",
     links: [
+      { href: "/sitemap", label: "Sitemap" },
       { href: "/impressum", label: "Impressum" },
       { href: "/datenschutz", label: "Datenschutz" },
     ],

@@ -119,7 +119,7 @@ const themenGruppen = [
     titel: "Digitale Infrastruktur",
     items: [
       {
-        href: "/digitalisierung/e-rechnung",
+        href: "/betrieb-und-recht/e-rechnung",
         titel: "E-Rechnungspflicht",
         text: "Was seit 2025 im Geschäftsverkehr zwischen Unternehmen gilt.",
       },
