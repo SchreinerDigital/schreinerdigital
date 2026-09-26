@@ -33,6 +33,7 @@ const columns = [
       { href: "/tools/quell-schwund", label: "Quell- und Schwundrechner" },
       { href: "/tools/falsche-gehrung", label: "Falsche-Gehrung-Rechner" },
       { href: "/tools/schwalbenschwanz", label: "Schwalbenschwanz-Rechner" },
+      { href: "/tools/terrassendielen", label: "Terrassendielen-Rechner" },
     ],
   },
   {

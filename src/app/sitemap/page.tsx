@@ -158,14 +158,14 @@ export default async function SitemapPage() {
 
       <div className="mt-14 grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
         {sections.map((section) => (
-          <div key={section.title}>
+          <div key={section.title} className="min-w-0">
             <h2 className="text-base font-semibold text-ink">{section.title}</h2>
-            <ul className={section.dense ? "mt-3 columns-2 gap-x-6 text-sm" : "mt-3 text-sm"}>
+            <ul className={section.dense ? "mt-3 text-sm sm:columns-2 sm:gap-x-6" : "mt-3 text-sm"}>
               {section.overview && (
                 <li className="mb-2 break-inside-avoid">
                   <Link
                     href={section.overview.href}
-                    className="font-medium text-accent hover:underline"
+                    className="break-words font-medium text-accent hover:underline"
                   >
                     {section.overview.label}
                   </Link>
@@ -175,7 +175,7 @@ export default async function SitemapPage() {
                 <li key={link.href} className="mb-2 break-inside-avoid">
                   <Link
                     href={link.href}
-                    className="text-ink-muted transition-colors hover:text-accent"
+                    className="break-words text-ink-muted transition-colors hover:text-accent"
                   >
                     {link.label}
                   </Link>
